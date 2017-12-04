@@ -1,0 +1,23 @@
+//
+//  WOTWorkSpace_Prefix.pch
+
+//  Created by Zhao Yiqi on 13-12-8.
+//  Copyright (c) 2013年 Zhao Yiqi. All rights reserved.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#import "header.h"
+#import "WOTSingtleton.h"
+#import "NSString+URL.h"
+#import "NSString+Category.h"
+#import "UIImage+Extension.h"
+
+#import "SDWebImageManager.h"
+#import "UIImageView+WebCache.h"
+#import "WOTBaseModel.h"
+#import "WOTFileUitls.h"
+#import "WOTUserSingleton.h"
+#import "WOTErrorMessageMacro.h"
+#endif

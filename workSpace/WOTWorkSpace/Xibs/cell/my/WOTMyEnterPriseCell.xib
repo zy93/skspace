@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16D30" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="myenterpriseCellID" rowHeight="95" id="KGk-i7-Jjw" customClass="WOTMyEnterPriseCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="94.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultHeaderVIew" translatesAutoresizingMaskIntoConstraints="NO" id="pjN-By-Fa9">
+                        <rect key="frame" x="20" y="10.5" width="60" height="72.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="Mkq-xe-0wQ"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backAcssory" translatesAutoresizingMaskIntoConstraints="NO" id="Qbl-Nm-PsV">
+                        <rect key="frame" x="293" y="41" width="7" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="7" id="Daw-81-0Wf"/>
+                            <constraint firstAttribute="height" constant="13" id="bw7-oW-NBA"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京易联港科技发展有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXm-Hi-NwR">
+                        <rect key="frame" x="90" y="27" width="225.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-03-10 ：33:34:23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHw-Ng-a4h">
+                        <rect key="frame" x="90" y="53" width="144.5" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdm-3v-J13">
+                        <rect key="frame" x="0.0" y="93.5" width="320" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="hj8-O6-jZa"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="pjN-By-Fa9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="1ck-LT-j0N"/>
+                    <constraint firstItem="zdm-3v-J13" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="BYv-vS-dtA"/>
+                    <constraint firstItem="zdm-3v-J13" firstAttribute="top" secondItem="pjN-By-Fa9" secondAttribute="bottom" constant="10" id="DKN-Zc-DOU"/>
+                    <constraint firstItem="BXm-Hi-NwR" firstAttribute="leading" secondItem="pjN-By-Fa9" secondAttribute="trailing" constant="10" id="G4m-rN-oIy"/>
+                    <constraint firstAttribute="bottom" secondItem="zdm-3v-J13" secondAttribute="bottom" id="JQX-nP-8mI"/>
+                    <constraint firstItem="pjN-By-Fa9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Us0-c0-Gme"/>
+                    <constraint firstItem="LHw-Ng-a4h" firstAttribute="top" secondItem="BXm-Hi-NwR" secondAttribute="bottom" constant="5" id="eW4-1n-nAM"/>
+                    <constraint firstItem="BXm-Hi-NwR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-10" id="fKW-uJ-aBB"/>
+                    <constraint firstAttribute="trailing" secondItem="zdm-3v-J13" secondAttribute="trailing" id="hL6-c1-GuH"/>
+                    <constraint firstAttribute="trailing" secondItem="Qbl-Nm-PsV" secondAttribute="trailing" constant="20" id="l5H-M9-2y1"/>
+                    <constraint firstItem="LHw-Ng-a4h" firstAttribute="leading" secondItem="pjN-By-Fa9" secondAttribute="trailing" constant="10" id="szf-lF-udD"/>
+                    <constraint firstItem="Qbl-Nm-PsV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xEz-Ot-2ls"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="enterpariseName" destination="BXm-Hi-NwR" id="2u6-sc-pQ2"/>
+                <outlet property="enterpriseHeaderImage" destination="pjN-By-Fa9" id="8ar-rB-ar6"/>
+                <outlet property="joinEnterpriseTime" destination="LHw-Ng-a4h" id="3oG-sp-DMm"/>
+                <outlet property="lineView" destination="zdm-3v-J13" id="mDf-kw-q8V"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="115.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="backAcssory" width="7" height="13"/>
+        <image name="defaultHeaderVIew" width="50" height="50"/>
+    </resources>
+</document>

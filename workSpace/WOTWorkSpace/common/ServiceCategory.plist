@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>政务服务</key>
+	<array>
+		<string>政策咨询</string>
+		<string>政府补贴申请</string>
+		<string>知识产权保护</string>
+		<string>金融租赁服务</string>
+	</array>
+	<key>金融</key>
+	<array>
+		<string>金融租赁服务</string>
+		<string>资产证券化服务</string>
+		<string>理财服务</string>
+		<string>小微金融服务</string>
+		<string>担保服务</string>
+		<string>信贷服务</string>
+		<string>工商注册</string>
+	</array>
+	<key>法律</key>
+	<array>
+		<string>法律培训</string>
+		<string>合同起草审核</string>
+		<string>融资法律服务</string>
+		<string>股权架构设计</string>
+		<string>法律咨询</string>
+	</array>
+	<key>人力资源</key>
+	<array>
+		<string>雇主品牌</string>
+		<string>绩效考核</string>
+		<string>薪酬及架构管理</string>
+		<string>社保及商业保险</string>
+		<string>招聘、猎头</string>
+		<string>人才培训</string>
+	</array>
+	<key>财税</key>
+	<array>
+		<string>财务制度搭建</string>
+		<string>财税培训</string>
+		<string>财税咨询</string>
+		<string>财务审计</string>
+		<string>税务代办</string>
+		<string>代理记账</string>
+	</array>
+	<key>营销推广</key>
+	<array>
+		<string>视觉设计</string>
+		<string>市场传播</string>
+		<string>市场活动</string>
+		<string>品牌推广</string>
+	</array>
+</dict>
+</plist>
