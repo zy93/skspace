@@ -16,7 +16,6 @@
 #import "WOTSpaceModel.h"
 #import "WOTBookStationListModel.h"
 #import "JXPopoverView.h"
-#import "SKBookStationNumberModel.h"
 
 @interface WOTBookStationVC ()<UITableViewDelegate,UITableViewDataSource, WOTBookStationCellDelegate>
 {
@@ -50,7 +49,7 @@
 @property (nonatomic, strong)NSMutableArray *cityList;
 @property (nonatomic, strong)UIButton *cityButton;
 @property (nonatomic, strong)WOTSpaceModel *spaceModel;
-@property (nonatomic, assign)NSNumber *stationNumber;
+
 
 
 //@property (nonatomic,strong) NSString *spaceNme;
@@ -73,7 +72,7 @@
     if ((!cityName) || [cityName isEqualToString:@""]) {
         cityName = @"未定位";
     }
-    [self requestStationNumber];
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -335,20 +334,7 @@
     return bookcell;
 }
 
-#pragma mark - 请求工位数量
--(void)requestStationNumber
-{
-    __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getBookStationNumberWithSpaceId:self.spaceId response:^(id bean, NSError *error) {
-        if (error) {
-            NSLog(@"error:%@",error);
-            return ;
-        }
-        SKBookStationNumberModel *bookStation = bean;
-        weakSelf.stationNumber = [bookStation.msg objectForKey:@"residueStationNum"];
-    }];
-    NSLog(@"打印工位数量：%@",self.stationNumber);
-}
+
 
 @end
 

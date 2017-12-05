@@ -18,6 +18,7 @@
 #import "WOTDatePickerView.h"
 #import "JudgmentTime.h"
 #import "WOTLoginVC.h"
+#import "SKBookStationNumberModel.h"
 
 #define infoCell @"infoCell"
 #define bookStationCell @"bookStationCell"
@@ -46,6 +47,7 @@
 @property (nonatomic, assign)NSInteger dayNumber;
 @property (nonatomic, assign)NSNumber *productNum;
 @property (nonatomic, assign)float orderNumber;
+@property (nonatomic, assign)NSNumber *stationNumber;
 
 @end
 
@@ -62,6 +64,7 @@
     [self configNav];
     [self loadData];
     [self loadCost];
+     [self requestStationNumber];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -160,6 +163,7 @@
 #pragma mark - action-- 支付按钮
 - (IBAction)clickSubmitBtn:(id)sender {
     //判断用户是否登录
+    //NSLog(@"打印工位数量：%@",self.stationNumber);
     if (![WOTUserSingleton shareUser].userInfo.userId) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"未登录" message:@"请先登录用户" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -651,6 +655,22 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+
+#pragma mark - 请求工位数量
+-(void)requestStationNumber
+{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getBookStationNumberWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"] response:^(id bean, NSError *error) {
+        if (error) {
+            NSLog(@"error:%@",error);
+            return ;
+        }
+        SKBookStationNumberModel *bookStation = bean;
+        weakSelf.stationNumber = [bookStation.msg objectForKey:@"residueStationNum"];
+    }];
+    NSLog(@"打印工位数量：%@",self.stationNumber);
+}
+
 //-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 //{
 //    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];

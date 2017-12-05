@@ -287,6 +287,8 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)generateOrderWithSpaceId:(NSNumber *)spaceId commodityNum:(NSNumber *)commNum commodityKind:(NSNumber *)commKind productNum:(NSNumber *)productNum startTime:(NSString *)startTime endTime:(NSString *)endTime money:(CGFloat)money dealMode:(NSString *)dealMode  payType:(NSNumber *)payType payObject:(NSString *)payObject payMode:(NSNumber *)payMode contractMode:(NSNumber *)contractMode response:(response)response;
 
++(void)wxPayWithParameter:(NSDictionary *)parameter;
+
 
 #pragma mark - 社交
 

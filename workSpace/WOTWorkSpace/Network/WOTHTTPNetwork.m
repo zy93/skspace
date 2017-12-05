@@ -751,7 +751,7 @@
     } response:response];
 }
 
-#pragma mark - 订单
+#pragma mark - 确认订单
 +(void)generateOrderWithSpaceId:(NSNumber *)spaceId commodityNum:(NSNumber *)commNum commodityKind:(NSNumber *)commKind productNum:(NSNumber *)productNum startTime:(NSString *)startTime endTime:(NSString *)endTime money:(CGFloat)money dealMode:(NSString *)dealMode payType:(NSNumber *)payType payObject:(NSString *)payObject payMode:(NSNumber *)payMode contractMode:(NSNumber *)contractMode response:(response)response
 {
     NSString *url = [NSString stringWithFormat:@"%@/Order/addOrderOrUpdate",HTTPBaseURL];
@@ -782,17 +782,23 @@
     
     [self doRequestWithParameters:parameters useUrl:url  complete:^JSONModel *(id responseobj) {
         WOTWXPayModel_msg *model = [[WOTWXPayModel_msg alloc]initWithDictionary:responseobj error:nil];
-        //调用支付接口
-        PayReq *payRequest = [[PayReq alloc]init];
-        payRequest.partnerId = model.msg.mch_id;//商户id
-        payRequest.prepayId = model.msg.prepay_id;//预支付订单编号
-        payRequest.package = model.msg.package;//商家根据财付通文档填写的数据和签名
-        payRequest.nonceStr = model.msg.nonce_str;//随机串，防重发
-        payRequest.timeStamp = (UInt32)model.msg.timeStamp.integerValue;//时间戳，防重发
-        payRequest.sign = model.msg.sign;//商家根据微信开放平台文档对数据做的签名
-        [WXApi sendReq:payRequest];
         return  model;
     } response:response];
+}
+
+#pragma mark - 支付接口
++(void)wxPayWithParameter:(NSDictionary *)parameter
+{
+    //调用支付接口
+    PayReq *payRequest = [[PayReq alloc]init];
+    payRequest.partnerId = [parameter objectForKey:@"mch_id"];//商户id
+    payRequest.prepayId = [parameter objectForKey:@"prepay_id"];//预支付订单编号
+    payRequest.package = [parameter objectForKey:@"package"];//商家根据财付通文档填写的数据和签名
+    payRequest.nonceStr = [parameter objectForKey:@"nonce_str"];//随机串，防重发
+    payRequest.timeStamp = [[parameter objectForKey:@"timeStamp"] intValue];//时间戳，防重发
+    payRequest.sign = [parameter objectForKey:@"sign"];//商家根据微信开放平台文档对数据做的签名
+    [WXApi sendReq:payRequest];
+    
 }
 
 #pragma mark - 社交
