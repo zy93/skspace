@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "WXApi.h"
 
-//测试 zy
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,WXApiDelegate>
 
