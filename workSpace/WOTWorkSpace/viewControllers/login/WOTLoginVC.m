@@ -134,13 +134,9 @@
         
         }
     }
-    
-   
-    
 }
+
 - (IBAction)clickRegisterBtn:(id)sender {
-    
-    
     WOTUserRegisterVC *vc = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTUserRegisterVC"];
     [self.navigationController pushViewController:vc animated:YES];
 

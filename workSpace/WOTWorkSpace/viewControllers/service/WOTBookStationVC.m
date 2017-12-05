@@ -16,6 +16,7 @@
 #import "WOTSpaceModel.h"
 #import "WOTBookStationListModel.h"
 #import "JXPopoverView.h"
+#import "SKBookStationNumberModel.h"
 
 @interface WOTBookStationVC ()<UITableViewDelegate,UITableViewDataSource, WOTBookStationCellDelegate>
 {
@@ -49,6 +50,7 @@
 @property (nonatomic, strong)NSMutableArray *cityList;
 @property (nonatomic, strong)UIButton *cityButton;
 @property (nonatomic, strong)WOTSpaceModel *spaceModel;
+@property (nonatomic, assign)NSNumber *stationNumber;
 
 
 //@property (nonatomic,strong) NSString *spaceNme;
@@ -61,21 +63,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupView];
-
+    
     self.navigationItem.title = @"订工位";
     
     //_spaceId = @(56);原来
     self.cityList = [NSMutableArray new];
     inquireTime = [NSDate getNewTimeZero];
     cityName = [WOTSingtleton shared].cityName;
-    //cityName = ((WOTFilterTypeModel *)self.menuArray[0]).filterName;
-//    WOTLocationModel *model = [WOTSingtleton shared].nearbySpace;
-//    NSLog(@"最近空间%@",model.spaceName);
-//    _spaceId = model.spaceId;
     if ((!cityName) || [cityName isEqualToString:@""]) {
         cityName = @"未定位";
     }
-
+    [self requestStationNumber];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,7 +83,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController.navigationBar setHidden:NO];
-//    [self configNaviBackItem];
+    //    [self configNaviBackItem];
     NSLog(@"%@",cityName);
     [self createRequestCity];
     [self createRequest];
@@ -108,22 +106,22 @@
     CGSize buttonTitleLabelSize = [cityName sizeWithAttributes:@{NSFontAttributeName:self.cityButton.titleLabel.font}]; //文本尺寸
     CGSize buttonImageSize = imageForButton.size;   //图片尺寸
     self.cityButton.frame = CGRectMake(0,0,
-                              buttonImageSize.width + buttonTitleLabelSize.width,
-                              buttonImageSize.height);
+                                       buttonImageSize.width + buttonTitleLabelSize.width,
+                                       buttonImageSize.height);
     self.cityButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.cityButton.imageView.frame.size.width - self.cityButton.frame.size.width + self.cityButton.titleLabel.intrinsicContentSize.width, 0, 0);
-
+    
     self.cityButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -self.cityButton.titleLabel.frame.size.width - self.cityButton.frame.size.width + self.cityButton.imageView.frame.size.width);
-
+    
     self.barButton = [[UIBarButtonItem alloc]initWithCustomView:self.cityButton];
     self.navigationItem.rightBarButtonItem = self.barButton;
-
+    
     //解决布局空白问题--dong
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
     if (is7Version) {
         self.edgesForExtendedLayout=UIRectEdgeNone;
     }
     self.navigationController.navigationBar.translucent = NO; //有个万恶的黑色
-
+    
 }
 
 -(void)setupView
@@ -134,7 +132,7 @@
     [self setTextColor:UIColorFromRGB(0x5484e7) tomorrowcolor:[UIColor blackColor] timecolor:[UIColor blackColor]];
     
     __weak typeof(self) weakSelf = self;
-
+    
     _datepickerview = [[NSBundle mainBundle]loadNibNamed:@"WOTDatePickerView" owner:nil options:nil].lastObject;
     [_datepickerview setFrame:CGRectMake(0, self.view.frame.size.height - 250, self.view.frame.size.width, 250)];
     _datepickerview.cancelBlokc = ^(){
@@ -154,7 +152,7 @@
 #pragma mark - request
 -(void)createRequest
 {
-   
+    
     if ([cityName isEqualToString:@""]) {
         self.notInformationImageView.hidden = NO;
         self.notBookStationInformationLabel.hidden = NO;
@@ -171,7 +169,7 @@
             WOTSpaceModel_msg *list = bean;
             //        tableList = list.msg;
             //tableDic = [self sortByCity:list.msg];
-            tableList = list.msg;
+            tableList = [list.msg objectForKey:@"list"];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (tableList.count) {
                     self.notInformationImageView.hidden = YES;
@@ -186,7 +184,7 @@
                 [self.tableIView  reloadData];
             });
         }];
-    
+        
     }
     
     
@@ -204,7 +202,7 @@
 
 - (IBAction)selectedTomorrow:(id)sender {
     self.indicatorVIewCenter.constant = self.tomorrowView.frame.origin.x;
-     [self setTextColor:[UIColor blackColor] tomorrowcolor:UIColorFromRGB(0x5484e7) timecolor:[UIColor blackColor]];
+    [self setTextColor:[UIColor blackColor] tomorrowcolor:UIColorFromRGB(0x5484e7) timecolor:[UIColor blackColor]];
     inquireTime = [NSDate getTomorrowTimeZero];
     _datepickerview.hidden = YES;
 }
@@ -214,6 +212,7 @@
     [self setTextColor:[UIColor blackColor] tomorrowcolor:[UIColor blackColor] timecolor:UIColorFromRGB(0x5484e7)];
     _datepickerview.hidden = NO;
 }
+
 
 -(void)selectSpace:(UIButton *)sender
 {
@@ -235,6 +234,8 @@
         [popoverView showToView:sender withActions:JXPopoverActionArray];
     }
 }
+
+
 -(void)createRequestCity
 {
     __weak typeof(self) weakSelf = self;
@@ -245,7 +246,7 @@
         }
         WOTSpaceModel_msg *list = bean;
         //        tableList = list.msg;
-      [self createRequestCityList:list.msg];
+        [self createRequestCityList:[list.msg objectForKey:@"list"]];
     }];
 }
 
@@ -256,15 +257,15 @@
         //
         BOOL isHaveCity = NO;
         for (NSString *city in self.cityList) {
-            if ([model.city isEqualToString:city]) {
+            if ([((NSDictionary *)model)[@"city"] isEqualToString:city]) {
                 isHaveCity = YES;
                 break;
             }
         }
         if (!isHaveCity) {
-            [self.cityList addObject:model.city];
+            [self.cityList addObject:((NSDictionary *)model)[@"city"]];
         }
-        //[self.cityList addObject:model.city];
+        //[self.cityList addObject:((NSDictionary *)model)[@"city"]];
     }
     
 }
@@ -284,7 +285,7 @@
     vc.startTime = inquireTime;//arr.firstObject;
     vc.endTime = inquireTime;//arr.lastObject;
     vc.spaceId = self.spaceId;
-//    vc.conferenceId = cell.model.conferenceId;
+    //    vc.conferenceId = cell.model.conferenceId;
     [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
     vc.spaceModel = cell.model;
     [self.navigationController pushViewController:vc animated:YES];
@@ -302,7 +303,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{   
+{
     return  225;
 }
 
@@ -320,98 +321,34 @@
         bookcell.model = model;
         //NSLog(@"测试：%@",model);
         //待开发
-        bookcell.spaceName.text =model.spaceName;// @"方圆大厦-众创空间";
-        [bookcell.spaceImage sd_setImageWithURL:[model.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
-        bookcell.stationNum.text  = [NSString stringWithFormat:@"%ld工位可以预定",model.alreadyTakenNum.integerValue]; //@"23个工位可以预定";
-        bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%ld/天",model.stationPrice.integerValue];//@"¥123元／天";
+        bookcell.spaceName.text =((NSDictionary *)model)[@"spaceName"];// @"方圆大厦-众创空间";
+        [bookcell.spaceImage sd_setImageWithURL:[((NSDictionary *)model)[@"spacePicture"] ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+       // bookcell.stationNum.text  = [NSString stringWithFormat:@"%ld工位可以预定",model.alreadyTakenNum.integerValue]; //@"23个工位可以预定";
+        bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",(((NSDictionary *)model)[@"onlineLocationPrice"])];//@"¥123元／天";
         bookcell.delegate = self;
         bookcell.model = model;
     } else {
-       // NSLog(@"测试：没有数据！");
+        // NSLog(@"测试：没有数据！");
         
     }
-   
+    
     return bookcell;
 }
 
-
-
-
-
-//- (UIViewController *)makeVC {
-//    UIViewController *basevc = [[UIViewController alloc]init];
-//    
-//    
-//    return basevc;
-//}
-//
-//-(void)setpageMenu{
-//    
-//    UIViewController *vc1 = [[UIViewController alloc]init];
-//    UIViewController *vc2 = [[UIViewController alloc]init];
-//   
-//    NSArray<__kindof UIViewController *> *controllers = @[vc1,vc2,vc2];
-//    self.pageTabView = [[XXPageTabView alloc] initWithChildControllers:controllers childTitles:@[@"今日",@"明日",@"选择日期"]];
-//    self.pageTabView.cutOffLine = NO;
-//    [self.pageTabView layoutSubviews];
-//    self.pageTabView.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
-//    self.pageTabView.delegate = self;
-//    self.pageTabView.tabSize = CGSizeMake(self.view.frame.size.width, 40);
-//    self.pageTabView.titleStyle = XXPageTabTitleStyleDefault;
-//    self.pageTabView.indicatorStyle = XXPageTabIndicatorStyleDefault;
-//    self.pageTabView.maxNumberOfPageItems = 5;
-//    self.pageTabView.indicatorWidth = 20;
-// 
-//    [self.view addSubview:self.pageTabView];
-//}
-//
-//#pragma mark - XXPageTabViewDelegate
-//- (void)pageTabViewDidEndChange {
-//    NSLog(@"#####%d", (int)self.pageTabView.selectedTabIndex);
-//    if (self.pageTabView.selectedTabIndex == 2) {
-//        NSLog(@"显示选择时间");
-//    }
-//}
-//
-//#pragma mark - Event response
-//- (void)scrollToLast:(id)sender {
-//    [self.pageTabView setSelectedTabIndexWithAnimation:self.pageTabView.selectedTabIndex-1];
-//}
-//
-//- (void)scrollToNext:(id)sender {
-//    [self.pageTabView setSelectedTabIndexWithAnimation:self.pageTabView.selectedTabIndex+1];
-//}
-//
-//- (void)refreshPageTabView:(id)sender {
-//    //移除原有子控制器
-//    for(UIViewController *vc in self.childViewControllers) {
-//        [vc removeFromParentViewController];
-//    }
-//    
-//    UIViewController *test1 = [self makeVC];
-//    UIViewController *test2 = [self makeVC];
-//    UIViewController *test3 = [self makeVC];
-//    UIViewController *test4 = [self makeVC];
-//    UIViewController *test5 = [self makeVC];
-//    
-//    [self addChildViewController:test1];
-//    [self addChildViewController:test2];
-//    [self addChildViewController:test3];
-//    [self addChildViewController:test4];
-//    [self addChildViewController:test5];
-//    
-//    [self.pageTabView reloadChildControllers:self.childViewControllers childTitles:@[@"全部", @"待支付", @"待使用", @"已完成", @"已取消"]];
-//}
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - 请求工位数量
+-(void)requestStationNumber
+{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getBookStationNumberWithSpaceId:self.spaceId response:^(id bean, NSError *error) {
+        if (error) {
+            NSLog(@"error:%@",error);
+            return ;
+        }
+        SKBookStationNumberModel *bookStation = bean;
+        weakSelf.stationNumber = [bookStation.msg objectForKey:@"residueStationNum"];
+    }];
+    NSLog(@"打印工位数量：%@",self.stationNumber);
 }
-*/
 
 @end
+

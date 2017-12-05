@@ -76,6 +76,13 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getBookStationWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
+/**
+ 通过空间id获取工位数量
+ 
+ @param spaceId spaceId
+ @param response
+ */
++(void)getBookStationNumberWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
 //+(void)getSpaceWith
 

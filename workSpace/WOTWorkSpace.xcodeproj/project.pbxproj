@@ -126,6 +126,7 @@
 		2AFAC8951F0FB796001BAB14 /* WOTRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFAC8931F0FB796001BAB14 /* WOTRadioView.m */; };
 		59BB1AF86E21AC99D91DDCE6 /* libPods-WOTWorkSpace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D773A878FA3518662358C7A0 /* libPods-WOTWorkSpace.a */; };
 		97D06A114DB42F1134696656 /* libPods-WOTWorkSpaceUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFC264D6C897C120A10B700D /* libPods-WOTWorkSpaceUITests.a */; };
+		C56684DE1FD6AC0000DC5782 /* SKBookStationNumberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */; };
 		C7901EC51F789CF500692F02 /* JudgmentTime.m in Sources */ = {isa = PBXBuildFile; fileRef = C7901EC31F789CF400692F02 /* JudgmentTime.m */; };
 		C79C2D3A1F7E36870052DF23 /* WOTBookStationReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C79C2D391F7E36870052DF23 /* WOTBookStationReservationsModel.m */; };
 		C7B4DD2C1F7A793C00009011 /* JXPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4DD291F7A793C00009011 /* JXPopoverView.m */; };
@@ -582,6 +583,8 @@
 		61996A58C52879228CF28B28 /* libPods-WOTWorkSpaceTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WOTWorkSpaceTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD7419E0440D789E522F1B2 /* Pods-WOTWorkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTWorkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B06E1E0FEBF126912B787519 /* Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig"; path = "Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig"; sourceTree = "<group>"; };
+		C56684DC1FD6AC0000DC5782 /* SKBookStationNumberModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKBookStationNumberModel.h; sourceTree = "<group>"; };
+		C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKBookStationNumberModel.m; sourceTree = "<group>"; };
 		C7901EC31F789CF400692F02 /* JudgmentTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JudgmentTime.m; sourceTree = "<group>"; };
 		C7901EC41F789CF400692F02 /* JudgmentTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JudgmentTime.h; sourceTree = "<group>"; };
 		C79C2D381F7E36870052DF23 /* WOTBookStationReservationsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTBookStationReservationsModel.h; sourceTree = "<group>"; };
@@ -1320,6 +1323,8 @@
 				2A99FB751F25F2C000869732 /* WOTAppointmentModel.m */,
 				2A99FB5B1F258A0F00869732 /* WOTBookStationListModel.h */,
 				2A99FB5C1F258A0F00869732 /* WOTBookStationListModel.m */,
+				C56684DC1FD6AC0000DC5782 /* SKBookStationNumberModel.h */,
+				C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */,
 				C79C2D381F7E36870052DF23 /* WOTBookStationReservationsModel.h */,
 				C79C2D391F7E36870052DF23 /* WOTBookStationReservationsModel.m */,
 				2A99FB5D1F258A0F00869732 /* WOTMeetingListModel.h */,
@@ -2964,6 +2969,7 @@
 				E8C7203C1F14783900DED44C /* WOTDatePickerView.m in Sources */,
 				E86245731F3D4F4900CF0D9D /* SRSecurityPolicy.m in Sources */,
 				2A550D911F33302B0049C9D6 /* WOTSiteReservationsModel.m in Sources */,
+				C56684DE1FD6AC0000DC5782 /* SKBookStationNumberModel.m in Sources */,
 				E8190DBA1F0F69660000B07C /* WOTPersionalInformationTagCell.m in Sources */,
 				E869E83A1F1DBE4C00DBDBB9 /* WOTMyFeedBackModel.m in Sources */,
 				E8190D9B1F0F69660000B07C /* WOTSpaceDetailCell.m in Sources */,

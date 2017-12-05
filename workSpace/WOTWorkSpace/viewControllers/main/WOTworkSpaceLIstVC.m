@@ -280,7 +280,7 @@
         if (bean != nil) {
            
             WOTSpaceModel_msg *dd = (WOTSpaceModel_msg *)bean;
-            _dataSource = dd.msg;
+            _dataSource = [dd.msg objectForKey:@"list"];
         }
         if (error) {
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];

@@ -10,4 +10,8 @@
 
 @interface SKBookStationNumberModel : JSONModel
 
+@property(nonatomic,strong)NSString *code;
+@property(nonatomic,strong)NSString *result;
+@property(nonatomic,strong)NSDictionary *msg;
+
 @end

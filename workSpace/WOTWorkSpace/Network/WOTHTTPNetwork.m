@@ -33,6 +33,7 @@
 #import "WOTSendFriendsModel.h"
 #import "WOTFriendsMessageListModel.h"
 #import "WOTBookStationReservationsModel.h"
+#import "SKBookStationNumberModel.h"
 
 #import "WXApi.h"
 #import "WOTWXPayModel.h"
@@ -229,12 +230,13 @@
 
 +(void)getAllSpaceWithCity:(NSString *)city block:(response)response{
     
-    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/Space/findAllSpace"];
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/find"];
     NSDictionary *parameters;
     //在原来的基础上添加集团id
     if (city != nil) {
         parameters = @{@"city":city,
-                       @"appId":YLGTEST_APPID
+                       @"pageNo":@1,
+                       @"pageSize":@1000
                        };//原来
     }
 
@@ -272,10 +274,24 @@
     } response:response];
 }
 
+#pragma mark - 获取指定空间id下的工位数量
++(void)getBookStationNumberWithSpaceId:(NSNumber *)spaceId response:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/StationInfo/residueStation"];
+    NSDictionary * parameters =@{@"spaceId":spaceId};
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        SKBookStationNumberModel * stationNumberModel = [[SKBookStationNumberModel alloc]initWithDictionary:responseobj error:nil];
+        return  stationNumberModel;
+    } response:response];
+}
+
+#pragma mark - 获取所有的空间列表
 +(void)getSapaceFromGroupBlock:(response)response
 {
-    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/Space/findByAppId"];
-    NSDictionary *parameters = @{@"appId":YLGTEST_APPID};
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/find"];
+    NSDictionary *parameters = @{@"pageNo":@1,
+                                 @"pageSize":@1000
+                                 };
     
     [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
         WOTSpaceModel_msg * spacemodel = [[WOTSpaceModel_msg alloc]initWithDictionary:responseobj error:nil];

@@ -7,6 +7,7 @@
 //
 
 #import <JSONModel/JSONModel.h>
+#import <Foundation/Foundation.h>
 
 @protocol WOTLoginModel
 

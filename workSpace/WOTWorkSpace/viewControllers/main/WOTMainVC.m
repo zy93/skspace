@@ -217,10 +217,11 @@ int a = 0;
 }
 
 
+#pragma mark -- 获取最近空间
 -(void)loadLocation
 {
     [[WOTLocationManager shareLocation] getLocationWithBlock:^(CGFloat lat, CGFloat lon,NSString* cityName) {
-        [WOTSingtleton shared].cityName = cityName;
+        [WOTSingtleton shared].cityName = cityName;//得到所在城市
         NSLog(@"lat:%f,lon:%f",lat,lon);
         [WOTHTTPNetwork getSpaceWithLocation:lat lon:lon response:^(id bean, NSError *error) {
             [WOTSingtleton shared].nearbySpace = ((WOTLocationModel_Msg*)bean).msg;
@@ -481,14 +482,15 @@ int a = 0;
         bannerView.layer.masksToBounds = YES;
     }
     //从网络加载图片用
+    //NSLog(@"网络图片地址：%@",[_spacedataSource[index] objectForKey:@"spacePicture"]);
+    NSLog(@"----%@",((NSDictionary *)_spacedataSource[index])[@"spacePicture"]);
     
-      [bannerView.mainImageView sd_setImageWithURL:[[NSString stringWithFormat:@"%@%@",HTTPBaseURL,_spacedataSource[index].spacePicture] ToUrl]placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+      [bannerView.mainImageView sd_setImageWithURL:[[NSString stringWithFormat:@"%@%@",HTTPBaseURL,((NSDictionary *)_spacedataSource[index])[@"spacePicture"]] ToUrl]placeholderImage:[UIImage imageNamed:@"spacedefault"]];
     
-    
-    if ([_spacePageViewDataSource[index].spacePicture separatedWithString:@","].count!=0) {
-        [bannerView.mainImageView sd_setImageWithURL:[[_spacePageViewDataSource[index].spacePicture separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+    if ([((NSDictionary *)_spacedataSource[index])[@"spacePicture"] separatedWithString:@","].count!=0) {
+        [bannerView.mainImageView sd_setImageWithURL:[[((NSDictionary *)_spacedataSource[index])[@"spacePicture"] separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"spacedefault"]];
         
-        NSLog(@"图片地址：%@",[NSString stringWithFormat:@"%@%@",HTTPBaseURL,[_spacePageViewDataSource[index].spacePicture separatedWithString:@","][0]]);
+        NSLog(@"图片地址：%@",[NSString stringWithFormat:@"%@%@",HTTPBaseURL,[((NSDictionary *)_spacedataSource[index])[@"spacePicture"] separatedWithString:@","][0]]);
     }
     
     //从本地加载图片用
@@ -685,7 +687,8 @@ int a = 0;
         complete();
         if (bean != nil) {
             WOTSpaceModel_msg *dd = (WOTSpaceModel_msg *)bean;
-            _spacedataSource = dd.msg;
+            NSLog(@"测试：%@",[dd.msg  objectForKey:@"list"]);
+            _spacedataSource = [dd.msg  objectForKey:@"list"];
             
             if (_spacedataSource.count>5) {
                 for (int index = 0; index < 5; index++) {

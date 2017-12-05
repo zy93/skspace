@@ -1941,7 +1941,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="service" translatesAutoresizingMaskIntoConstraints="NO" id="Ean-Xe-aX3">
-                                                    <rect key="frame" x="333" y="13" width="22" height="23"/>
+                                                    <rect key="frame" x="335" y="15" width="20" height="19"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -2716,7 +2716,7 @@ AAAAAABBAAAAAAAAAAAAAAAAAAASNA
         <image name="investment_icon" width="36" height="35"/>
         <image name="lashlight" width="16" height="30"/>
         <image name="law_icon" width="46" height="39"/>
-        <image name="service" width="22" height="23"/>
+        <image name="service" width="20" height="19"/>
         <image name="visitors_icon" width="19" height="21"/>
     </resources>
 </document>

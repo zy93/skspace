@@ -212,7 +212,7 @@
     [MBProgressHUDUtil showLoadingWithMessage:@"支付中，请稍后...."
                                        toView:self.view
                            whileExcusingBlock:^(MBProgressHUD *hud) {
-                               [WOTHTTPNetwork generateOrderWithSpaceId:self.spaceModel.spaceId
+                               [WOTHTTPNetwork generateOrderWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"]
                                                            commodityNum:commNum
                                                           commodityKind:commKind
                                                              productNum:self.productNum
@@ -358,8 +358,8 @@
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_BOOKSTATION:
             {
-                [cell.infoImg  sd_setImageWithURL:[_spaceModel.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
-                cell.infoTitle.text = _spaceModel.spaceName;
+                [cell.infoImg  sd_setImageWithURL:[((NSDictionary *)_spaceModel)[@"spacePicture"] ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+                cell.infoTitle.text = ((NSDictionary *)_spaceModel)[@"spaceName"];
             }
                 break;
             case ORDER_TYPE_MEETING:
@@ -417,21 +417,21 @@
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_BOOKSTATION:
             {
-                cell.addressLabel.text = self.spaceModel.spaceSite ;
+                cell.addressLabel.text = ((NSDictionary *)self.spaceModel)[@"spaceSite"] ;
                 cell.openTimeLabel.text =@"全天";
                 cell.deviceInfoLabel.text =@"无" ;
             }
                 break;
             case ORDER_TYPE_MEETING:
             {
-                cell.addressLabel.text = [self.spaceModel.spaceSite stringByAppendingString:self.meetingModel.location];
+                cell.addressLabel.text = [((NSDictionary *)self.spaceModel)[@"spaceSite"] stringByAppendingString:self.meetingModel.location];
                 cell.openTimeLabel.text = [self.meetingModel.openTime stringByAppendingString:@"开放"];
                 cell.deviceInfoLabel.text = self.meetingModel.facility;
             }
                 break;
             case ORDER_TYPE_SITE:
             {
-                cell.addressLabel.text =[self.spaceModel.spaceSite stringByAppendingString:self.siteModel.location];
+                cell.addressLabel.text =[((NSDictionary *)self.spaceModel)[@"spaceSite"] stringByAppendingString:self.siteModel.location];
                 cell.openTimeLabel.text = [self.siteModel.openTime stringByAppendingString:@"开放"];
                 cell.deviceInfoLabel.text = self.siteModel.facility;
             }
@@ -536,7 +536,7 @@
 -(void)imputedPriceAndLoadCost
 {
     //self.orderNumber = [self.orderBookStationCell.orderNumber.text floatValue];
-    self.costNumber = self.dayNumber*[self.orderBookStationCell.orderNumber.text floatValue]*[self.spaceModel.stationPrice floatValue];
+    self.costNumber = self.dayNumber*[self.orderBookStationCell.orderNumber.text floatValue]*[((NSDictionary *)self.spaceModel)[@"onlineLocationPrice"] floatValue];
     [self loadCost];
 }
 
@@ -602,11 +602,11 @@
 #pragma mark - 验证会议室
 -(void)verifyMeeting
 {
-    [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
+    [WOTHTTPNetwork meetingReservationsWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"]
                                       conferenceId:self.meetingModel.conferenceId
                                          startTime:self.startTime
                                            endTime:self.endTime
-                                         spaceName:self.spaceModel.spaceName
+                                         spaceName:((NSDictionary *)self.spaceModel)[@"spaceName"]
                                        meetingName:self.meetingModel.conferenceName
                                           response:^(id bean, NSError *error) {
                                               
@@ -616,11 +616,11 @@
 #pragma mark - 验证场地
 -(void)verifySite
 {
-    [WOTHTTPNetwork siteReservationsWithSpaceId:self.spaceModel.spaceId
+    [WOTHTTPNetwork siteReservationsWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"]
                                          siteId:self.siteModel.siteId
                                       startTime:self.startTime
                                         endTime:self.endTime
-                                      spaceName:self.spaceModel.spaceName
+                                      spaceName:((NSDictionary *)self.spaceModel)[@"spaceName"]
                                        siteName:self.siteModel.siteName
                                        response:^(id bean, NSError *error) {
                                            
@@ -631,7 +631,7 @@
 -(void)verifyBookStation
 {
    // NSLog(@"测试：%@",self.productNum);
-    [WOTHTTPNetwork bookStationReservationsWithSpaceId:self.spaceModel.spaceId
+    [WOTHTTPNetwork bookStationReservationsWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"]
                                                  count:@([self.orderBookStationCell.orderNumber.text integerValue])
                                              startTime:self.orderBookStationCell.startDataLable.text
                                                endTime:self.orderBookStationCell.endDataLabel.text
