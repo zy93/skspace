@@ -2103,77 +2103,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="A7B-us-yXJ">
-                                <rect key="frame" x="0.0" y="60" width="320" height="508"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Pt7-3R-UZu" id="ia8-dd-2HQ"/>
                                     <outlet property="delegate" destination="Pt7-3R-UZu" id="Jum-Z1-ySa"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMy-Al-jfN">
-                                <rect key="frame" x="20" y="20" width="93.5" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="rYl-F7-WM2"/>
-                                </constraints>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="今天">
-                                    <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <state key="selected" title="今天">
-                                    <color key="titleColor" red="0.25098039220000001" green="0.52941176469999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="today:" destination="Pt7-3R-UZu" eventType="touchUpInside" id="EPH-xv-YWo"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOm-A4-nEN">
-                                <rect key="frame" x="113.5" y="25" width="93.5" height="30"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="明天">
-                                    <color key="titleColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <state key="selected">
-                                    <color key="titleColor" red="0.25098039220000001" green="0.52941176469999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="tomorrow:" destination="Pt7-3R-UZu" eventType="touchUpInside" id="lks-dE-vSC"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MUp-RW-E7b">
-                                <rect key="frame" x="207" y="25" width="93" height="30"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="选择日期">
-                                    <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <state key="selected">
-                                    <color key="titleColor" red="0.25098039220000001" green="0.52941176469999995" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="selectTime:" destination="Pt7-3R-UZu" eventType="touchUpInside" id="7x6-P2-fUk"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ywm-xD-dxA">
-                                <rect key="frame" x="41.5" y="59" width="50" height="1"/>
-                                <color key="backgroundColor" red="0.25098039215686274" green="0.52941176470588236" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="SyR-rT-Gtl"/>
-                                    <constraint firstAttribute="width" constant="50" id="Wih-Ak-Ftx"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxu-HK-VjV">
-                                <rect key="frame" x="0.0" y="20" width="320" height="1"/>
-                                <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="tpg-An-K87"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8zQ-z3-qgy">
-                                <rect key="frame" x="0.0" y="60" width="320" height="1"/>
-                                <color key="backgroundColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="aTv-T7-Tuf"/>
-                                </constraints>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="NotInformation" text="亲，暂时没有场地哦" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CeX-9v-OzY">
                                 <rect key="frame" x="71" y="329" width="178" height="21"/>
                                 <constraints>
@@ -2195,41 +2131,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Yfi-aq-tV1" firstAttribute="centerX" secondItem="25e-Xb-waZ" secondAttribute="centerX" id="0wE-cw-bLD"/>
-                            <constraint firstItem="hOm-A4-nEN" firstAttribute="centerY" secondItem="YMy-Al-jfN" secondAttribute="centerY" id="67B-c3-ZM3"/>
-                            <constraint firstItem="8zQ-z3-qgy" firstAttribute="top" secondItem="Ywm-xD-dxA" secondAttribute="bottom" id="8da-HR-dpn"/>
-                            <constraint firstItem="YMy-Al-jfN" firstAttribute="top" secondItem="ksv-7i-jPQ" secondAttribute="bottom" id="A5p-6x-EzR"/>
+                            <constraint firstItem="A7B-us-yXJ" firstAttribute="top" secondItem="ksv-7i-jPQ" secondAttribute="bottom" id="Jxq-gM-XIX"/>
                             <constraint firstItem="CeX-9v-OzY" firstAttribute="top" secondItem="Yfi-aq-tV1" secondAttribute="bottom" constant="10" id="KxP-iu-bhz"/>
-                            <constraint firstItem="8zQ-z3-qgy" firstAttribute="leading" secondItem="25e-Xb-waZ" secondAttribute="leading" id="L5g-3o-dc3"/>
                             <constraint firstItem="Jef-eg-rAg" firstAttribute="top" secondItem="A7B-us-yXJ" secondAttribute="bottom" id="MiC-01-TWS"/>
                             <constraint firstAttribute="trailing" secondItem="A7B-us-yXJ" secondAttribute="trailing" id="Mle-ba-fyc"/>
-                            <constraint firstAttribute="trailing" secondItem="MUp-RW-E7b" secondAttribute="trailing" constant="20" id="NNg-Kb-E6T"/>
-                            <constraint firstItem="Xxu-HK-VjV" firstAttribute="top" secondItem="ksv-7i-jPQ" secondAttribute="bottom" id="ObD-Sb-WEf"/>
-                            <constraint firstAttribute="trailing" secondItem="Xxu-HK-VjV" secondAttribute="trailing" id="Qrn-EY-9Oo"/>
-                            <constraint firstItem="MUp-RW-E7b" firstAttribute="centerY" secondItem="YMy-Al-jfN" secondAttribute="centerY" id="XTa-d7-aCz"/>
-                            <constraint firstItem="YMy-Al-jfN" firstAttribute="leading" secondItem="25e-Xb-waZ" secondAttribute="leading" constant="20" id="YDA-CZ-RRV"/>
-                            <constraint firstItem="MUp-RW-E7b" firstAttribute="width" secondItem="YMy-Al-jfN" secondAttribute="width" id="ZfI-PW-aY1"/>
-                            <constraint firstItem="Ywm-xD-dxA" firstAttribute="bottom" secondItem="YMy-Al-jfN" secondAttribute="bottom" id="aVG-01-MTQ"/>
-                            <constraint firstItem="A7B-us-yXJ" firstAttribute="top" secondItem="hOm-A4-nEN" secondAttribute="bottom" constant="5" id="amO-WW-7iz"/>
                             <constraint firstItem="A7B-us-yXJ" firstAttribute="leading" secondItem="25e-Xb-waZ" secondAttribute="leading" id="cZW-Xs-kBh"/>
-                            <constraint firstItem="hOm-A4-nEN" firstAttribute="width" secondItem="YMy-Al-jfN" secondAttribute="width" id="czQ-3y-Yag"/>
-                            <constraint firstAttribute="trailing" secondItem="8zQ-z3-qgy" secondAttribute="trailing" id="gfn-87-Jrs"/>
                             <constraint firstItem="Yfi-aq-tV1" firstAttribute="centerY" secondItem="25e-Xb-waZ" secondAttribute="centerY" id="gpb-dj-ZxB"/>
-                            <constraint firstItem="MUp-RW-E7b" firstAttribute="leading" secondItem="hOm-A4-nEN" secondAttribute="trailing" id="qx0-tA-BAp"/>
-                            <constraint firstItem="Ywm-xD-dxA" firstAttribute="centerX" secondItem="YMy-Al-jfN" secondAttribute="centerX" id="tzu-6k-Y3o"/>
                             <constraint firstItem="CeX-9v-OzY" firstAttribute="centerX" secondItem="25e-Xb-waZ" secondAttribute="centerX" id="uhb-bv-sOW"/>
-                            <constraint firstItem="Xxu-HK-VjV" firstAttribute="leading" secondItem="25e-Xb-waZ" secondAttribute="leading" id="vus-VQ-Ju7"/>
-                            <constraint firstItem="hOm-A4-nEN" firstAttribute="centerX" secondItem="25e-Xb-waZ" secondAttribute="centerX" id="w2s-lo-mXg"/>
-                            <constraint firstItem="hOm-A4-nEN" firstAttribute="leading" secondItem="YMy-Al-jfN" secondAttribute="trailing" id="xAW-Xs-ui9"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="indicatorViewCenter" destination="tzu-6k-Y3o" id="Gw2-M7-jBH"/>
                         <outlet property="notInformationImageView" destination="Yfi-aq-tV1" id="b2G-SU-ewr"/>
                         <outlet property="notInformationLabel" destination="CeX-9v-OzY" id="h5n-6T-iDo"/>
-                        <outlet property="selectTimeBtn" destination="MUp-RW-E7b" id="lnf-5h-5zV"/>
                         <outlet property="table" destination="A7B-us-yXJ" id="AaZ-h8-hPd"/>
-                        <outlet property="todayBtn" destination="YMy-Al-jfN" id="GEJ-Xc-XyC"/>
-                        <outlet property="tomorrowBtn" destination="hOm-A4-nEN" id="K7S-r8-5CQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t1f-kk-vav" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -12,8 +12,5 @@
 
 @property (nonatomic, strong) NSNumber *spaceId;
 @property (nonatomic, strong) NSString *spaceName;
-//已选时间记录
-@property (nonatomic,assign) CGFloat beginTime;
-@property (nonatomic,assign) CGFloat endTime;
 
 @end

@@ -64,7 +64,15 @@
     [self configNav];
     [self loadData];
     [self loadCost];
-     [self requestStationNumber];
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+        
+    } else if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
+        
+    } else if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+        [self requestStationNumber];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -428,7 +436,7 @@
                 break;
             case ORDER_TYPE_MEETING:
             {
-                cell.addressLabel.text = [((NSDictionary *)self.spaceModel)[@"spaceSite"] stringByAppendingString:self.meetingModel.location];
+                cell.addressLabel.text = [self.spaceModel.spaceSite stringByAppendingString:self.meetingModel.location];
                 cell.openTimeLabel.text = [self.meetingModel.openTime stringByAppendingString:@"开放"];
                 cell.deviceInfoLabel.text = self.meetingModel.facility;
             }
@@ -656,7 +664,7 @@
     
 }
 
-#pragma mark - 请求工位数量
+#pragma mark - 请求工位数量 request
 -(void)requestStationNumber
 {
     __weak typeof(self) weakSelf = self;
@@ -670,6 +678,9 @@
     }];
     NSLog(@"打印工位数量：%@",self.stationNumber);
 }
+
+//-(void)request
+
 
 //-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 //{
