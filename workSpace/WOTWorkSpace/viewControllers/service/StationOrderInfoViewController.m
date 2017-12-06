@@ -59,6 +59,8 @@
     
     self.bookStationScrollView = [[UIScrollView alloc] init];
     [self.view addSubview:self.bookStationScrollView];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"确认订单";
     
     self.contentView = [UIView new];
     [self.bookStationScrollView addSubview:self.contentView];
@@ -216,6 +218,7 @@
     self.lineView = [UIView new];
     self.lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     [self.bottomView addSubview:self.lineView];
+    [self updateView];
 }
 
 -(void)viewDidLayoutSubviews
@@ -394,10 +397,28 @@
     
 }
 
+-(void)updateView
+{
+    [self.orderNumInfoLabel setText:self.model.out_trade_no];
+    [self.bookSiteInfoLabel setText:self.meetingModel.location];
+    [self.startTimeInfoLabel setText:[self.dic[@"starTime"] substringToIndex:16]];
+    [self.endTimeInfoLabel   setText:[self.dic[@"endTime"] substringToIndex:16]];
+    [self.bookNumInfoLabel   setText:@"1"];
+    [self.facilityInfoLabel setText:strIsEmpty(self.meetingModel.facility)? @"无":self.meetingModel.facility];
+    [self.payTypeInfoLabel setText:((NSNumber *)self.dic[@"payType"]).intValue == 0? @"企业支付" : @"个人支付"];
+    [self.sumInfoLabel setText:[NSString stringWithFormat:@"￥%.2f",((NSNumber*)self.dic[@"money"]).doubleValue]];
+    [self.orderTimeInfoLabel setText:[NSDate getNewTime]];
+    [self.actuallyPaidMoneyLabel setText:[NSString stringWithFormat:@"￥%.2f",((NSNumber*)self.dic[@"money"]).doubleValue]];
+}
+
+
+
 #pragma mark - 支付
 -(void)stationPayMethod
 {
-    
+    if ([self.dic[@"dealMode"] isEqualToString:@"微信支付"]) {
+        [WOTHTTPNetwork wxPayWithParameter:self.model];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

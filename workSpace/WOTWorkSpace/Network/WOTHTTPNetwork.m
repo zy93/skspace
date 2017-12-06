@@ -27,8 +27,6 @@
 #import "WOTRegisterModel.h"
 #import "WOTBusinessModel.h"
 #import "WOTLocationModel.h"
-#import "WOTSiteModel.h"
-#import "WOTSiteReservationsModel.h"
 #import "WOTServiceCategoryModel.h"
 #import "WOTSendFriendsModel.h"
 #import "WOTFriendsMessageListModel.h"
@@ -497,16 +495,62 @@
 
 /****************           Service        ****************************/
 #pragma mark - Service
-+(void)getMeetingRoomListWithSpaceId:(NSNumber *)spaceid response:(response)response
++(void)getMeetingRoomListWithSpaceId:(NSNumber *)spaceid type:(NSNumber *)type response:(response)response
 {
-    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Conference/findBySpaceId"];
-    NSDictionary *dic = @{@"spaceId":spaceid};
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conference/find"];
+    NSDictionary *dic = @{@"spaceId":spaceid,
+                          @"conferenceType":type,
+                          @"pageNo":@(1),
+                          @"pageSize":@(100)
+                          };
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTMeetingListModel_msg *model = [[WOTMeetingListModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
     
 
+}
+
++(void)getMeetingReservationsTimeWithSpaceId:(NSNumber *)spaceid conferenceId:(NSNumber *)confid startTime:(NSString *)strTime response:(response)response
+{
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conferencedetails/findByIdAndTime"];
+    
+    NSDictionary *dic = @{@"spaceId":spaceid,
+                          @"conferenceId":confid,
+                          @"startTime":strTime};
+    
+//    NSDictionary *dic = @{@"spaceId":@69,
+//                          @"conferenceId":@17,
+//                          @"startTime":@"2017/08/04"};
+    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
+        WOTMeetingReservationsModel_msg *model = [[WOTMeetingReservationsModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)meetingReservationsWithSpaceId:(NSNumber *)spaceid
+                         conferenceId:(NSNumber *)confid
+                            startTime:(NSString *)startTime
+                              endTime:(NSString *)endTime
+                            spaceName:(NSString *)spaceName
+                          meetingName:(NSString *)meetingName
+                             response:(response)response
+{
+    
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conferencedetails/subscribyTime"];
+    NSDictionary *dic = @{
+                          @"spaceId":spaceid,
+                          @"conferenceId":confid,
+                          @"startTime":startTime,
+                          @"endTime":endTime,
+                          @"spaceName":spaceName,
+                          @"company":meetingName,
+                          @"appId":YLGTEST_APPID
+                          };
+    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
+        WOTReservationsResponseModel_msg *model = [[WOTReservationsResponseModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
 }
 
 
@@ -524,26 +568,6 @@
     
 }
 
-+(void)getMeetingReservationsTimeWithSpaceId:(NSNumber *)spaceid conferenceId:(NSNumber *)confid startTime:(NSString *)strTime response:(response)response
-{
-    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Conferencedetails/findByIdAndTime"];
-    
-    NSDictionary *dic = @{@"spaceId":spaceid,
-                          @"conferenceId":confid,
-                          @"startTime":strTime};
-    
-//    NSDictionary *dic = @{@"spaceId":@69,
-//                          @"conferenceId":@17,
-//                          @"startTime":@"2017/08/04"};
-    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
-        WOTMeetingReservationsModel_msg *model = [[WOTMeetingReservationsModel_msg alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
-
-
-
-
 
 +(void)postServiceRequestWithDescribe:(NSString *)describe spaceId:(NSString *)spaceId userId:(NSString *)userId facilitatorType:(NSString *)facilitatorType facilitatorLabel:(NSString *)facilitatorLabel  response:(response)response{
     
@@ -556,99 +580,9 @@
         return model;
     } response:response];
 }
-//+(void)meetingReservationsWithSpaceId:(NSNumber *)spaceid conferenceId:(NSNumber *)confid startTime:(NSString *)startTime endTime:(NSString *)endTime response:(response)response
-+(void)meetingReservationsWithSpaceId:(NSNumber *)spaceid
-                         conferenceId:(NSNumber *)confid
-                            startTime:(NSString *)startTime
-                              endTime:(NSString *)endTime
-                            spaceName:(NSString *)spaceName
-                          meetingName:(NSString *) meetingName
-                             response:(response)response
-{
-    
-    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Conferencedetails/subscribyTime"];
-    NSDictionary *dic = @{
-                          @"spaceId":spaceid,
-                          @"conferenceId":confid,
-                          @"startTime":startTime,
-                          @"endTime":endTime,
-                          @"spaceName":spaceName,
-                          @"company":meetingName,
-                          @"appId":YLGTEST_APPID
-                          };
-    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
-        WOTReservationsResponseModel_msg *model = [[WOTReservationsResponseModel_msg alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
-
-#pragma mark - Site
-+(void)getAllSiteResponse:(response)response
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Site/findAllSite"];
-    [self doRequestWithParameters:nil useUrl:url complete:^JSONModel *(id responseobj) {
-         WOTSiteModel_Msg *model = [[WOTSiteModel_Msg alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
-
-+(void)getSiteListWithSpaceId:(NSNumber *)spaceid response:(response)response
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Site/findSiteBySpaceId"];
-    NSDictionary *dic = @{
-                          @"spaceId":spaceid,
-                          };
-    [self doRequestWithParameters:dic useUrl:url complete:^JSONModel *(id responseobj) {
-        WOTSiteModel_Msg *model = [[WOTSiteModel_Msg alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
-
-+(void)getSiteReservationsTimeWithSpaceId:(NSNumber *)spaceid siteId:(NSNumber *)siteid startTime:(NSString *)strTime response:(response)response
-{
-    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SiteOrder/findByIdAndTime"];
-    /*
-    NSDictionary *dic = @{
-                          @"spaceId":spaceid,
-                          @"siteId":siteid,
-                          @"startTime":strTime};
-    */
-    NSDictionary *dic = @{
-                          @"spaceId":spaceid,
-                          @"siteId":siteid,
-                          @"startTime":strTime};
-    [self doRequestWithParameters:dic useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
-        WOTSiteReservationsModel_Msg *model = [[WOTSiteReservationsModel_Msg alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
-
-+(void)siteReservationsWithSpaceId:(NSNumber *)spaceid
-                            siteId:(NSNumber *)siteid
-                         startTime:(NSString *)startTime
-                           endTime:(NSString *)endTime
-                         spaceName:(NSString *)spaceName
-                          siteName:(NSString *)siteName
-                          response:(response)response
-{
-    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SiteOrder/findByTime"];
-    //添加的参数字段待修改
-    NSDictionary *dic = @{
-                          @"spaceId":spaceid,
-                          @"siteId":siteid,
-                          @"startTime":startTime,
-                          @"endTime":endTime,
-                          @"spaceName":spaceName,
-                          @"siteName":siteName
-                          };
-    
-    [self doRequestWithParameters:dic useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
-        WOTSiteReservationsRsponseModel_Msg *model = [[WOTSiteReservationsRsponseModel_Msg alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
 
 
+#pragma mark - bookstation
 +(void)bookStationReservationsWithSpaceId:(NSNumber *)spaceId
                                     count:(NSNumber *)count
                                 startTime:(NSString *)startTime
@@ -766,51 +700,27 @@
 }
 
 #pragma mark - 确认订单
-+(void)generateOrderWithSpaceId:(NSNumber *)spaceId commodityNum:(NSNumber *)commNum commodityKind:(NSNumber *)commKind productNum:(NSNumber *)productNum startTime:(NSString *)startTime endTime:(NSString *)endTime money:(CGFloat)money dealMode:(NSString *)dealMode payType:(NSNumber *)payType payObject:(NSString *)payObject payMode:(NSNumber *)payMode contractMode:(NSNumber *)contractMode response:(response)response
++(void)generateOrderWithParam:(NSDictionary *)param response:(response)response
 {
-    NSString *url = [NSString stringWithFormat:@"%@/Order/addOrderOrUpdate",HTTPBaseURL];
-    NSString *deviceip = [[WOTConfigThemeUitls shared] getIPAddress];
-    NSString *chineseBody = @"易创客";
-    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
-                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
-                                 @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
-                                 @"facilitator":@(00001),
-                                 @"carrieroperator":@(00002),
-                                 @"body":chineseBody,
-                                 @"total_fee":@(1),
-                                 @"spbill_create_ip":deviceip,
-                                 @"trade_type":@"APP",
-                                 @"spaceId":spaceId,
-                                 @"commodityNum":commNum,
-                                 @"commodityKind":commKind,
-                                 @"productNum":productNum,
-                                 @"starTime":startTime,
-                                 @"endTime":endTime,
-                                 @"money":@(money),
-                                 @"dealMode":dealMode,
-                                 @"payType":payType,
-                                 @"payObject":payObject,
-                                 @"payMode":payMode,
-                                 @"contractMode":contractMode,
-                                 };
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/wxAddOrder",HTTPBaseURL];
     
-    [self doRequestWithParameters:parameters useUrl:url  complete:^JSONModel *(id responseobj) {
+    [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
         WOTWXPayModel_msg *model = [[WOTWXPayModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  model;
     } response:response];
 }
 
 #pragma mark - 支付接口
-+(void)wxPayWithParameter:(NSDictionary *)parameter
++(void)wxPayWithParameter:(WOTWXPayModel *)payModel
 {
     //调用支付接口
     PayReq *payRequest = [[PayReq alloc]init];
-    payRequest.partnerId = [parameter objectForKey:@"mch_id"];//商户id
-    payRequest.prepayId = [parameter objectForKey:@"prepay_id"];//预支付订单编号
-    payRequest.package = [parameter objectForKey:@"package"];//商家根据财付通文档填写的数据和签名
-    payRequest.nonceStr = [parameter objectForKey:@"nonce_str"];//随机串，防重发
-    payRequest.timeStamp = [[parameter objectForKey:@"timeStamp"] intValue];//时间戳，防重发
-    payRequest.sign = [parameter objectForKey:@"sign"];//商家根据微信开放平台文档对数据做的签名
+    payRequest.partnerId = payModel.mch_id;//商户id
+    payRequest.prepayId = payModel.prepay_id;//预支付订单编号
+    payRequest.package = payModel.package;//商家根据财付通文档填写的数据和签名
+    payRequest.nonceStr = payModel.nonce_str;//随机串，防重发
+    payRequest.timeStamp = [payModel.timeStamp intValue];//时间戳，防重发
+    payRequest.sign = payModel.sign;//商家根据微信开放平台文档对数据做的签名
     [WXApi sendReq:payRequest];
     
 }

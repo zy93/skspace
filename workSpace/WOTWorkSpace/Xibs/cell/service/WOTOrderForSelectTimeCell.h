@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet WOTSelectScrollView *selectTimeScroll;
 @property (nonatomic, strong) id <WOTOrderForSelectTimeCellDelegate> delegate;
 
-@property (nonatomic, strong) NSString *inquireTime;//查询日期;
+@property (nonatomic, strong) NSArray *reservationList;//已预订的时间数组;
 @property (nonatomic, strong) NSIndexPath *index;
 
 @property (nonatomic, assign)CGFloat allTime;

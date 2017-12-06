@@ -1564,6 +1564,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="dailyRentLabel" destination="jOe-i0-jbb" id="Get-Hg-hZb"/>
                                             <outlet property="infoImg" destination="RYO-kt-gQe" id="59l-fj-d0h"/>
                                             <outlet property="infoTitle" destination="5QG-OT-jBn" id="tdu-DP-Zqa"/>
                                         </connections>
@@ -2121,7 +2122,7 @@
                                             <constraint firstAttribute="height" constant="35" id="DAi-Og-bF2"/>
                                             <constraint firstAttribute="width" constant="100" id="tT8-G7-Luk"/>
                                         </constraints>
-                                        <state key="normal" title="支付">
+                                        <state key="normal" title="确定">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>

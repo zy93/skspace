@@ -13,6 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.dateLab.layer.borderColor = UIColorFromRGB(0xdddddd).CGColor;
+    self.dateLab.layer.borderWidth = 1.f;
     self.separatorInset = UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0); // ViewWidth  [宏] 指的是手机屏幕的宽度
 }
 

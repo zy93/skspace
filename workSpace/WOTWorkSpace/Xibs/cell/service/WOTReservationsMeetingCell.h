@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "WOTSelectScrollView.h"
 #import "WOTMeetingListModel.h"
-#import "WOTSiteModel.h"
-
 @class WOTReservationsMeetingCell;
 
 
@@ -23,6 +21,5 @@
 
 //设置数据
 @property (nonatomic, strong) WOTMeetingListModel *meetingModel;
-@property (nonatomic, strong) WOTSiteModel *siteModel;
 
 @end

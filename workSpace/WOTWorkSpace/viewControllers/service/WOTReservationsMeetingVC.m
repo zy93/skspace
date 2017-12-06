@@ -13,8 +13,6 @@
 #import "WOTDatePickerView.h"
 #import "WOTMeetingListModel.h"
 #import "WOTMeetingReservationsModel.h"
-#import "WOTSiteModel.h"
-#import "WOTSiteReservationsModel.h"
 #import "MBProgressHUD+Extension.h"
 #import "JudgmentTime.h"
 
@@ -138,13 +136,13 @@
 -(void)createRequest
 {
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
-        [WOTHTTPNetwork getMeetingRoomListWithSpaceId:self.spaceId response:^(id bean, NSError *error) {
+        [WOTHTTPNetwork getMeetingRoomListWithSpaceId:self.spaceId type:@(0) response:^(id bean, NSError *error) {
             if (error) {
                 NSLog(@"error:%@",error);
                 return ;
             }
             WOTMeetingListModel_msg *model = bean;
-            tableList = model.msg;
+            tableList = model.msg.list;
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (tableList.count) {
                     self.notInformationImageView.hidden = YES;
@@ -161,13 +159,13 @@
         }];
     }
     else {
-        [WOTHTTPNetwork getSiteListWithSpaceId:self.spaceId response:^(id bean, NSError *error) {
+        [WOTHTTPNetwork getMeetingRoomListWithSpaceId:self.spaceId type:@(1) response:^(id bean, NSError *error) {
             if (error) {
                 NSLog(@"error:%@",error);
                 return ;
             }
-            WOTSiteModel_Msg *model = bean;
-            tableList = model.msg;
+            WOTMeetingListModel_msg *model = bean;
+            tableList = model.msg.list;
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (tableList.count) {
                     self.notInformationImageView.hidden = YES;
@@ -231,12 +229,7 @@
     }
    
     id model = tableList[indexPath.row];
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
-        [cell setMeetingModel:model];
-    }
-    else {
-        [cell setSiteModel:model];
-    }
+    [cell setMeetingModel:model];
     return cell;
 
 }
@@ -246,70 +239,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     WOTReservationsMeetingCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
-//    vc.spaceId = self.spaceId;
     vc.spaceModel = self.spaceModel;
-    if([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING){
-        vc.meetingModel = cell.meetingModel;
-        [self.navigationController pushViewController:vc animated:YES];
-        //会议室
-        //        [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceId
-        //                                          conferenceId:cell.meetingModel.conferenceId startTime:arr.firstObject
-        //                                               endTime:arr.lastObject
-        //                                              response:^(id bean, NSError *error) {
-        /*
-         [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceId
-         conferenceId:cell.meetingModel.conferenceId startTime:arr.firstObject
-         endTime:arr.lastObject
-         spaceName:self.spaceName
-         meetingName:cell.meetingModel.conferenceName
-         response:^(id bean, NSError *error) {
-         
-         WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
-         if ([model.code isEqualToString: @"200"]) {
-         vc.meetingModel = cell.meetingModel;
-         vc.costNumber = (self.endTime - self.beginTime) * cell.meetingModel.conferencePrice.floatValue;
-         [self.navigationController pushViewController:vc animated:YES];
-         }else{
-         // [MBProgressHUDUtil ];
-         [MBProgressHUDUtil showMessage:@"选择的时间已经被预约！" toView:self.view];
-         }
-         
-         
-         }];
-         */
-        
-    }
-    else {
-        vc.siteModel = cell.siteModel;
-        [self.navigationController pushViewController:vc animated:YES];
-        //场地
-        /*
-         [WOTHTTPNetwork siteReservationsWithSpaceId:self.spaceId
-         siteId:cell.siteModel.siteId
-         startTime:arr.firstObject
-         endTime:arr.lastObject
-         response:^(id bean, NSError *error) {
-         
-         [WOTHTTPNetwork siteReservationsWithSpaceId:self.spaceId
-         siteId:cell.siteModel.siteId
-         startTime:arr.firstObject
-         endTime:arr.lastObject
-         spaceName:self.spaceName
-         siteName:cell.siteModel.siteName
-         response:^(id bean, NSError *error) {
-         WOTSiteReservationsRsponseModel_Msg *model = (WOTSiteReservationsRsponseModel_Msg *)bean;
-         if ([model.code isEqualToString:@"200"]) {
-         vc.siteModel = cell.siteModel;
-         vc.costNumber = (self.endTime - self.beginTime) * cell.siteModel.sitePrice.floatValue;
-         [self.navigationController pushViewController:vc animated:YES];
-         }else
-         {
-         [MBProgressHUDUtil showMessage:@"选择的时间已经被预约！" toView:self.view];
-         }
-         }];
-         */
-        
-    }
+    vc.meetingModel = cell.meetingModel;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

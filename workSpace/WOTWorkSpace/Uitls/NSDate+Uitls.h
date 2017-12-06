@@ -11,6 +11,8 @@
 @interface NSDate (Uitls)
 //获取今天零点时间
 +(NSString *)getNewTimeZero;
+//获取当前时间
++(NSString *)getNewTime;
 //获取明天零点时间
 +(NSString *)getTomorrowTimeZero;
 //获取时间
