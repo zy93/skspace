@@ -16,7 +16,6 @@
 
 @interface WOTOrderVC : UIViewController
 
-@property (nonatomic, strong) WOTBookStationListModel *model;
 @property (nonatomic, strong) WOTMeetingListModel *meetingModel;
 @property (nonatomic, strong) WOTSpaceModel *spaceModel;
 

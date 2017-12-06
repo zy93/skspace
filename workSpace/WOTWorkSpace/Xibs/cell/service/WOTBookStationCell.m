@@ -12,9 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.spaceName.textColor = HighTextColor;
-    [[WOTConfigThemeUitls shared]setLabelColorss:[NSArray arrayWithObjects:self.stationPrice,self.stationNum, nil] withColor:MiddleTextColor];
-    // Initialization code
+    [self.bgview setBackgroundColor:COLOR(40, 43, 50, 0.6)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

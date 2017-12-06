@@ -27,7 +27,7 @@
 #define infoCell @"infoCell"
 #define selectDateCell @"selectDateCell"
 #define selectTimeCell @"selectTimeCell"
-#define bookStationCell @"bookStationCell"
+#define selectNumberCell @"selectNumberCell"
 #define serviceCell @"serviceCell"
 #define payTypeCell @"payTypeCell"
 #define selectCell @"selectCell"
@@ -57,6 +57,8 @@
 @property (nonatomic, assign)NSNumber *stationNumber;
 @property (nonatomic, strong)NSIndexPath *selectCellIndex;
 @property (nonatomic, strong)NSString *reservationDate;//预定会议室日期
+@property (nonatomic, strong)NSString *reservationStationStartDate;//预定工位开始日期
+@property (nonatomic, strong)NSString *reservationStationEndDate;//预定工位结束日期
 
 @end
 
@@ -71,6 +73,8 @@
                                             selector:@selector(backMainView:)
                                                 name:@"buttonLoseResponse" object:nil];
     self.reservationDate = [NSDate getNewTimeZero];
+    self.reservationStationStartDate = [NSDate getNewTimeZero];
+    self.reservationStationEndDate = [NSDate getNewTimeZero];
     [self configNav];
     [self loadData];
     [self loadCost];
@@ -128,23 +132,32 @@
     
     _datepickerview.okBlock = ^(NSInteger year,NSInteger month,NSInteger day,NSInteger hour,NSInteger min){
         weakSelf.datepickerview.hidden = YES;
-        NSString *selecTime = [NSString stringWithFormat:@"%04ld/%02ld/%02ld",year, month, day];
+        NSString *selecTime = [NSString stringWithFormat:@"%04ld/%02ld/%02ld 00:00:00",year, month, day];
         weakSelf.isValidTime = [weakSelf.judgmentTime judgementTimeWithYear:year month:month day:day];
-        
-        if (weakSelf.isValidTime) {
-            weakSelf.datepickerview.hidden  = YES;
-            [weakSelf Timedisplay:selecTime];
-            
-        }else
-        {
-            [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
-            weakSelf.datepickerview.hidden  = NO;
-        }
-        weakSelf.reservationDate = [NSString stringWithFormat:@"%02ld/%02ld/%02ld 00:00:00",year, month, day];
-
+        weakSelf.reservationDate = selecTime;
         WOTOrderForSelectDateCell *cell = [weakSelf.table cellForRowAtIndexPath:weakSelf.selectCellIndex];
-        [cell.dateLab setText:selecTime];
-        [weakSelf requestMeetingReservationsInfo];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [cell.dateLab setText:[selecTime substringToIndex:10]];
+        });
+        if ([WOTSingtleton shared].orderType != ORDER_TYPE_BOOKSTATION) {
+            [weakSelf requestMeetingReservationsInfo];
+        }else {
+            if (weakSelf.selectCellIndex.row == 1) {
+                weakSelf.reservationStationStartDate = selecTime;
+            }
+            else {
+                weakSelf.reservationStationEndDate = selecTime;
+            }
+            if (weakSelf.isValidTime) {
+                weakSelf.datepickerview.hidden  = YES;
+                [weakSelf Timedisplay:selecTime];
+            }else
+            {
+                [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
+                weakSelf.datepickerview.hidden  = NO;
+            }
+            
+        }
     };
     
     [self.view addSubview:_datepickerview];
@@ -159,7 +172,7 @@
     switch ([WOTSingtleton shared].orderType) {
         case ORDER_TYPE_BOOKSTATION:
         {
-            list1 = @[infoCell, bookStationCell, serviceCell, payTypeCell, selectCell, selectCell];
+            list1 = @[infoCell, selectDateCell,selectDateCell, selectNumberCell];
         }
             break;
         case ORDER_TYPE_MEETING:
@@ -341,8 +354,8 @@
     else if ([cellType isEqualToString:selectTimeCell]) {
         return 130;
     }
-    else if ([cellType isEqualToString:bookStationCell]) {
-        return 169;
+    else if ([cellType isEqualToString:selectNumberCell]) {
+        return 50;
     }
     else if ([cellType isEqualToString:siteCell]) {
         return 65;
@@ -437,7 +450,7 @@
         cell.index = indexPath;
         return cell;
     }
-    else if ([cellType isEqualToString:bookStationCell]) {
+    else if ([cellType isEqualToString:selectNumberCell]) {
         self.orderBookStationCell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForBookStationCell"];
         if (self.orderBookStationCell == nil) {
             self.orderBookStationCell = [[WOTOrderForBookStationCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForBookStationCell"];
@@ -554,7 +567,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSArray *list = tableList[indexPath.section];
     NSString *cellType = list[indexPath.row];
-    
+    self.selectCellIndex = indexPath;
     if ([cellType isEqualToString:selectDateCell]) {
         _datepickerview.hidden = NO;
     }
@@ -600,61 +613,16 @@
 #pragma mark - 判断时间选择是否合理
 -(void)Timedisplay:(NSString *)selectTime
 {
-    BOOL isStartTime = [self.orderBookStationCell.startDataLable.text isEqualToString:@"请选择"];
-    BOOL isEndTime = [self.orderBookStationCell.startDataLable.text isEqualToString:@"请选择"];
-//    BOOL isEqualToStartTimeWithEndTime =[self.orderBookStationCell.startDataLable.text isEqualToString:selectTime];
-    switch ([WOTSingtleton shared].buttonType) {
-        case BUTTON_TYPE_STARTTIME:
-        {
-            if (isEndTime) {
-                self.orderBookStationCell.startDataLable.text = selectTime;
-            }else
-            {
-                if ([self.judgmentTime compareDate:selectTime withDate:self.orderBookStationCell.endDataLabel.text]) {
-                    self.dayNumber = [self.judgmentTime numberOfDaysWithFromDate:selectTime toDate:self.orderBookStationCell.endDataLabel.text];
-                    [self imputedPriceAndLoadCost];
-                    self.orderBookStationCell.startDataLable.text = selectTime;
-                }else
-                {
-                    [MBProgressHUDUtil showMessage:@"请选择小于等于结束时间的时间！" toView:self.view];
-                    _datepickerview.hidden  = NO;
-                }
-            }
-        }
-            break;
-        case BUTTON_TYPE_ENDTIME:
-        {
-            if (isStartTime) {
-                self.orderBookStationCell.endDataLabel.text = selectTime;
-            }else
-            {
-                if ([self.judgmentTime compareDate:self.orderBookStationCell.startDataLable.text withDate:selectTime]) {
-                    self.dayNumber = [self.judgmentTime numberOfDaysWithFromDate:self.orderBookStationCell.startDataLable.text toDate:selectTime];
-                    [self imputedPriceAndLoadCost];
-                    self.orderBookStationCell.endDataLabel.text = selectTime;
-                } else {
-                    [MBProgressHUDUtil showMessage:@"请选择大写等于开始时间的时间！" toView:self.view];
-                    _datepickerview.hidden  = NO;
-                }
-            }
-        }
-            
-        default:
-            break;
-    }
-    
-}
-
-#pragma mark - 数量变化
--(void)changeValue:(WOTOrderForBookStationCell *)cell
-{
-    BOOL isStartTime = [cell.startDataLable.text isEqualToString:@"请选择"];
-    BOOL isEndTime = [cell.startDataLable.text isEqualToString:@"请选择"];
-    if ((!isStartTime) && (!isEndTime)) {
+    if ([self.judgmentTime compareDate:[self.reservationStationStartDate substringToIndex:10]
+                              withDate:[self.reservationStationEndDate substringToIndex:10]]) {
+        self.dayNumber = [self.judgmentTime numberOfDaysWithFromDate:selectTime toDate:self.reservationStationEndDate];
         [self imputedPriceAndLoadCost];
+    }else
+    {
+        [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
+        _datepickerview.hidden  = NO;
     }
 }
-
 
 #pragma mark - 验证会议室
 -(void)verifyMeeting
@@ -675,9 +643,9 @@
 {
    // NSLog(@"测试：%@",self.productNum);
     [WOTHTTPNetwork bookStationReservationsWithSpaceId:self.spaceModel.spaceId
-                                                 count:@([self.orderBookStationCell.orderNumber.text integerValue])
-                                             startTime:self.orderBookStationCell.startDataLable.text
-                                               endTime:self.orderBookStationCell.endDataLabel.text
+                                            count:@([self.orderBookStationCell.orderNumber.text integerValue])
+                                             startTime:self.reservationStationStartDate
+                                               endTime:self.reservationStationEndDate
                                               response:^(id bean, NSError *error) {
                                                   
                                               }];
