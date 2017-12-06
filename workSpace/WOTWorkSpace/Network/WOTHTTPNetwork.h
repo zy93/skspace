@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
 
+@class WOTWXPayModel;
+
 typedef void(^response)(id bean,NSError *error);
 
 @interface WOTHTTPNetwork : NSObject
@@ -268,24 +270,11 @@ typedef void(^response)(id bean,NSError *error);
 
 /**
  预定会议室、场地、工位订单
-
- @param spaceId 空间id
- @param commNum 商品编号 会议室id、场地id、工位传0
- @param commKind 商品对象 0工位，1会议室，2场地·
- @param productNum 商品数量 会议室、场地传1，工位传预定的工位数量
- @param startTime 预定开始日期
- @param endTime 预定结束日期
- @param money 订单总金额（元）
- @param dealMode 交易方式 strin（支付宝、微信）
- @param payType 支付类型 个人、企业
- @param payObject 支付对象 个人传用户名，企业传企业名
- @param payMode 支付方式 0线下，1线上
- @param contractMode 合同方式 0纸质，1电子
  @param response 结果回调
  */
-+(void)generateOrderWithSpaceId:(NSNumber *)spaceId commodityNum:(NSNumber *)commNum commodityKind:(NSNumber *)commKind productNum:(NSNumber *)productNum startTime:(NSString *)startTime endTime:(NSString *)endTime money:(CGFloat)money dealMode:(NSString *)dealMode  payType:(NSNumber *)payType payObject:(NSString *)payObject payMode:(NSNumber *)payMode contractMode:(NSNumber *)contractMode response:(response)response;
++(void)generateOrderWithParam:(NSDictionary *)param response:(response)response;
 
-+(void)wxPayWithParameter:(NSDictionary *)parameter;
++(void)wxPayWithParameter:(WOTWXPayModel *)payModel;
 
 
 #pragma mark - 社交

@@ -185,7 +185,7 @@
         switch (resp.errCode) {
             case WXSuccess:
             {
-                strMsg = @"支付结果：成功！";
+                strMsg = @"支付成功，可在个人中心查看订单信息";
                 //                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
                 
@@ -200,7 +200,7 @@
                 
             default:
             {
-                strMsg = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
+                strMsg = [NSString stringWithFormat:@"支付失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
                 NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
                 //                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr]];
                 //

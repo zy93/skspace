@@ -1564,6 +1564,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="dailyRentLabel" destination="jOe-i0-jbb" id="Get-Hg-hZb"/>
                                             <outlet property="infoImg" destination="RYO-kt-gQe" id="59l-fj-d0h"/>
                                             <outlet property="infoTitle" destination="5QG-OT-jBn" id="tdu-DP-Zqa"/>
                                         </connections>

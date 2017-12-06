@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WOTWXPayModel.h"
+#import "WOTMeetingListModel.h"
 
 @interface StationOrderInfoViewController : UIViewController
+
+
+@property (nonatomic, strong) WOTWXPayModel *model;
+@property (nonatomic, strong) WOTMeetingListModel *meetingModel;
+@property (nonatomic, strong) NSDictionary *dic;
 
 @end

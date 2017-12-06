@@ -21,6 +21,7 @@
 #import "JudgmentTime.h"
 #import "WOTLoginVC.h"
 #import "SKBookStationNumberModel.h"
+#import "StationOrderInfoViewController.h"
 #import "UIColor+ColorChange.h"
 
 #define infoCell @"infoCell"
@@ -159,14 +160,12 @@
         case ORDER_TYPE_BOOKSTATION:
         {
             list1 = @[infoCell, bookStationCell, serviceCell, payTypeCell, selectCell, selectCell];
-            
         }
             break;
         case ORDER_TYPE_MEETING:
         case ORDER_TYPE_SITE:
         {
             list1 = @[infoCell, selectDateCell, selectTimeCell];
-            
         }
             break;
         default:
@@ -175,8 +174,8 @@
     
     NSArray *list2 = @[serviceCell];
     NSArray *list3 = @[payTypeCell, selectCell, selectCell];
-//    NSArray *list4 = @[uitableCell,paymentCell];
-    tableList = @[list1, list2, list3];
+    NSArray *list4 = @[uitableCell,paymentCell];
+    tableList = @[list1, list2, list3, list4];
 }
 
 #pragma mark - update table
@@ -193,7 +192,7 @@
 }
 
 
-#pragma mark - action-- 支付按钮
+#pragma mark - action-- 确认按钮
 - (IBAction)clickSubmitBtn:(id)sender {
     //判断用户是否登录
     //NSLog(@"打印工位数量：%@",self.stationNumber);
@@ -202,16 +201,9 @@
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             NSLog(@"跳转到");
             [[WOTConfigThemeUitls shared] showLoginVC:self];
-//            WOTLoginVC *loginVC = [[WOTLoginVC alloc] init];
-//            [self.navigationController pushViewController:loginVC animated:YES];
         }];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
-        return;
-    }
-    
-    if (self.costNumber == 0.0) {
-        [MBProgressHUDUtil showMessage:@"订单金额为0无法支付" toView:self.view];
         return;
     }
     
@@ -234,88 +226,62 @@
             self.productNum = @(1);
             commNum = self.meetingModel.conferenceId;
             commKind = @(1);
-        }
-            break;
-        default:
-            break;
-    }
-    NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.beginTime  endTime:self.endTime];
-    
-    [MBProgressHUDUtil showLoadingWithMessage:@"支付中，请稍后...."
-                                       toView:self.view
-                           whileExcusingBlock:^(MBProgressHUD *hud) {
-                               [WOTHTTPNetwork generateOrderWithSpaceId:self.spaceModel.spaceId
-                                                           commodityNum:commNum
-                                                          commodityKind:commKind
-                                                             productNum:self.productNum
-                                                              startTime:arr.firstObject
-                                                                endTime:arr.lastObject
-                                                                  money:self.costNumber
-                                                               dealMode:dealMode
-                                                                payType:@(1)
-                                                              payObject:[WOTUserSingleton shareUser].userInfo.userName payMode:@(1) contractMode:@(1) response:^(id bean, NSError *error) {
-                                                                  //[hud h];
-                                                                  [hud setHidden:YES];
-                                                              }];
-                           }];
-    
-    /*
-    switch ([WOTSingtleton shared].orderType) {
-        case ORDER_TYPE_BOOKSTATION:
-        {
-            
-        }
-            break;
-        case ORDER_TYPE_MEETING:
-        {
-            [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceId conferenceId:self.conferenceOrSiteId startTime:self.startTime endTime:self.endTime response:^(id bean, NSError *error) {
-                NSLog(@"---%@", bean);
-            }];
-        }
-            break;
-        case ORDER_TYPE_SITE:
-        {
-            
-//            [WOTHTTPNetwork siteReservationsWithSpaceId:self.spaceId siteId:self.conferenceOrSiteId startTime:self.startTime endTime:self.endTime response:^(id bean, NSError *error) {
-//                NSLog(@"---%@", bean);
-//            }];
-            
-            NSNumber *commNum = @(0);
-            NSNumber *commKind = @(0);
-            NSString *dealMode = @"微信支付";
-            switch ([WOTSingtleton shared].orderType) {
-                case ORDER_TYPE_BOOKSTATION:
-                {
-                    commNum = @(10000);;
-                    commKind = @(0);
-                }
-                    break;
-                case ORDER_TYPE_MEETING:
-                {
-                    commNum = self.meetingModel.conferenceId;
-                    commKind = @(1);
-                }
-                    break;
-                case ORDER_TYPE_SITE:
-                {
-                    commNum = self.siteModel.siteId;
-                    commKind = @(2);
-                }
-                    break;
-                default:
-                    break;
+            //是否选择了时间
+            if (self.endTime-self.beginTime <=0) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请选择预定时间" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                }];
+                [alert addAction:action];
+                [self presentViewController:alert animated:YES completion:nil];
+                return;
             }
-            [WOTHTTPNetwork generateOrderWithSpaceId:self.spaceId commodityNum:commNum commodityKind:commKind productNum:@(1) startTime:self.startTime endTime:self.endTime money:self.costNumber dealMode:dealMode payType:@(1) payObject:[WOTUserSingleton shareUser].userInfo.userName payMode:@(1) contractMode:@(1) response:^(id bean, NSError *error) {
-                
-            }];
-        }
             
+            NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.beginTime  endTime:self.endTime];
+            NSString *deviceip = [[WOTConfigThemeUitls shared] getIPAddress];
+            NSString *chineseBody = @"易创客";
+            
+            NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                         @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                         @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                         @"facilitator":@"1006",
+                                         @"carrieroperator":@"1006",
+                                         @"body":chineseBody,
+                                         @"total_fee":@(1),
+                                         @"spbill_create_ip":deviceip,
+                                         @"trade_type":@"APP",
+                                         @"spaceId":self.meetingModel.spaceId,
+                                         @"commodityNum":commNum,
+                                         @"commodityKind":commKind,
+                                         @"productNum":@(1),
+                                         @"starTime":arr.firstObject,
+                                         @"endTime":arr.lastObject,
+                                         @"money":@(self.costNumber),
+                                         @"dealMode":dealMode,
+                                         @"payType":@(1),
+                                         @"payObject":@(1),
+                                         @"payMode":@(1),
+                                         @"contractMode":@(1),
+                                         };
+            
+            
+            
+            __weak typeof(self) weakSelf = self;
+            [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){
+               dispatch_async(dispatch_get_main_queue(), ^{
+                   //
+                   StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
+                   vc.meetingModel = weakSelf.meetingModel;
+                   vc.dic = parameters;
+                   [vc setModel:((WOTWXPayModel_msg*)bean).msg];
+                   [weakSelf.navigationController pushViewController:vc animated:YES];
+               });
+            }];
+            
+        }
             break;
         default:
             break;
     }
-     */
-             
 }
 
 #pragma mark - cell delegate
@@ -436,6 +402,7 @@
             {
                 [cell.infoImg  sd_setImageWithURL:[_meetingModel.conferencePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _meetingModel.conferenceName;
+                cell.dailyRentLabel.text = _meetingModel.location;
             }
                 break;
             default:
@@ -545,7 +512,7 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCelll"];
         }
-        [cell.textLabel setText:@"电子支付"];
+        [cell.textLabel setText:@"支付方式"];
 //        cell.separatorInset = UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0); // ViewWidth  [宏] 指的是手机屏幕的宽度
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
         

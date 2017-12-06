@@ -165,7 +165,7 @@
                 return ;
             }
             WOTMeetingListModel_msg *model = bean;
-            tableList = model.msg;
+            tableList = model.msg.list;
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (tableList.count) {
                     self.notInformationImageView.hidden = YES;

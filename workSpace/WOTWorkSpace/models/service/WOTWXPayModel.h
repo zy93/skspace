@@ -9,16 +9,17 @@
 #import <JSONModel/JSONModel.h>
 
 @interface WOTWXPayModel : JSONModel
-@property(nonatomic,strong)NSString *result_code;
+@property(nonatomic,strong)NSString *appid;
 @property(nonatomic,strong)NSString *sign;
 @property(nonatomic,strong)NSString *mch_id;
 @property(nonatomic,strong)NSString *timeStamp;
 @property(nonatomic,strong)NSString *prepay_id;
-@property(nonatomic,strong)NSString *return_msg;
 @property(nonatomic,strong)NSString *package;
-@property(nonatomic,strong)NSString *appid;
 @property(nonatomic,strong)NSString *nonce_str;
+@property(nonatomic,strong)NSString *out_trade_no;
+@property(nonatomic,strong)NSString *return_msg;;
 @property(nonatomic,strong)NSString *return_code;
+@property(nonatomic,strong)NSString *result_code;
 @property(nonatomic,strong)NSString *device_info;
 @property(nonatomic,strong)NSString *trade_type;
 @end

@@ -700,51 +700,27 @@
 }
 
 #pragma mark - 确认订单
-+(void)generateOrderWithSpaceId:(NSNumber *)spaceId commodityNum:(NSNumber *)commNum commodityKind:(NSNumber *)commKind productNum:(NSNumber *)productNum startTime:(NSString *)startTime endTime:(NSString *)endTime money:(CGFloat)money dealMode:(NSString *)dealMode payType:(NSNumber *)payType payObject:(NSString *)payObject payMode:(NSNumber *)payMode contractMode:(NSNumber *)contractMode response:(response)response
++(void)generateOrderWithParam:(NSDictionary *)param response:(response)response
 {
-    NSString *url = [NSString stringWithFormat:@"%@/Order/addOrderOrUpdate",HTTPBaseURL];
-    NSString *deviceip = [[WOTConfigThemeUitls shared] getIPAddress];
-    NSString *chineseBody = @"易创客";
-    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
-                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
-                                 @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
-                                 @"facilitator":@(00001),
-                                 @"carrieroperator":@(00002),
-                                 @"body":chineseBody,
-                                 @"total_fee":@(1),
-                                 @"spbill_create_ip":deviceip,
-                                 @"trade_type":@"APP",
-                                 @"spaceId":spaceId,
-                                 @"commodityNum":commNum,
-                                 @"commodityKind":commKind,
-                                 @"productNum":productNum,
-                                 @"starTime":startTime,
-                                 @"endTime":endTime,
-                                 @"money":@(money),
-                                 @"dealMode":dealMode,
-                                 @"payType":payType,
-                                 @"payObject":payObject,
-                                 @"payMode":payMode,
-                                 @"contractMode":contractMode,
-                                 };
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/wxAddOrder",HTTPBaseURL];
     
-    [self doRequestWithParameters:parameters useUrl:url  complete:^JSONModel *(id responseobj) {
+    [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
         WOTWXPayModel_msg *model = [[WOTWXPayModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  model;
     } response:response];
 }
 
 #pragma mark - 支付接口
-+(void)wxPayWithParameter:(NSDictionary *)parameter
++(void)wxPayWithParameter:(WOTWXPayModel *)payModel
 {
     //调用支付接口
     PayReq *payRequest = [[PayReq alloc]init];
-    payRequest.partnerId = [parameter objectForKey:@"mch_id"];//商户id
-    payRequest.prepayId = [parameter objectForKey:@"prepay_id"];//预支付订单编号
-    payRequest.package = [parameter objectForKey:@"package"];//商家根据财付通文档填写的数据和签名
-    payRequest.nonceStr = [parameter objectForKey:@"nonce_str"];//随机串，防重发
-    payRequest.timeStamp = [[parameter objectForKey:@"timeStamp"] intValue];//时间戳，防重发
-    payRequest.sign = [parameter objectForKey:@"sign"];//商家根据微信开放平台文档对数据做的签名
+    payRequest.partnerId = payModel.mch_id;//商户id
+    payRequest.prepayId = payModel.prepay_id;//预支付订单编号
+    payRequest.package = payModel.package;//商家根据财付通文档填写的数据和签名
+    payRequest.nonceStr = payModel.nonce_str;//随机串，防重发
+    payRequest.timeStamp = [payModel.timeStamp intValue];//时间戳，防重发
+    payRequest.sign = payModel.sign;//商家根据微信开放平台文档对数据做的签名
     [WXApi sendReq:payRequest];
     
 }

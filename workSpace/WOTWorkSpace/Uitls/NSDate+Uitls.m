@@ -22,6 +22,18 @@
     return DateTime;
 }
 
++(NSString *)getNewTime
+{
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY/MM/dd hh:mm:ss"];
+    NSString *DateTime = [formatter stringFromDate:date];
+    //    NSLog(@"%@============年-月-日  时：分：秒=====================",DateTime);
+    return DateTime;
+}
+
 +(NSString *)getTomorrowTimeZero
 {
     NSDate *date = [NSDate date];
