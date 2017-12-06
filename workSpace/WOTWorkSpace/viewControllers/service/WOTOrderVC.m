@@ -21,6 +21,7 @@
 #import "JudgmentTime.h"
 #import "WOTLoginVC.h"
 #import "SKBookStationNumberModel.h"
+#import "UIColor+ColorChange.h"
 
 #define infoCell @"infoCell"
 #define selectDateCell @"selectDateCell"
@@ -44,6 +45,8 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property (weak, nonatomic) IBOutlet UILabel *costLabel;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+
 @property (nonatomic, strong)WOTDatePickerView *datepickerview;
 @property (nonatomic, assign)BOOL isValidTime;
 @property (nonatomic, strong)JudgmentTime *judgmentTime;
@@ -107,6 +110,9 @@
     if (is7Version) {
         self.edgesForExtendedLayout=UIRectEdgeNone;
     }
+    self.confirmButton.layer.cornerRadius = 5.f;
+    self.confirmButton.layer.borderWidth = 1.f;
+    self.confirmButton.layer.borderColor = [UIColor colorWithHexString:@"00a910"].CGColor;
 }
 
 -(void)creatDataPickerView
@@ -418,6 +424,7 @@
             {
                 [cell.infoImg  sd_setImageWithURL:[_spaceModel.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _spaceModel.spaceName;
+//                cell.dailyRentLabel.text = [NSString stringWithFormat:@"日租金：%@元",_spaceModel.on];
             }
                 break;
             case ORDER_TYPE_MEETING:

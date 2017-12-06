@@ -483,14 +483,14 @@ int a = 0;
     }
     //从网络加载图片用
     //NSLog(@"网络图片地址：%@",[_spacedataSource[index] objectForKey:@"spacePicture"]);
-    NSLog(@"----%@",((NSDictionary *)_spacedataSource[index])[@"spacePicture"]);
+    NSLog(@"----%@",_spacedataSource[index].spacePicture);
     
-      [bannerView.mainImageView sd_setImageWithURL:[[NSString stringWithFormat:@"%@%@",HTTPBaseURL,((NSDictionary *)_spacedataSource[index])[@"spacePicture"]] ToUrl]placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+      [bannerView.mainImageView sd_setImageWithURL:[[NSString stringWithFormat:@"%@%@",HTTPBaseURL,_spacedataSource[index].spacePicture] ToUrl]placeholderImage:[UIImage imageNamed:@"spacedefault"]];
     
-    if ([((NSDictionary *)_spacedataSource[index])[@"spacePicture"] separatedWithString:@","].count!=0) {
-        [bannerView.mainImageView sd_setImageWithURL:[[((NSDictionary *)_spacedataSource[index])[@"spacePicture"] separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+    if ([_spacedataSource[index].spacePicture separatedWithString:@","].count!=0) {
+        [bannerView.mainImageView sd_setImageWithURL:[[_spacedataSource[index].spacePicture separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"spacedefault"]];
         
-        NSLog(@"图片地址：%@",[NSString stringWithFormat:@"%@%@",HTTPBaseURL,[((NSDictionary *)_spacedataSource[index])[@"spacePicture"] separatedWithString:@","][0]]);
+        NSLog(@"图片地址：%@",[NSString stringWithFormat:@"%@%@",HTTPBaseURL,[_spacedataSource[index].spacePicture separatedWithString:@","][0]]);
     }
     
     //从本地加载图片用
@@ -687,8 +687,8 @@ int a = 0;
         complete();
         if (bean != nil) {
             WOTSpaceModel_msg *dd = (WOTSpaceModel_msg *)bean;
-            NSLog(@"测试：%@",[dd.msg  objectForKey:@"list"]);
-            _spacedataSource = [dd.msg  objectForKey:@"list"];
+            NSLog(@"测试：%@",dd.msg.list);
+            _spacedataSource = dd.msg.list;
             
             if (_spacedataSource.count>5) {
                 for (int index = 0; index < 5; index++) {

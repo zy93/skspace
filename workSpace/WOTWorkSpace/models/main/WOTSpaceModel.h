@@ -32,24 +32,22 @@
 @property(nonatomic,strong)NSString *spaceUrl;
 @property(nonatomic,strong)NSString *valueAdded;//增值服务
 
-
-//@property(nonatomic,assign)NSNumber *leaseConditions; //长短租
-//@property(nonatomic,assign)NSNumber *shortRent;
-//@property(nonatomic,strong)NSString *spaceStar;
-//@property(nonatomic,strong)NSString *spared1;
-//@property(nonatomic,strong)NSString *spared2;
-//@property(nonatomic,strong)NSString *spared3;
-////新添加的接口
-//@property(nonatomic,strong)NSNumber *stationNum;
-//@property(nonatomic,strong)NSNumber *alreadyTakenNum;
-//@property(nonatomic,strong)NSNumber *stationPrice;
--(instancetype)initWithSpaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName spaceDescribe:(NSString *)spaceDescribe  city:(NSString *)city spaceSite:(NSString *)spaceSite fixPhone:(NSString *)fixPhone relationTel:(NSString *)relationTel spaceState:(NSNumber *)spaceState creationTime:(NSString *)creationTime spacePicture:(NSString *)spacePicture;
 @end
+
+@interface WOTSpaceModel_m : JSONModel
+@property (nonatomic, strong) NSNumber *bottomPageNo;
+@property(nonatomic,strong)NSArray <WOTSpaceModel> *list;
+
+
+
+
+@end
+
+
 
 @interface WOTSpaceModel_msg : JSONModel
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSString *result;
-@property(nonatomic,strong)NSDictionary *msg;
-//@property(nonatomic,strong)NSArray<WOTSpaceModel> *msg;
+@property(nonatomic,strong)WOTSpaceModel_m *msg;
 
 @end

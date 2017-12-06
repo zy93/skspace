@@ -35,6 +35,14 @@
 }
 @end
 
+@implementation WOTSpaceModel_m
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+
+@end
+
 @implementation WOTSpaceModel_msg
 +(BOOL)propertyIsOptional:(NSString *)propertyName
 {

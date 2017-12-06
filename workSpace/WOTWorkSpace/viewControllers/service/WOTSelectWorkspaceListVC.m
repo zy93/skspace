@@ -54,9 +54,8 @@
             NSLog(@"error:%@",error);
             return ;
         }
-        WOTSpaceModel_msg *list = bean;
-//        tableList = list.msg;
-        tableDic = [self sortByCity:list.msg];
+        WOTSpaceModel_msg *spaceMoedel = bean;
+        tableDic = [self sortByCity:spaceMoedel.msg.list];
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.table reloadData];
         });

@@ -168,7 +168,7 @@
             WOTSpaceModel_msg *list = bean;
             //        tableList = list.msg;
             //tableDic = [self sortByCity:list.msg];
-            tableList = [list.msg objectForKey:@"list"];
+            tableList = list.msg.list;
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (tableList.count) {
                     self.notInformationImageView.hidden = YES;
@@ -245,7 +245,7 @@
         }
         WOTSpaceModel_msg *list = bean;
         //        tableList = list.msg;
-        [self createRequestCityList:[list.msg objectForKey:@"list"]];
+        [self createRequestCityList:list.msg.list];
     }];
 }
 
@@ -256,13 +256,13 @@
         //
         BOOL isHaveCity = NO;
         for (NSString *city in self.cityList) {
-            if ([((NSDictionary *)model)[@"city"] isEqualToString:city]) {
+            if ([model.city isEqualToString:city]) {
                 isHaveCity = YES;
                 break;
             }
         }
         if (!isHaveCity) {
-            [self.cityList addObject:((NSDictionary *)model)[@"city"]];
+            [self.cityList addObject:model.city];
         }
         //[self.cityList addObject:((NSDictionary *)model)[@"city"]];
     }
@@ -320,10 +320,10 @@
         bookcell.model = model;
         //NSLog(@"测试：%@",model);
         //待开发
-        bookcell.spaceName.text =((NSDictionary *)model)[@"spaceName"];// @"方圆大厦-众创空间";
-        [bookcell.spaceImage sd_setImageWithURL:[((NSDictionary *)model)[@"spacePicture"] ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+        bookcell.spaceName.text =model.spaceName;// @"方圆大厦-众创空间";
+        [bookcell.spaceImage sd_setImageWithURL:[model.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
        // bookcell.stationNum.text  = [NSString stringWithFormat:@"%ld工位可以预定",model.alreadyTakenNum.integerValue]; //@"23个工位可以预定";
-        bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",(((NSDictionary *)model)[@"onlineLocationPrice"])];//@"¥123元／天";
+        bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",model.onlineLocationPrice];//@"¥123元／天";
         bookcell.delegate = self;
         bookcell.model = model;
     } else {

@@ -11,5 +11,6 @@
 @interface WOTOrderForInfoCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *infoImg;
 @property (weak, nonatomic) IBOutlet UILabel *infoTitle;
+@property (weak, nonatomic) IBOutlet UILabel *dailyRentLabel;
 
 @end
