@@ -126,7 +126,12 @@
 		2AFAC8951F0FB796001BAB14 /* WOTRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFAC8931F0FB796001BAB14 /* WOTRadioView.m */; };
 		59BB1AF86E21AC99D91DDCE6 /* libPods-WOTWorkSpace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D773A878FA3518662358C7A0 /* libPods-WOTWorkSpace.a */; };
 		97D06A114DB42F1134696656 /* libPods-WOTWorkSpaceUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFC264D6C897C120A10B700D /* libPods-WOTWorkSpaceUITests.a */; };
+		C55A29871FD6DFD9001E0DB7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29811FD6DFD8001E0DB7 /* LoginViewController.m */; };
+		C55A29881FD6DFD9001E0DB7 /* FindPassWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29821FD6DFD9001E0DB7 /* FindPassWordViewController.m */; };
+		C55A29891FD6DFD9001E0DB7 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29841FD6DFD9001E0DB7 /* RegisterViewController.m */; };
+		C55A298C1FD6E16B001E0DB7 /* UIColor+ColorChange.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A298A1FD6E16B001E0DB7 /* UIColor+ColorChange.m */; };
 		C56684DE1FD6AC0000DC5782 /* SKBookStationNumberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */; };
+		C580842D1FD781C10091DCC4 /* StationOrderInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C580842B1FD781C10091DCC4 /* StationOrderInfoViewController.m */; };
 		C7901EC51F789CF500692F02 /* JudgmentTime.m in Sources */ = {isa = PBXBuildFile; fileRef = C7901EC31F789CF400692F02 /* JudgmentTime.m */; };
 		C79C2D3A1F7E36870052DF23 /* WOTBookStationReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C79C2D391F7E36870052DF23 /* WOTBookStationReservationsModel.m */; };
 		C7B4DD2C1F7A793C00009011 /* JXPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4DD291F7A793C00009011 /* JXPopoverView.m */; };
@@ -583,8 +588,18 @@
 		61996A58C52879228CF28B28 /* libPods-WOTWorkSpaceTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WOTWorkSpaceTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD7419E0440D789E522F1B2 /* Pods-WOTWorkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTWorkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B06E1E0FEBF126912B787519 /* Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig"; path = "Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig"; sourceTree = "<group>"; };
+		C55A29811FD6DFD8001E0DB7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		C55A29821FD6DFD9001E0DB7 /* FindPassWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPassWordViewController.m; sourceTree = "<group>"; };
+		C55A29831FD6DFD9001E0DB7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		C55A29841FD6DFD9001E0DB7 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		C55A29851FD6DFD9001E0DB7 /* FindPassWordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindPassWordViewController.h; sourceTree = "<group>"; };
+		C55A29861FD6DFD9001E0DB7 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		C55A298A1FD6E16B001E0DB7 /* UIColor+ColorChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorChange.m"; sourceTree = "<group>"; };
+		C55A298B1FD6E16B001E0DB7 /* UIColor+ColorChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorChange.h"; sourceTree = "<group>"; };
 		C56684DC1FD6AC0000DC5782 /* SKBookStationNumberModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKBookStationNumberModel.h; sourceTree = "<group>"; };
 		C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKBookStationNumberModel.m; sourceTree = "<group>"; };
+		C580842B1FD781C10091DCC4 /* StationOrderInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationOrderInfoViewController.m; sourceTree = "<group>"; };
+		C580842C1FD781C10091DCC4 /* StationOrderInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationOrderInfoViewController.h; sourceTree = "<group>"; };
 		C7901EC31F789CF400692F02 /* JudgmentTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JudgmentTime.m; sourceTree = "<group>"; };
 		C7901EC41F789CF400692F02 /* JudgmentTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JudgmentTime.h; sourceTree = "<group>"; };
 		C79C2D381F7E36870052DF23 /* WOTBookStationReservationsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTBookStationReservationsModel.h; sourceTree = "<group>"; };
@@ -1188,6 +1203,12 @@
 		2A336A831F0CF26300F5B0AF /* login */ = {
 			isa = PBXGroup;
 			children = (
+				C55A29851FD6DFD9001E0DB7 /* FindPassWordViewController.h */,
+				C55A29821FD6DFD9001E0DB7 /* FindPassWordViewController.m */,
+				C55A29831FD6DFD9001E0DB7 /* LoginViewController.h */,
+				C55A29811FD6DFD8001E0DB7 /* LoginViewController.m */,
+				C55A29861FD6DFD9001E0DB7 /* RegisterViewController.h */,
+				C55A29841FD6DFD9001E0DB7 /* RegisterViewController.m */,
 				2A336A841F0CF2B600F5B0AF /* WOTLoginVC.h */,
 				2A336A851F0CF2B600F5B0AF /* WOTLoginVC.m */,
 				2A1624EB1F0E21CB00F216F9 /* WOTSelectCityCodeVC.h */,
@@ -2070,6 +2091,8 @@
 				2AB255011F1C8E0E00FCE6E7 /* WOTSelectWorkspaceListVC.m */,
 				2AF18A2D1F135AE2004681CE /* WOTOrderVC.h */,
 				2AF18A2E1F135AE2004681CE /* WOTOrderVC.m */,
+				C580842C1FD781C10091DCC4 /* StationOrderInfoViewController.h */,
+				C580842B1FD781C10091DCC4 /* StationOrderInfoViewController.m */,
 				E8693B1B1F05143800772BC1 /* WOTServiceNaviController.h */,
 				E8693B1C1F05143800772BC1 /* WOTServiceNaviController.m */,
 				E8CF9FCC1F0F751B00EF0F46 /* WOTBookStationVC.h */,
@@ -2087,6 +2110,8 @@
 		E85A860B1F0233270016FCA1 /* Uitls */ = {
 			isa = PBXGroup;
 			children = (
+				C55A298B1FD6E16B001E0DB7 /* UIColor+ColorChange.h */,
+				C55A298A1FD6E16B001E0DB7 /* UIColor+ColorChange.m */,
 				C7901EC41F789CF400692F02 /* JudgmentTime.h */,
 				C7901EC31F789CF400692F02 /* JudgmentTime.m */,
 				E8605CD51F1356BF005C09F4 /* UISearchBar+JCSearchBarPlaceholder.h */,
@@ -2970,6 +2995,7 @@
 				E86245731F3D4F4900CF0D9D /* SRSecurityPolicy.m in Sources */,
 				2A550D911F33302B0049C9D6 /* WOTSiteReservationsModel.m in Sources */,
 				C56684DE1FD6AC0000DC5782 /* SKBookStationNumberModel.m in Sources */,
+				C55A29871FD6DFD9001E0DB7 /* LoginViewController.m in Sources */,
 				E8190DBA1F0F69660000B07C /* WOTPersionalInformationTagCell.m in Sources */,
 				E869E83A1F1DBE4C00DBDBB9 /* WOTMyFeedBackModel.m in Sources */,
 				E8190D9B1F0F69660000B07C /* WOTSpaceDetailCell.m in Sources */,
@@ -2984,6 +3010,7 @@
 				E8DAE74A1F3025D800830A2F /* WOTRefreshControlUitls.m in Sources */,
 				E86FD1F31F20742A009BE16A /* WOTApplyRepairCell.m in Sources */,
 				E869E83D1F1DE1DF00DBDBB9 /* WOTPhotosBaseUtils.m in Sources */,
+				C55A29891FD6DFD9001E0DB7 /* RegisterViewController.m in Sources */,
 				E8190DAA1F0F69660000B07C /* WOTMyActivitiesCell.m in Sources */,
 				E8A2001A1F1C8266003C8A86 /* WOTSliderModel.m in Sources */,
 				2A99FB701F25EA8300869732 /* WOTSocialContactsBean.m in Sources */,
@@ -3120,6 +3147,7 @@
 				E86245621F3D4F4900CF0D9D /* SRIOConsumer.m in Sources */,
 				E86594811F21C9260093B796 /* WOTSocialContactCell.m in Sources */,
 				E8190D991F0F69660000B07C /* WOTSpaceCityCollectionCell.m in Sources */,
+				C580842D1FD781C10091DCC4 /* StationOrderInfoViewController.m in Sources */,
 				E868E0EB1F42E8C700573B66 /* WOTAlipayManager.m in Sources */,
 				2AAC7A3B1F5D2FDE00F08359 /* MJRefreshNormalHeader.m in Sources */,
 				2AAC7A361F5D2FDE00F08359 /* MJRefreshAutoStateFooter.m in Sources */,
@@ -3137,6 +3165,7 @@
 				E85A85951F0201F30016FCA1 /* WOTWorkSpace.xcdatamodeld in Sources */,
 				2AF78CEE1F0A39E800F7B56D /* WOTGETServiceViewController.m in Sources */,
 				2AF18A321F136016004681CE /* WOTOrderForInfoCell.m in Sources */,
+				C55A298C1FD6E16B001E0DB7 /* UIColor+ColorChange.m in Sources */,
 				2AAC7A391F5D2FDE00F08359 /* MJRefreshBackStateFooter.m in Sources */,
 				2AF18A2B1F131DEA004681CE /* WOTReservationsMeetingCell.m in Sources */,
 				E868E0EA1F42E8C700573B66 /* RSADataVerifier.m in Sources */,
@@ -3189,6 +3218,7 @@
 				E8190DB01F0F69660000B07C /* WOTMyEnterPriseCell.m in Sources */,
 				E8EACF7E1F0344EC0015535D /* WOTPageMenuParentVC.m in Sources */,
 				2AAC7A351F5D2FDE00F08359 /* MJRefreshAutoNormalFooter.m in Sources */,
+				C55A29881FD6DFD9001E0DB7 /* FindPassWordViewController.m in Sources */,
 				2AB255021F1C8E0E00FCE6E7 /* WOTSelectWorkspaceListVC.m in Sources */,
 				E85A85F41F0202460016FCA1 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				E8BA0D8A1F0CFA1F00B81C3D /* WOTMyRepairdListVC.m in Sources */,
