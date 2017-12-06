@@ -11,16 +11,8 @@
 @interface WOTMyOrderCell()
 
 @property (weak, nonatomic) IBOutlet UIView *mettingroomView;
-@property (weak, nonatomic) IBOutlet UIView *stationView;
 
-@property (weak, nonatomic) IBOutlet UILabel *mettingroomNum;
-@property (weak, nonatomic) IBOutlet UILabel *mettingroomLabel;
-@property (weak, nonatomic) IBOutlet UILabel *stationNum;
-@property (weak, nonatomic) IBOutlet UILabel *stationLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *allOrderLabel;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidth;
+@property (weak, nonatomic) IBOutlet UIButton *bookStationButton;
 
 
 @end
@@ -30,11 +22,12 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.viewWidth.constant = SCREEN_WIDTH/2;
-    self.mettingroomView.backgroundColor = CLEARCOLOR;
-    self.stationView.backgroundColor = CLEARCOLOR;
-    self.mettingroomLabel.textColor = LowTextColor;
-    self.stationLabel.textColor = LowTextColor;
+    
+//    self.viewWidth.constant = SCREEN_WIDTH/2;
+//    self.mettingroomView.backgroundColor = CLEARCOLOR;
+//    self.stationView.backgroundColor = CLEARCOLOR;
+//    self.mettingroomLabel.textColor = LowTextColor;
+//    self.stationLabel.textColor = LowTextColor;
     // Initialization code
 }
 
@@ -61,6 +54,15 @@
     
     
 }
+
+- (IBAction)showSiteVC:(id)sender {
+    if (_celldelegate) {
+        [self.celldelegate showSiteOrderList];
+    }
+}
+
+
+
 - (IBAction)showAllOrderVC:(id)sender {
     
     

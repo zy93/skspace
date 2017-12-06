@@ -11,7 +11,9 @@
 #import "WOTEnterpriseLIstVC.h"
 #import "WOTPublishSocialTrendsVC.h"
 #import "MJRefresh.h"
-@interface WOTSocialcontact ()
+#import "UIColor+ColorChange.h"
+
+@interface WOTSocialcontact ()<XXPageTabViewDelegate>
 
 @end
 
@@ -34,32 +36,16 @@
 -(void)setpageMenu{
     NSArray<__kindof UIViewController *> *controllers = [self createViewControllers];
     self.pageTabView = [[XXPageTabView alloc] initWithChildControllers:controllers childTitles:[self createTitles]];
-    self.pageTabView.cutOffLine = YES;
-    self.pageTabView.bottomOffLine = NO;
+    self.pageTabView.bottomOffLine = YES;
+    self.pageTabView.selectedColor = [UIColor colorWithHexString:@"ff7d3d"];
     [self.pageTabView addIndicatorViewWithStyle];
     [self.pageTabView layoutSubviews];
     self.pageTabView.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
     self.pageTabView.delegate = self;
-    //    self.pageTabView.bodyBounces = NO;
-    //    self.pageTabView.tabSize = CGSizeMake(self.view.frame.size.width, 40);
     self.pageTabView.titleStyle = XXPageTabTitleStyleDefault;
     self.pageTabView.indicatorStyle = XXPageTabIndicatorStyleDefault;
-    //    self.pageTabView.minScale = 1.0;
-    //    self.pageTabView.selectedTabIndex = 4;
-    //    self.pageTabView.selectedTabIndex = -1;
-    //    self.pageTabView.selectedTabIndex = 4;
-    
-    //    self.pageTabView.maxNumberOfPageItems = 1;
-    self.pageTabView.maxNumberOfPageItems = 5;
-    
-    //    self.pageTabView.tabItemFont = [UIFont systemFontOfSize:18];
-    
-    //    self.pageTabView.indicatorHeight = 5;
     self.pageTabView.indicatorWidth = 20;
-    //    self.pageTabView.tabBackgroundColor = [UIColor yellowColor];
-    //    self.pageTabView.unSelectedColor = [UIColor greenColor];
-    
-    //    self.pageTabView.tabSize = CGSizeMake(self.view.bounds.size.width-30, 0);
+
     [self.view addSubview:self.pageTabView];
 }
 
@@ -80,7 +66,7 @@
 }
 
 -(NSArray *)createTitles{
-    return [[NSArray alloc]initWithObjects:@"最近的圈子",@"友邻企业",@"空间集市",nil];
+    return [[NSArray alloc]initWithObjects:@"全部",@"关注",@"评价",nil];
 }
 -(NSArray<__kindof UIViewController *> *)createViewControllers{
     WOTNearCirclesVC *circle = [[UIStoryboard storyboardWithName:@"Socialcontact" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTNearCirclesVCID"];

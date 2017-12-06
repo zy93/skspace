@@ -16,6 +16,8 @@
 #import "WOTLoginVC.h"
 #import "WOTLoginNaviController.h"
 #import "WOTReservationsMeetingVC.h"
+#import "LoginViewController.h"
+
 @interface WOTMyVC ()<WOTOrderCellDelegate,WOTOMyCellDelegate>
 @property(nonatomic,strong)WOTSettingVC *settingvc;
 @property(nonatomic,strong)WOTPersionalInformation *persionalVC;
@@ -33,7 +35,10 @@
     
     [self.tableView registerClass:[WOTMycommonCell class] forCellReuseIdentifier:@"mycommonCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderCell" bundle:nil] forCellReuseIdentifier:@"myorderCellID"];
-    
+//    if (![WOTSingtleton shared].isuserLogin) {
+//        LoginViewController *loginVC = [[LoginViewController alloc] init];
+//        [self.navigationController pushViewController:loginVC animated:YES];
+//    }
     // Do any additional setup after loading the view.
 }
 
@@ -93,7 +98,7 @@
             return 270;
             break;
         case 1:
-            return 125;
+            return 117;
             break;
         case 2:
             return 50;
@@ -120,25 +125,31 @@
     
     if (indexPath.section == 0) {
         WOTMyuserCell *mycell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyuserCellID" forIndexPath:indexPath];
+        [mycell.loginButton addTarget:self action:@selector(showLoginView) forControlEvents:UIControlEventTouchDown];
         if ([WOTSingtleton shared].isuserLogin) {
-//            [[WOTUserSingleton shareUser] setValues];
-            mycell.userName.text = [WOTUserSingleton shareUser].userInfo.userName;
-            mycell.constellation.text = [WOTUserSingleton shareUser].userInfo.constellation;
-            mycell.signature.text = [WOTUserSingleton shareUser].userInfo.spared1;
-            mycell.sexImage.image = [[WOTUserSingleton shareUser].userInfo.sex isEqualToString:@"man"]? [UIImage imageNamed:@"boy"]:[UIImage imageNamed:@"girl"];
-           // NSLog(@"测试：%@",[WOTUserSingleton shareUser].userInfo.headPortrait);
-            [mycell.headerImage sd_setImageWithURL:[[WOTUserSingleton shareUser].userInfo.headPortrait ToUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
+            [mycell.loginButton setHidden:YES];
+            [mycell.memberLabel setHidden:NO];
+            [mycell.userName setHidden:NO];
+            NSString *numberString = [[WOTUserSingleton shareUser].userInfo.tel stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+            mycell.userName.text = numberString;
+            if ([[WOTUserSingleton shareUser].userInfo.userType isEqualToNumber:@0]) {
+                mycell.memberLabel.text = @"普通用户";
+            }else
+            {
+                mycell.memberLabel.text = @"会员用户";
+            }
             
-        } else {
-            mycell.userName.text = @"登录／注册";
-            mycell.constellation.text = @"";
-            mycell.signature.text = @"";
-            mycell.headerImage.image = [UIImage imageNamed:@"unlogin"];
-            mycell.sexImage.image = [UIImage imageNamed:@""];
+        }else
+        {
+            [mycell.loginButton setHidden:NO];
+            [mycell.memberLabel setHidden:YES];
+            [mycell.userName setHidden:YES];
         }
-        mycell.bgImage.image = [UIImage imageNamed:@"mybgimage"];
+        
+       
+       
+        [mycell.headerImage sd_setImageWithURL:[[WOTUserSingleton shareUser].userInfo.headPortrait ToUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
         mycell.mycelldelegate = self;
-    
         commoncell = mycell;
     } else if (indexPath.section == 1){
         WOTMyOrderCell *ordercell = [tableView dequeueReusableCellWithIdentifier:@"myorderCellID" forIndexPath:indexPath];
@@ -189,6 +200,11 @@
    
 }
 
+-(void)showLoginView
+{
+    [[WOTConfigThemeUitls shared] showLoginVC:self];
+}
+
 
 /**订单celldelegate*/
 -(void)showAllOrderList{
@@ -212,6 +228,17 @@
         [[WOTConfigThemeUitls shared] showLoginVC:self];
     }
     
+}
+
+-(void)showSiteOrderList
+{
+    if ([WOTSingtleton shared].isuserLogin) {
+        WOTOrderLIstVC *station_ordervc = [[WOTOrderLIstVC alloc]init];
+        station_ordervc.vctype = WOTPageMenuVCTypeSite;
+        [self.navigationController pushViewController:station_ordervc animated:YES];
+    } else {
+        [[WOTConfigThemeUitls shared] showLoginVC:self];
+    }
 }
 
 -(void)showMettingRoomOrderList{

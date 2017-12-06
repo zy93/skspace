@@ -7,6 +7,7 @@
 //
 
 #import "WOTTabBarVCViewController.h"
+#import "LoginViewController.h"
 
 @interface WOTTabBarVCViewController ()
 
@@ -19,8 +20,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadSubControllers];
     [self configTab];
+
     // Do any additional setup after loading the view.
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -69,6 +73,7 @@
     [self.tabBar setBackgroundImage:[UIImage imageNamed:@"fgcolor"]];
     
 }
+
 /*
 #pragma mark - Navigation
 

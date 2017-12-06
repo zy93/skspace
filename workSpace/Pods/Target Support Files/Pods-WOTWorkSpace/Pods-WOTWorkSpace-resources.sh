@@ -86,6 +86,7 @@ EOM
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/AMap2DMap/MAMapKit.framework/AMap.bundle"
   install_resource "${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
+  install_resource "${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@2x.png"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@3x.png"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_original_circle.png"
@@ -110,6 +111,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/AMap2DMap/MAMapKit.framework/AMap.bundle"
   install_resource "${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
+  install_resource "${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@2x.png"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@3x.png"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_original_circle.png"
@@ -134,6 +136,7 @@ fi
 if [[ "$CONFIGURATION" == "ad hoc distrbution" ]]; then
   install_resource "${PODS_ROOT}/AMap2DMap/MAMapKit.framework/AMap.bundle"
   install_resource "${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
+  install_resource "${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@2x.png"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@3x.png"
   install_resource "${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_original_circle.png"

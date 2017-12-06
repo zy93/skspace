@@ -13,9 +13,15 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
    
-    
+    self.headView.layer.shadowOpacity = 0.5;// 阴影透明度
+    self.headView.layer.shadowColor = [UIColor grayColor].CGColor;// 阴影的颜色
+    self.headView.layer.shadowRadius = 3;// 阴影扩散的范围控制
+    self.headView.layer.shadowOffset = CGSizeMake(1, 1);// 阴影的范围
+    self.headView.layer.cornerRadius = 5.f;
+    self.headView.layer.borderWidth = 1.f;
+    self.headView.layer.borderColor = [UIColor whiteColor].CGColor;
     [self.headerImage setCorenerRadius:self.headerImage.frame.size.width/2 borderColor:White];
-    [[WOTConfigThemeUitls shared] setLabelColorss:[NSArray arrayWithObjects:self.userName,self.constellation,self.signature, nil] withColor:[UIColor whiteColor]];
+    [[WOTConfigThemeUitls shared] setLabelColorss:[NSArray arrayWithObjects:self.userName,self.memberLabel, nil] withColor:[UIColor blackColor]];
     // Initialization code
 }
 
@@ -30,10 +36,8 @@
         [_mycelldelegate showSettingVC];
     }
 }
-- (IBAction)goToPersionalInformationVC:(id)sender {
-    if (_mycelldelegate) {
-        [_mycelldelegate showPersonalInformationVC];
-    }
-}
+
+
+
 
 @end

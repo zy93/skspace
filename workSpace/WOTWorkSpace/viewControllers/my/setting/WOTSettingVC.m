@@ -50,7 +50,12 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
    
         //return 3;
-    return 2;
+    if ([WOTSingtleton shared].isuserLogin) {
+        return 2;
+    }else
+    {
+        return 1;
+    }
 
 }
 
@@ -208,13 +213,21 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    
+        
     if (indexPath.section == 1) {
-        [[WOTConfigThemeUitls shared] showRemindingAlert:self message:@"确定退出当前帐号?" okBlock:^{
-            [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
-            [self.navigationController popViewControllerAnimated:YES];           
-        } cancel:^{
-            
-        }];
+        if ([WOTSingtleton shared].isuserLogin) {
+            [[WOTConfigThemeUitls shared] showRemindingAlert:self message:@"确定退出当前帐号?" okBlock:^{
+                [WOTSingtleton shared].isuserLogin = NO;
+                [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
+                [[WOTUserSingleton shareUser] deletePlistFile];
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            } cancel:^{
+                
+            }];
+        }
+        
         
     } else if (indexPath.section == 0){
         

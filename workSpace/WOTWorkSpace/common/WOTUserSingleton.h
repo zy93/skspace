@@ -16,4 +16,5 @@
 
 +(instancetype)shareUser;
 -(void)saveUserInfoToPlistWithModel:(WOTLoginModel *)model;
+-(void)deletePlistFile;
 @end
