@@ -281,9 +281,9 @@
 -(void)gotoOrderVC:(WOTBookStationCell *)cell
 {
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
-    vc.startTime = inquireTime;//arr.firstObject;
-    vc.endTime = inquireTime;//arr.lastObject;
-    vc.spaceId = self.spaceId;
+//    vc.startTime = inquireTime;//arr.firstObject;
+//    vc.endTime = inquireTime;//arr.lastObject;
+//    vc.spaceId = self.spaceId;
     //    vc.conferenceId = cell.model.conferenceId;
     [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
     vc.spaceModel = cell.model;

@@ -8,6 +8,8 @@
 
 #import "WOTOrderVC.h"
 #import "WOTOrderForInfoCell.h"
+#import "WOTOrderForSelectDateCell.h"
+#import "WOTOrderForSelectTimeCell.h"
 #import "WOTOrderForBookStationCell.h"
 #import "WOTOrderForSiteCell.h"
 #import "WOTOrderForServiceInfoCell.h"
@@ -21,6 +23,8 @@
 #import "SKBookStationNumberModel.h"
 
 #define infoCell @"infoCell"
+#define selectDateCell @"selectDateCell"
+#define selectTimeCell @"selectTimeCell"
 #define bookStationCell @"bookStationCell"
 #define serviceCell @"serviceCell"
 #define payTypeCell @"payTypeCell"
@@ -30,24 +34,25 @@
 #define uitableCell @"uitableCell"
 #define paymentCell @"paymentCell"
 
-@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,WOTOrderForBookStationCellDelegate>
+@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate>
 {
     NSArray *tableList;
     
     NSIndexPath *payTypeIndex;//个人、企业支付
     NSIndexPath *paymentIndex;//微信、支付宝支付
-    
+    NSString *inquireTime;//查询日期;
 }
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property (weak, nonatomic) IBOutlet UILabel *costLabel;
 @property (nonatomic, strong)WOTDatePickerView *datepickerview;
 @property (nonatomic, assign)BOOL isValidTime;
-@property (nonatomic, strong) JudgmentTime *judgmentTime;
+@property (nonatomic, strong)JudgmentTime *judgmentTime;
 @property (nonatomic, strong)WOTOrderForBookStationCell *orderBookStationCell;
 @property (nonatomic, assign)NSInteger dayNumber;
 @property (nonatomic, assign)NSNumber *productNum;
 @property (nonatomic, assign)float orderNumber;
 @property (nonatomic, assign)NSNumber *stationNumber;
+@property (nonatomic, strong)NSIndexPath *selectCellIndex;;
 
 @end
 
@@ -95,7 +100,7 @@
 }
 
 -(void)configNav{
-    self.navigationItem.title = @"确认订单";
+    self.navigationItem.title = @"预定";
     self.navigationController.navigationBar.translucent = NO;
     //解决布局空白问题
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
@@ -108,7 +113,6 @@
 {
     __weak typeof(self) weakSelf = self;
     _datepickerview = [[NSBundle mainBundle]loadNibNamed:@"WOTDatePickerView" owner:nil options:nil].lastObject;
-    //[_datepickerview setFrame:CGRectMake(0, self.view.frame.size.height - [WOTUitls GetLengthAdaptRate]*300, self.view.frame.size.width, 300)];
      [_datepickerview setFrame:CGRectMake(0, self.view.frame.size.height-300, self.view.frame.size.width, 300)];
     _datepickerview.cancelBlokc = ^(){
         weakSelf.datepickerview.hidden = YES;
@@ -116,18 +120,21 @@
     
     _datepickerview.okBlock = ^(NSInteger year,NSInteger month,NSInteger day,NSInteger hour,NSInteger min){
         weakSelf.datepickerview.hidden = YES;
-        NSString *selecTime = [NSString stringWithFormat:@"%ld/%ld/%ld",year, month, day];
+        NSString *selecTime = [NSString stringWithFormat:@"%04ld/%02ld/%02ld",year, month, day];
         weakSelf.isValidTime = [weakSelf.judgmentTime judgementTimeWithYear:year month:month day:day];
         
         if (weakSelf.isValidTime) {
             weakSelf.datepickerview.hidden  = YES;
-                [weakSelf Timedisplay:selecTime];
+            [weakSelf Timedisplay:selecTime];
             
         }else
         {
             [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
             weakSelf.datepickerview.hidden  = NO;
         }
+        
+        WOTOrderForSelectDateCell *cell = [weakSelf.table cellForRowAtIndexPath:weakSelf.selectCellIndex];
+        [cell.dateLab setText:selecTime];
        // [weakSelf reloadView];
     };
     
@@ -150,7 +157,7 @@
         case ORDER_TYPE_MEETING:
         case ORDER_TYPE_SITE:
         {
-            list1 = @[infoCell, siteCell, serviceCell, payTypeCell, selectCell, selectCell];
+            list1 = @[infoCell, selectDateCell, selectTimeCell];
             
         }
             break;
@@ -158,8 +165,10 @@
             break;
     }
     
-    NSArray *list2 = @[uitableCell,paymentCell];
-    tableList = @[list1, list2];
+    NSArray *list2 = @[serviceCell];
+    NSArray *list3 = @[payTypeCell, selectCell, selectCell];
+    NSArray *list4 = @[uitableCell,paymentCell];
+    tableList = @[list1, list2, list3, list4];
 }
 
 -(void)loadCost
@@ -221,15 +230,17 @@
         default:
             break;
     }
+    NSArray *arr = [NSString getReservationsTimesWithDate:inquireTime StartTime:self.beginTime  endTime:self.endTime];
+    
     [MBProgressHUDUtil showLoadingWithMessage:@"支付中，请稍后...."
                                        toView:self.view
                            whileExcusingBlock:^(MBProgressHUD *hud) {
-                               [WOTHTTPNetwork generateOrderWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"]
+                               [WOTHTTPNetwork generateOrderWithSpaceId:self.spaceModel.spaceId
                                                            commodityNum:commNum
                                                           commodityKind:commKind
                                                              productNum:self.productNum
-                                                              startTime:self.startTime
-                                                                endTime:self.endTime
+                                                              startTime:arr.firstObject
+                                                                endTime:arr.lastObject
                                                                   money:self.costNumber
                                                                dealMode:dealMode
                                                                 payType:@(1)
@@ -298,6 +309,35 @@
              
 }
 
+#pragma mark - cell delegate
+-(void)selectTimeWithCell:(WOTOrderForSelectTimeCell *)cell Time:(CGFloat)time
+{
+    if (self.beginTime == self.endTime && self.endTime == 0) {
+        self.beginTime = time;
+        self.endTime = self.beginTime+0.5;
+    }
+    else if (time ==  self.beginTime && self.beginTime == self.endTime-0.5) {
+        self.beginTime = self.endTime = 0;
+    }
+    else if (time<self.beginTime) {
+        self.beginTime = time;
+    }
+    else if (time>=self.endTime) {
+        self.endTime = time+0.5;
+    }
+    else if (time>self.beginTime && time<self.endTime) {
+        if (time == self.endTime-0.5) {
+            self.endTime = time;
+        }
+        else {
+            self.endTime = time+0.5;
+        }
+    }
+    
+    [cell.selectTimeScroll setBeginTime:self.beginTime endTime:self.endTime];
+}
+
+
 #pragma mark - table delegate & dataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -317,7 +357,13 @@
     NSString *cellType = list[indexPath.row];
     
     if ([cellType isEqualToString:infoCell]) {
-        return 198;
+        return 265;
+    }
+    else if ([cellType isEqualToString:selectDateCell]) {
+        return 40;
+    }
+    else if ([cellType isEqualToString:selectTimeCell]) {
+        return 130;
     }
     else if ([cellType isEqualToString:bookStationCell]) {
         return 169;
@@ -326,7 +372,7 @@
         return 65;
     }
     else if ([cellType isEqualToString:serviceCell]) {
-        return 176;
+        return 80;
     }
     else if ([cellType isEqualToString:payTypeCell]) {
         return 50;
@@ -370,8 +416,8 @@
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_BOOKSTATION:
             {
-                [cell.infoImg  sd_setImageWithURL:[((NSDictionary *)_spaceModel)[@"spacePicture"] ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
-                cell.infoTitle.text = ((NSDictionary *)_spaceModel)[@"spaceName"];
+                [cell.infoImg  sd_setImageWithURL:[_spaceModel.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+                cell.infoTitle.text = _spaceModel.spaceName;
             }
                 break;
             case ORDER_TYPE_MEETING:
@@ -393,6 +439,29 @@
         
         return cell;
     }
+    else if ([cellType isEqualToString:selectDateCell]) {
+        WOTOrderForSelectDateCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForSelectDateCell"];
+        if (cell == nil) {
+            cell = [[WOTOrderForSelectDateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTOrderForSelectDateCell"];
+        }
+        return cell;
+    }
+    else if ([cellType isEqualToString:selectTimeCell]) {
+        WOTOrderForSelectTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForSelectTimeCell"];
+        if (cell == nil) {
+            cell = [[WOTOrderForSelectTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTOrderForSelectTimeCell"];
+        }
+        cell.delegate  =  self;
+        [cell setInquireTime:inquireTime];
+        if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+            [cell.selectTimeScroll setOpenTime:self.meetingModel.openTime];
+        }
+        else {
+            [cell.selectTimeScroll setOpenTime:self.siteModel.openTime];
+        }
+        cell.index = indexPath;
+        return cell;
+    }
     else if ([cellType isEqualToString:bookStationCell]) {
         self.orderBookStationCell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForBookStationCell"];
         if (self.orderBookStationCell == nil) {
@@ -408,14 +477,6 @@
         if (cell == nil) {
             cell = [[WOTOrderForSiteCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForSiteCell"];
         }
-        //
-        [cell.reservationsDateLab setText:[self.startTime substringWithRange:NSMakeRange(0, 10)]];
-        NSString *str = [NSString stringWithFormat:@"%@-%@",
-                         [self.startTime substringWithRange:NSMakeRange(11, 5)],
-                         [self.endTime   substringWithRange:NSMakeRange(11, 5)]];
-        
-        [cell.reservationsTimeLab setText:str];
-        
         return cell;
     }
     else if ([cellType isEqualToString:serviceCell]) {
@@ -429,7 +490,7 @@
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_BOOKSTATION:
             {
-                cell.addressLabel.text = ((NSDictionary *)self.spaceModel)[@"spaceSite"] ;
+                cell.addressLabel.text = self.spaceModel.spaceSite;
                 cell.openTimeLabel.text =@"全天";
                 cell.deviceInfoLabel.text =@"无" ;
             }
@@ -438,13 +499,13 @@
             {
                 cell.addressLabel.text = [self.spaceModel.spaceSite stringByAppendingString:self.meetingModel.location];
                 cell.openTimeLabel.text = [self.meetingModel.openTime stringByAppendingString:@"开放"];
-                cell.deviceInfoLabel.text = self.meetingModel.facility;
+                cell.deviceInfoLabel.text = strIsEmpty(self.meetingModel.facility) ? @"无": self.meetingModel.facility ;
             }
                 break;
             case ORDER_TYPE_SITE:
             {
-                cell.addressLabel.text =[((NSDictionary *)self.spaceModel)[@"spaceSite"] stringByAppendingString:self.siteModel.location];
-                cell.openTimeLabel.text = [self.siteModel.openTime stringByAppendingString:@"开放"];
+                cell.addressLabel.text =[self.spaceModel.spaceSite stringByAppendingString:self.siteModel.location];
+                cell.openTimeLabel.text = self.siteModel.openTime;
                 cell.deviceInfoLabel.text = self.siteModel.facility;
             }
                 break;
@@ -466,7 +527,7 @@
         if (cell == nil) {
             cell = [[WOTOrderForSelectCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForSelectCell"];
         }
-        if (indexPath.row==4) {
+        if (indexPath.row==1) {
             [cell.titleLab setText:@"发票信息"];
             [cell.subtitleLab setText:@"北京物联港科技发展有限公司"];
         }
@@ -521,19 +582,26 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section==0) {
-        if (indexPath.row == 4 || indexPath.row == 5) {
-            payTypeIndex = indexPath;
-//            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        }
+    NSArray *list = tableList[indexPath.section];
+    NSString *cellType = list[indexPath.row];
+    
+    if ([cellType isEqualToString:selectDateCell]) {
+        _datepickerview.hidden = NO;
+    }
+    
+//    if (indexPath.section==0) {
+//        if (indexPath.row == 4 || indexPath.row == 5) {
+//            payTypeIndex = indexPath;
+////            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        }
+////        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+//    }
+//    else if (indexPath.section == 1) {
+//        if (indexPath.row == 1 || indexPath.row == 2) {
+//            paymentIndex = indexPath;
+//        }
 //        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-    }
-    else if (indexPath.section == 1) {
-        if (indexPath.row == 1 || indexPath.row == 2) {
-            paymentIndex = indexPath;
-        }
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-    }
+//    }
 }
 
 #pragma mark - 显示时间选择器
@@ -614,11 +682,12 @@
 #pragma mark - 验证会议室
 -(void)verifyMeeting
 {
-    [WOTHTTPNetwork meetingReservationsWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"]
+    NSArray *arr = [NSString getReservationsTimesWithDate:inquireTime StartTime:self.beginTime  endTime:self.endTime];
+    [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
                                       conferenceId:self.meetingModel.conferenceId
-                                         startTime:self.startTime
-                                           endTime:self.endTime
-                                         spaceName:((NSDictionary *)self.spaceModel)[@"spaceName"]
+                                         startTime:arr.firstObject
+                                           endTime:arr.lastObject
+                                         spaceName:self.spaceModel.spaceName
                                        meetingName:self.meetingModel.conferenceName
                                           response:^(id bean, NSError *error) {
                                               
@@ -628,11 +697,12 @@
 #pragma mark - 验证场地
 -(void)verifySite
 {
-    [WOTHTTPNetwork siteReservationsWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"]
+    NSArray *arr = [NSString getReservationsTimesWithDate:inquireTime StartTime:self.beginTime  endTime:self.endTime];
+    [WOTHTTPNetwork siteReservationsWithSpaceId:self.spaceModel.spaceId
                                          siteId:self.siteModel.siteId
-                                      startTime:self.startTime
-                                        endTime:self.endTime
-                                      spaceName:((NSDictionary *)self.spaceModel)[@"spaceName"]
+                                      startTime:arr.firstObject
+                                        endTime:arr.lastObject
+                                      spaceName:self.spaceModel.spaceName
                                        siteName:self.siteModel.siteName
                                        response:^(id bean, NSError *error) {
                                            
@@ -643,7 +713,7 @@
 -(void)verifyBookStation
 {
    // NSLog(@"测试：%@",self.productNum);
-    [WOTHTTPNetwork bookStationReservationsWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"]
+    [WOTHTTPNetwork bookStationReservationsWithSpaceId:self.spaceModel.spaceId
                                                  count:@([self.orderBookStationCell.orderNumber.text integerValue])
                                              startTime:self.orderBookStationCell.startDataLable.text
                                                endTime:self.orderBookStationCell.endDataLabel.text
@@ -668,7 +738,7 @@
 -(void)requestStationNumber
 {
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getBookStationNumberWithSpaceId:((NSDictionary *)self.spaceModel)[@"spaceId"] response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork getBookStationNumberWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
         if (error) {
             NSLog(@"error:%@",error);
             return ;

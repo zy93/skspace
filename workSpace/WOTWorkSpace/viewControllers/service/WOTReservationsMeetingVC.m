@@ -246,7 +246,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     WOTReservationsMeetingCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
-    vc.spaceId = self.spaceId;
+//    vc.spaceId = self.spaceId;
     vc.spaceModel = self.spaceModel;
     if([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING){
         vc.meetingModel = cell.meetingModel;

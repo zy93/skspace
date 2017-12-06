@@ -17,18 +17,14 @@
 
 @interface WOTOrderVC : UIViewController
 
-@property (nonatomic, strong) NSNumber *spaceId;
-@property (nonatomic, strong) NSNumber *conferenceOrSiteId;
-@property (nonatomic, strong) NSString *startTime;
-@property (nonatomic, strong) NSString *endTime;
-
 @property (nonatomic, strong) WOTBookStationListModel *model;
 @property (nonatomic, strong) WOTMeetingListModel *meetingModel;
 @property (nonatomic, strong) WOTSiteModel *siteModel;
-
-//2017-9-26
 @property (nonatomic, strong) WOTSpaceModel *spaceModel;
 
 @property (nonatomic, assign) CGFloat costNumber;
+//已选时间记录
+@property (nonatomic,assign) CGFloat beginTime;
+@property (nonatomic,assign) CGFloat endTime;
 
 @end

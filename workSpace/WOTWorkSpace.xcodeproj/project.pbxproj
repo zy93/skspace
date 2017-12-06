@@ -122,6 +122,8 @@
 		2AF78CF11F0A3B7000F7B56D /* WOTVisitorsAppointmentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF78CF01F0A3B7000F7B56D /* WOTVisitorsAppointmentVC.m */; };
 		2AF78CF41F0A3DCB00F7B56D /* WOTMaintenanceApplyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF78CF31F0A3DCB00F7B56D /* WOTMaintenanceApplyVC.m */; };
 		2AF78CF71F0A3EFA00F7B56D /* WOTFeedbackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF78CF61F0A3EFA00F7B56D /* WOTFeedbackVC.m */; };
+		2AF7B18C1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7B18B1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m */; };
+		2AF7B18F1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7B18E1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.m */; };
 		2AF83EE81F05FB92000AE733 /* Service.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AF83EE71F05FB92000AE733 /* Service.storyboard */; };
 		2AFAC8951F0FB796001BAB14 /* WOTRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFAC8931F0FB796001BAB14 /* WOTRadioView.m */; };
 		59BB1AF86E21AC99D91DDCE6 /* libPods-WOTWorkSpace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D773A878FA3518662358C7A0 /* libPods-WOTWorkSpace.a */; };
@@ -574,6 +576,10 @@
 		2AF78CF31F0A3DCB00F7B56D /* WOTMaintenanceApplyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMaintenanceApplyVC.m; sourceTree = "<group>"; };
 		2AF78CF51F0A3EFA00F7B56D /* WOTFeedbackVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTFeedbackVC.h; sourceTree = "<group>"; };
 		2AF78CF61F0A3EFA00F7B56D /* WOTFeedbackVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTFeedbackVC.m; sourceTree = "<group>"; };
+		2AF7B18A1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTOrderForSelectDateCell.h; sourceTree = "<group>"; };
+		2AF7B18B1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTOrderForSelectDateCell.m; sourceTree = "<group>"; };
+		2AF7B18D1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTOrderForSelectTimeCell.h; sourceTree = "<group>"; };
+		2AF7B18E1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTOrderForSelectTimeCell.m; sourceTree = "<group>"; };
 		2AF83EE71F05FB92000AE733 /* Service.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Service.storyboard; sourceTree = "<group>"; };
 		2AFAC8921F0FB796001BAB14 /* WOTRadioView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTRadioView.h; sourceTree = "<group>"; };
 		2AFAC8931F0FB796001BAB14 /* WOTRadioView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTRadioView.m; sourceTree = "<group>"; };
@@ -1655,6 +1661,10 @@
 				2AF18A431F136F6D004681CE /* WOTOrderForPaymentCell.m */,
 				2AF18A3F1F136567004681CE /* WOTOrderForAmountCell.h */,
 				2AF18A401F136567004681CE /* WOTOrderForAmountCell.m */,
+				2AF7B18A1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.h */,
+				2AF7B18B1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m */,
+				2AF7B18D1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.h */,
+				2AF7B18E1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.m */,
 				2AF18A281F131DEA004681CE /* WOTReservationsMeetingCell.h */,
 				2AF18A291F131DEA004681CE /* WOTReservationsMeetingCell.m */,
 				2AF18A2A1F131DEA004681CE /* WOTReservationsMeetingCell.xib */,
@@ -3115,6 +3125,7 @@
 				2A1624F61F0E3F4B00F216F9 /* WOTUserRegisterVC.m in Sources */,
 				E8190D971F0F69660000B07C /* WOTInformationLIstCell.m in Sources */,
 				E8DDCCD21F11D151007D001C /* WOTEnterpriseTypeVC.m in Sources */,
+				2AF7B18C1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m in Sources */,
 				E85A85F51F0202460016FCA1 /* View+MASAdditions.m in Sources */,
 				E85A860A1F022D6C0016FCA1 /* WOTMyNaviController.m in Sources */,
 				E86245621F3D4F4900CF0D9D /* SRIOConsumer.m in Sources */,
@@ -3136,6 +3147,7 @@
 				E8CF9FD41F0F8EA400EF0F46 /* WOTBookStationCell.m in Sources */,
 				E85A85951F0201F30016FCA1 /* WOTWorkSpace.xcdatamodeld in Sources */,
 				2AF78CEE1F0A39E800F7B56D /* WOTGETServiceViewController.m in Sources */,
+				2AF7B18F1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.m in Sources */,
 				2AF18A321F136016004681CE /* WOTOrderForInfoCell.m in Sources */,
 				2AAC7A391F5D2FDE00F08359 /* MJRefreshBackStateFooter.m in Sources */,
 				2AF18A2B1F131DEA004681CE /* WOTReservationsMeetingCell.m in Sources */,
@@ -3326,7 +3338,7 @@
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/WXPay",
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/Alipay",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.skSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WOTWorkSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3487,7 +3499,7 @@
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/WXPay",
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/Alipay",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.skSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WOTWorkSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3528,7 +3540,7 @@
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/WXPay",
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/Alipay",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.skSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WOTWorkSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

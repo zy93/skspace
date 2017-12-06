@@ -9,8 +9,8 @@
 #import "WOTSelectScrollView.h"
 #import "WOTReservationsMeetingCell.h"
 
-#define ButtonWith 40
-#define ButtonHeight 50
+#define ButtonWith 45
+#define ButtonHeight 60
 
 
 @interface WOTScrollButton ()
@@ -25,7 +25,7 @@
     [super setSelected:selected];
     if (selected) {
         [self setBackgroundColor:UIColor_blue_40];
-        [self setImage:[UIImage imageNamed:@"select_white"]  forState:UIControlStateNormal];
+        [self setImage:[UIImage imageNamed:@"time_selected"]  forState:UIControlStateNormal];
         [self.layer setBorderColor:UIColor_blue_40.CGColor];
     }
     else {
@@ -39,7 +39,7 @@
     [super setEnabled:enabled];
     if (!enabled) {
         [self setBackgroundColor:UIColor_gray_d6];
-        [self setImage:[UIImage imageNamed:@"select_gray"]  forState:UIControlStateNormal];
+        [self setImage:[UIImage imageNamed:@"time_invalid"]  forState:UIControlStateNormal];
     }
     else {
         [self setBackgroundColor:[UIColor whiteColor]];
@@ -48,21 +48,21 @@
         
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self sendActionsForControlEvents:UIControlEventTouchUpInside];
-    [[self nextResponder] touchesBegan:touches withEvent:event];
-}
-
--(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [[self nextResponder] touchesEnded:touches withEvent:event];
-}
-
--(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [[self nextResponder] touchesCancelled:touches withEvent:event];
-}
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+//    [[self nextResponder] touchesBegan:touches withEvent:event];
+//}
+//
+//-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [[self nextResponder] touchesEnded:touches withEvent:event];
+//}
+//
+//-(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [[self nextResponder] touchesCancelled:touches withEvent:event];
+//}
 
 @end
 
@@ -106,21 +106,21 @@
     return self;
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-
-    [[self nextResponder] touchesBegan:touches withEvent:event];
-}
-
--(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [[self nextResponder] touchesEnded:touches withEvent:event];
-}
-
--(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [[self nextResponder] touchesCancelled:touches withEvent:event];
-}
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//
+//    [[self nextResponder] touchesBegan:touches withEvent:event];
+//}
+//
+//-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [[self nextResponder] touchesEnded:touches withEvent:event];
+//}
+//
+//-(void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [[self nextResponder] touchesCancelled:touches withEvent:event];
+//}
 
 -(void)setOpenTime:(NSString *)openTime
 {
@@ -134,7 +134,7 @@
 {
     selectBeginTime = begin;
     selectEndTime = end;
-    [self setNeedsLayout];
+    [self updateView];
 }
 
 //-(void)setSelectBtnTimeList:(NSArray *)tagList
@@ -184,11 +184,11 @@
         }
         [titleArr removeAllObjects];
     }
-    if (!topLine) {
-        topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 1)];
-    }
-    [topLine setBackgroundColor:[UIColor grayColor]];
-    [self addSubview:topLine];
+//    if (!topLine) {
+//        topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 1)];
+//    }
+//    [topLine setBackgroundColor:[UIColor grayColor]];
+//    [self addSubview:topLine];
     //NSLog(@"测试：%f,%f",openStartTime,openEndTime);
     
     for (float i = openStartTime; i< openEndTime; i+=0.5) {
@@ -222,7 +222,7 @@
       */
     //NSLog(@"测试：%d",buttonArr.count);
     //NSLog(@"测试：%d",titleArr.count);
-    [self setNeedsLayout];
+    [self updateView];
 }
 
 
@@ -230,8 +230,8 @@
 {
     WOTScrollButton *button = [WOTScrollButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchUpInside];
-    button.layer.borderColor = UIColor_gray_d6.CGColor;
-    button.layer.borderWidth = 1.f;
+//    button.layer.borderColor = UIColor_gray_d6.CGColor;
+//    button.layer.borderWidth = 1.f;
     if (title) {
         [button setTitle:title forState:UIControlStateNormal];
     }
@@ -248,35 +248,36 @@
     return lab;
 }
 
--(void)layoutSubviews
+-(void)updateView
 {
-    [super layoutSubviews];
     //NSLog(@"测试：%d",buttonArr.count);
     //NSLog(@"测试：%d",titleArr.count);
-    CGRect btnRect = CGRectMake(10, 30, ButtonWith, ButtonHeight);
+    CGFloat btnY = 0;
+    CGRect btnRect = CGRectMake(10, btnY, ButtonWith, ButtonHeight);
     for (int i = 0 ; i<buttonArr.count ; i++) {
         WOTScrollButton *btn = buttonArr[i];
 //        NSLog(@"---Btn:%ld",btn.isEnabled);
         [btn setEnabled:YES];
         btn.selected = NO;
         [btn setFrame:btnRect];
-        btnRect = CGRectMake(CGRectGetMaxX(btn.frame)-1, 30, ButtonWith, ButtonHeight);
+        btnRect = CGRectMake(CGRectGetMaxX(btn.frame)-1, btnY, ButtonWith, ButtonHeight);
        
         //整点
         if ((int)(btn.time+0.5)==(int)btn.time) {
             UILabel *lab = [titleArr objectAtIndex:i/2];
             //lab.backgroundColor = [UIColor blueColor];
            // [lab setFrame:CGRectMake(CGRectGetMinX(btn.frame), 15, 30, 13)];
-            [lab setFrame:CGRectMake(CGRectGetMinX(btn.frame)-10, 15, 30, 13)];
+            [lab setFrame:CGRectMake(CGRectGetMinX(btn.frame)-10, CGRectGetMaxY(btnRect) + 2, 30, 13)];
+            [self completeLineWithBtn:btn];
+        }else
+        {
+            [self incompleteLineWithBtn:btn];
         }
         //最后一个是否需要显示，以及位置
         if (i==buttonArr.count-1) {
             if ((int)(btn.time+0.5)-(int)btn.time!=0) {
                 UILabel *lab = [titleArr objectAtIndex:(i+1)/2];
-                //lab.backgroundColor = [UIColor blueColor];
-                // [lab setFrame:CGRectMake(CGRectGetMinX(btn.frame), 15, 30, 13)];
-                // [lab setFrame:CGRectMake(CGRectGetMinX(btn.frame)-10, 15, 30, 13)];
-                [lab setFrame:CGRectMake(CGRectGetMaxX(btn.frame)-10, 15, 30, 13)];
+                [lab setFrame:CGRectMake(CGRectGetMaxX(btn.frame)-10, CGRectGetMaxY(btnRect) + 2, 30, 13)];
             }
             
         }
@@ -317,6 +318,41 @@
     }
 }
 
+-(void)completeLineWithBtn:(WOTScrollButton *)btn
+{
+    // 线的路径
+    UIBezierPath *linePath = [UIBezierPath bezierPath];
+    // 起点
+    [linePath moveToPoint:CGPointMake(0, 0)];
+    // 其他点
+    [linePath addLineToPoint:CGPointMake(0, btn.frame.size.height)];
+    [linePath addLineToPoint:CGPointMake(btn.frame.size.width, btn.frame.size.height)];
+    
+    CAShapeLayer *lineLayer = [CAShapeLayer layer];
+    lineLayer.lineWidth = 1;
+    lineLayer.strokeColor = UIColorFromRGB(0xdddddd).CGColor;
+    lineLayer.path = linePath.CGPath;
+    lineLayer.fillColor = nil; // 默认为blackColor
+    [btn.layer addSublayer:lineLayer];
+}
+
+-(void)incompleteLineWithBtn:(WOTScrollButton *)btn
+{
+    // 线的路径
+    UIBezierPath *linePath = [UIBezierPath bezierPath];
+    // 起点
+    [linePath moveToPoint:CGPointMake(0, btn.frame.size.height -25)];
+    // 其他点
+    [linePath addLineToPoint:CGPointMake(0, btn.frame.size.height)];
+    [linePath addLineToPoint:CGPointMake(btn.frame.size.width, btn.frame.size.height)];
+    
+    CAShapeLayer *lineLayer = [CAShapeLayer layer];
+    lineLayer.lineWidth = 1;
+    lineLayer.strokeColor = UIColorFromRGB(0xdddddd).CGColor;
+    lineLayer.path = linePath.CGPath;
+    lineLayer.fillColor = nil; // 默认为blackColor
+    [btn.layer addSublayer:lineLayer];
+}
 
 -(BOOL)checkTimeHasBeenBookedWithTime:(CGFloat)time
 {
