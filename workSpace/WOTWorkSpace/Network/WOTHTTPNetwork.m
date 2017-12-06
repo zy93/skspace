@@ -195,8 +195,9 @@
 //登录
 +(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd response:(response)response
 {
-    NSDictionary *dic = @{@"tel" :telOrEmail, @"password":[WOTUitls md5HexDigestByString:pwd]};
-    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/Login/Login"];
+    NSDictionary *dic = @{@"tel" :telOrEmail,
+                          @"password":[WOTUitls md5HexDigestByString:pwd]};
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/Login"];
     
     [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
         WOTLoginModel_msg *model = [[WOTLoginModel_msg alloc] initWithDictionary:responseobj error:nil];
@@ -207,7 +208,7 @@
 +(void)userGetVerifyWitTel:(NSString *)tel response:(response)response
 {
     NSDictionary *dic = @{@"tel" :tel};
-    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/Login/sendVerify"];
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/sendVerify"];
     
     [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
         WOTGetVerifyModel *model = [[WOTGetVerifyModel alloc] initWithDictionary:responseobj error:nil];
@@ -217,10 +218,23 @@
 
 +(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass response:(response)response
 {
-    NSDictionary *dic = @{@"tel" :tel,
-                          @"verifyNumPro": code,
+    NSDictionary *dic = @{@"tel":tel,
+                          @"verifyNum": code,
                           @"password":[WOTUitls md5HexDigestByString:pass]};
-    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/Login/register"];
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/register"];
+    
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        WOTRegisterModel *model = [[WOTRegisterModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)updatePassWordWithVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass response:(response)response
+{
+    NSDictionary *dic = @{@"tel":tel,
+                          @"verifyNum": code,
+                          @"password":[WOTUitls md5HexDigestByString:pass]};
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/register"];
     
     [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
         WOTRegisterModel *model = [[WOTRegisterModel alloc] initWithDictionary:responseobj error:nil];

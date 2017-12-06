@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <ifaddrs.h>
 #import <arpa/inet.h>
+#import "LoginViewController.h"
 
 @implementation WOTConfigThemeUitls
 +(instancetype)shared{
@@ -79,18 +80,23 @@
 //懒加载登录模块navigationController
 -(WOTLoginNaviController *)nav{
     if (_nav == nil) {
-        WOTLoginVC *vc = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTLoginVC"];
-       _nav = [[WOTLoginNaviController alloc]initWithRootViewController:vc];
+//        WOTLoginVC *vc = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTLoginVC"];
+//       _nav = [[WOTLoginNaviController alloc]initWithRootViewController:vc];
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        _nav = [[WOTLoginNaviController alloc]initWithRootViewController:loginVC];;
     }
     return _nav;
 }
+
 //跳转到登录页面通用方法
 -(void)showLoginVC:(UIViewController *)persentVC{
     
     
-    [persentVC presentViewController:self.nav animated:YES completion:^{
-        
-    }];
+//    [persentVC presentViewController:self.nav animated:YES completion:^{
+//
+//    }];
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    [persentVC.navigationController pushViewController:loginVC animated:YES];
 }
 
 //统一显示alertView

@@ -36,6 +36,16 @@ typedef void(^response)(id bean,NSError *error);
 +(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass response:(response)response;
 
 /**
+ * 修改密码接口
+ @param code 验证码
+ @param tel  手机号注册
+ @param pass 用户密码
+ @param response    回调数据到上层
+ */
++(void)updatePassWordWithVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass response:(response)response;
+
+
+/**
  * 根据城市获取所有空间接口
  @param city  城市名称 传入城市名称根据城市筛选，不传查询全部
  @param response    回调数据到上层
