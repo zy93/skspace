@@ -10,9 +10,11 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "WOTWXApiManager.h"
+//#import "LoginViewController.h"
+
 #define MAP_API_KEY @"47411f2c349b36c1fbdee073cd648149"
 @interface AppDelegate ()
-
+@property (nonatomic, strong)WOTTabBarVCViewController *tabbar;
 @end
 
 @implementation AppDelegate
@@ -20,6 +22,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.tabbar = [[WOTTabBarVCViewController alloc]init];
+    //self.tabbar.delegate = self;
     [self loadTabView];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 //    [self registerPush];
@@ -111,8 +115,8 @@
 
 
 -(void)loadTabView{
-    WOTTabBarVCViewController *tabbar = [[WOTTabBarVCViewController alloc]init];
-    self.window.rootViewController = tabbar;
+   // WOTTabBarVCViewController *tabbar = [[WOTTabBarVCViewController alloc]init];
+    self.window.rootViewController =self.tabbar ;
 }
 
 #pragma mark - private methods
@@ -219,24 +223,21 @@
     //    [alert show];
 }
 
+//- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{//每次点击都会执行的方法
+//    if([viewController.tabBarItem.title isEqualToString:@"我的"]){//判断点击的tabBarItem的title是不是购物车，如果是继续执行
+//        if(![WOTSingtleton shared].isuserLogin){//当登录的时候存储一个标识，判断是否登录过，没登录执行下面代码进入登录页
+//           // LoginViewController *loginVC = [[LoginViewController alloc] init];
+//            LoginViewController *loginVC = [[LoginViewController alloc]init]; //登陆界面
+//            //loginVC.selectedIndex = selectedIndex;    //将所选的TabbarItem 传入登陆界面
+//            loginVC.hidesBottomBarWhenPushed = YES;   //隐藏Tabbar
+//            //[loginVC.navigationController setNavigationBarHidden:YES];
+//            [loginVC.navigationController setNavigationBarHidden:YES animated:YES];
+//            UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginVC];   //使登陆界面的Navigationbar可以显示出来
+//            [((UINavigationController *)tabBarController.selectedViewController) presentViewController:loginNav animated:YES completion:nil]; //跳转登陆界面
+//
+//
+//        }
+//    }
+//}
 
-
-//
-//-(void)registerPush{
-//   
-//    UIUserNotificationSettings *setting = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert categories:nil];
-//    [[UIApplication sharedApplication]registerUserNotificationSettings:setting];
-//}
-//
-//-(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
-//    [application registerForRemoteNotifications];
-//}
-//-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
-//    NSString *token = [NSString stringWithFormat:@"%@",deviceToken];
-//    
-//}
-//
-//-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-//    
-//}
 @end

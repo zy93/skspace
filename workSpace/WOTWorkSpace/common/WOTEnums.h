@@ -13,6 +13,7 @@
 typedef NS_ENUM(NSInteger, WOTPageMenuVCType) {
     WOTPageMenuVCTypeMetting = 0,
     WOTPageMenuVCTypeStation,
+    WOTPageMenuVCTypeSite
 };
 
 

@@ -233,6 +233,7 @@
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                     [[WOTUserSingleton shareUser] saveUserInfoToPlistWithModel:model.msg];
                     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:LOGIN_STATE_USERDEFAULT];
+                    [WOTSingtleton shared].isuserLogin = YES;
                 });
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSLog(@"是否登陆：%d",[WOTSingtleton shared].isuserLogin);

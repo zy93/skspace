@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ReM-5A-Olt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ReM-5A-Olt">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,7 +44,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JTL-1P-dlz">
                                                 <rect key="frame" x="20" y="15" width="3" height="20"/>
-                                                <color key="backgroundColor" red="0.30696478486061096" green="0.52055728435516357" blue="0.90593600273132324" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="1" green="0.49019607843137253" blue="0.23921568627450979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="3" id="f01-2z-vNE"/>
                                                     <constraint firstAttribute="height" constant="20" id="u19-d9-TBL"/>
@@ -89,7 +89,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Fk-r9-LOu">
                                                 <rect key="frame" x="20" y="16" width="3" height="20"/>
-                                                <color key="backgroundColor" red="0.30696478490000001" green="0.52055728440000004" blue="0.90593600269999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="1" green="0.49019607843137253" blue="0.23921568627450979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="3" id="Kla-KA-qtI"/>
                                                     <constraint firstAttribute="height" constant="20" id="c6X-aD-q3c"/>
@@ -164,7 +164,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68Y-GB-uLK">
                                                 <rect key="frame" x="20" y="15" width="3" height="20"/>
-                                                <color key="backgroundColor" red="0.32810655239999997" green="0.51628834010000002" blue="0.90593618149999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="1" green="0.49019607843137253" blue="0.23921568627450979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="ouV-Df-4Hz"/>
                                                     <constraint firstAttribute="width" constant="3" id="rLf-Ma-g9g"/>
@@ -208,7 +208,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxa-k9-KBE">
                                                 <rect key="frame" x="15" y="15" width="3" height="20"/>
-                                                <color key="backgroundColor" red="0.30696478490000001" green="0.52055728440000004" blue="0.90593600269999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="1" green="0.49019607843137253" blue="0.23921568627450979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="3" id="m2d-am-rbc"/>
                                                     <constraint firstAttribute="height" constant="20" id="u8v-5V-j8U"/>

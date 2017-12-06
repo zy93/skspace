@@ -130,9 +130,8 @@
         commoncell = cell;
     } else if (indexPath.section == 1){
         NSArray *titleArray = @[@"技    能",@"兴    趣",@"行业",@"个性签名"];
-        NSArray *valueArray = @[@"",@"",
-                                [WOTUserSingleton shareUser].userInfo.industry,
-                                [WOTUserSingleton shareUser].userInfo.spared1];
+        NSArray *valueArray = @[@"",
+                                [WOTUserSingleton shareUser].userInfo.industry];
         if (indexPath.row == 0|| indexPath.row == 1) {
             
             WOTPersionalInformationTagCell *tagcell = [tableView dequeueReusableCellWithIdentifier:@"WOTPersionalInformationTagCellID" forIndexPath:indexPath];

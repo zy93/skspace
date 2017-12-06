@@ -17,10 +17,10 @@
 @end
 @interface WOTMyuserCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *userName;
-@property (weak, nonatomic) IBOutlet UIImageView *sexImage;
 @property (weak, nonatomic) IBOutlet UIImageView *headerImage;
-@property (weak, nonatomic) IBOutlet UILabel *constellation;
-@property (weak, nonatomic) IBOutlet UILabel *signature;
-@property (weak, nonatomic) IBOutlet UIImageView *bgImage;
+@property (weak, nonatomic) IBOutlet UILabel *memberLabel;
+@property (weak, nonatomic) IBOutlet UIView *headView;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
 @property(nonatomic,strong)id<WOTOMyCellDelegate> mycelldelegate;
 @end

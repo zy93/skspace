@@ -7,6 +7,7 @@
 //
 
 #import "WOTMycommonCell.h"
+#import "UIColor+ColorChange.h"
 
 #import "WOTConstants.h"
 @implementation WOTMycommonCell
@@ -29,7 +30,7 @@
     _cellImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"enterprise"]];
     _cellImage.contentMode = UIViewContentModeScaleAspectFit;
     _lineview = [[UIView alloc]init];
-    _lineview.backgroundColor = LINE_COLOR;
+    _lineview.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
     [self.contentView addSubview:_lineview];
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_nextImageView];
