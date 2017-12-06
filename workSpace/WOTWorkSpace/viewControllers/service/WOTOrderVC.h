@@ -11,7 +11,6 @@
 #import "WOTMeetingReservationsModel.h"
 #import "WOTBookStationListModel.h"
 #import "WOTMeetingListModel.h"
-#import "WOTSiteModel.h"
 #import "WOTSpaceModel.h"
 //#import ""
 
@@ -19,9 +18,9 @@
 
 @property (nonatomic, strong) WOTBookStationListModel *model;
 @property (nonatomic, strong) WOTMeetingListModel *meetingModel;
-@property (nonatomic, strong) WOTSiteModel *siteModel;
 @property (nonatomic, strong) WOTSpaceModel *spaceModel;
 
+//账单费用
 @property (nonatomic, assign) CGFloat costNumber;
 //已选时间记录
 @property (nonatomic,assign) CGFloat beginTime;

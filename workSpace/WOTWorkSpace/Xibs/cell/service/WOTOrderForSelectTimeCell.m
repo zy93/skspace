@@ -32,6 +32,12 @@
 
 }
 
+-(void)setReservationList:(NSArray *)reservationList
+{
+    _reservationList = reservationList;
+    [self.selectTimeScroll setInvalidBtnTimeList:_reservationList];
+}
+
 #pragma mark - scroll delegate
 -(void)selectButton:(WOTScrollButton *)button
 {

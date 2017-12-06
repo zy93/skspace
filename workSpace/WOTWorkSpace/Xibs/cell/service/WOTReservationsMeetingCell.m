@@ -9,7 +9,6 @@
 #import "WOTReservationsMeetingCell.h"
 #import "WOTReservationsMeetingVC.h"
 #import "WOTMeetingReservationsModel.h"
-#import "WOTSiteReservationsModel.h"
 
 @implementation WOTReservationsMeetingCell
 
@@ -36,15 +35,4 @@
     [self.meetingImg sd_setImageWithURL:[_meetingModel.conferencePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
     [self.meetingPriceLab setText:[NSString stringWithFormat:@"%.2f元/小时",[_meetingModel.conferencePrice floatValue]]];
 }
-
--(void)setSiteModel:(WOTSiteModel *)siteModel
-{
-    _siteModel = siteModel;
-    //NSLog(@"测试：%@",siteModel);
-    [self.meetingNameLab setText:_siteModel.siteName];
-    [self.meetingInfoLab setText:_siteModel.siteDescribe];
-    [self.meetingImg sd_setImageWithURL:[_siteModel.sitePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
-    [self.meetingPriceLab setText:[NSString stringWithFormat:@"%.2f元/小时",[_siteModel.sitePrice floatValue]]];
-}
-
 @end

@@ -15,6 +15,13 @@
 }
 @end
 
+@implementation WOTMeetingListModel_list
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+@end
+
 
 @implementation WOTMeetingListModel_msg
 

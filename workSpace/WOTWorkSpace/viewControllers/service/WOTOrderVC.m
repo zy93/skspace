@@ -38,10 +38,9 @@
 @interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate>
 {
     NSArray *tableList;
-    
+    NSArray *mettingReservationList; //会议室已预订时间数组
     NSIndexPath *payTypeIndex;//个人、企业支付
     NSIndexPath *paymentIndex;//微信、支付宝支付
-    NSString *inquireTime;//查询日期;
 }
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property (weak, nonatomic) IBOutlet UILabel *costLabel;
@@ -51,11 +50,12 @@
 @property (nonatomic, assign)BOOL isValidTime;
 @property (nonatomic, strong)JudgmentTime *judgmentTime;
 @property (nonatomic, strong)WOTOrderForBookStationCell *orderBookStationCell;
-@property (nonatomic, assign)NSInteger dayNumber;
+@property (nonatomic, assign)NSInteger dayNumber;  //预定工位天数
 @property (nonatomic, assign)NSNumber *productNum;
 @property (nonatomic, assign)float orderNumber;
 @property (nonatomic, assign)NSNumber *stationNumber;
-@property (nonatomic, strong)NSIndexPath *selectCellIndex;;
+@property (nonatomic, strong)NSIndexPath *selectCellIndex;
+@property (nonatomic, strong)NSString *reservationDate;//预定会议室日期
 
 @end
 
@@ -69,13 +69,14 @@
    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(backMainView:)
                                                 name:@"buttonLoseResponse" object:nil];
+    self.reservationDate = [NSDate getNewTimeZero];
     [self configNav];
     [self loadData];
     [self loadCost];
     
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
-        
-    } else if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ||
+        [WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
+        [self requestMeetingReservationsInfo];
         
     } else if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
         [self requestStationNumber];
@@ -138,10 +139,11 @@
             [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
             weakSelf.datepickerview.hidden  = NO;
         }
-        
+        weakSelf.reservationDate = [NSString stringWithFormat:@"%02ld/%02ld/%02ld 00:00:00",year, month, day];
+
         WOTOrderForSelectDateCell *cell = [weakSelf.table cellForRowAtIndexPath:weakSelf.selectCellIndex];
         [cell.dateLab setText:selecTime];
-       // [weakSelf reloadView];
+        [weakSelf requestMeetingReservationsInfo];
     };
     
     [self.view addSubview:_datepickerview];
@@ -173,9 +175,17 @@
     
     NSArray *list2 = @[serviceCell];
     NSArray *list3 = @[payTypeCell, selectCell, selectCell];
-    NSArray *list4 = @[uitableCell,paymentCell];
-    tableList = @[list1, list2, list3, list4];
+//    NSArray *list4 = @[uitableCell,paymentCell];
+    tableList = @[list1, list2, list3];
 }
+
+#pragma mark - update table
+-(void)updateView{
+    self.beginTime = 0;
+    self.endTime = 0;
+    [self.table reloadData];
+}
+
 
 -(void)loadCost
 {
@@ -218,6 +228,7 @@
         }
             break;
         case ORDER_TYPE_MEETING:
+        case ORDER_TYPE_SITE:
         {
             [self verifyMeeting];
             self.productNum = @(1);
@@ -225,18 +236,10 @@
             commKind = @(1);
         }
             break;
-        case ORDER_TYPE_SITE:
-        {
-            [self verifySite];
-            self.productNum = @(1);
-            commNum = self.siteModel.siteId;
-            commKind = @(2);
-        }
-            break;
         default:
             break;
     }
-    NSArray *arr = [NSString getReservationsTimesWithDate:inquireTime StartTime:self.beginTime  endTime:self.endTime];
+    NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.beginTime  endTime:self.endTime];
     
     [MBProgressHUDUtil showLoadingWithMessage:@"支付中，请稍后...."
                                        toView:self.view
@@ -341,6 +344,7 @@
     }
     
     [cell.selectTimeScroll setBeginTime:self.beginTime endTime:self.endTime];
+    [self imputedPriceAndLoadCost];
 }
 
 
@@ -427,16 +431,11 @@
 //                cell.dailyRentLabel.text = [NSString stringWithFormat:@"日租金：%@元",_spaceModel.on];
             }
                 break;
+            case ORDER_TYPE_SITE:
             case ORDER_TYPE_MEETING:
             {
                 [cell.infoImg  sd_setImageWithURL:[_meetingModel.conferencePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _meetingModel.conferenceName;
-            }
-                break;
-            case ORDER_TYPE_SITE:
-            {
-                [cell.infoImg  sd_setImageWithURL:[_siteModel.sitePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
-                cell.infoTitle.text = _siteModel.siteName;
             }
                 break;
             default:
@@ -451,6 +450,7 @@
         if (cell == nil) {
             cell = [[WOTOrderForSelectDateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTOrderForSelectDateCell"];
         }
+        [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
         return cell;
     }
     else if ([cellType isEqualToString:selectTimeCell]) {
@@ -459,12 +459,13 @@
             cell = [[WOTOrderForSelectTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTOrderForSelectTimeCell"];
         }
         cell.delegate  =  self;
-        [cell setInquireTime:inquireTime];
-        if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+        [cell setReservationList:mettingReservationList];
+        if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ||
+            [WOTSingtleton shared].orderType == ORDER_TYPE_SITE ) {
             [cell.selectTimeScroll setOpenTime:self.meetingModel.openTime];
+            [cell.selectTimeScroll setBeginTime:self.beginTime endTime:self.endTime];
         }
         else {
-            [cell.selectTimeScroll setOpenTime:self.siteModel.openTime];
         }
         cell.index = indexPath;
         return cell;
@@ -503,17 +504,12 @@
             }
                 break;
             case ORDER_TYPE_MEETING:
+            case ORDER_TYPE_SITE:
+
             {
                 cell.addressLabel.text = [self.spaceModel.spaceSite stringByAppendingString:self.meetingModel.location];
-                cell.openTimeLabel.text = [self.meetingModel.openTime stringByAppendingString:@"开放"];
+                cell.openTimeLabel.text =self.meetingModel.openTime;
                 cell.deviceInfoLabel.text = strIsEmpty(self.meetingModel.facility) ? @"无": self.meetingModel.facility ;
-            }
-                break;
-            case ORDER_TYPE_SITE:
-            {
-                cell.addressLabel.text =[self.spaceModel.spaceSite stringByAppendingString:self.siteModel.location];
-                cell.openTimeLabel.text = self.siteModel.openTime;
-                cell.deviceInfoLabel.text = self.siteModel.facility;
             }
                 break;
             default:
@@ -623,7 +619,14 @@
 -(void)imputedPriceAndLoadCost
 {
     //self.orderNumber = [self.orderBookStationCell.orderNumber.text floatValue];
-    self.costNumber = self.dayNumber*[self.orderBookStationCell.orderNumber.text floatValue]*[((NSDictionary *)self.spaceModel)[@"onlineLocationPrice"] floatValue];
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE ||
+        [WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+        CGFloat reservaionsTime = self.endTime - self.beginTime;
+        self.costNumber = [self.meetingModel.conferencePrice floatValue] * reservaionsTime;
+    }
+    else {
+         self.costNumber = self.dayNumber*[self.orderBookStationCell.orderNumber.text floatValue]*[self.spaceModel.onlineLocationPrice floatValue];
+    }
     [self loadCost];
 }
 
@@ -689,7 +692,7 @@
 #pragma mark - 验证会议室
 -(void)verifyMeeting
 {
-    NSArray *arr = [NSString getReservationsTimesWithDate:inquireTime StartTime:self.beginTime  endTime:self.endTime];
+    NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.beginTime  endTime:self.endTime];
     [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
                                       conferenceId:self.meetingModel.conferenceId
                                          startTime:arr.firstObject
@@ -700,22 +703,6 @@
                                               
                                           }];
 }
-
-#pragma mark - 验证场地
--(void)verifySite
-{
-    NSArray *arr = [NSString getReservationsTimesWithDate:inquireTime StartTime:self.beginTime  endTime:self.endTime];
-    [WOTHTTPNetwork siteReservationsWithSpaceId:self.spaceModel.spaceId
-                                         siteId:self.siteModel.siteId
-                                      startTime:arr.firstObject
-                                        endTime:arr.lastObject
-                                      spaceName:self.spaceModel.spaceName
-                                       siteName:self.siteModel.siteName
-                                       response:^(id bean, NSError *error) {
-                                           
-                                       }];
-}
-
 #pragma mark - 验证工位
 -(void)verifyBookStation
 {
@@ -754,6 +741,24 @@
         weakSelf.stationNumber = [bookStation.msg objectForKey:@"residueStationNum"];
     }];
     NSLog(@"打印工位数量：%@",self.stationNumber);
+}
+
+//查询会议室预定情况
+-(void)requestMeetingReservationsInfo
+{
+    //    @"2017/07/13 00:00:00"
+    [WOTHTTPNetwork getMeetingReservationsTimeWithSpaceId:_meetingModel.spaceId conferenceId:_meetingModel.conferenceId startTime:self.reservationDate response:^(id bean, NSError *error) {
+        WOTMeetingReservationsModel_msg *mod =(WOTMeetingReservationsModel_msg *) bean;
+        NSMutableArray *reserList = [NSMutableArray new];
+        for (WOTMeetingReservationsModel * model in  mod.msg) {
+            NSArray *arr = [NSString getReservationsTimesWithStartTime:model.startTime endTime:model.endTime];
+            [reserList addObject:arr];
+        }
+        mettingReservationList = reserList;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateView];
+        });
+    }];
 }
 
 //-(void)request

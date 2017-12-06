@@ -180,7 +180,7 @@ typedef void(^response)(id bean,NSError *error);
  @param spaceid 空间id
  @param response 响应回调
  */
-+(void)getMeetingRoomListWithSpaceId:(NSNumber *)spaceid response:(response)response;
++(void)getMeetingRoomListWithSpaceId:(NSNumber *)spaceid type:(NSNumber *)type response:(response)response;
 
 /**
  获取某个会议室预定情况
@@ -209,18 +209,6 @@ typedef void(^response)(id bean,NSError *error);
                             spaceName:(NSString *)spaceName
                           meetingName:(NSString *) meetingName
                              response:(response)response;
-//TODO: 场地
-+(void)getAllSiteResponse:(response)response;
-+(void)getSiteListWithSpaceId:(NSNumber *)spaceid response:(response)response;
-+(void)getSiteReservationsTimeWithSpaceId:(NSNumber *)spaceid siteId:(NSNumber *)siteid startTime:(NSString *)strTime response:(response)response;
-+(void)siteReservationsWithSpaceId:(NSNumber *)spaceid
-                            siteId:(NSNumber *)siteid
-                         startTime:(NSString *)startTime
-                           endTime:(NSString *)endTime
-                         spaceName:(NSString *)sapceName
-                          siteName:(NSString *)siteName
-                          response:(response)response;
-
 //TODO: 工位
 
 /**

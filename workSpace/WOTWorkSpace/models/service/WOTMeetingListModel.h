@@ -38,10 +38,23 @@
 
 @end
 
+@interface WOTMeetingListModel_list:JSONModel
+@property (nonatomic, strong) NSNumber * bottomPageNo;
+@property (nonatomic, strong) NSNumber * nextPageNo;
+@property (nonatomic, strong) NSNumber * pageNo;
+@property (nonatomic, strong) NSNumber * pageSize;
+@property (nonatomic, strong) NSNumber * previousPageNo;
+@property (nonatomic, strong) NSNumber * topPageNo;
+@property (nonatomic, strong) NSNumber * totalPages;
+@property (nonatomic, strong) NSNumber * totalRecords;
+@property(nonatomic,strong)NSArray <WOTMeetingListModel> *list;
+
+@end
+
 
 @interface WOTMeetingListModel_msg:JSONModel
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSString *result;
-@property(nonatomic,strong)NSArray<WOTMeetingListModel> *msg;
+@property(nonatomic,strong)WOTMeetingListModel_list *msg;
 
 @end
