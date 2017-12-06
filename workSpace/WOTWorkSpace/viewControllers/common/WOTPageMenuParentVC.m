@@ -51,32 +51,13 @@
     [self makeVC];
     NSArray<__kindof UIViewController *> *controllers = [self createViewControllers];
     self.pageTabView = [[XXPageTabView alloc] initWithChildControllers:controllers childTitles:[self createTitles]];
-    self.pageTabView.cutOffLine = YES;
-    self.pageTabView.bottomOffLine = YES;
     [self.pageTabView addIndicatorViewWithStyle];
     [self.pageTabView layoutSubviews];
     self.pageTabView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.pageTabView.delegate = self;
-    //    self.pageTabView.bodyBounces = NO;
-    //    self.pageTabView.tabSize = CGSizeMake(self.view.frame.size.width, 40);
     self.pageTabView.titleStyle = XXPageTabTitleStyleDefault;
     self.pageTabView.indicatorStyle = XXPageTabIndicatorStyleDefault;
-    //    self.pageTabView.minScale = 1.0;
-    //    self.pageTabView.selectedTabIndex = 4;
-    //    self.pageTabView.selectedTabIndex = -1;
-    //    self.pageTabView.selectedTabIndex = 4;
-    
-    //    self.pageTabView.maxNumberOfPageItems = 1;
-    self.pageTabView.maxNumberOfPageItems = 5;
-    
-    //    self.pageTabView.tabItemFont = [UIFont systemFontOfSize:18];
-    
-    //    self.pageTabView.indicatorHeight = 5;
     self.pageTabView.indicatorWidth = 20;
-    //    self.pageTabView.tabBackgroundColor = [UIColor yellowColor];
-    //    self.pageTabView.unSelectedColor = [UIColor greenColor];
-    
-    //    self.pageTabView.tabSize = CGSizeMake(self.view.bounds.size.width-30, 0);
     [self.view addSubview:self.pageTabView];
 }
 
