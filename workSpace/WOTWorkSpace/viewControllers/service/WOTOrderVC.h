@@ -16,14 +16,13 @@
 
 @interface WOTOrderVC : UIViewController
 
-@property (nonatomic, strong) WOTBookStationListModel *model;
 @property (nonatomic, strong) WOTMeetingListModel *meetingModel;
 @property (nonatomic, strong) WOTSpaceModel *spaceModel;
 
 //账单费用
 @property (nonatomic, assign) CGFloat costNumber;
 //已选时间记录
-@property (nonatomic,assign) CGFloat beginTime;
-@property (nonatomic,assign) CGFloat endTime;
+@property (nonatomic,assign) CGFloat meetingBeginTime;
+@property (nonatomic,assign) CGFloat meetingEndTime;
 
 @end

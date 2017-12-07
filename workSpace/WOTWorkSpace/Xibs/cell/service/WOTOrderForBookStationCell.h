@@ -12,26 +12,16 @@
 @class WOTOrderForBookStationCell;
 
 @protocol WOTOrderForBookStationCellDelegate <NSObject>
-
--(void)showDataPickerView:(WOTOrderForBookStationCell *)cell;
-
 -(void)changeValue:(WOTOrderForBookStationCell *)cell;
 
 @end
 
 @interface WOTOrderForBookStationCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIButton *beginTimeBtn;
-@property (weak, nonatomic) IBOutlet UIButton *endTimeBtn;
+
 @property (weak, nonatomic) IBOutlet UIButton *subBtn;
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
-@property (weak, nonatomic) IBOutlet UILabel *surplusLab;
-@property (weak, nonatomic) IBOutlet UILabel *timeExplanationLab;
 @property (weak, nonatomic) IBOutlet UILabel *orderNumber;
-@property (nonatomic, assign)BOOL isHiddenDataPickerView;
-@property (weak, nonatomic) IBOutlet UILabel *startDataLable;
-@property (weak, nonatomic) IBOutlet UILabel *endDataLabel;
-
-@property (nonatomic, strong)WOTSpaceModel *spaceModel;
+@property (nonatomic, assign)int orderNumberInt;
 
 @property (nonatomic,weak) id<WOTOrderForBookStationCellDelegate>delegate;
 

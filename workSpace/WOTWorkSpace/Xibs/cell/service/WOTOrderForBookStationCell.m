@@ -13,7 +13,6 @@
 
 @interface WOTOrderForBookStationCell()
 
-@property (nonatomic, assign)int orderNumberInt;
 //@property (nonatomic, assign)int
 
 
@@ -34,23 +33,6 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
-}
-
-- (IBAction)selectStartTime:(id)sender {
-    self.isHiddenDataPickerView = NO;
-    [WOTSingtleton shared].buttonType = BUTTON_TYPE_STARTTIME;
-    if ([_delegate respondsToSelector:@selector(showDataPickerView:)]) {
-        [_delegate showDataPickerView:self];
-    }
-
-}
-
-- (IBAction)selectEndTime:(id)sender {
-    self.isHiddenDataPickerView = NO;
-    [WOTSingtleton shared].buttonType = BUTTON_TYPE_ENDTIME;
-    if ([_delegate respondsToSelector:@selector(showDataPickerView:)]) {
-        [_delegate showDataPickerView:self];
-    }
 }
 
 - (IBAction)subButton:(id)sender {

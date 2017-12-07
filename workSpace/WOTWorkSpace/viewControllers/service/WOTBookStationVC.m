@@ -26,20 +26,7 @@
 }
 
 @property (nonatomic, strong) XXPageTabView *pageTabView;
-@property (weak, nonatomic) IBOutlet UIView *tomorrowView;
-@property (weak, nonatomic) IBOutlet UIView *todayView;
-@property (weak, nonatomic) IBOutlet UIView *selectDateView;
-@property (weak, nonatomic) IBOutlet UIView *indicatorView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *indicatorVIewCenter;
-@property (weak, nonatomic) IBOutlet UILabel *todayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *tomorrowLabel;
-@property (weak, nonatomic) IBOutlet UILabel *selectedTimeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *tomorrowBtn;
-@property (weak, nonatomic) IBOutlet UIButton *todayBtn;
-@property (weak, nonatomic) IBOutlet UIButton *selectedBtn;
 @property (weak, nonatomic) IBOutlet UITableView *tableIView;
-@property(nonatomic,strong)WOTDatePickerView *datepickerview;
 @property (weak, nonatomic) IBOutlet UIImageView *notInformationImageView;
 @property (weak, nonatomic) IBOutlet UILabel *notBookStationInformationLabel;
 @property (nonatomic, strong) NSMutableArray *menuArray;
@@ -61,8 +48,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupView];
-    
     self.navigationItem.title = @"订工位";
     
     //_spaceId = @(56);原来
@@ -122,32 +107,6 @@
     self.navigationController.navigationBar.translucent = NO; //有个万恶的黑色
     
 }
-
--(void)setupView
-{
-    self.viewWidth.constant = self.view.frame.size.width/3;
-    self.view.backgroundColor = MainColor;
-    self.tableIView.backgroundColor = CLEARCOLOR;
-    [self setTextColor:UIColorFromRGB(0x5484e7) tomorrowcolor:[UIColor blackColor] timecolor:[UIColor blackColor]];
-    
-    __weak typeof(self) weakSelf = self;
-    
-    _datepickerview = [[NSBundle mainBundle]loadNibNamed:@"WOTDatePickerView" owner:nil options:nil].lastObject;
-    [_datepickerview setFrame:CGRectMake(0, self.view.frame.size.height - 250, self.view.frame.size.width, 250)];
-    _datepickerview.cancelBlokc = ^(){
-        weakSelf.datepickerview.hidden = YES;
-    };
-    
-    _datepickerview.okBlock = ^(NSInteger year,NSInteger month,NSInteger day,NSInteger hour,NSInteger min){
-        weakSelf.datepickerview.hidden = YES;
-        NSLog(@"%ld年%ld月%ld日",year,month,day);
-        inquireTime = [NSString stringWithFormat:@"%02d/%02d/%02d %02d:%02d",(int)year, (int)month, (int)day,(int)hour,(int)min];
-    };
-    
-    [self.view addSubview:_datepickerview];
-    _datepickerview.hidden  = YES;
-}
-
 #pragma mark - request
 -(void)createRequest
 {
@@ -186,33 +145,10 @@
         
     }
     
-    
 }
 
 
 #pragma mark - action
-
-- (IBAction)selectedToday:(id)sender {
-    self.indicatorVIewCenter.constant = self.todayView.frame.origin.x;
-    [self setTextColor:UIColorFromRGB(0x5484e7) tomorrowcolor:[UIColor blackColor] timecolor:[UIColor blackColor]];
-    inquireTime = [NSDate getNewTimeZero];
-    _datepickerview.hidden = YES;
-}
-
-- (IBAction)selectedTomorrow:(id)sender {
-    self.indicatorVIewCenter.constant = self.tomorrowView.frame.origin.x;
-    [self setTextColor:[UIColor blackColor] tomorrowcolor:UIColorFromRGB(0x5484e7) timecolor:[UIColor blackColor]];
-    inquireTime = [NSDate getTomorrowTimeZero];
-    _datepickerview.hidden = YES;
-}
-
-- (IBAction)selectedTime:(id)sender {
-    self.indicatorVIewCenter.constant = self.selectDateView.frame.origin.x;
-    [self setTextColor:[UIColor blackColor] tomorrowcolor:[UIColor blackColor] timecolor:UIColorFromRGB(0x5484e7)];
-    _datepickerview.hidden = NO;
-}
-
-
 -(void)selectSpace:(UIButton *)sender
 {
     
@@ -237,14 +173,13 @@
 
 -(void)createRequestCity
 {
-    __weak typeof(self) weakSelf = self;
+//    __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getSapaceFromGroupBlock:^(id bean, NSError *error) {
         if (error) {
             NSLog(@"error:%@",error);
             return ;
         }
         WOTSpaceModel_msg *list = bean;
-        //        tableList = list.msg;
         [self createRequestCityList:list.msg.list];
     }];
 }
@@ -269,22 +204,10 @@
     
 }
 
-#pragma mark -
-
--(void)setTextColor:(UIColor *)todaycolor tomorrowcolor:(UIColor *)tomorrowcolor timecolor:(UIColor *)timecolor{
-    self.todayLabel.textColor = todaycolor;
-    self.tomorrowLabel.textColor = tomorrowcolor;
-    self.selectedTimeLabel.textColor = timecolor;
-}
-
 #pragma mark - cell delegate
 -(void)gotoOrderVC:(WOTBookStationCell *)cell
 {
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
-//    vc.startTime = inquireTime;//arr.firstObject;
-//    vc.endTime = inquireTime;//arr.lastObject;
-//    vc.spaceId = self.spaceId;
-    //    vc.conferenceId = cell.model.conferenceId;
     [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
     vc.spaceModel = cell.model;
     [self.navigationController pushViewController:vc animated:YES];
@@ -313,7 +236,7 @@
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTBookStationCell *bookcell = [tableView dequeueReusableCellWithIdentifier:@"WOTBookStationCellID" forIndexPath:indexPath];
+    WOTBookStationCell *bookcell = [tableView dequeueReusableCellWithIdentifier:@"WOTBookStationCell" forIndexPath:indexPath];
     if (tableList) {
         WOTSpaceModel *model = tableList[indexPath.row];
         self.spaceModel = model;
@@ -322,7 +245,7 @@
         //待开发
         bookcell.spaceName.text =model.spaceName;// @"方圆大厦-众创空间";
         [bookcell.spaceImage sd_setImageWithURL:[model.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
-       // bookcell.stationNum.text  = [NSString stringWithFormat:@"%ld工位可以预定",model.alreadyTakenNum.integerValue]; //@"23个工位可以预定";
+        bookcell.stationNum.text  = [NSString stringWithFormat:@"地址：%@",model.spaceSite]; //@"23个工位可以预定";
         bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",model.onlineLocationPrice];//@"¥123元／天";
         bookcell.delegate = self;
         bookcell.model = model;
@@ -332,6 +255,15 @@
     }
     
     return bookcell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
+    WOTSpaceModel *model = tableList[indexPath.row];
+    [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
+    vc.spaceModel = model;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

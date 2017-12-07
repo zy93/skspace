@@ -27,7 +27,7 @@
 #define infoCell @"infoCell"
 #define selectDateCell @"selectDateCell"
 #define selectTimeCell @"selectTimeCell"
-#define bookStationCell @"bookStationCell"
+#define selectNumberCell @"selectNumberCell"
 #define serviceCell @"serviceCell"
 #define payTypeCell @"payTypeCell"
 #define selectCell @"selectCell"
@@ -50,13 +50,33 @@
 @property (nonatomic, strong)WOTDatePickerView *datepickerview;
 @property (nonatomic, assign)BOOL isValidTime;
 @property (nonatomic, strong)JudgmentTime *judgmentTime;
-@property (nonatomic, strong)WOTOrderForBookStationCell *orderBookStationCell;
-@property (nonatomic, assign)NSInteger dayNumber;  //预定工位天数
-@property (nonatomic, assign)NSNumber *productNum;
-@property (nonatomic, assign)float orderNumber;
-@property (nonatomic, assign)NSNumber *stationNumber;
 @property (nonatomic, strong)NSIndexPath *selectCellIndex;
 @property (nonatomic, strong)NSString *reservationDate;//预定会议室日期
+@property (nonatomic, strong)NSNumber *stationTotalNumber; //可预定工位数量
+@property (nonatomic, strong)NSString *reservationStationStartDate;//预定工位开始日期
+@property (nonatomic, strong)NSString *reservationStationEndDate;//预定工位结束日期
+@property (nonatomic, assign)NSInteger reservationStationNumber; //预定工位数量
+
+//订单信息
+@property (nonatomic, strong) NSNumber *spaceId;
+@property (nonatomic, strong) NSNumber *commodityNum;   //商品编号
+@property (nonatomic, strong) NSString *commodityKind; //商品对象 0:工位 1:会议室 2:场地 3:增值服务
+@property (nonatomic, strong) NSNumber *productNum;   //商品数量
+@property (nonatomic, strong) NSString *starTime;    //开始时间
+@property (nonatomic, strong) NSString *endTime;    //结束时间
+@property (nonatomic, strong) NSNumber *money;     //金额
+@property (nonatomic, strong) NSNumber *payType;  //支付类型 0:企业 1:个人
+@property (nonatomic, strong) NSString *payObject;//支付对象 企业支付就是公司Id；个人支付就是人名
+@property (nonatomic, strong) NSNumber *payMode;//支付方式 0:线下 1:线上
+@property (nonatomic, strong) NSNumber *contractMode;     //合同方式 0:纸质 1:电子
+@property (nonatomic, strong) NSString *dealMode;         //交易方式 微信 支付宝
+@property (nonatomic, strong) NSNumber *deduction;        //是否抵用 0:是 1:否
+@property (nonatomic, strong) NSString *facilitator;      //服务商编号:1006
+@property (nonatomic, strong) NSString *carrieroperator;  //运营商编号:1006
+@property (nonatomic, strong) NSString *body;             //商品描述
+@property (nonatomic, strong) NSString *total_fee;        //总金额
+@property (nonatomic, strong) NSString *spbill_create_ip; //终端IP
+@property (nonatomic, strong) NSString *trade_type;       //交易类型
 
 @end
 
@@ -71,6 +91,8 @@
                                             selector:@selector(backMainView:)
                                                 name:@"buttonLoseResponse" object:nil];
     self.reservationDate = [NSDate getNewTimeZero];
+    self.reservationStationStartDate = [NSDate getNewTimeZero];
+    self.reservationStationEndDate = [NSDate getNewTimeZero];
     [self configNav];
     [self loadData];
     [self loadCost];
@@ -92,7 +114,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.productNum = [[NSNumber alloc] init];
     [super viewWillAppear:animated];
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self creatDataPickerView];
@@ -128,23 +149,32 @@
     
     _datepickerview.okBlock = ^(NSInteger year,NSInteger month,NSInteger day,NSInteger hour,NSInteger min){
         weakSelf.datepickerview.hidden = YES;
-        NSString *selecTime = [NSString stringWithFormat:@"%04ld/%02ld/%02ld",year, month, day];
+        NSString *selecTime = [NSString stringWithFormat:@"%04ld/%02ld/%02ld 00:00:00",year, month, day];
         weakSelf.isValidTime = [weakSelf.judgmentTime judgementTimeWithYear:year month:month day:day];
-        
-        if (weakSelf.isValidTime) {
-            weakSelf.datepickerview.hidden  = YES;
-            [weakSelf Timedisplay:selecTime];
-            
-        }else
-        {
-            [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
-            weakSelf.datepickerview.hidden  = NO;
-        }
-        weakSelf.reservationDate = [NSString stringWithFormat:@"%02ld/%02ld/%02ld 00:00:00",year, month, day];
-
+        weakSelf.reservationDate = selecTime;
         WOTOrderForSelectDateCell *cell = [weakSelf.table cellForRowAtIndexPath:weakSelf.selectCellIndex];
-        [cell.dateLab setText:selecTime];
-        [weakSelf requestMeetingReservationsInfo];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [cell.dateLab setText:[selecTime substringToIndex:10]];
+        });
+        if ([WOTSingtleton shared].orderType != ORDER_TYPE_BOOKSTATION) {
+            [weakSelf requestMeetingReservationsInfo];
+        }else {
+            if (weakSelf.selectCellIndex.row == 1) {
+                weakSelf.reservationStationStartDate = selecTime;
+            }
+            else {
+                weakSelf.reservationStationEndDate = selecTime;
+            }
+            if (weakSelf.isValidTime) {
+                weakSelf.datepickerview.hidden  = YES;
+                [weakSelf Timedisplay:selecTime];
+            }else
+            {
+                [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
+                weakSelf.datepickerview.hidden  = NO;
+            }
+            
+        }
     };
     
     [self.view addSubview:_datepickerview];
@@ -159,7 +189,7 @@
     switch ([WOTSingtleton shared].orderType) {
         case ORDER_TYPE_BOOKSTATION:
         {
-            list1 = @[infoCell, bookStationCell, serviceCell, payTypeCell, selectCell, selectCell];
+            list1 = @[infoCell, selectDateCell,selectDateCell, selectNumberCell];
         }
             break;
         case ORDER_TYPE_MEETING:
@@ -180,8 +210,8 @@
 
 #pragma mark - update table
 -(void)updateView{
-    self.beginTime = 0;
-    self.endTime = 0;
+    self.meetingBeginTime = 0;
+    self.meetingEndTime = 0;
     [self.table reloadData];
 }
 
@@ -207,27 +237,39 @@
         return;
     }
     
-    NSNumber *commNum = @(0);
-    NSNumber *commKind = @(0);
-    NSString *dealMode = @"微信支付";
+    self.dealMode = @"微信支付";
+    self.payType = @(1);
+    self.payObject= @"1";
+    
     switch ([WOTSingtleton shared].orderType) {
         case ORDER_TYPE_BOOKSTATION:
         {
-            [self verifyBookStation];
-            self.productNum = @([self.orderBookStationCell.orderNumber.text integerValue]);
-            commNum = @(0);;
-            commKind = @(0);
+            if (![self verifyBookStation]) {
+                return;
+            };
+            self.spaceId = self.spaceModel.spaceId;
+            self.commodityNum = self.spaceModel.spaceId;
+            self.commodityKind = @"0";
+            self.productNum = @(1);
+            self.starTime = self.reservationStationStartDate;
+            self.endTime =  self.reservationStationEndDate;
+            self.money = @(self.costNumber);
+            self.payMode = @(1);
+            self.contractMode = @(1);
+            self.facilitator = @"1006";
+            self.carrieroperator = @"1006";
+            self.body = @"工位预定";
+            self.total_fee = @"1";// self.money.floatValue * 100;
+            self.trade_type = @"APP";
+            [self commitOrder];
+
         }
             break;
         case ORDER_TYPE_MEETING:
         case ORDER_TYPE_SITE:
         {
-            [self verifyMeeting];
-            self.productNum = @(1);
-            commNum = self.meetingModel.conferenceId;
-            commKind = @(1);
-            //是否选择了时间
-            if (self.endTime-self.beginTime <=0) {
+            //时间检验
+            if (self.meetingEndTime-self.meetingBeginTime <=0) {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请选择预定时间" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 }];
@@ -235,48 +277,23 @@
                 [self presentViewController:alert animated:YES completion:nil];
                 return;
             }
-            
-            NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.beginTime  endTime:self.endTime];
-            NSString *deviceip = [[WOTConfigThemeUitls shared] getIPAddress];
-            NSString *chineseBody = @"易创客";
-            
-            NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
-                                         @"userName":[WOTUserSingleton shareUser].userInfo.userName,
-                                         @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
-                                         @"facilitator":@"1006",
-                                         @"carrieroperator":@"1006",
-                                         @"body":chineseBody,
-                                         @"total_fee":@(1),
-                                         @"spbill_create_ip":deviceip,
-                                         @"trade_type":@"APP",
-                                         @"spaceId":self.meetingModel.spaceId,
-                                         @"commodityNum":commNum,
-                                         @"commodityKind":commKind,
-                                         @"productNum":@(1),
-                                         @"starTime":arr.firstObject,
-                                         @"endTime":arr.lastObject,
-                                         @"money":@(self.costNumber),
-                                         @"dealMode":dealMode,
-                                         @"payType":@(1),
-                                         @"payObject":@(1),
-                                         @"payMode":@(1),
-                                         @"contractMode":@(1),
-                                         };
-            
-            
-            
-            __weak typeof(self) weakSelf = self;
-            [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){
-               dispatch_async(dispatch_get_main_queue(), ^{
-                   //
-                   StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
-                   vc.meetingModel = weakSelf.meetingModel;
-                   vc.dic = parameters;
-                   [vc setModel:((WOTWXPayModel_msg*)bean).msg];
-                   [weakSelf.navigationController pushViewController:vc animated:YES];
-               });
-            }];
-            
+            self.spaceId = self.meetingModel.spaceId;
+            self.commodityNum = self.meetingModel.conferenceId;
+            self.commodityKind = [WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ?  @"1": @"2";
+            self.productNum = @(1);
+            NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
+            self.starTime = arr.firstObject;
+            self.endTime =  arr.lastObject;
+            self.money = @(self.costNumber);
+            self.payMode = @(1);
+            self.contractMode = @(1);
+            self.facilitator = @"1006";
+            self.carrieroperator = @"1006";
+            self.body = @"场地/会议室预定";
+            self.total_fee = @"1";// self.money.floatValue * 100;
+            self.trade_type = @"APP";
+            [self reservationsMeeting];
+
         }
             break;
         default:
@@ -287,29 +304,35 @@
 #pragma mark - cell delegate
 -(void)selectTimeWithCell:(WOTOrderForSelectTimeCell *)cell Time:(CGFloat)time
 {
-    if (self.beginTime == self.endTime && self.endTime == 0) {
-        self.beginTime = time;
-        self.endTime = self.beginTime+0.5;
+    if (self.meetingBeginTime == self.meetingEndTime && self.meetingEndTime == 0) {
+        self.meetingBeginTime = time;
+        self.meetingEndTime = self.meetingBeginTime+0.5;
     }
-    else if (time ==  self.beginTime && self.beginTime == self.endTime-0.5) {
-        self.beginTime = self.endTime = 0;
+    else if (time ==  self.meetingBeginTime && self.meetingBeginTime == self.meetingEndTime-0.5) {
+        self.meetingBeginTime = self.meetingEndTime = 0;
     }
-    else if (time<self.beginTime) {
-        self.beginTime = time;
+    else if (time<self.meetingBeginTime) {
+        self.meetingBeginTime = time;
     }
-    else if (time>=self.endTime) {
-        self.endTime = time+0.5;
+    else if (time>=self.meetingEndTime) {
+        self.meetingEndTime = time+0.5;
     }
-    else if (time>self.beginTime && time<self.endTime) {
-        if (time == self.endTime-0.5) {
-            self.endTime = time;
+    else if (time>self.meetingBeginTime && time<self.meetingEndTime) {
+        if (time == self.meetingEndTime-0.5) {
+            self.meetingEndTime = time;
         }
         else {
-            self.endTime = time+0.5;
+            self.meetingEndTime = time+0.5;
         }
     }
     
-    [cell.selectTimeScroll setBeginTime:self.beginTime endTime:self.endTime];
+    [cell.selectTimeScroll setBeginTime:self.meetingBeginTime endTime:self.meetingEndTime];
+    [self imputedPriceAndLoadCost];
+}
+
+-(void)changeValue:(WOTOrderForBookStationCell *)cell
+{
+    self.reservationStationNumber = cell.orderNumberInt;
     [self imputedPriceAndLoadCost];
 }
 
@@ -341,8 +364,8 @@
     else if ([cellType isEqualToString:selectTimeCell]) {
         return 130;
     }
-    else if ([cellType isEqualToString:bookStationCell]) {
-        return 169;
+    else if ([cellType isEqualToString:selectNumberCell]) {
+        return 50;
     }
     else if ([cellType isEqualToString:siteCell]) {
         return 65;
@@ -394,7 +417,7 @@
             {
                 [cell.infoImg  sd_setImageWithURL:[_spaceModel.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _spaceModel.spaceName;
-//                cell.dailyRentLabel.text = [NSString stringWithFormat:@"日租金：%@元",_spaceModel.on];
+                cell.dailyRentLabel.text = [NSString stringWithFormat:@"剩余工位：%ld",self.stationTotalNumber.integerValue];
             }
                 break;
             case ORDER_TYPE_SITE:
@@ -418,6 +441,16 @@
             cell = [[WOTOrderForSelectDateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTOrderForSelectDateCell"];
         }
         [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
+        
+        if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+            if (indexPath.row == 1) {
+                [cell.dateNameLab setText:@"开始日期："];
+            }
+            else {
+                [cell.dateNameLab setText:@"结束日期："];
+            }
+        }
+        
         return cell;
     }
     else if ([cellType isEqualToString:selectTimeCell]) {
@@ -430,22 +463,20 @@
         if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ||
             [WOTSingtleton shared].orderType == ORDER_TYPE_SITE ) {
             [cell.selectTimeScroll setOpenTime:self.meetingModel.openTime];
-            [cell.selectTimeScroll setBeginTime:self.beginTime endTime:self.endTime];
+            [cell.selectTimeScroll setBeginTime:self.meetingBeginTime endTime:self.meetingEndTime];
         }
         else {
         }
         cell.index = indexPath;
         return cell;
     }
-    else if ([cellType isEqualToString:bookStationCell]) {
-        self.orderBookStationCell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForBookStationCell"];
-        if (self.orderBookStationCell == nil) {
-            self.orderBookStationCell = [[WOTOrderForBookStationCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForBookStationCell"];
-            
+    else if ([cellType isEqualToString:selectNumberCell]) {
+        WOTOrderForBookStationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForBookStationCell"];
+        if (cell == nil) {
+            cell = [[WOTOrderForBookStationCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForBookStationCell"];
         }
-        self.orderBookStationCell.delegate = self;
-        self.orderBookStationCell.spaceModel = self.spaceModel;
-        return self.orderBookStationCell;
+        cell.delegate = self;
+        return cell;
     }
     else if ([cellType isEqualToString:siteCell]) {
         WOTOrderForSiteCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForSiteCell"];
@@ -554,7 +585,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSArray *list = tableList[indexPath.section];
     NSString *cellType = list[indexPath.row];
-    
+    self.selectCellIndex = indexPath;
     if ([cellType isEqualToString:selectDateCell]) {
         _datepickerview.hidden = NO;
     }
@@ -574,25 +605,19 @@
 //    }
 }
 
-#pragma mark - 显示时间选择器
-#pragma mark -WOTOrderForBookStationCell delegate
--(void)showDataPickerView:(WOTOrderForBookStationCell *)cell
-{
-    _datepickerview.hidden = cell.isHiddenDataPickerView;
-    [self.view setNeedsLayout];
-}
-
 #pragma mark - 计算价格
 -(void)imputedPriceAndLoadCost
 {
-    //self.orderNumber = [self.orderBookStationCell.orderNumber.text floatValue];
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE ||
         [WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
-        CGFloat reservaionsTime = self.endTime - self.beginTime;
+        CGFloat reservaionsTime = self.meetingEndTime - self.meetingBeginTime;
         self.costNumber = [self.meetingModel.conferencePrice floatValue] * reservaionsTime;
     }
     else {
-         self.costNumber = self.dayNumber*[self.orderBookStationCell.orderNumber.text floatValue]*[self.spaceModel.onlineLocationPrice floatValue];
+        NSString *startDate =[self.reservationStationStartDate substringToIndex:10];
+        NSString *endDate = [self.reservationStationEndDate substringToIndex:10];
+        NSInteger dayNumber = [self.judgmentTime numberOfDaysWithFromDate:startDate toDate:endDate];
+        self.costNumber = dayNumber * self.reservationStationNumber * [self.spaceModel.onlineLocationPrice floatValue];
     }
     [self loadCost];
 }
@@ -600,66 +625,22 @@
 #pragma mark - 判断时间选择是否合理
 -(void)Timedisplay:(NSString *)selectTime
 {
-    BOOL isStartTime = [self.orderBookStationCell.startDataLable.text isEqualToString:@"请选择"];
-    BOOL isEndTime = [self.orderBookStationCell.startDataLable.text isEqualToString:@"请选择"];
-//    BOOL isEqualToStartTimeWithEndTime =[self.orderBookStationCell.startDataLable.text isEqualToString:selectTime];
-    switch ([WOTSingtleton shared].buttonType) {
-        case BUTTON_TYPE_STARTTIME:
-        {
-            if (isEndTime) {
-                self.orderBookStationCell.startDataLable.text = selectTime;
-            }else
-            {
-                if ([self.judgmentTime compareDate:selectTime withDate:self.orderBookStationCell.endDataLabel.text]) {
-                    self.dayNumber = [self.judgmentTime numberOfDaysWithFromDate:selectTime toDate:self.orderBookStationCell.endDataLabel.text];
-                    [self imputedPriceAndLoadCost];
-                    self.orderBookStationCell.startDataLable.text = selectTime;
-                }else
-                {
-                    [MBProgressHUDUtil showMessage:@"请选择小于等于结束时间的时间！" toView:self.view];
-                    _datepickerview.hidden  = NO;
-                }
-            }
-        }
-            break;
-        case BUTTON_TYPE_ENDTIME:
-        {
-            if (isStartTime) {
-                self.orderBookStationCell.endDataLabel.text = selectTime;
-            }else
-            {
-                if ([self.judgmentTime compareDate:self.orderBookStationCell.startDataLable.text withDate:selectTime]) {
-                    self.dayNumber = [self.judgmentTime numberOfDaysWithFromDate:self.orderBookStationCell.startDataLable.text toDate:selectTime];
-                    [self imputedPriceAndLoadCost];
-                    self.orderBookStationCell.endDataLabel.text = selectTime;
-                } else {
-                    [MBProgressHUDUtil showMessage:@"请选择大写等于开始时间的时间！" toView:self.view];
-                    _datepickerview.hidden  = NO;
-                }
-            }
-        }
-            
-        default:
-            break;
-    }
-    
-}
-
-#pragma mark - 数量变化
--(void)changeValue:(WOTOrderForBookStationCell *)cell
-{
-    BOOL isStartTime = [cell.startDataLable.text isEqualToString:@"请选择"];
-    BOOL isEndTime = [cell.startDataLable.text isEqualToString:@"请选择"];
-    if ((!isStartTime) && (!isEndTime)) {
+    NSString *startDate =[self.reservationStationStartDate substringToIndex:10];
+    NSString *endDate = [self.reservationStationEndDate substringToIndex:10];
+    if ([self.judgmentTime compareDate:startDate withDate:endDate]) {
         [self imputedPriceAndLoadCost];
+    } else {
+        [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
+        _datepickerview.hidden  = NO;
     }
 }
 
-
-#pragma mark - 验证会议室
--(void)verifyMeeting
+#pragma mark - 预定会议室
+-(void)reservationsMeeting
 {
-    NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.beginTime  endTime:self.endTime];
+    __weak typeof(self) weakSelf = self;
+    //会议室先预定，然后支付。
+    NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
     [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
                                       conferenceId:self.meetingModel.conferenceId
                                          startTime:arr.firstObject
@@ -667,21 +648,67 @@
                                          spaceName:self.spaceModel.spaceName
                                        meetingName:self.meetingModel.conferenceName
                                           response:^(id bean, NSError *error) {
-                                              
-                                          }];
+                                              WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
+                                              if ([model.code isEqualToString:@"200"]) {
+                                                  [weakSelf commitOrder];
+                                              }
+                                              else {
+                                                  [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
+                                              }
+    }];
 }
 #pragma mark - 验证工位
--(void)verifyBookStation
+-(BOOL)verifyBookStation
 {
-   // NSLog(@"测试：%@",self.productNum);
-    [WOTHTTPNetwork bookStationReservationsWithSpaceId:self.spaceModel.spaceId
-                                                 count:@([self.orderBookStationCell.orderNumber.text integerValue])
-                                             startTime:self.orderBookStationCell.startDataLable.text
-                                               endTime:self.orderBookStationCell.endDataLabel.text
-                                              response:^(id bean, NSError *error) {
-                                                  
-                                              }];
+    //工位不需要先预定，支付后完成后才会修改状态
+    if (self.reservationStationNumber <=0) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请选择工位数量" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return NO;
+    }
+    return YES;
 }
+
+-(void)commitOrder{
+    //是否选择了时间
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"facilitator":self.facilitator,
+                                 @"carrieroperator":self.carrieroperator,
+                                 @"body":self.body,
+                                 @"total_fee":self.total_fee,
+                                 @"trade_type":self.trade_type,
+                                 @"spaceId":self.spaceId,
+                                 @"commodityNum":self.commodityNum,
+                                 @"commodityKind":self.commodityKind,
+                                 @"productNum":self.productNum,
+                                 @"starTime":self.starTime,
+                                 @"endTime":self.endTime,
+                                 @"money":@(self.costNumber),
+                                 @"dealMode":self.dealMode,
+                                 @"payType":self.payType,
+                                 @"payObject":self.payObject,
+                                 @"payMode":self.payMode,
+                                 @"contractMode":self.contractMode,
+                                 };
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //
+            StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
+            vc.meetingModel = weakSelf.meetingModel;
+            vc.dic = parameters;
+            [vc setModel:((WOTWXPayModel_msg*)bean).msg];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        });
+    }];
+}
+
+
 
 -(void)dealloc
 {
@@ -705,9 +732,9 @@
             return ;
         }
         SKBookStationNumberModel *bookStation = bean;
-        weakSelf.stationNumber = [bookStation.msg objectForKey:@"residueStationNum"];
+        weakSelf.stationTotalNumber = [bookStation.msg objectForKey:@"residueStationNum"];
+        NSLog(@"可预订工位数量：%@",weakSelf.stationTotalNumber);
     }];
-    NSLog(@"打印工位数量：%@",self.stationNumber);
 }
 
 //查询会议室预定情况

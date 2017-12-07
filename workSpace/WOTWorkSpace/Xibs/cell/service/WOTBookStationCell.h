@@ -22,8 +22,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *spaceName;
 @property (weak, nonatomic) IBOutlet UILabel *stationNum;
 @property (weak, nonatomic) IBOutlet UILabel *stationPrice;
-@property (weak, nonatomic) IBOutlet UIButton *bookBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *spaceImage;
+@property (weak, nonatomic) IBOutlet UIView *bgview;
 
 @property (nonatomic, weak) id <WOTBookStationCellDelegate> delegate;
 //@property (nonatomic, strong) WOTBookStationListModel *model;
