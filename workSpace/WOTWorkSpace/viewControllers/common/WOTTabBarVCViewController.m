@@ -50,6 +50,20 @@
     socialnav.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"社交" image:[UIImage imageNamed:@"socialcontact"] selectedImage:[UIImage imageNamed:@"socialcontact_select"]];
     [socialnav.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
     
+    
+
+    WOTOpenDoorVC *openVC = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOpenDoorVC"];
+    UIImage *img = [UIImage imageNamed:@"openDoor"];
+    img = [img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *selectImg = [UIImage imageNamed:@"openDoor_select"];
+    selectImg = [selectImg imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    openVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"开门" image:img selectedImage:selectImg];
+    openVC.tabBarItem.imageInsets  = UIEdgeInsetsMake(-10, 0, 10, 0);
+    [openVC.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
+    WOTBaseNavigationController *scanQRNav = [[WOTBaseNavigationController alloc]initWithRootViewController:openVC];
+
+    
+    
     WOTServiceVC *servicevc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTServiceVC"];
     servicevc.navigationItem.title = @"众创空间移动客户端";
     WOTServiceNaviController *servicnav = [[WOTServiceNaviController alloc]initWithRootViewController:servicevc];
@@ -64,6 +78,7 @@
     
     [vcarray addObject:mainnav];
     [vcarray addObject:socialnav];
+    [vcarray addObject:openVC];
     [vcarray addObject:servicnav];
     [vcarray addObject:myvc];
     self.viewControllers = vcarray;
