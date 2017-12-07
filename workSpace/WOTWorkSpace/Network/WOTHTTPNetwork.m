@@ -517,7 +517,8 @@
     
     NSDictionary *dic = @{@"spaceId":spaceid,
                           @"conferenceId":confid,
-                          @"startTime":strTime};
+                          @"startTime":strTime
+                          };
     
 //    NSDictionary *dic = @{@"spaceId":@69,
 //                          @"conferenceId":@17,
