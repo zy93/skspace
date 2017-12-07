@@ -13,7 +13,6 @@
 
 @interface WOTOrderForBookStationCell()
 
-@property (nonatomic, assign)int orderNumberInt;
 //@property (nonatomic, assign)int
 
 

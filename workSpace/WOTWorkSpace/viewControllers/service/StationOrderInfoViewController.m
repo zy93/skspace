@@ -401,8 +401,8 @@
 {
     [self.orderNumInfoLabel setText:self.model.out_trade_no];
     [self.bookSiteInfoLabel setText:self.meetingModel.location];
-    [self.startTimeInfoLabel setText:[self.dic[@"starTime"] substringToIndex:16]];
-    [self.endTimeInfoLabel   setText:[self.dic[@"endTime"] substringToIndex:16]];
+    [self.startTimeInfoLabel setText:[self.dic[@"starTime"] substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
+    [self.endTimeInfoLabel   setText:[self.dic[@"endTime"] substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
     [self.bookNumInfoLabel   setText:@"1"];
     [self.facilityInfoLabel setText:strIsEmpty(self.meetingModel.facility)? @"无":self.meetingModel.facility];
     [self.payTypeInfoLabel setText:((NSNumber *)self.dic[@"payType"]).intValue == 0? @"企业支付" : @"个人支付"];

@@ -10,5 +10,6 @@
 
 @interface WOTOrderForSelectDateCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *dateLab;
+@property (weak, nonatomic) IBOutlet UILabel *dateNameLab;
 
 @end
