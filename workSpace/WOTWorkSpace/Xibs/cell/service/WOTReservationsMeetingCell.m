@@ -16,7 +16,7 @@
     [super awakeFromNib];
     // Initialization code
     self.clipsToBounds = YES;
-    [self.meetingImgBGView setBackgroundColor:COLOR(40, 43, 50, 0.6)];
+    [self.meetingImgBGView setBackgroundColor:RGBA(40, 43, 50, 0.6)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

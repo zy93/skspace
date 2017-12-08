@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.bgview setBackgroundColor:COLOR(40, 43, 50, 0.6)];
+    [self.bgview setBackgroundColor:RGBA(40, 43, 50, 0.6)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

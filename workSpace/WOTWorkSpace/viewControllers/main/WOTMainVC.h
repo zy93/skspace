@@ -11,6 +11,7 @@
 #import "ZYQSphereView.h"
 #import "WOTSpaceModel.h"
 #import "WOTShortcutMenuView.h"
+#import "CardView.h"
 @interface WOTMainVC : UIViewController
 @property (weak, nonatomic) IBOutlet SDCycleScrollView *autoScrollView;
 
@@ -19,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollVIew;
 @property (nonatomic, strong) NSMutableArray<WOTSpaceModel *> *spacePageViewDataSource;
 
-@property (weak, nonatomic) IBOutlet UIView *spaceView;
+@property (weak, nonatomic) IBOutlet CardView *spaceView;
 @property (weak, nonatomic) IBOutlet UIView *activityView;
 
 @property (weak, nonatomic) IBOutlet UIView *informationView;

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="WOTCardViewItem">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IEy-By-c8a">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qhX-Ig-78z">
+                    <rect key="frame" x="0.0" y="627" width="375" height="40"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xg6-pR-fLR">
+                            <rect key="frame" x="15" y="7" width="52.5" height="26.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="OXb-Ow-PwK"/>
+                        <constraint firstItem="Xg6-pR-fLR" firstAttribute="leading" secondItem="qhX-Ig-78z" secondAttribute="leading" constant="15" id="YPO-rc-0Vh"/>
+                        <constraint firstItem="Xg6-pR-fLR" firstAttribute="centerY" secondItem="qhX-Ig-78z" secondAttribute="centerY" id="mUh-6Y-rRq"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="qhX-Ig-78z" secondAttribute="trailing" id="21P-M1-u38"/>
+                <constraint firstItem="qhX-Ig-78z" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="D9W-GZ-qVE"/>
+                <constraint firstAttribute="bottom" secondItem="IEy-By-c8a" secondAttribute="bottom" id="HID-XP-lrh"/>
+                <constraint firstAttribute="trailing" secondItem="IEy-By-c8a" secondAttribute="trailing" id="L2O-5a-mHo"/>
+                <constraint firstItem="IEy-By-c8a" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="L4H-bX-w09"/>
+                <constraint firstItem="IEy-By-c8a" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="cCy-4J-10b"/>
+                <constraint firstAttribute="bottom" secondItem="qhX-Ig-78z" secondAttribute="bottom" id="cir-OL-OKq"/>
+            </constraints>
+            <connections>
+                <outlet property="bgIV" destination="IEy-By-c8a" id="CA4-Ei-pTa"/>
+                <outlet property="title" destination="Xg6-pR-fLR" id="8il-DH-Bme"/>
+                <outlet property="titleBgView" destination="qhX-Ig-78z" id="kbn-Jl-09T"/>
+            </connections>
+            <point key="canvasLocation" x="8.5" y="96.5"/>
+        </view>
+    </objects>
+</document>

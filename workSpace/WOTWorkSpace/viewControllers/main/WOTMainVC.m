@@ -23,9 +23,10 @@
 #import "WOTSliderModel.h"
 #import "WOTLocationManager.h"
 #import "MJRefresh.h"
-
+#import "WOTCardViewItem.h"
 #import "WOTRefreshControlUitls.h"
-@interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,UITableViewDelegate,UITableViewDataSource>
+#import "UIImageView+AFNetworking.h"
+@interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,CardViewDelegate,CardViewDataSource,UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
 @property(nonatomic,strong)WOTworkSpaceLIstVC *spacevc;
@@ -70,6 +71,16 @@
     _infoImage.image = [UIImage imageNamed:@"placeholder"];
     _activityImage.image = [UIImage imageNamed:@"placeholder"];
    
+    
+    self.spaceView.delegate   = self;
+    self.spaceView.dataSource = self;
+    self.spaceView.maxItems   = 3;
+    self.spaceView.scaleRatio = 0.05;
+    [self.spaceView registerXibFile:@"WOTCardViewItem" forItemReuseIdentifier:@"WOTCardViewItem"];
+
+//    self.cardViewHeightConstraint.constant = CARD_ITEM_H + 100;
+    
+    
     [self getAllData];
     [self AddRefreshHeader];
      // Do any additional setup after loading the view.
@@ -151,7 +162,8 @@ int a = 0;
     }];
     [self getDataSourceFromWebFWithCity:nil complete:^{
     } loadVIews:^{
-        [self setupUI];
+//        [self setupUI];
+        [self.spaceView reloadData];
     }];
     
 }
@@ -257,7 +269,7 @@ int a = 0;
         title.text = [WOTSingtleton shared].ballTitle[i];
         title.textAlignment = NSTextAlignmentCenter;
         title.font = [UIFont systemFontOfSize:14.0];
-        title.textColor = COLOR(129.0, 225.0, 250.0, 1.0);
+        title.textColor = RGBA(129.0, 225.0, 250.0, 1.0);
         [subview addSubview:title];
         UIButton *subbtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80,80)];
         
@@ -426,35 +438,35 @@ int a = 0;
 }
 
 
-//page view UI
-- (void)setupUI {
-    if (!_pageFlowView) {
-        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-20)];
-        _pageFlowView.delegate = self;
-        _pageFlowView.dataSource = self;
-        _pageFlowView.minimumPageAlpha = 0.1;
-        _pageFlowView.isCarousel = NO;
-        _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-        _pageFlowView.isOpenAutoScroll = YES;
-        
-        //初始化pageControl
-        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 32, SCREEN_WIDTH, 8)];
-        _pageFlowView.pageControl = pageControl;
-        [_pageFlowView addSubview:pageControl];
-    }
-   
-    [self.spaceView addSubview:_pageFlowView];
-    
-    [_pageFlowView reloadData];
-    
-}
+////page view UI
+//- (void)setupUI {
+//    if (!_pageFlowView) {
+//        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-20)];
+//        _pageFlowView.delegate = self;
+//        _pageFlowView.dataSource = self;
+//        _pageFlowView.minimumPageAlpha = 0.1;
+//        _pageFlowView.isCarousel = NO;
+//        _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
+//        _pageFlowView.isOpenAutoScroll = YES;
+//        
+//        //初始化pageControl
+//        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 32, SCREEN_WIDTH, 8)];
+//        _pageFlowView.pageControl = pageControl;
+//        [_pageFlowView addSubview:pageControl];
+//    }
+//   
+//    [self.spaceView addSubview:_pageFlowView];
+//    
+//    [_pageFlowView reloadData];
+//    
+//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-#pragma mark NewPagedFlowView Delegate
+#pragma mark - NewPagedFlowView Delegate
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
     return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
 }
@@ -466,7 +478,7 @@ int a = 0;
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 
-#pragma mark NewPagedFlowView Datasource
+#pragma mark  NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
     
     return self.spacePageViewDataSource.count;
@@ -568,6 +580,34 @@ int a = 0;
     [self.navigationController pushViewController:detailvc animated:YES];
     
     
+}
+
+#pragma mark - Card Delegate & DataSource
+-(NSInteger)numberOfItemsInCardView:(CardView *)cardView
+{
+    return self.spacePageViewDataSource.count;
+}
+
+-(CardViewItem *)cardView:(CardView *)cardView itemAtIndex:(NSInteger)index
+{
+    WOTCardViewItem *item = (WOTCardViewItem *)[cardView dequeueReusableCellWithIdentifier:@"WOTCardViewItem"];
+    WOTSpaceModel *model = self.spacePageViewDataSource[index];
+    
+//    NSArray *urlArr= [model.spacePicture componentsSeparatedByString:@","];
+//    [item.bgIV setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTPBaseURL,urlArr.firstObject]]];
+    [item.bgIV setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512661579794&di=963501da40aa0f561266d5c0307f95ee&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd01373f082025aafa9b293e2f0edab64034f1a12.jpg"]];
+    [item.title setText:model.spaceName]; 
+    return item;
+}
+
+-(CGRect)cardView:(CardView *)cardView rectForItemAtIndex:(NSInteger)index
+{
+    return CGRectMake(0, 0, SCREEN_WIDTH-40, self.spaceView.height - 35);
+}
+
+-(void)cardView:(CardView *)cardView didSelectItemAtIndex:(NSInteger)index
+{
+    NSLog(@"卡片%ld被选中", (long)index);
 }
 
 //MARK:SDCycleScrollView   Delegate  点击轮播图显示详情
@@ -681,26 +721,23 @@ int a = 0;
 
 //从网络获取空间数据
 -(void)getDataSourceFromWebFWithCity:( NSString * __nullable )city complete:(void(^)())complete loadVIews:(void(^)())loadViews{
-//    [WOTHTTPNetwork getAllSpaceWithCity:city block:^(id bean, NSError *error) {
     [self.spacePageViewDataSource removeAllObjects];
+    
+    __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getSapaceFromGroupBlock:^(id bean, NSError *error) {
         complete();
         if (bean != nil) {
             WOTSpaceModel_msg *dd = (WOTSpaceModel_msg *)bean;
             NSLog(@"测试：%@",dd.msg.list);
-            _spacedataSource = dd.msg.list;
+            weakSelf.spacedataSource = [dd.msg.list mutableCopy];
             
             if (_spacedataSource.count>5) {
                 for (int index = 0; index < 5; index++) {
-                    
-                        [self.spacePageViewDataSource addObject:_spacedataSource[index]];
-                 
+                    [weakSelf.spacePageViewDataSource addObject:_spacedataSource[index]];
                 }
             } else {
                 for (int index = 0; index < _spacedataSource.count; index++) {
-                    
-                        [self.spacePageViewDataSource addObject:_spacedataSource[index]];
-                   
+                    [weakSelf.spacePageViewDataSource addObject:_spacedataSource[index]];
                 }
             }
             loadViews();

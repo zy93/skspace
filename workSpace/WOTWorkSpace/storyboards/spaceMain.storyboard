@@ -41,7 +41,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlm-Cg-Xxw" userLabel="workspace">
-                                        <rect key="frame" x="0.0" y="410" width="375" height="230"/>
+                                        <rect key="frame" x="0.0" y="410" width="375" height="290"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JTL-1P-dlz">
                                                 <rect key="frame" x="20" y="15" width="3" height="20"/>
@@ -51,8 +51,8 @@
                                                     <constraint firstAttribute="height" constant="20" id="u19-d9-TBL"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tmB-rj-951">
-                                                <rect key="frame" x="0.0" y="46" width="375" height="184"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tmB-rj-951" customClass="CardView">
+                                                <rect key="frame" x="0.0" y="46" width="375" height="234"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="众创空间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oxi-H8-9rX">
@@ -79,14 +79,14 @@
                                             <constraint firstItem="42I-HG-I7K" firstAttribute="leading" secondItem="xlm-Cg-Xxw" secondAttribute="leading" id="X19-wh-HIl"/>
                                             <constraint firstItem="tmB-rj-951" firstAttribute="top" secondItem="42I-HG-I7K" secondAttribute="bottom" constant="5" id="cQW-l9-rdY"/>
                                             <constraint firstItem="tmB-rj-951" firstAttribute="leading" secondItem="xlm-Cg-Xxw" secondAttribute="leading" id="dq5-9g-N5p"/>
-                                            <constraint firstAttribute="bottom" secondItem="tmB-rj-951" secondAttribute="bottom" id="eMt-fF-qE8"/>
+                                            <constraint firstAttribute="bottom" secondItem="tmB-rj-951" secondAttribute="bottom" constant="10" id="eMt-fF-qE8"/>
                                             <constraint firstItem="JTL-1P-dlz" firstAttribute="top" secondItem="xlm-Cg-Xxw" secondAttribute="top" constant="15" id="elz-W5-J9t"/>
-                                            <constraint firstAttribute="height" constant="230" id="gBR-Jj-NIa"/>
+                                            <constraint firstAttribute="height" constant="290" id="gBR-Jj-NIa"/>
                                             <constraint firstItem="42I-HG-I7K" firstAttribute="top" secondItem="xlm-Cg-Xxw" secondAttribute="top" id="ksj-uv-zVL"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="asL-0x-wIO">
-                                        <rect key="frame" x="0.0" y="990" width="375" height="180"/>
+                                        <rect key="frame" x="0.0" y="1050" width="375" height="180"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Fk-r9-LOu">
                                                 <rect key="frame" x="20" y="16" width="3" height="20"/>
@@ -161,7 +161,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7nj-Nx-AkA">
-                                        <rect key="frame" x="0.0" y="650" width="375" height="140"/>
+                                        <rect key="frame" x="0.0" y="710" width="375" height="140"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68Y-GB-uLK">
                                                 <rect key="frame" x="20" y="15" width="3" height="20"/>
@@ -205,7 +205,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heX-LE-hiG">
-                                        <rect key="frame" x="0.0" y="800" width="375" height="180"/>
+                                        <rect key="frame" x="0.0" y="860" width="375" height="180"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxa-k9-KBE">
                                                 <rect key="frame" x="15" y="15" width="3" height="20"/>
@@ -304,7 +304,7 @@
                         <outlet property="infoImage" destination="sAP-1O-1Ym" id="lrY-2r-6g6"/>
                         <outlet property="informationView" destination="asL-0x-wIO" id="HTk-hn-Fs9"/>
                         <outlet property="scrollVIew" destination="6Ga-9d-eZb" id="eyj-TW-Wt7"/>
-                        <outlet property="spaceView" destination="tmB-rj-951" id="hfr-lH-TZ3"/>
+                        <outlet property="spaceView" destination="tmB-rj-951" id="vhb-FQ-9BH"/>
                         <outlet property="tableView" destination="30y-Ou-Iq2" id="1We-xZ-fbO"/>
                         <outlet property="workspaceView" destination="xlm-Cg-Xxw" id="xWC-Gq-Vdc"/>
                     </connections>
