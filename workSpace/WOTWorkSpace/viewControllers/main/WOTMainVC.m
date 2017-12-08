@@ -596,7 +596,7 @@ int a = 0;
 //    NSArray *urlArr= [model.spacePicture componentsSeparatedByString:@","];
 //    [item.bgIV setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTPBaseURL,urlArr.firstObject]]];
     [item.bgIV setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512661579794&di=963501da40aa0f561266d5c0307f95ee&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd01373f082025aafa9b293e2f0edab64034f1a12.jpg"]];
-    [item.title setText:model.spaceName]; 
+    [item.title setText:model.spaceName];
     return item;
 }
 

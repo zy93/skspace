@@ -9,6 +9,7 @@
 #import "CardViewItem.h"
 
 @interface WOTCardViewItem : CardViewItem
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UIImageView *bgIV;
 @property (weak, nonatomic) IBOutlet UIView *titleBgView;
 @property (weak, nonatomic) IBOutlet UILabel *title;

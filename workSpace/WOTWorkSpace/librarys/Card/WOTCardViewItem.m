@@ -15,12 +15,14 @@
     [super awakeFromNib];
     //init
     
-    self.layer.cornerRadius = 5.f;
     //加阴影
     self.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
     self.layer.shadowOffset = CGSizeMake(4,4);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-    self.layer.shadowRadius = 8;//阴影半径，默认3
-    self.layer.shadowOpacity = 0.8;//阴影透明度，默认0
+    self.layer.shadowRadius = 5;//阴影半径，默认3
+    self.layer.shadowOpacity = 0.5;//阴影透明度，默认0
+    self.backgroundColor = [UIColor clearColor];
+    self.bgView.layer.cornerRadius = 5.f;
+    self.bgView.clipsToBounds = YES;
     self.titleBgView.backgroundColor = RGBA(1, 1, 1, 0.5);
     
 }
