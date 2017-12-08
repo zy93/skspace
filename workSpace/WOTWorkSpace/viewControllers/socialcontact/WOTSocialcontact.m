@@ -23,7 +23,11 @@
     [super viewDidLoad];
     self.view.backgroundColor = MainColor;
     [self configNavi];
- 
+    //解决布局空白问题
+    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
+    if (is7Version) {
+        self.edgesForExtendedLayout=UIRectEdgeNone;
+    }
     // Do any additional setup after loading the view.
 }
 
@@ -40,7 +44,8 @@
     self.pageTabView.selectedColor = [UIColor colorWithHexString:@"ff7d3d"];
     [self.pageTabView addIndicatorViewWithStyle];
     [self.pageTabView layoutSubviews];
-    self.pageTabView.frame = CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height-60);
+    self.pageTabView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height-60);
+    NSLog(@"ok:%f",self.view.frame.size.height-60);
     self.pageTabView.delegate = self;
     self.pageTabView.titleStyle = XXPageTabTitleStyleDefault;
     self.pageTabView.indicatorStyle = XXPageTabIndicatorStyleDefault;
@@ -90,14 +95,7 @@
     
     return self.childViewControllers;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 @end
