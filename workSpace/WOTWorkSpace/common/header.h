@@ -28,6 +28,7 @@
 
 //viewControllers
 #import "WOTTabBarVCViewController.h"
+#import "WOTOpenDoorVC.h"
 #import "WOTMyVC.h"
 #import "WOTBaseNavigationController.h"
 #import "WOTSettingVC.h"
