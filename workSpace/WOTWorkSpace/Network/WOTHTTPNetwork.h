@@ -100,11 +100,9 @@ typedef void(^response)(id bean,NSError *error);
 
 /**
  *  根据空间id 和状态请求筛选 获取活动列表
- * @param spaceid  空间id
-   @param spaceState 空间状态
    @param response 回调数据返回上层
  */
-+(void)getActivitiesWithSpaceId:(NSNumber *)spaceid spaceState:(NSNumber *)spaceState response:(response)response;
++(void)getActivitiesResponse:(response)response;
 /**
  *获取空间下的友邻企业
  *@param spaceid  空间id

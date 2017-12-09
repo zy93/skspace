@@ -338,10 +338,12 @@
     
 }
 
-+(void)getActivitiesWithSpaceId:(NSNumber *)spaceid spaceState:(NSNumber *)spaceState  response:(response)response{
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Activity/findByState"];
-    NSDictionary * parameters = @{@"activityState":spaceState};
-    
++(void)getActivitiesResponse:(response)response
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findforApp"];
+    NSDictionary * parameters = @{@"pageNo":@(1),
+                                  @"pageSize":@(1)
+                                  };
      [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
          
          WOTActivityModel_msg * activitymodel = [[WOTActivityModel_msg alloc]initWithDictionary:responseobj error:nil];
@@ -354,8 +356,10 @@
 
 
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response{
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/CompanyInfo/findBySpaceId"];
-    NSDictionary * parameters = @{@"spaceId":spaceid};
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/CompanyInfo/find"];
+    NSDictionary * parameters = @{@"pageNo":@(1),
+                                  @"pageSize":@(10)
+                                  };
     
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
         
