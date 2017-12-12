@@ -625,6 +625,7 @@ int a = 0;
     infovc.dataSource = _infodataSource;
     [self.navigationController pushViewController:infovc animated:YES];
 }
+
 -(void)getEnterpriseListDataFromWeb:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getEnterprisesWithSpaceId:[[NSNumber alloc]initWithInt:69] response:^(id bean, NSError *error) {

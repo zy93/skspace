@@ -26,5 +26,10 @@
  */
 @property (nonatomic,copy) NSString *replyInfo;
 
+/**
+ *  评论者id
+ */
+@property (nonatomic,assign) NSNumber *replyUserId;
+
 
 @end

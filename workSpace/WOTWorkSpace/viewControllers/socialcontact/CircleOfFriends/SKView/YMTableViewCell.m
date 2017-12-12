@@ -289,22 +289,27 @@
         _ilcoreText.delegate = self;
         _ilcoreText.replyIndex = i;
         _ilcoreText.isFold = NO;
-        _ilcoreText.attributedData = [ymData.attributedDataReply objectAtIndex:i];
+        if (ymData.attributedDataReply.count >0) {
+            _ilcoreText.attributedData = [ymData.attributedDataReply objectAtIndex:i];
+        }
         
-        
-        WFReplyBody *body = (WFReplyBody *)[ymData.replyDataSource objectAtIndex:i];
+        WFReplyBody *body ;
+        if (ymData.replyDataSource.count > 0) {
+            body = (WFReplyBody *)[ymData.replyDataSource objectAtIndex:i];
+        }
         
         NSString *matchString;
         
         if ([body.repliedUser isEqualToString:@""]) {
             matchString = [NSString stringWithFormat:@"%@:%@",body.replyUser,body.replyInfo];
-            
         }else{
             matchString = [NSString stringWithFormat:@"%@回复%@:%@",body.replyUser,body.repliedUser,body.replyInfo];
-            
         }
         
-        [_ilcoreText setOldString:matchString andNewString:[ymData.completionReplySource objectAtIndex:i]];
+        if (ymData.completionReplySource.count >0) {
+            [_ilcoreText setOldString:matchString andNewString:[ymData.completionReplySource objectAtIndex:i]];
+        }
+        
         
         _ilcoreText.frame = CGRectMake(offSet_X,TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - offSet_X * 2, [_ilcoreText getTextHeight]);
         [self.contentView addSubview:_ilcoreText];

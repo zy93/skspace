@@ -292,4 +292,37 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)queryAllCircleofFriendsWithFocusPeopleid:(NSNumber *)focusPeopleid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response;
 
+/**
+ 添加评论，回复评论接口
+
+ @param friendId 朋友圈id
+ @param byReplyid 被回复人id
+ @param byReplyname 被回复人名字
+ @param replyId 评论人id
+ @param replyName 评论人名字
+ @param replyInfo 评论内容
+ @param response 结果回调
+ */
+
++(void)addReplyWithFriendId:(NSNumber *)friendId byReplyid:(NSNumber *)byReplyid byReplyname:(NSString *)byReplyname replyId:(NSNumber *)replyId replyName:(NSString *)replyName replyInfo:(NSString *)replyInfo response:(response)response;
+
+
+/**
+ 添加关注
+
+ @param focusPeopleid 关注人id
+ @param befocusPeopleid  被关注人id
+ @param response 结果回调
+ */
++(void)addFocusWithfocusPeopleid:(NSNumber *)focusPeopleid befocusPeopleid:(NSNumber *)befocusPeopleid response:(response)response;
+
+
+/**
+ 取消关注
+
+ @param focusId 关注信息id
+ @param response 结果回调
+ */
++(void)deleteFocusWithFocusId:(NSNumber *)focusId response:(response)response;
+
 @end

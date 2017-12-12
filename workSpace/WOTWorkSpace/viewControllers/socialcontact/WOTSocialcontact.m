@@ -75,13 +75,11 @@
 }
 -(NSArray<__kindof UIViewController *> *)createViewControllers{
     WOTNearCirclesVC *circle = [[UIStoryboard storyboardWithName:@"Socialcontact" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTNearCirclesVCID"];
-
     [self addChildViewController:circle];
+    
     UIViewController *circle1 = [[UIViewController alloc]init];
     circle1.view.backgroundColor = White;
     [MBProgressHUDUtil showMessage:@"敬请期待" toView:circle1.view];
-    
-    
     [self addChildViewController:circle1];
     
     UIViewController *circle2 = [[UIViewController alloc]init];

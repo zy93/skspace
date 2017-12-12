@@ -136,8 +136,8 @@
         NSString *str = [[[_attributedData objectAtIndex:i] allKeys] objectAtIndex:0];
         
         [attrString addAttribute:(id)kCTForegroundColorAttributeName value:(id)(_textColor.CGColor) range:NSRangeFromString(str)];
-        [attrString addAttribute:(id)kCTForegroundColorAttributeName value:[UIColor colorWithHexString:@"666666"] range:NSMakeRange(1, 2)];
-        [attrString addAttribute:(id)kCTForegroundColorAttributeName value:[UIColor colorWithHexString:@"666666"] range:NSMakeRange(5, attrString.length-5)];
+       // [attrString addAttribute:(id)kCTForegroundColorAttributeName value:[UIColor colorWithHexString:@"666666"] range:NSMakeRange(1, 2)];
+       // [attrString addAttribute:(id)kCTForegroundColorAttributeName value:[UIColor colorWithHexString:@"666666"] range:NSMakeRange(5, attrString.length-5)];
     }
     
     for(NSInteger i = 0; i < [ranges count]; i++){

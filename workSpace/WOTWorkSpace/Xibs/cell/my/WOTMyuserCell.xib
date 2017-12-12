@@ -29,8 +29,9 @@
                         <rect key="frame" x="25" y="125" width="384" height="110"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFz-Ku-k2G">
-                                <rect key="frame" x="100" y="40" width="46" height="30"/>
-                                <state key="normal" title="未登录">
+                                <rect key="frame" x="100" y="38.5" width="70" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="立即登录">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
@@ -42,14 +43,14 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5H-Ba-aCZ">
-                                <rect key="frame" x="100" y="15" width="42" height="21"/>
+                                <rect key="frame" x="100" y="38.5" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ch5-ah-PPX">
-                                <rect key="frame" x="100" y="74" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登陆后可进行更多操作" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ch5-ah-PPX">
+                                <rect key="frame" x="100" y="77" width="153" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -58,7 +59,7 @@
                         <constraints>
                             <constraint firstItem="R5H-Ba-aCZ" firstAttribute="leading" secondItem="eB9-Kk-Iwx" secondAttribute="trailing" constant="10" id="4xa-XU-T4i"/>
                             <constraint firstItem="Ch5-ah-PPX" firstAttribute="bottom" secondItem="eB9-Kk-Iwx" secondAttribute="bottom" id="BhM-Xo-u7x"/>
-                            <constraint firstItem="R5H-Ba-aCZ" firstAttribute="top" secondItem="EHL-hV-utI" secondAttribute="top" constant="15" id="CRC-HI-fuT"/>
+                            <constraint firstItem="R5H-Ba-aCZ" firstAttribute="top" secondItem="DFz-Ku-k2G" secondAttribute="top" id="CRC-HI-fuT"/>
                             <constraint firstItem="DFz-Ku-k2G" firstAttribute="leading" secondItem="eB9-Kk-Iwx" secondAttribute="trailing" constant="10" id="Que-oM-EMx"/>
                             <constraint firstAttribute="height" constant="110" id="Re4-3V-L6R"/>
                             <constraint firstItem="eB9-Kk-Iwx" firstAttribute="centerY" secondItem="EHL-hV-utI" secondAttribute="centerY" id="hKJ-vq-IhS"/>
