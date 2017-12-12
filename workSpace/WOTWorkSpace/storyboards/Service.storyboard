@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,21 +19,96 @@
                         <viewControllerLayoutGuide type="bottom" id="rCf-ps-14O"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Uu7-Hm-JCl">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUq-sb-SOy">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ua4-Zy-Yb3">
-                                        <rect key="frame" x="0.0" y="210" width="320" height="436"/>
+                                        <rect key="frame" x="0.0" y="210" width="320" height="550"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="436" id="1Lf-1t-vbv"/>
+                                            <constraint firstAttribute="height" constant="550" id="1Lf-1t-vbv"/>
                                         </constraints>
                                         <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTGETServiceCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTGETServiceCell" rowHeight="100" id="bq2-t6-AwD" customClass="WOTGETServiceCell">
+                                                <rect key="frame" x="0.0" y="28" width="320" height="100"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bq2-t6-AwD" id="aJn-kV-6D5">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGo-0d-bQt" customClass="WOTButton">
+                                                            <rect key="frame" x="90.5" y="15" width="69.5" height="77.5"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="问题报修" image="lssue_repair">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="MqZ-me-xKn"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-ye-4yK" customClass="WOTButton">
+                                                            <rect key="frame" x="160" y="15" width="70" height="77.5"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="发布需求" image="release_requirements">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="IpF-WN-GWi"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88Q-nM-hD2" customClass="WOTButton">
+                                                            <rect key="frame" x="230" y="15" width="70" height="77.5"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="意见反馈" image="feedback">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="1gs-v4-sKX"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLt-lk-uLd" customClass="WOTButton">
+                                                            <rect key="frame" x="20" y="15" width="70.5" height="77.5"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="客户预约" image="visitors_appointment">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="Lg8-Iz-TMZ"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="01o-8W-FSf"/>
+                                                        <constraint firstItem="TLt-lk-uLd" firstAttribute="top" secondItem="aJn-kV-6D5" secondAttribute="top" constant="15" id="1jd-vy-pdO"/>
+                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="AUr-yd-KUF"/>
+                                                        <constraint firstAttribute="bottom" secondItem="TLt-lk-uLd" secondAttribute="bottom" constant="7" id="J8m-C5-GcC"/>
+                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="LaT-oO-Dqr"/>
+                                                        <constraint firstAttribute="trailing" secondItem="88Q-nM-hD2" secondAttribute="trailing" constant="20" id="Pld-CY-Do3"/>
+                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="SrI-ev-DV4"/>
+                                                        <constraint firstItem="TLt-lk-uLd" firstAttribute="leading" secondItem="aJn-kV-6D5" secondAttribute="leading" constant="20" id="WaU-KM-HrS"/>
+                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="Z1g-NX-fK8"/>
+                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="leading" secondItem="TLt-lk-uLd" secondAttribute="trailing" id="h8x-eg-Wcw"/>
+                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="lUd-rJ-ONz"/>
+                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="oc6-FO-1Qv"/>
+                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="q6B-1C-iY1"/>
+                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="leading" secondItem="LGo-0d-bQt" secondAttribute="trailing" id="shj-9u-u0d"/>
+                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="leading" secondItem="Oto-ye-4yK" secondAttribute="trailing" id="uHO-mg-Sb7"/>
+                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="w67-Gm-i1r"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ServiceProvidersApplicationCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTServiceProvidersApplyCell" id="vcb-wp-dNd" customClass="WOTServiceProvidersApplyCell">
-                                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="128" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vcb-wp-dNd" id="YpI-5B-zJx">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -64,91 +139,56 @@
                                                     <outlet property="titleLab" destination="Rq2-vG-MvI" id="xEy-Zw-js4"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTGETServiceCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTGETServiceCell" rowHeight="105" id="bq2-t6-AwD" customClass="WOTGETServiceCell">
-                                                <rect key="frame" x="0.0" y="72" width="320" height="105"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WOTServiceForProvidersCell" rowHeight="171" id="igS-cO-trK" customClass="WOTServiceForProvidersCell">
+                                                <rect key="frame" x="0.0" y="172" width="320" height="171"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bq2-t6-AwD" id="aJn-kV-6D5">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="104.5"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="igS-cO-trK" id="lNK-lm-rE7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="170.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGo-0d-bQt">
-                                                            <rect key="frame" x="90.5" y="15" width="70" height="75"/>
-                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <inset key="titleEdgeInsets" minX="-35" minY="50" maxX="0.0" maxY="0.0"/>
-                                                            <inset key="imageEdgeInsets" minX="20" minY="-30" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="人力资源" image="HR_icon">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55P-YU-DOb">
+                                                            <rect key="frame" x="0.0" y="51" width="320" height="119"/>
+                                                        </scrollView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="平台服务商" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1W-hk-b2I">
+                                                            <rect key="frame" x="20" y="20" width="87" height="21"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXD-6A-jHH">
+                                                            <rect key="frame" x="226" y="15" width="62" height="30"/>
+                                                            <state key="normal" title="申请入驻">
+                                                                <color key="titleColor" red="1" green="0.34901960784313724" blue="0.031372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="MqZ-me-xKn"/>
+                                                                <action selector="joinBtn:" destination="igS-cO-trK" eventType="touchUpInside" id="c7h-n1-kXU"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-ye-4yK">
-                                                            <rect key="frame" x="160.5" y="15" width="70" height="75"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <inset key="titleEdgeInsets" minX="-35" minY="50" maxX="0.0" maxY="0.0"/>
-                                                            <inset key="imageEdgeInsets" minX="20" minY="-30" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="法律" image="law_icon">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="IpF-WN-GWi"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88Q-nM-hD2">
-                                                            <rect key="frame" x="230.5" y="15" width="69.5" height="75"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <inset key="titleEdgeInsets" minX="-35" minY="50" maxX="0.0" maxY="0.0"/>
-                                                            <inset key="imageEdgeInsets" minX="20" minY="-30" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="IT" image="IT_icon">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="1gs-v4-sKX"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLt-lk-uLd">
-                                                            <rect key="frame" x="20" y="15" width="70.5" height="75"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <inset key="titleEdgeInsets" minX="-35" minY="50" maxX="0.0" maxY="0.0"/>
-                                                            <inset key="imageEdgeInsets" minX="20" minY="-30" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="投融资" image="investment_icon">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="Lg8-Iz-TMZ"/>
-                                                            </connections>
-                                                        </button>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backAcssory" translatesAutoresizingMaskIntoConstraints="NO" id="eAJ-GY-Wsk">
+                                                            <rect key="frame" x="293" y="23.5" width="7" height="13"/>
+                                                        </imageView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="01o-8W-FSf"/>
-                                                        <constraint firstItem="TLt-lk-uLd" firstAttribute="top" secondItem="aJn-kV-6D5" secondAttribute="top" constant="15" id="1jd-vy-pdO"/>
-                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="AUr-yd-KUF"/>
-                                                        <constraint firstAttribute="bottom" secondItem="TLt-lk-uLd" secondAttribute="bottom" constant="15" id="J8m-C5-GcC"/>
-                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="LaT-oO-Dqr"/>
-                                                        <constraint firstAttribute="trailing" secondItem="88Q-nM-hD2" secondAttribute="trailing" constant="20" id="Pld-CY-Do3"/>
-                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="SrI-ev-DV4"/>
-                                                        <constraint firstItem="TLt-lk-uLd" firstAttribute="leading" secondItem="aJn-kV-6D5" secondAttribute="leading" constant="20" id="WaU-KM-HrS"/>
-                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="Z1g-NX-fK8"/>
-                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="leading" secondItem="TLt-lk-uLd" secondAttribute="trailing" id="h8x-eg-Wcw"/>
-                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="lUd-rJ-ONz"/>
-                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="oc6-FO-1Qv"/>
-                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="q6B-1C-iY1"/>
-                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="leading" secondItem="LGo-0d-bQt" secondAttribute="trailing" id="shj-9u-u0d"/>
-                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="leading" secondItem="Oto-ye-4yK" secondAttribute="trailing" id="uHO-mg-Sb7"/>
-                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="w67-Gm-i1r"/>
+                                                        <constraint firstAttribute="trailing" secondItem="eAJ-GY-Wsk" secondAttribute="trailing" constant="20" id="FmT-0F-Opt"/>
+                                                        <constraint firstAttribute="trailing" secondItem="55P-YU-DOb" secondAttribute="trailing" id="GOr-Yf-ZjP"/>
+                                                        <constraint firstItem="eAJ-GY-Wsk" firstAttribute="leading" secondItem="ZXD-6A-jHH" secondAttribute="trailing" constant="5" id="M1X-6F-h9t"/>
+                                                        <constraint firstItem="eAJ-GY-Wsk" firstAttribute="centerY" secondItem="ZXD-6A-jHH" secondAttribute="centerY" id="Ros-b4-Xfs"/>
+                                                        <constraint firstItem="C1W-hk-b2I" firstAttribute="top" secondItem="lNK-lm-rE7" secondAttribute="top" constant="20" id="TbI-G1-LvK"/>
+                                                        <constraint firstAttribute="bottom" secondItem="55P-YU-DOb" secondAttribute="bottom" id="au1-B2-Xkm"/>
+                                                        <constraint firstItem="55P-YU-DOb" firstAttribute="leading" secondItem="lNK-lm-rE7" secondAttribute="leading" id="eGa-xv-oCL"/>
+                                                        <constraint firstItem="ZXD-6A-jHH" firstAttribute="centerY" secondItem="C1W-hk-b2I" secondAttribute="centerY" id="euD-8d-Njt"/>
+                                                        <constraint firstItem="eAJ-GY-Wsk" firstAttribute="leading" secondItem="ZXD-6A-jHH" secondAttribute="trailing" constant="5" id="qgo-Ca-uAX"/>
+                                                        <constraint firstItem="C1W-hk-b2I" firstAttribute="leading" secondItem="lNK-lm-rE7" secondAttribute="leading" constant="20" id="vYS-eh-pKB"/>
+                                                        <constraint firstItem="55P-YU-DOb" firstAttribute="top" secondItem="C1W-hk-b2I" secondAttribute="bottom" constant="10" id="yV5-lB-APx"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="arrowIV" destination="eAJ-GY-Wsk" id="IlI-cu-anD"/>
+                                                    <outlet property="providersScrollView" destination="55P-YU-DOb" id="ACc-3P-XxB"/>
+                                                </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTServiceCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTServiceCell" id="nTL-3z-NbT" customClass="WOTServiceCell">
-                                                <rect key="frame" x="0.0" y="177" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="343" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nTL-3z-NbT" id="vCT-HP-9nN">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -216,6 +256,7 @@
                             <constraint firstItem="FUq-sb-SOy" firstAttribute="top" secondItem="C6T-CN-W5k" secondAttribute="bottom" constant="-20" id="WV6-a5-JSB"/>
                         </constraints>
                     </view>
+                    <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="autoScrollView" destination="PcB-rN-qG4" id="N0M-83-axA"/>
                         <outlet property="scrollView" destination="FUq-sb-SOy" id="qOQ-rC-dSV"/>
@@ -225,7 +266,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mug-id-hfi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-28" y="104"/>
+            <point key="canvasLocation" x="-28.125" y="103.52112676056338"/>
         </scene>
         <!--Register Service ProvidersVC-->
         <scene sceneID="Nlg-Lm-pw3">
@@ -2321,8 +2362,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="HR_icon" width="36" height="45"/>
-        <image name="IT_icon" width="43" height="31"/>
         <image name="NotInformation" width="139" height="134"/>
         <image name="arrows_down" width="12" height="12"/>
         <image name="backAcssory" width="7" height="13"/>
@@ -2667,13 +2706,15 @@ AAAAAABBAAAAAAAAAAAAAAAAAAASNA
         </image>
         <image name="camera_icon" width="25" height="20"/>
         <image name="createtel" width="20" height="20"/>
+        <image name="feedback" width="56" height="56"/>
         <image name="head_icon" width="40" height="48"/>
-        <image name="investment_icon" width="36" height="35"/>
         <image name="lashlight" width="16" height="30"/>
-        <image name="law_icon" width="46" height="39"/>
+        <image name="lssue_repair" width="56" height="56"/>
+        <image name="release_requirements" width="56" height="56"/>
         <image name="service" width="20" height="19"/>
         <image name="service_device" width="15" height="11"/>
         <image name="service_time" width="15" height="15"/>
+        <image name="visitors_appointment" width="56" height="56"/>
         <image name="visitors_icon" width="19" height="21"/>
     </resources>
 </document>

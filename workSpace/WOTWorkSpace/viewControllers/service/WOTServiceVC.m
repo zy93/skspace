@@ -11,7 +11,7 @@
 #import "WOTServiceProvidersApplyCell.h"
 #import "WOTGETServiceCell.h"
 #import "WOTServiceCell.h"
-
+#import "WOTServiceForProvidersCell.h"
 #import "WOTLoginVC.h"
 #import "WOTLoginNaviController.h"
 #import "WOTOpenLockScanVC.h"
@@ -19,11 +19,9 @@
 #import "WOTH5VC.h"
 #import "MJRefresh.h"
 
-#define visitors @"访客预约"
-#define maintenance @"问题报修"
-#define opendoor @"一键开门"
-#define getservice @"发布需求"
-#define feedback @"意见反馈"
+
+#define getService @"WOTGETServiceCell"
+#define serviceScroll @"serviceScroll"
 
 #import "WOTRefreshControlUitls.h"
 @interface WOTServiceVC () <UITableViewDelegate, UITableViewDataSource,SDCycleScrollViewDelegate, WOTGETServiceCellDelegate>
@@ -146,9 +144,9 @@
 
 -(void)addData
 {
-    NSArray *section1 = @[@"申请成为平台服务商", @"投融资"];
-    NSArray *section2 = @[visitors, maintenance, getservice, feedback];
-    tableIconList = [@[@"visitors_icon", @"maintenance_apply_icon", @"openDoor_icon", @"get_service_icon", @"feedback_icon"] mutableCopy];
+    NSArray *section1 = @[getService];
+    NSArray *section2 = @[serviceScroll];
+//    tableIconList = [@[@"visitors_icon", @"maintenance_apply_icon", @"openDoor_icon", @"get_service_icon", @"feedback_icon"] mutableCopy];
 //    NSArray *section3 = @[@"可操控设备"];
 
     tableList = [@[section1, section2] mutableCopy];
@@ -180,11 +178,11 @@
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    int coun = -2; //前两个不算.
-    for (NSArray * arr in tableList) {
-        coun+=arr.count;
-    }
-    self.tableHeight.constant = 105+20+45+(coun * 50);
+//    int coun = -2; //前两个不算.
+//    for (NSArray * arr in tableList) {
+//        coun+=arr.count;
+//    }
+    self.tableHeight.constant = 100+50+250;
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetHeight(self.autoScrollView.frame)+ self.tableHeight.constant);
 }
 
@@ -229,13 +227,13 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 ) {
-        if ( indexPath.row==0) {
-            return 45;
-        }
-        return 105;
+    NSArray *arr = tableList[indexPath.section];
+    if ([arr[indexPath.row] isEqualToString:getService]) {
+        return 100;
     }
-    return 50;
+    else {
+        return 250;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -245,79 +243,33 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section==0 ) {
+    
+    
+    NSArray *arr = tableList[indexPath.section];
+    if ([arr[indexPath.row] isEqualToString:getService]) {
         
-        if (indexPath.row==0) {
-            WOTServiceProvidersApplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTServiceProvidersApplyCell"];
-            if (cell == nil) {
-                cell = [[WOTServiceProvidersApplyCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTServiceProvidersApplyCell"];
-            }
-            NSArray *sectionArr = tableList[indexPath.section];
-            
-            [cell.titleLab setText:sectionArr[indexPath.row]];
-            return cell;
-
+        WOTGETServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTGETServiceCell"];
+        if (cell == nil) {
+            cell = [[WOTGETServiceCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTGETServiceCell"];
         }
-        else {
-            WOTGETServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTGETServiceCell"];
-            if (cell == nil) {
-                cell = [[WOTGETServiceCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTGETServiceCell"];
-            }
-            cell.mDelegate = self;
-            return cell;
-        }
-
+        cell.mDelegate = self;
+        return cell;
     }
     else {
-        WOTServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTServiceCell"];
+        WOTServiceForProvidersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTServiceForProvidersCell"];
         if (cell == nil) {
-            cell = [[WOTServiceCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTServiceCell"];
+            cell = [[WOTServiceForProvidersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTServiceForProvidersCell"];
         }
-        NSArray *sectionArr = tableList[indexPath.section];
-        [cell.titleLab setText:sectionArr[indexPath.row]];
-        [cell.iconImg setImage:[UIImage imageNamed:tableIconList[indexPath.row]]];
+        [cell setData:5]; 
         return cell;
-
     }
+    
     
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section==0) {
-        if (indexPath.row==0) {
-            [self pushVCByVCName:@"WOTRegisterServiceProvidersVC"];
-        }
-        else if (indexPath.row==1) {
-            [self pushVCByVCName:@"WOTGETServiceViewController"];
-        }
-    }
-    else if (indexPath.section==1) {
-        NSArray *sectionArr = tableList[indexPath.section];
-        if ([sectionArr[indexPath.row] isEqualToString:visitors]) {
-            [self pushVCByVCName:@"WOTVisitorsAppointmentVC"];
-        }
-        else if ([sectionArr[indexPath.row] isEqualToString:maintenance]) {
-            [self pushVCByVCName:@"WOTMainAppleRepairVCID"];
-        }
-        else if ([sectionArr[indexPath.row] isEqualToString:opendoor]) {
-            [self pushVCByVCName:@"WOTOpenLockScanVCID"];
-        }
-        else if ([sectionArr[indexPath.row] isEqualToString:getservice]) {
-            [self pushVCByVCName:@"WOTGETServiceViewController"];
-        }
-        else if ([sectionArr[indexPath.row] isEqualToString:feedback]) {
-            [self pushVCByVCName:@"WOTFeedbackVC"];
-        }
-    } else if (indexPath.section == 2){
-        if ([WOTSingtleton shared].isuserLogin){
-          [self pushVCByVCName:@"WOTIntelligenceDeviceListVCID"];
-        } else {
-            [[WOTConfigThemeUitls shared] showLoginVC:self];
-        }
-        
-    }
 }
 
 -(void)getSliderDataSource:(void(^)())complete{
