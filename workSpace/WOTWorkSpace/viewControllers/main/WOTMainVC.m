@@ -23,20 +23,34 @@
 #import "WOTSliderModel.h"
 #import "WOTLocationManager.h"
 #import "MJRefresh.h"
-
+#import "WOTCardViewItem.h"
 #import "WOTRefreshControlUitls.h"
-@interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,UITableViewDelegate,UITableViewDataSource>
+#import "UIImageView+AFNetworking.h"
+#import "WOTEnterpriseScrollView.h"
+@interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,CardViewDelegate,CardViewDataSource>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
 @property(nonatomic,strong)WOTworkSpaceLIstVC *spacevc;
 
-@property (weak, nonatomic) IBOutlet UIImageView *activityImage;
-@property (weak, nonatomic) IBOutlet UIImageView *infoImage;
-@property (weak, nonatomic) IBOutlet UILabel *InfoMessage;
-@property (weak, nonatomic) IBOutlet UILabel *InfoTime;
+//空间
+@property (weak, nonatomic) IBOutlet CardView *spaceView;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic,strong) NSArray<WOTEnterpriseModel *> *enterpriseListdata;
+//企业
+@property (weak, nonatomic) IBOutlet WOTEnterpriseScrollView *enterpriseScrollView;
+//活动
+@property (weak, nonatomic) IBOutlet UIImageView *activityIV;
+@property (weak, nonatomic) IBOutlet UILabel *activityNameLab;
+@property (weak, nonatomic) IBOutlet UILabel *activityDateLab;
+
+//资讯
+@property (weak, nonatomic) IBOutlet UIImageView *newsIV;
+@property (weak, nonatomic) IBOutlet UILabel *newsNameLab;
+@property (weak, nonatomic) IBOutlet UILabel *newsDateLab;
+
+
+
+
+
 @property (nonatomic,strong) NSMutableArray *imageUrlStrings;
 @property (nonatomic,strong) NSMutableArray *imageTitles;
 @property (nonatomic,strong) NSMutableArray *sliderUrlStrings;
@@ -57,19 +71,21 @@
     [self loadAutoScrollView];
     [self configScrollView];
    
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
     self.ballView.delegate = self;
-    [self.tableView registerNib:[UINib nibWithNibName:@"WOTTEnterpriseListCell" bundle:nil] forCellReuseIdentifier:@"WOTTEnterpriseListCellID"];
-    _tableView.scrollEnabled = NO;
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
     if (is7Version) {
         self.edgesForExtendedLayout=UIRectEdgeNone;
     }
+    
+    self.spaceView.delegate   = self;
+    self.spaceView.dataSource = self;
+    self.spaceView.maxItems   = 3;
+    self.spaceView.scaleRatio = 0.05;
+    [self.spaceView registerXibFile:@"WOTCardViewItem" forItemReuseIdentifier:@"WOTCardViewItem"];
 
-    _infoImage.image = [UIImage imageNamed:@"placeholder"];
-    _activityImage.image = [UIImage imageNamed:@"placeholder"];
-   
+//    self.cardViewHeightConstraint.constant = CARD_ITEM_H + 100;
+    
+    
     [self getAllData];
     [self AddRefreshHeader];
      // Do any additional setup after loading the view.
@@ -108,9 +124,9 @@ int a = 0;
 
 -(void)getAllData{
     
-    dispatch_queue_t queue = dispatch_queue_create("com.workspacek.gcd.group", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_group_t group = dispatch_group_create();
-    
+//    dispatch_queue_t queue = dispatch_queue_create("com.workspacek.gcd.group", DISPATCH_QUEUE_CONCURRENT);
+//    dispatch_group_t group = dispatch_group_create();
+//
 //    dispatch_group_enter(group);
 //    [self getEnterpriseListDataFromWeb:^{
 //        
@@ -151,7 +167,8 @@ int a = 0;
     }];
     [self getDataSourceFromWebFWithCity:nil complete:^{
     } loadVIews:^{
-        [self setupUI];
+//        [self setupUI];
+        [self.spaceView reloadData];
     }];
     
 }
@@ -169,12 +186,6 @@ int a = 0;
         _spacePageViewDataSource = [NSMutableArray array];
     }
     return _spacePageViewDataSource;
-}
--(NSArray<WOTEnterpriseModel *>*)enterpriseListdata{
-    if (_enterpriseListdata == nil) {
-        _enterpriseListdata = [[NSArray alloc]init];
-    }
-    return _enterpriseListdata;
 }
 
 - (NSMutableArray *)imageUrlStrings {
@@ -257,7 +268,7 @@ int a = 0;
         title.text = [WOTSingtleton shared].ballTitle[i];
         title.textAlignment = NSTextAlignmentCenter;
         title.font = [UIFont systemFontOfSize:14.0];
-        title.textColor = COLOR(129.0, 225.0, 250.0, 1.0);
+        title.textColor = RGBA(129.0, 225.0, 250.0, 1.0);
         [subview addSubview:title];
         UIButton *subbtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80,80)];
         
@@ -426,35 +437,35 @@ int a = 0;
 }
 
 
-//page view UI
-- (void)setupUI {
-    if (!_pageFlowView) {
-        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-20)];
-        _pageFlowView.delegate = self;
-        _pageFlowView.dataSource = self;
-        _pageFlowView.minimumPageAlpha = 0.1;
-        _pageFlowView.isCarousel = NO;
-        _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-        _pageFlowView.isOpenAutoScroll = YES;
-        
-        //初始化pageControl
-        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 32, SCREEN_WIDTH, 8)];
-        _pageFlowView.pageControl = pageControl;
-        [_pageFlowView addSubview:pageControl];
-    }
-   
-    [self.spaceView addSubview:_pageFlowView];
-    
-    [_pageFlowView reloadData];
-    
-}
+////page view UI
+//- (void)setupUI {
+//    if (!_pageFlowView) {
+//        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-20)];
+//        _pageFlowView.delegate = self;
+//        _pageFlowView.dataSource = self;
+//        _pageFlowView.minimumPageAlpha = 0.1;
+//        _pageFlowView.isCarousel = NO;
+//        _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
+//        _pageFlowView.isOpenAutoScroll = YES;
+//        
+//        //初始化pageControl
+//        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 32, SCREEN_WIDTH, 8)];
+//        _pageFlowView.pageControl = pageControl;
+//        [_pageFlowView addSubview:pageControl];
+//    }
+//   
+//    [self.spaceView addSubview:_pageFlowView];
+//    
+//    [_pageFlowView reloadData];
+//    
+//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-#pragma mark NewPagedFlowView Delegate
+#pragma mark - NewPagedFlowView Delegate
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
     return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
 }
@@ -466,7 +477,7 @@ int a = 0;
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 
-#pragma mark NewPagedFlowView Datasource
+#pragma mark  NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
     
     return self.spacePageViewDataSource.count;
@@ -544,7 +555,6 @@ int a = 0;
 - (IBAction)showEnterpriseListVC:(id)sender {
 
     WOTEnterpriseLIstVC *enterprisevc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTEnterpriseLIstVCID"];
-    [enterprisevc setDataSource:_enterpriseListdata];
     [self.navigationController pushViewController:enterprisevc animated:YES];
 }
 //activity section imageClick
@@ -570,6 +580,34 @@ int a = 0;
     
 }
 
+#pragma mark - Card Delegate & DataSource
+-(NSInteger)numberOfItemsInCardView:(CardView *)cardView
+{
+    return self.spacePageViewDataSource.count;
+}
+
+-(CardViewItem *)cardView:(CardView *)cardView itemAtIndex:(NSInteger)index
+{
+    WOTCardViewItem *item = (WOTCardViewItem *)[cardView dequeueReusableCellWithIdentifier:@"WOTCardViewItem"];
+    WOTSpaceModel *model = self.spacePageViewDataSource[index];
+    
+//    NSArray *urlArr= [model.spacePicture componentsSeparatedByString:@","];
+//    [item.bgIV setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTPBaseURL,urlArr.firstObject]]];
+    [item.bgIV setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512661579794&di=963501da40aa0f561266d5c0307f95ee&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd01373f082025aafa9b293e2f0edab64034f1a12.jpg"]];
+    [item.title setText:model.spaceName];
+    return item;
+}
+
+-(CGRect)cardView:(CardView *)cardView rectForItemAtIndex:(NSInteger)index
+{
+    return CGRectMake(0, 0, SCREEN_WIDTH-40, self.spaceView.height - 35);
+}
+
+-(void)cardView:(CardView *)cardView didSelectItemAtIndex:(NSInteger)index
+{
+    NSLog(@"卡片%ld被选中", (long)index);
+}
+
 //MARK:SDCycleScrollView   Delegate  点击轮播图显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
     
@@ -581,55 +619,19 @@ int a = 0;
     NSLog(@"%@+%ld",cycleScrollView.titlesGroup[index],index);
 }
 
-//MARK:tableView datasource delegate
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return 1;
-}
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 110;
-}
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return  0.01;
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    WOTTEnterpriseListCell *enterprisecell = [tableView dequeueReusableCellWithIdentifier:@"WOTTEnterpriseListCellID" forIndexPath:indexPath];
-    enterprisecell.enterpriseName.text = _enterpriseListdata[indexPath.row].companyName;
-    enterprisecell.enterpriseInfo.text = _enterpriseListdata[indexPath.row].companyProfile;
-    [enterprisecell.enterpriseLogo sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTPBaseURL,_enterpriseListdata[indexPath.row].companyPicture]] placeholderImage:[UIImage imageNamed:@"enterprise_logo"]];
-    enterprisecell.lineView.hidden = indexPath.row == _enterpriseListdata.count-1 ? YES:NO;
-    return enterprisecell;
-    
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    //detailvc.url = [NSString stringWithFormat:@"%@%@",@"http://",_enterpriseListdata[indexPath.row].spared2];
-    [self.navigationController pushViewController:detailvc animated:YES];
-}
+#pragma mark -  tableView datasource delegate
 -(void)showNewInfoVC{
     WOTInformationListVC *infovc = [[WOTInformationListVC alloc]init];
     infovc.dataSource = _infodataSource;
     [self.navigationController pushViewController:infovc animated:YES];
 }
 -(void)getEnterpriseListDataFromWeb:(void(^)())complete{
-    
+    __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getEnterprisesWithSpaceId:[[NSNumber alloc]initWithInt:69] response:^(id bean, NSError *error) {
         complete();
         if (bean) {
             WOTEnterpriseModel_msg *dd = (WOTEnterpriseModel_msg *)bean;
-            _enterpriseListdata = dd.msg;
-            [self.tableView reloadData];
+            [weakSelf.enterpriseScrollView setData:dd.msg.list];
         }
         if (error) {
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
@@ -681,26 +683,23 @@ int a = 0;
 
 //从网络获取空间数据
 -(void)getDataSourceFromWebFWithCity:( NSString * __nullable )city complete:(void(^)())complete loadVIews:(void(^)())loadViews{
-//    [WOTHTTPNetwork getAllSpaceWithCity:city block:^(id bean, NSError *error) {
     [self.spacePageViewDataSource removeAllObjects];
+    
+    __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getSapaceFromGroupBlock:^(id bean, NSError *error) {
         complete();
         if (bean != nil) {
             WOTSpaceModel_msg *dd = (WOTSpaceModel_msg *)bean;
             NSLog(@"测试：%@",dd.msg.list);
-            _spacedataSource = dd.msg.list;
+            weakSelf.spacedataSource = [dd.msg.list mutableCopy];
             
             if (_spacedataSource.count>5) {
                 for (int index = 0; index < 5; index++) {
-                    
-                        [self.spacePageViewDataSource addObject:_spacedataSource[index]];
-                 
+                    [weakSelf.spacePageViewDataSource addObject:_spacedataSource[index]];
                 }
             } else {
                 for (int index = 0; index < _spacedataSource.count; index++) {
-                    
-                        [self.spacePageViewDataSource addObject:_spacedataSource[index]];
-                   
+                    [weakSelf.spacePageViewDataSource addObject:_spacedataSource[index]];
                 }
             }
             loadViews();
@@ -715,18 +714,17 @@ int a = 0;
 
 
 -(void)getActivityDataFromWeb:(void(^)())complete{
-    
-    [WOTHTTPNetwork getActivitiesWithSpaceId:nil spaceState:[[NSNumber alloc]initWithInt:1]  response:^(id bean, NSError *error) {
-        
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getActivitiesResponse:^(id bean, NSError *error)  {
         complete();
         if (bean) {
             WOTActivityModel_msg *dd = (WOTActivityModel_msg *)bean;
-            _activitydataSource = dd.msg;
+            _activitydataSource = dd.msg.list;
             if (_activitydataSource.count>0) {
                 if ([_activitydataSource[0].pictureSite separatedWithString:@","].count !=0 ) {
                     _activityImageUrl = [_activitydataSource[0].pictureSite separatedWithString:@","][0];
                     
-                    [_activityImage sd_setImageWithURL:[_activityImageUrl ToUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                    [weakSelf.activityIV sd_setImageWithURL:[_activityImageUrl ToUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
                     
                 }
             }
@@ -743,33 +741,33 @@ int a = 0;
 
 -(void)getInfoDataFromWeb:(void(^)())complete{
     
-    [WOTHTTPNetwork getAllNewInformation:^(id bean, NSError *error) {
-        complete();
-        if (bean) {
-            WOTNewInformationModel_msg *dd = (WOTNewInformationModel_msg *)bean;
-            _infodataSource = [[NSMutableArray alloc]init];
-            [_infodataSource addObject:dd.msg.space];
-            [_infodataSource addObject:dd.msg.firm];
-            
-            if (_infodataSource[0].count  >0) {
-                WOTNewInformationModel *model = _infodataSource[0][0];
-                
-                
-                [_infoImage sd_setImageWithURL: [[model.pictureSite separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-                _InfoMessage.text = model.messageInfo;
-                _InfoTime.text = model.issueTime;
-            } else {
-                _infoImage.image = [UIImage imageNamed:@"placeholder"];
-                _InfoMessage.text = @"";
-                _InfoTime.text = @"";
-            }
-            
-        }
-        if (error) {
-            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
-        }
-        
-    }];
+//    [WOTHTTPNetwork getAllNewInformation:^(id bean, NSError *error) {
+//        complete();
+//        if (bean) {
+//            WOTNewInformationModel_msg *dd = (WOTNewInformationModel_msg *)bean;
+//            _infodataSource = [[NSMutableArray alloc]init];
+//            [_infodataSource addObject:dd.msg.space];
+//            [_infodataSource addObject:dd.msg.firm];
+//
+//            if (_infodataSource[0].count  >0) {
+//                WOTNewInformationModel *model = _infodataSource[0][0];
+//
+//
+//                [_infoImage sd_setImageWithURL: [[model.pictureSite separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+//                _InfoMessage.text = model.messageInfo;
+//                _InfoTime.text = model.issueTime;
+//            } else {
+//                _infoImage.image = [UIImage imageNamed:@"placeholder"];
+//                _InfoMessage.text = @"";
+//                _InfoTime.text = @"";
+//            }
+//
+//        }
+//        if (error) {
+//            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
+//        }
+//
+//    }];
 }
 
 

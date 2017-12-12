@@ -9,8 +9,23 @@
 #import "WOTEnterpriseModel.h"
 
 @implementation WOTEnterpriseModel
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 @end
-@implementation WOTEnterpriseModel_msg
 
+@implementation WOTEnterpriseModel_list
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+@end
+
+
+@implementation WOTEnterpriseModel_msg
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 @end

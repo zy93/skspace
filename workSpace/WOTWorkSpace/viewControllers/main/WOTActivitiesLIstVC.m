@@ -176,12 +176,12 @@ bool ismenu1 =  NO;
 
 -(void)getActivityDataFromWeb:(void(^)())complete{
     
-    [WOTHTTPNetwork getActivitiesWithSpaceId:nil spaceState:[[NSNumber alloc]initWithInt:1]  response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork getActivitiesResponse:^(id bean, NSError *error) {
         
         complete();
         if (bean) {
             WOTActivityModel_msg *dd = (WOTActivityModel_msg *)bean;
-            _dataSource = dd.msg;
+            _dataSource = dd.msg.list;
            
             [self.tableVIew reloadData];
             

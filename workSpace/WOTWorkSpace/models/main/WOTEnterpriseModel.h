@@ -30,8 +30,23 @@
 
 @end
 
+
+
+@interface WOTEnterpriseModel_list : JSONModel
+@property (nonatomic, strong) NSNumber * bottomPageNo;
+@property (nonatomic, strong) NSNumber * nextPageNo;
+@property (nonatomic, strong) NSNumber * pageNo;
+@property (nonatomic, strong) NSNumber * pageSize;
+@property (nonatomic, strong) NSNumber * previousPageNo;
+@property (nonatomic, strong) NSNumber * topPageNo;
+@property (nonatomic, strong) NSNumber * totalPages;
+@property (nonatomic, strong) NSNumber * totalRecords;
+@property(nonatomic,strong)NSArray <WOTEnterpriseModel> *list;
+@end
+
+
 @interface WOTEnterpriseModel_msg : JSONModel
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSString *result;
-@property(nonatomic,strong)NSArray<WOTEnterpriseModel> *msg;
+@property(nonatomic,strong)WOTEnterpriseModel_list *msg;
 @end
