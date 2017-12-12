@@ -410,7 +410,7 @@
 }
 
 
-
+#pragma mark - 服务商
 
 +(void)registerServiceBusiness:(NSNumber *)userId firmName:(NSString *)firmName businessScope:(NSString *)businessScope contatcts:(NSString *)contatcts tel:(NSString *)tel facilitatorType:(NSString *)facilitatorType facilitatorState:(NSNumber *)facilitatorState firmLogo:(NSArray<UIImage *> *)firmLogo     response:(response)response{
     
@@ -429,6 +429,41 @@
     } response:response];
   
 }
+
++(void)getAllServiceTypes:(response)response{
+    
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/FacilitatorLabel/findAll"];
+    
+    [self doRequestWithParameters:nil useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        
+        WOTServiceCategoryModel_msg *model = [[WOTServiceCategoryModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)getServiceProviders:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/"];
+    
+    [self doRequestWithParameters:nil useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        
+        WOTServiceCategoryModel_msg *model = [[WOTServiceCategoryModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)postServiceRequestWithDescribe:(NSString *)describe spaceId:(NSString *)spaceId userId:(NSString *)userId facilitatorType:(NSString *)facilitatorType facilitatorLabel:(NSString *)facilitatorLabel  response:(response)response{
+    
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/GetFacilitator/addGetFacilitator"];
+    
+    NSMutableDictionary * parameters = [[NSMutableDictionary alloc]initWithObjectsAndKeys:describe,@"describe",spaceId,@"spaceId",userId,@"userId",facilitatorType,@"facilitatorType",facilitatorLabel,@"facilitatorLabel",nil];
+    
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
 
 
 
@@ -574,17 +609,6 @@
 }
 
 
-+(void)postServiceRequestWithDescribe:(NSString *)describe spaceId:(NSString *)spaceId userId:(NSString *)userId facilitatorType:(NSString *)facilitatorType facilitatorLabel:(NSString *)facilitatorLabel  response:(response)response{
-    
-    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/GetFacilitator/addGetFacilitator"];
-   
-    NSMutableDictionary * parameters = [[NSMutableDictionary alloc]initWithObjectsAndKeys:describe,@"describe",spaceId,@"spaceId",userId,@"userId",facilitatorType,@"facilitatorType",facilitatorLabel,@"facilitatorLabel",nil];
-   
-    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
-        WOTBaseModel *model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
 
 
 #pragma mark - bookstation
@@ -611,16 +635,7 @@
     } response:response];
 }
 
-+(void)getAllServiceTypes:(response)response{
-    
-    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/FacilitatorLabel/findAll"];
-    
-    [self doRequestWithParameters:nil useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
-       
-        WOTServiceCategoryModel_msg *model = [[WOTServiceCategoryModel_msg alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
+
 
 //+(void)getBookStationInfoWithSpaceId:(NSNumber *)spaceid response:(response)response
 //{

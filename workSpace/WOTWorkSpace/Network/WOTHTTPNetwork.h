@@ -132,13 +132,35 @@ typedef void(^response)(id bean,NSError *error);
  */
 
 +(void)getMyHistoryFeedBackData:(NSNumber *)userId response:(response)response;
+
+
+#pragma mark - 服务商
 /**
  *注册成为平台服务商
  @param userId  用户id
  
  */
-
 +(void)registerServiceBusiness:(NSNumber *)userId firmName:(NSString *)firmName businessScope:(NSString *)businessScope contatcts:(NSString *)contatcts tel:(NSString *)tel facilitatorType:(NSString *)facilitatorType facilitatorState:(NSNumber *)facilitatorState firmLogo:(NSArray<UIImage *> *)firmLogo     response:(response)response;
+
+/**
+ *服务--获取服务商类别
+ */
++(void)getAllServiceTypes:(response)response;
+
+/**
+ 获取服务商列表
+
+ @param response 返回
+ */
++(void)getServiceProviders:(response)response;
+
+/**
+ *服务--发布需求页面
+ */
+
++(void)postServiceRequestWithDescribe:(NSString *)describe spaceId:(NSString *)spaceId userId:(NSString *)userId facilitatorType:(NSString *)facilitatorType facilitatorLabel:(NSString *)facilitatorLabel  response:(response)response;
+
+
 
 /**
  *提交意见反馈
@@ -146,15 +168,6 @@ typedef void(^response)(id bean,NSError *error);
 
 +(void)postFeedBackInfoWithContent:(NSString *)opinionContent spaceId:(NSNumber *)spaceId userId:(NSNumber *)userId userName:(NSString *)userName tel:(NSString *)   tel response:(response)response;
 
-/**
- *服务--发布需求页面
- */
-
-+(void)postServiceRequestWithDescribe:(NSString *)describe spaceId:(NSString *)spaceId userId:(NSString *)userId facilitatorType:(NSString *)facilitatorType facilitatorLabel:(NSString *)facilitatorLabel  response:(response)response;
-/**
- *服务--获取服务商类别
- */
-+(void)getAllServiceTypes:(response)response;
 
 +(void)getFlexSliderSouceInfo:(response)response;
 
