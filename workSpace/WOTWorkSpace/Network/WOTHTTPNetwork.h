@@ -281,4 +281,17 @@ typedef void(^response)(id bean,NSError *error);
 
 +(void)sendMessageToSapceWithSpaceId:(NSNumber *)spaceId text:(NSString *)text images:(NSArray *)images response:(response)response;
 +(void)getMessageBySapceIdWithSpaceId:(NSNumber *)spaceId response:(response)response;
+
+///****************尚科新接口**************
+
+/**
+ 查询全部朋友圈
+
+ @param focusPeopleid  登录用户的userid
+ @param pageNo 页数
+ @param pageSize 条数
+ @param response 结果回调
+ */
++(void)queryAllCircleofFriendsWithFocusPeopleid:(NSNumber *)focusPeopleid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response;
+
 @end

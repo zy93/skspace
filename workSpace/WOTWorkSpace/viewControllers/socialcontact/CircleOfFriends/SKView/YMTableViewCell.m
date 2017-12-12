@@ -12,6 +12,7 @@
 #import "YMTapGestureRecongnizer.h"
 #import "WFHudView.h"
 #import "UIImageView+WebCache.h"
+#import "UIColor+ColorChange.h"
 
 #define kImageTag 9999
 
@@ -39,14 +40,14 @@
         [layer setMasksToBounds:YES];
         [layer setCornerRadius:10.0];
         [layer setBorderWidth:1];
-        [layer setBorderColor:[[UIColor colorWithRed:63/255.0 green:107/255.0 blue:252/255.0 alpha:1.0] CGColor]];
+        [layer setBorderColor:[[UIColor clearColor] CGColor]];
         [self.contentView addSubview:_userHeaderImage];
         
         //用户名
         _userNameLbl = [[UILabel alloc] initWithFrame:CGRectMake(20 + TableHeader + 20, 5, screenWidth - 120, TableHeader/2)];
         _userNameLbl.textAlignment = NSTextAlignmentLeft;
         _userNameLbl.font = [UIFont systemFontOfSize:15.0];
-        _userNameLbl.textColor = [UIColor colorWithRed:104/255.0 green:109/255.0 blue:248/255.0 alpha:1.0];
+        _userNameLbl.textColor = [UIColor colorWithHexString:@"666666"];
         [self.contentView addSubview:_userNameLbl];
         
         
@@ -95,7 +96,8 @@
         [self.contentView addSubview:_favourImage];
         
         _addTimeLabel = [[UILabel alloc] init];
-        _addTimeLabel.text = @"2017-12-07";
+        //_addTimeLabel.text = @"2017-12-07";
+        _addTimeLabel.textColor = [UIColor colorWithHexString:@"999999"];
         [_addTimeLabel setFont:[UIFont systemFontOfSize:12]];
         [self.contentView addSubview:_addTimeLabel];
         
@@ -127,22 +129,19 @@
 - (void)setYMViewWith:(YMTextData *)ymData{
   
     tempDate = ymData;
-    
 #pragma mark -  //头像 昵称 简介
     //_userHeaderImage.image = [UIImage imageNamed:tempDate.messageBody.posterImgstr];
    [ _userHeaderImage sd_setImageWithURL:[NSURL URLWithString:tempDate.messageBody.posterImgstr] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
     _userNameLbl.text = tempDate.messageBody.posterName;
     _userIntroLbl.text = tempDate.messageBody.posterIntro;
-    
+    _addTimeLabel.text = [self cutOutString:tempDate.messageBody.friendTime];
     //移除说说view 避免滚动时内容重叠
     for ( int i = 0; i < _ymShuoshuoArray.count; i ++) {
         WFTextView * imageV = (WFTextView *)[_ymShuoshuoArray objectAtIndex:i];
         if (imageV.superview) {
             [imageV removeFromSuperview];
-            
         }
     }
-    
     [_ymShuoshuoArray removeAllObjects];
   
 #pragma mark - // /////////添加说说view
@@ -150,6 +149,7 @@
     WFTextView *textView = [[WFTextView alloc] initWithFrame:CGRectMake(offSet_X, 15 + TableHeader, screenWidth - 2 * offSet_X, 0)];
     textView.delegate = self;
     textView.attributedData = ymData.attributedDataShuoshuo;
+    //textView.textColor = [UIColor redColor];
     textView.isFold = ymData.foldOrNot;
     textView.isDraw = YES;
     [textView setOldString:ymData.showShuoShuo andNewString:ymData.completionShuoshuo];
@@ -180,7 +180,6 @@
         
         [foldBtn setTitle:@"收起" forState:0];
     }
-    
 #pragma mark - /////// //图片部分
     for (int i = 0; i < [_imageArray count]; i++) {
         //修改成为加载网络图片
@@ -394,6 +393,15 @@
 -(void)openCommentBtnMethod
 {
     NSLog(@"打开评论");
+}
+
+
+#pragma mark - 截取字符串--保留年、月、日
+-(NSString *)cutOutString:(NSString *)timeString
+{
+    NSString *str = [timeString substringToIndex:11];
+    NSLog(@"截取的值为：%@",str);
+    return str;
 }
 
 @end

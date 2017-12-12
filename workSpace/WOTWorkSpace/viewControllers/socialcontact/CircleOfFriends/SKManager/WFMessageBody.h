@@ -49,4 +49,9 @@
  */
 @property (nonatomic,assign) BOOL isFavour;
 
+
+@property (nonatomic,strong) NSString *friendTime;
+
+
+
 @end

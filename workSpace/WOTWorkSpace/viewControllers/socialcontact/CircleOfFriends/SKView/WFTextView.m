@@ -13,6 +13,7 @@
 #import "NSArray+NSArray_ILExtension.h"
 #import "NSString+NSString_ILExtension.h"
 #import "WFHudView.h"
+#import "UIColor+ColorChange.h"
 
 #define FontHeight                  15.0
 #define ImageLeftPadding            2.0
@@ -124,18 +125,19 @@
     helvetica = CTFontCreateWithName(CFSTR("Helvetica"),FontSize, NULL);
     [attrString addAttribute:(id)kCTFontAttributeName value: (id)CFBridgingRelease(helvetica) range:NSMakeRange(0,[attrString.string length])];
     
-    [attrString addAttribute:(id)kCTForegroundColorAttributeName value:(id)([UIColor blackColor].CGColor) range:NSMakeRange(0,[attrString length])];
+    [attrString addAttribute:(id)kCTForegroundColorAttributeName value:(id)([UIColor colorWithHexString:@"999999"].CGColor) range:NSMakeRange(0,[attrString length])];
     
     if (_textColor == nil) {
-        _textColor = [UIColor blueColor];
+        _textColor = [UIColor colorWithHexString:@"507daf"];
     }
-    
+    //_textColor = [UIColor blueColor];
     for (int i = 0; i < _attributedData.count; i ++) {
         
         NSString *str = [[[_attributedData objectAtIndex:i] allKeys] objectAtIndex:0];
         
         [attrString addAttribute:(id)kCTForegroundColorAttributeName value:(id)(_textColor.CGColor) range:NSRangeFromString(str)];
-        
+        [attrString addAttribute:(id)kCTForegroundColorAttributeName value:[UIColor colorWithHexString:@"666666"] range:NSMakeRange(1, 2)];
+        [attrString addAttribute:(id)kCTForegroundColorAttributeName value:[UIColor colorWithHexString:@"666666"] range:NSMakeRange(5, attrString.length-5)];
     }
     
     for(NSInteger i = 0; i < [ranges count]; i++){

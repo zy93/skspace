@@ -70,12 +70,10 @@
     if (!_likeButton) {
         _likeButton= [UIButton buttonWithType:UIButtonTypeCustom];
         _likeButton.tag = 1;
-//        _likeButton.backgroundColor = [UIColor blueColor];
         [_likeButton setTitle:@"关注" forState:UIControlStateNormal];
         _likeButton.titleLabel.font = [UIFont systemFontOfSize:12];
         _likeButton.frame = CGRectMake(CGRectGetMaxX(_replyButton.frame), 0, kXHALbumOperationViewSize.width / 2.0, kXHALbumOperationViewSize.height);
         [_likeButton setImage:[UIImage imageNamed:@"workgroup_img_like"] forState:UIControlStateNormal];
-        //[_likeButton setImage:[UIImage imageNamed:@"workgroup_img_like_sel"] forState:UIControlStateSelected];
         [_likeButton addTarget:self action:@selector(operationDidClicked:) forControlEvents:UIControlEventTouchUpInside];
         _likeButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
         [self addSubview:_likeButton];
@@ -106,8 +104,8 @@
         UIImage *image = [UIImage imageNamed:@"workgroup_img_like"];
         UIImage *selectImage = [UIImage imageNamed:@"workgroup_img_like_sel"];
         [_likeButton setImage:(isFavour?selectImage:image) forState:UIControlStateNormal];
-        //[_likeButton setTitle:(isFavour?@"取消赞":@"赞") forState:UIControlStateNormal];
-        [_likeButton setTitle:@"关注" forState:UIControlStateNormal];
+        [_likeButton setTitle:(isFavour?@"已关注":@"关注") forState:UIControlStateNormal];
+        //[_likeButton setTitle:@"关注" forState:UIControlStateNormal];
     }];
 }
 

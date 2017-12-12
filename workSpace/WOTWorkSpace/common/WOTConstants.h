@@ -72,9 +72,9 @@
 
 //#define HTTPBaseURL @"http://192.168.6.219:8080/workSpace"//石宇驰电脑
 //#define HTTPBaseURL @"http://192.168.38.149:8080/workSpace"
-//#define HTTPBaseURL @"http://219.143.170.98:10011"//公共
+#define HTTPBaseURL @"http://219.143.170.98:10011"//公共
 //#define HTTPBaseURL @"http://192.168.6.166"//公共
-#define HTTPBaseURL @"http://192.168.34.80:8080"//测试
+//#define HTTPBaseURL @"http://192.168.34.80:8080"//测试
 
 //集团的appid
 //#define YLGTEST_APPID @"c4ca4238a0b923820dcc509a6f75849b"//易联港测试
