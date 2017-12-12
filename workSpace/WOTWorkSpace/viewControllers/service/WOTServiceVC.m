@@ -21,7 +21,6 @@
 
 
 #define getService @"WOTGETServiceCell"
-#define joinService @"申请成为平台服务商"
 #define serviceScroll @"serviceScroll"
 
 #import "WOTRefreshControlUitls.h"
@@ -145,7 +144,7 @@
 
 -(void)addData
 {
-    NSArray *section1 = @[getService, joinService];
+    NSArray *section1 = @[getService];
     NSArray *section2 = @[serviceScroll];
 //    tableIconList = [@[@"visitors_icon", @"maintenance_apply_icon", @"openDoor_icon", @"get_service_icon", @"feedback_icon"] mutableCopy];
 //    NSArray *section3 = @[@"可操控设备"];
@@ -232,13 +231,9 @@
     if ([arr[indexPath.row] isEqualToString:getService]) {
         return 100;
     }
-    else if ([arr[indexPath.row] isEqualToString:joinService]) {
-        return 50;
-    }
     else {
         return 250;
     }
-    return 50;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -258,16 +253,6 @@
             cell = [[WOTGETServiceCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTGETServiceCell"];
         }
         cell.mDelegate = self;
-        return cell;
-    }
-    else if ([arr[indexPath.row] isEqualToString:joinService]) {
-        WOTServiceProvidersApplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTServiceProvidersApplyCell"];
-        if (cell == nil) {
-            cell = [[WOTServiceProvidersApplyCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTServiceProvidersApplyCell"];
-        }
-        NSArray *sectionArr = tableList[indexPath.section];
-        
-        [cell.titleLab setText:sectionArr[indexPath.row]];
         return cell;
     }
     else {

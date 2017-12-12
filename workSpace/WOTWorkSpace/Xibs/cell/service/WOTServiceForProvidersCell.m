@@ -8,7 +8,7 @@
 
 #import "WOTServiceForProvidersCell.h"
 
-#define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 40)
+#define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 50)
 #define providersViewHeight ([[UIScreen mainScreen] bounds].size.width/350 * 180)
 #define providersViewGap  10
 #define providersStartX   20
@@ -18,8 +18,14 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.backgroundColor = [UIColor grayColor];
-    self.providersScrollView.backgroundColor = UIColorFromRGB(0x1234ff);
+//    self.backgroundColor = [UIColor grayColor];
+//    self.providersScrollView.backgroundColor = UIColorFromRGB(0x1234ff);
+    if ([self respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self setSeparatorInset:UIEdgeInsetsZero];
+    }
+    UIImage *im = self.arrowIV.image;
+    im = [im imageWithColor:UIColorFromRGB(0xFF5908)];
+    [self.arrowIV setImage:im];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -38,17 +44,19 @@
     
     for (int i = 0; i<da; i++) {
         
-        WOTServiceProvidersView *view = [[WOTServiceProvidersView alloc] initWithFrame:CGRectMake(i*providersViewWidth + ((i+1)*(providersViewGap+10)), 0, providersViewWidth, providersViewHeight)];
+        WOTServiceProvidersView *view = [[WOTServiceProvidersView alloc] initWithFrame:CGRectMake(i==0? providersStartX: i*providersViewWidth + ((i)*(providersViewGap)) + providersStartX, 0, providersViewWidth, providersViewHeight)];
         view.clipsToBounds = YES;
         [self.providersScrollView addSubview:view];
     }
     
     NSLog(@"---------HH:%f",CGRectGetHeight(self.providersScrollView.frame));
     
-    self.providersScrollView.contentSize = CGSizeMake(da*providersViewWidth, self.providersScrollView.frame.size.height);
+    self.providersScrollView.contentSize = CGSizeMake(da*providersViewWidth+ (da*(providersViewGap)) + providersStartX, self.providersScrollView.frame.size.height);
     
 }
 
+- (IBAction)joinBtn:(id)sender {
+}
 
 
 @end

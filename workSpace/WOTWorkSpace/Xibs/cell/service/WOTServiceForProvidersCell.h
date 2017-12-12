@@ -11,6 +11,7 @@
 
 @interface WOTServiceForProvidersCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIScrollView *providersScrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowIV;
 
 -(void)setData:(NSInteger)da;
 
