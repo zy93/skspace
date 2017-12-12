@@ -32,6 +32,7 @@
 #import "WOTFriendsMessageListModel.h"
 #import "WOTBookStationReservationsModel.h"
 #import "SKBookStationNumberModel.h"
+#import "QueryCircleofFriendsModel.h"
 
 #import "WXApi.h"
 #import "WOTWXPayModel.h"
@@ -773,6 +774,20 @@
         return model12;
     } response:response];
     
+}
+
++(void)queryAllCircleofFriendsWithFocusPeopleid:(NSNumber *)focusPeopleid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/find",HTTPBaseURL];
+    NSDictionary *parameters = @{@"pageNo":pageNo,
+                                 @"pageSize":pageSize,
+                                 @"focusPeopleid":focusPeopleid
+                                 };
+    
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        QueryCircleofFriendsModel *model13 = [[QueryCircleofFriendsModel alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
 }
 
 @end

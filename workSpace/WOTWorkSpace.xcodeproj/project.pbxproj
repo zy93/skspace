@@ -129,6 +129,9 @@
 		C55A298C1FD6E16B001E0DB7 /* UIColor+ColorChange.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A298A1FD6E16B001E0DB7 /* UIColor+ColorChange.m */; };
 		C56684DE1FD6AC0000DC5782 /* SKBookStationNumberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */; };
 		C580842D1FD781C10091DCC4 /* StationOrderInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C580842B1FD781C10091DCC4 /* StationOrderInfoViewController.m */; };
+		C59840451FDE3206009B49CE /* PublishCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */; };
+		C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */; };
+		C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */ = {isa = PBXBuildFile; fileRef = C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */; };
 		C59D56CB1FDA280C001870B2 /* YHWorkGroupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56C51FDA280B001870B2 /* YHWorkGroupButton.m */; };
 		C59D56DF1FDA2C6D001870B2 /* YMTextData.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56D31FDA2C6C001870B2 /* YMTextData.m */; };
 		C59D56E01FDA2C6D001870B2 /* WFMessageBody.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56D41FDA2C6C001870B2 /* WFMessageBody.m */; };
@@ -606,6 +609,12 @@
 		C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKBookStationNumberModel.m; sourceTree = "<group>"; };
 		C580842B1FD781C10091DCC4 /* StationOrderInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationOrderInfoViewController.m; sourceTree = "<group>"; };
 		C580842C1FD781C10091DCC4 /* StationOrderInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationOrderInfoViewController.h; sourceTree = "<group>"; };
+		C598403C1FDE3205009B49CE /* QueryCircleofFriendsModel_msg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCircleofFriendsModel_msg.h; sourceTree = "<group>"; };
+		C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishCircleofFriendsModel.m; sourceTree = "<group>"; };
+		C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryCircleofFriendsModel.m; sourceTree = "<group>"; };
+		C598403F1FDE3205009B49CE /* PublishCircleofFriendsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishCircleofFriendsModel.h; sourceTree = "<group>"; };
+		C59840421FDE3206009B49CE /* QueryCircleofFriendsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCircleofFriendsModel.h; sourceTree = "<group>"; };
+		C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryCircleofFriendsModel_msg.m; sourceTree = "<group>"; };
 		C59D56C51FDA280B001870B2 /* YHWorkGroupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHWorkGroupButton.m; sourceTree = "<group>"; };
 		C59D56C61FDA280B001870B2 /* YHWorkGroupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHWorkGroupButton.h; sourceTree = "<group>"; };
 		C59D56C91FDA280C001870B2 /* ContantHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContantHead.h; sourceTree = "<group>"; };
@@ -1458,6 +1467,7 @@
 		2A99FB611F258A0F00869732 /* socialcontact */ = {
 			isa = PBXGroup;
 			children = (
+				C598403A1FDE2D98009B49CE /* SKCircleofFriends */,
 				2A99FB6E1F25EA8300869732 /* WOTSocialContactsBean.h */,
 				2A99FB6F1F25EA8300869732 /* WOTSocialContactsBean.m */,
 				2A345AA41F5E576500DC6B31 /* WOTSendFriendsModel.h */,
@@ -1507,6 +1517,19 @@
 				EFC264D6C897C120A10B700D /* libPods-WOTWorkSpaceUITests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C598403A1FDE2D98009B49CE /* SKCircleofFriends */ = {
+			isa = PBXGroup;
+			children = (
+				C598403F1FDE3205009B49CE /* PublishCircleofFriendsModel.h */,
+				C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */,
+				C598403C1FDE3205009B49CE /* QueryCircleofFriendsModel_msg.h */,
+				C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */,
+				C59840421FDE3206009B49CE /* QueryCircleofFriendsModel.h */,
+				C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */,
+			);
+			path = SKCircleofFriends;
 			sourceTree = "<group>";
 		};
 		C59D56C41FDA27E6001870B2 /* CircleOfFriends */ = {
@@ -3211,6 +3234,7 @@
 				E86594881F21CFF00093B796 /* WOTNearCirclesVC.m in Sources */,
 				E86B81DF1F383134002AAC63 /* WOTMapManager.m in Sources */,
 				2A1624F61F0E3F4B00F216F9 /* WOTUserRegisterVC.m in Sources */,
+				C59840451FDE3206009B49CE /* PublishCircleofFriendsModel.m in Sources */,
 				E8190D971F0F69660000B07C /* WOTInformationLIstCell.m in Sources */,
 				E8DDCCD21F11D151007D001C /* WOTEnterpriseTypeVC.m in Sources */,
 				2AF7B18C1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m in Sources */,
@@ -3236,6 +3260,7 @@
 				E8CF9FD41F0F8EA400EF0F46 /* WOTBookStationCell.m in Sources */,
 				2A3B54F41FD93C2F00358B8A /* UIFont+MyFont.m in Sources */,
 				E85A85951F0201F30016FCA1 /* WOTWorkSpace.xcdatamodeld in Sources */,
+				C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */,
 				2AF78CEE1F0A39E800F7B56D /* WOTGETServiceViewController.m in Sources */,
 				2AF7B18F1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.m in Sources */,
 				2AF18A321F136016004681CE /* WOTOrderForInfoCell.m in Sources */,
@@ -3308,6 +3333,7 @@
 				2A99FB671F258A4000869732 /* WOTVisitorsModel.m in Sources */,
 				E8605CD71F1356BF005C09F4 /* UISearchBar+JCSearchBarPlaceholder.m in Sources */,
 				E8747AE21F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.m in Sources */,
+				C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */,
 				E86245711F3D4F4900CF0D9D /* NSURLRequest+SRWebSocket.m in Sources */,
 				E868E0E41F42E8C700573B66 /* DataSigner.m in Sources */,
 				E86245651F3D4F4900CF0D9D /* SRRunLoopThread.m in Sources */,
