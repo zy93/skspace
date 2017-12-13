@@ -142,7 +142,8 @@
         }else
         {
             [mycell.loginButton setHidden:NO];
-            [mycell.memberLabel setHidden:YES];
+            [mycell.memberLabel setHidden:NO];
+            mycell.memberLabel.text = @"登录后可进行更多操作";
             [mycell.userName setHidden:YES];
         }
         

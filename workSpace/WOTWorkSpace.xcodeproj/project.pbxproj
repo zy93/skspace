@@ -133,6 +133,7 @@
 		C59840451FDE3206009B49CE /* PublishCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */; };
 		C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */; };
 		C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */ = {isa = PBXBuildFile; fileRef = C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */; };
+		C598E9021FDFC4A300CBAD8E /* SKAddReply.m in Sources */ = {isa = PBXBuildFile; fileRef = C598E9011FDFC4A300CBAD8E /* SKAddReply.m */; };
 		C59D56CB1FDA280C001870B2 /* YHWorkGroupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56C51FDA280B001870B2 /* YHWorkGroupButton.m */; };
 		C59D56DF1FDA2C6D001870B2 /* YMTextData.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56D31FDA2C6C001870B2 /* YMTextData.m */; };
 		C59D56E01FDA2C6D001870B2 /* WFMessageBody.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56D41FDA2C6C001870B2 /* WFMessageBody.m */; };
@@ -618,6 +619,8 @@
 		C598403F1FDE3205009B49CE /* PublishCircleofFriendsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishCircleofFriendsModel.h; sourceTree = "<group>"; };
 		C59840421FDE3206009B49CE /* QueryCircleofFriendsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCircleofFriendsModel.h; sourceTree = "<group>"; };
 		C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryCircleofFriendsModel_msg.m; sourceTree = "<group>"; };
+		C598E9001FDFC4A300CBAD8E /* SKAddReply.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKAddReply.h; sourceTree = "<group>"; };
+		C598E9011FDFC4A300CBAD8E /* SKAddReply.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKAddReply.m; sourceTree = "<group>"; };
 		C59D56C51FDA280B001870B2 /* YHWorkGroupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHWorkGroupButton.m; sourceTree = "<group>"; };
 		C59D56C61FDA280B001870B2 /* YHWorkGroupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YHWorkGroupButton.h; sourceTree = "<group>"; };
 		C59D56C91FDA280C001870B2 /* ContantHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContantHead.h; sourceTree = "<group>"; };
@@ -1531,6 +1534,8 @@
 				C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */,
 				C59840421FDE3206009B49CE /* QueryCircleofFriendsModel.h */,
 				C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */,
+				C598E9001FDFC4A300CBAD8E /* SKAddReply.h */,
+				C598E9011FDFC4A300CBAD8E /* SKAddReply.m */,
 			);
 			path = SKCircleofFriends;
 			sourceTree = "<group>";
@@ -3278,6 +3283,7 @@
 				2A3B54F71FD93C2F00358B8A /* SystemFunctions.m in Sources */,
 				E8605CDA1F137827005C09F4 /* WOTEnterpriseConnectsInfoVC.m in Sources */,
 				E8693ADE1F049C6300772BC1 /* UItableView+Extension.m in Sources */,
+				C598E9021FDFC4A300CBAD8E /* SKAddReply.m in Sources */,
 				E8190DCA1F0F69660000B07C /* PGIndexBannerSubiew.m in Sources */,
 				2AF18A241F131898004681CE /* WOTPickerView.m in Sources */,
 				E86B81E81F38422B002AAC63 /* WOTWXApiManager.m in Sources */,

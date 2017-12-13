@@ -33,7 +33,6 @@
 #import "WOTBookStationReservationsModel.h"
 #import "SKBookStationNumberModel.h"
 #import "QueryCircleofFriendsModel.h"
-
 #import "WXApi.h"
 #import "WOTWXPayModel.h"
 
@@ -789,5 +788,36 @@
         return model13;
     } response:response];
 }
+
++(void)addReplyWithFriendId:(NSNumber *)friendId byReplyid:(NSNumber *)byReplyid byReplyname:(NSString *)byReplyname replyId:(NSNumber *)replyId replyName:(NSString *)replyName replyInfo:(NSString *)replyInfo response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/ReplyRecor/addReplyRecord",HTTPBaseURL];
+    NSDictionary *parameters = @{@"friendId":friendId,
+                                 @"byReplyid":byReplyid,
+                                 @"byReplyname":byReplyname,
+                                 @"replyId":replyId,
+                                 @"replyName":replyName,
+                                 @"replyInfo":replyInfo
+                                 };
+    
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model14 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model14;
+    } response:response];
+}
+
++(void)addFocusWithfocusPeopleid:(NSNumber *)focusPeopleid befocusPeopleid:(NSNumber *)befocusPeopleid response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/FocusTable/addFocus",HTTPBaseURL];
+    NSDictionary *parameters = @{@"focusPeopleid":focusPeopleid,
+                                 @"BefocusPeopleid":befocusPeopleid
+                                 };
+    
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model15 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model15;
+    } response:response];
+}
+
 
 @end

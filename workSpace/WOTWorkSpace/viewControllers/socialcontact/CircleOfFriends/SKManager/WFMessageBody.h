@@ -52,6 +52,11 @@
 
 @property (nonatomic,strong) NSString *friendTime;
 
+@property (nonatomic,assign) NSNumber *friendId;
+
+@property (nonatomic,assign) NSNumber *issueId;
+
+
 
 
 @end
