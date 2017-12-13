@@ -17,20 +17,62 @@
 #import "WOTVisitorsModel.h"
 #import "WOTConstants.h"
 #import "JudgmentTime.h"
+#import "WOTElasticityView.h"
 
-@interface WOTVisitorsAppointmentVC () <UITableViewDelegate, UITableViewDataSource, WOTVisitorsAppointmentSubmitCellDelegate, WOTVisitorsAppointmentCellDelegate, WOTVisitTypeCellDelegate>
+@interface WOTVisitorsAppointmentVC () <UIScrollViewDelegate, WOTVisitorsAppointmentSubmitCellDelegate, WOTVisitorsAppointmentCellDelegate, WOTVisitTypeCellDelegate>
 {
     NSArray *tableList;
     NSArray *tableSubtitleList;
     NSMutableArray *contentList;
     NSString *time;
     UIImage *headImage;
+    
+    CGFloat topViewHeight;
 }
-@property (weak, nonatomic) IBOutlet UITableView *table;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet WOTElasticityView *topView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraints;
+@property (weak, nonatomic) IBOutlet UIView *contentBGView;
+@property (weak, nonatomic) IBOutlet UIButton *headBtn;
+
+@property (weak, nonatomic) IBOutlet UIView *nameBGView;
+@property (weak, nonatomic) IBOutlet UITextField *nameText;
+
+
+@property (weak, nonatomic) IBOutlet UIView *genderBGView;
+@property (weak, nonatomic) IBOutlet UILabel *genderValueLab;
+@property (weak, nonatomic) IBOutlet UIButton *chooseGenderBtn;
+
+@property (weak, nonatomic) IBOutlet UIView *telBGView;
+@property (weak, nonatomic) IBOutlet UITextField *telText;
+
+@property (weak, nonatomic) IBOutlet UIView *communityBGView;
+@property (weak, nonatomic) IBOutlet UILabel *communityValueLab;
+@property (weak, nonatomic) IBOutlet UIButton *chooseCommunityBtn;
+
+@property (weak, nonatomic) IBOutlet UIView *accessTypeBGView;
+@property (weak, nonatomic) IBOutlet UILabel *accessTypeValueLab;
+@property (weak, nonatomic) IBOutlet UIButton *chooseAccessTypeBtn;
+
+@property (weak, nonatomic) IBOutlet UIView *accessTargetBGView;
+@property (weak, nonatomic) IBOutlet UILabel *accessTargetValueLab;
+@property (weak, nonatomic) IBOutlet UIButton *chooseAccessTargetBtn;
+
+@property (weak, nonatomic) IBOutlet UIView *accessReasonBGView;
+@property (weak, nonatomic) IBOutlet UITextField *accessReasonText;
+
+@property (weak, nonatomic) IBOutlet UIView *accessNumberBGView;
+@property (weak, nonatomic) IBOutlet UITextField *accessNumberText;
+
+@property (weak, nonatomic) IBOutlet UIView *accessDateBGView;
+@property (weak, nonatomic) IBOutlet UILabel *accessDateValueLab;
+@property (weak, nonatomic) IBOutlet UIButton *chooseAccessDateBtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *commitBtn;
+
 @property (nonatomic, strong) WOTDatePickerView *datepickerview;
 @property (nonatomic, strong) JudgmentTime *judgmentTime;
 @property (nonatomic, assign) BOOL isValidTime;
-
 @end
 
 @implementation WOTVisitorsAppointmentVC
@@ -38,6 +80,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    CGFloat radius = 5.f;
+    
+    [self addShadowWith:self.nameBGView];
+    [self addShadowWith:self.genderBGView];
+    [self addShadowWith:self.telBGView];
+    [self addShadowWith:self.communityBGView];
+    [self addShadowWith:self.accessTypeBGView];
+    [self addShadowWith:self.accessTargetBGView];
+    [self addShadowWith:self.accessReasonBGView];
+    [self addShadowWith:self.accessNumberBGView];
+    [self addShadowWith:self.accessDateBGView];
+    self.contentBGView.layer.cornerRadius =radius;
+//    self.contentBGView.hidden = YES;
+    self.contentBGView.backgroundColor = UIColorFromRGB(0xf1f1f1);
+    self.topView.backgroundColor = UIColorFromRGB(0xff7371);
+    topViewHeight = self.topViewHeightConstraints.constant;
+    self.commitBtn.layer.cornerRadius = 5.f;
+
+    
     [self configNav];
     [self setupView];
     [self addData];
@@ -50,17 +111,33 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController.navigationBar setHidden:NO];
     self.judgmentTime = [[JudgmentTime alloc] init];
-    [self.table reloadData];
 }
 
 -(void)configNav{
     self.navigationItem.title = @"访客预约";
-    //解决布局空白问题
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
+    
+    //navi颜色
+    self.navigationController.navigationBar.translucent = YES;
+    UIColor *color = [UIColor clearColor];
+    CGRect rect = CGRectMake(0, 0, SCREEN_WIDTH, 64);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.clipsToBounds = YES;
+    
+//    //解决布局空白问题
+//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
+//    if (is7Version) {
+//        self.edgesForExtendedLayout=UIRectEdgeNone;
+//    }
 }
+
+
+
 
 -(void)setupView
 {
@@ -85,7 +162,6 @@
                 time = @"";
                 _datepickerview.hidden  = NO;
             }
-            [weakSelf.table reloadData];
         });
     };
     [self.view addSubview:_datepickerview];
@@ -103,9 +179,19 @@
     [contentList replaceObjectAtIndex:2 withObject:@"男"];
     [contentList replaceObjectAtIndex:5 withObject:@(2)];
     tableSubtitleList = @[@"", @"必填", @"MAN", @"必填", @"请选择", @"", @"必填", @"必填", @"必填", @"请选择"];
-    [self.table reloadData];
 }
 
+-(void)addShadowWith:(UIView *)view
+{
+    view.backgroundColor = UIColorFromRGB(0xe1e1e1);
+    view.layer.borderWidth = 1.f;
+    view.layer.borderColor = UIColorFromRGB(0xcccccc).CGColor;
+    view.layer.cornerRadius =5.f;
+    view.layer.shadowColor = UIColorFromRGB(0xd5d5d5).CGColor;//shadowColor阴影颜色
+    view.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    view.layer.shadowRadius = 3;//阴影半径，默认3
+    view.layer.shadowOpacity = 1.f;//阴影透明度，默认0
+}
 
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -122,7 +208,6 @@
 //    enterpriseLogoPath = editingInfo[UIImagePickerControllerReferenceURL];
 //    tableInputDatadic[@"firmLogo"] = enterpriseLogoPath;
     headImage = image;
-    [self.table reloadData];
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -205,137 +290,26 @@
     [contentList replaceObjectAtIndex:cell.index.row withObject:@(type)];
 }
 
-#pragma mark - table delegate & data source
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+#pragma mark - scrollview delegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    return 1;
+    //通过滑动的便宜距离重新给图片设置大小
+    CGFloat yOffset = scrollView.contentOffset.y + 64;
+    if((yOffset<0 && yOffset > -100) ||
+       (yOffset>0 && yOffset<60) )
+    {
+        CGFloat height = topViewHeight;
+        height = height - yOffset;
+//        self.topViewHeightConstraints.constant = height;
+        [self.topView scrollViewPoint:CGPointMake(0, -yOffset) isEnd:NO];
+    }
+
+    
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    return tableList.count;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *str = tableList[indexPath.row];
-    if ([str isEqualToString:@"访问类型"] || [str isEqualToString:@"提交"]) {
-        return 80;
-    }
-    
-    return 50;
-}
-
-//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 10;
-//}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    NSString *str = tableList[indexPath.row];
-
-    
-    if ([str isEqualToString:@"访问类型"]) {
-        WOTVisitTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTVisitTypeCell"];
-        if (cell == nil) {
-            cell = [[WOTVisitTypeCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTVisitTypeCell"];
-        }
-        [cell.titleLab setText:tableList[indexPath.row]];
-        cell.delegate = self;
-        cell.index = indexPath;
-        return  cell;
-    }
-    else if ([str isEqualToString:@"提交"]) {
-        WOTVisitorsAppointmentSubmitCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTVisitorsAppointmentSubmitCell"];
-        if (cell == nil) {
-            cell = [[WOTVisitorsAppointmentSubmitCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTVisitorsAppointmentSubmitCell"];
-        }
-        cell.delegate = self;
-        return  cell;
-    }
-    else {
-        WOTVisitorsAppointmentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTVisitorsAppointmentCell"];
-        if (cell == nil) {
-            cell = [[WOTVisitorsAppointmentCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTVisitorsAppointmentCell"];
-        }
-        if ([str isEqualToString:@"访客照片"]) {
-            cell.headImg.hidden = NO;
-            cell.contentText.hidden = YES;
-            if (headImage) {
-                [cell.headImg setImage:headImage];
-            }
-        }
-        else {
-            cell.headImg.hidden = YES;
-        }
-        
-        if ([str isEqualToString:@"访问社区"] || [str isEqualToString:@"到访日期"]) {
-            cell.contentText.enabled = NO;
-        }
-        else {
-            cell.contentText.enabled = YES;
-        }
-        if ([str isEqualToString:@"性别"]) {
-            cell.contentText.hidden = YES;
-            cell.headImg.hidden = YES;
-            cell.manBtn.hidden = NO;
-            cell.womBtn.hidden = NO;
-        }
-        else {
-            cell.contentText.hidden = cell.contentText.isHidden;
-            cell.headImg.hidden = cell.headImg.isHidden;
-            cell.manBtn.hidden = YES;
-            cell.womBtn.hidden = YES;
-        }
-        if (self.spaceName && [str isEqualToString:@"访问社区"]) {
-            cell.contentText.text = self.spaceName;
-        }
-        
-        if ([str isEqualToString:@"到访日期"] && time) {
-            cell.contentText.text = time;
-        }
-        
-        cell.delegate = self;
-        cell.index = indexPath;
-        [cell.titleLab setText:tableList[indexPath.row]];
-        cell.contentText.placeholder = tableSubtitleList[indexPath.row];
-        return  cell;
-    }
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString *str = tableList[indexPath.row];
-    
-    if (indexPath.row==0) {
-        WOTPhotosBaseUtils *photo = [[WOTPhotosBaseUtils alloc]init];
-        photo.onlyOne = YES;
-        photo.vc = self;
-        
-        [photo showSelectedPhotoSheet];
-    }
-    else  if ([str isEqualToString:@"访问社区"]) {
-        WOTSelectWorkspaceListVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTSelectWorkspaceListVC"];//1
-        __weak typeof(self) weakSelf = self;
-        vc.selectSpaceBlock = ^(WOTSpaceModel *model){
-            weakSelf.spaceId = model.spaceId;
-            weakSelf.spaceName = model.spaceName;
-        };
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if ([str isEqualToString:@"到访日期"]) {
-        _datepickerview.hidden  = NO;
-        CGFloat offset = -100;
-        CGRect frame = self.table.frame;
-        frame.origin.y = offset;
-        self.table.frame = frame;
-        
-        //[tableView becomeFirstResponder];
-    }
+//    [self.topView scrollViewPoint:CGPointMake(0, 0) isEnd:YES];
 }
 
 //#pragma mark - 处理键盘遮挡问题

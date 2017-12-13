@@ -24,6 +24,7 @@
 		2A345AA91F5E579000DC6B31 /* WOTFriendsMessageListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A345AA81F5E579000DC6B31 /* WOTFriendsMessageListModel.m */; };
 		2A36B0051F18C450007DB615 /* WOTPaymentTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A36B0041F18C450007DB615 /* WOTPaymentTypeCell.m */; };
 		2A39E7421FDF81CD009AE59B /* WOTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A39E7411FDF81CD009AE59B /* WOTButton.m */; };
+		2A39E7891FE109B8009AE59B /* WOTElasticityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A39E7881FE109B8009AE59B /* WOTElasticityView.m */; };
 		2A3B54E31FD927F200358B8A /* WOTOpenDoorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3B54E21FD927F200358B8A /* WOTOpenDoorVC.m */; };
 		2A3B54F31FD93C2F00358B8A /* HCCreateQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3B54E61FD93C2F00358B8A /* HCCreateQRCode.m */; };
 		2A3B54F41FD93C2F00358B8A /* UIFont+MyFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3B54E81FD93C2F00358B8A /* UIFont+MyFont.m */; };
@@ -437,6 +438,8 @@
 		2A36B0041F18C450007DB615 /* WOTPaymentTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTPaymentTypeCell.m; sourceTree = "<group>"; };
 		2A39E7401FDF81CD009AE59B /* WOTButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTButton.h; sourceTree = "<group>"; };
 		2A39E7411FDF81CD009AE59B /* WOTButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTButton.m; sourceTree = "<group>"; };
+		2A39E7871FE109B7009AE59B /* WOTElasticityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTElasticityView.h; sourceTree = "<group>"; };
+		2A39E7881FE109B8009AE59B /* WOTElasticityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTElasticityView.m; sourceTree = "<group>"; };
 		2A3B54E11FD927F200358B8A /* WOTOpenDoorVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTOpenDoorVC.h; sourceTree = "<group>"; };
 		2A3B54E21FD927F200358B8A /* WOTOpenDoorVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTOpenDoorVC.m; sourceTree = "<group>"; };
 		2A3B54E51FD93C2F00358B8A /* HCScanQRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCScanQRViewController.h; sourceTree = "<group>"; };
@@ -1852,6 +1855,8 @@
 			isa = PBXGroup;
 			children = (
 				E8DAE7421F30228E00830A2F /* reloadView */,
+				2A39E7871FE109B7009AE59B /* WOTElasticityView.h */,
+				2A39E7881FE109B8009AE59B /* WOTElasticityView.m */,
 				2A39E7401FDF81CD009AE59B /* WOTButton.h */,
 				2A39E7411FDF81CD009AE59B /* WOTButton.m */,
 				2A4214CF1F14EE730010B003 /* WOTSelectScrollView.h */,
@@ -3312,6 +3317,7 @@
 				2AD2BE281F271BE400D4C3BC /* WOTLightCell.m in Sources */,
 				E85A85ED1F0202460016FCA1 /* MASCompositeConstraint.m in Sources */,
 				E8190DB81F0F69660000B07C /* WOTPersionalInformationCommonCell.m in Sources */,
+				2A39E7891FE109B8009AE59B /* WOTElasticityView.m in Sources */,
 				E86FD1FD1F209723009BE16A /* WOTImageLookoverVC.m in Sources */,
 				E8F42AC31F2F21EA0011C595 /* WOTPublishSocialTrendsVC.m in Sources */,
 				2A3B55031FD9619500358B8A /* WOTCardViewItem.m in Sources */,
