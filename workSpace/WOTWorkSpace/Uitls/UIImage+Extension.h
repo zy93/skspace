@@ -26,4 +26,10 @@
  */
 - (UIImage *)imageWithColor:(UIColor *)color;
 
+
+// 获取屏幕截图
++ (UIImage *)getScreenSnap;
+
+
+
 @end

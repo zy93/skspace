@@ -8,7 +8,6 @@
 
 #import "WOTSelectCityCodeVC.h"
 #import "WOTLoginVC.h"
-#import "WOTLoginNaviController.h"
 
 @interface WOTSelectCityCodeVC () <UITableViewDelegate, UITableViewDataSource>
 {
@@ -106,7 +105,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    WOTLoginVC *vc = (WOTLoginVC*)[(WOTLoginNaviController *)self.navigationController getPreviousViewController];
+    WOTLoginVC *vc = (WOTLoginVC*)[(WOTBaseNavigationController *)self.navigationController getPreviousViewController];
     vc.cityName = cell.textLabel.text;
     vc.cityCode = cell.detailTextLabel.text;
     [self.navigationController popViewControllerAnimated:YES];

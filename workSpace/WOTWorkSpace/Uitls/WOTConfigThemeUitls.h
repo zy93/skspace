@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "WOTLoginVC.h"
-#import "WOTLoginNaviController.h"
+
+
 @interface WOTConfigThemeUitls : NSObject
 +(instancetype)shared;
 
-@property(nonatomic,strong) WOTLoginNaviController *nav;
 -(void)setLabelTexts:(NSArray *)labels withTexts:(NSArray *)texts;
 -(void)setLabelColorss:(NSArray *)labels withColor:(UIColor *)color;
 -(void)loadtagsBtn:(NSArray *)tagsArray superView:(UIView *)tagsView;
