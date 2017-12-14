@@ -188,7 +188,7 @@
 #pragma mark  - action
 -(void)pushVCByVCName:(NSString *)vcName
 {
-    WOTRegisterServiceProvidersVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:vcName];
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:vcName];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -209,7 +209,12 @@
 #pragma mark - cell delegate
 -(void)optionService:(NSString *)serviceName
 {
-    [self pushVCByVCName:@"WOTGETServiceViewController"];
+    if ([serviceName isEqualToString:@"意见反馈"]) {
+        [self pushVCByVCName:@"WOTFeedbackVC"];
+    }
+    else {
+        [self pushVCByVCName:@"WOTGETServiceViewController"];
+    }
 }
 
 #pragma mark - Table delegate & dataSource
