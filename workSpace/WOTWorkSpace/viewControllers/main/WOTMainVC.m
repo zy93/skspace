@@ -11,7 +11,7 @@
 #import "NewPagedFlowView.h"
 #import "PGIndexBannerSubiew.h"
 #import "ZYQSphereView.h"
-#import "WOTworkSpaceLIstVC.h"
+#import "WOTWorkSpaceListVC.h"
 #import "WOTH5VC.h"
 #import "WOTEnterpriseLIstVC.h"
 #import "WOTActivitiesLIstVC.h"
@@ -452,7 +452,7 @@ int a = 0;
 //MARK:点击显示新页面
 - (IBAction)showWorkSpaceVC:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"spaceMain" bundle:nil];
-    WOTworkSpaceLIstVC *spacevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTworkSpaceLIstVCID"];
+    WOTWorkSpaceListVC *spacevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTWorkSpaceListVC"];
     [spacevc setDataSource:self.spaceData];
     [self.navigationController pushViewController:spacevc animated:YES];
 }
