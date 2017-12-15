@@ -14,4 +14,6 @@ typedef void(^Complete)();
 
 - (void)hide:(BOOL)animated afterDelay:(NSTimeInterval)delay complete:(Complete)complete;
 
++(void)showMessage:(NSString *)message toView:(UIView *)view hide:(BOOL)animated afterDelay:(NSTimeInterval)delay complete:(Complete)complete;
+
 @end

@@ -166,7 +166,7 @@ typedef void(^response)(id bean,NSError *error);
  *提交意见反馈
  */
 
-+(void)postFeedBackInfoWithContent:(NSString *)opinionContent spaceId:(NSNumber *)spaceId userId:(NSNumber *)userId userName:(NSString *)userName tel:(NSString *)   tel response:(response)response;
++(void)feedBackWithSapceName:(NSString *)spaceName spaceId:(NSNumber *)spaceId contentText:(NSString *)contentText tel:(NSString *)tel response:(response)response;
 
 
 +(void)getFlexSliderSouceInfo:(response)response;

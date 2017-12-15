@@ -64,17 +64,12 @@
 #define UIColor_blue_40 UIColorFromRGB(0x4087ee)
 #define UIColor_green_12 UIColorFromRGB(0x12c700)
 #define UIColor_green_37 UIColorFromRGB(0x37c922)
-//#define HTTPBaseURL @"http://www.yiliangang.net:8012/workSpace"
-//#define HTTPBaseURL @"http://192.168.1.216:8080/workSpace"
 
-//#define HTTPBaseURL @"http://192.168.6.219:8080/workSpace"//石宇驰电脑
-//#define HTTPBaseURL @"http://192.168.38.149:8080/workSpace"
-#define HTTPBaseURL @"http://219.143.170.98:10011"//公共
-//#define HTTPBaseURL @"http://192.168.6.219:8080"//石宇驰电脑
-//#define HTTPBaseURL @"http://192.168.1.216:8080"//公共你
-//#define HTTPBaseURL @"http://219.143.170.98:10011"//公共
+
+//#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
+//#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
 //#define HTTPBaseURL @"http://192.168.6.166"//公共
-//#define HTTPBaseURL @"http://192.168.34.80:8080"//测试
+#define HTTPBaseURL @"http://192.168.34.80:8080"//石宇驰
 
 //集团的appid
 //#define YLGTEST_APPID @"c4ca4238a0b923820dcc509a6f75849b"//易联港测试

@@ -594,13 +594,32 @@
 }
 
 
-+(void)postFeedBackInfoWithContent:(NSString *)opinionContent spaceId:(NSNumber *)spaceId userId:(NSNumber *)userId userName:(NSString *)userName tel:(NSString*)   tel  response:(response)response{
++(void)feedBackWithSapceName:(NSString *)spaceName
+                     spaceId:(NSNumber *)spaceId
+                 contentText:(NSString *)contentText
+                         tel:(NSString *)tel
+                    response:(response)response
+{
     
-    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Opinion/addOpinion"];
-    NSMutableDictionary * parameters = [[NSMutableDictionary alloc]initWithObjectsAndKeys:opinionContent,@"opinionContent",spaceId,@"spaceId",userId,@"userId",userName,@"userName",nil];
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Suggest/AddSuggest"];
+    NSMutableDictionary * parameters = [@{
+                                         @"spaceId":spaceId,
+                                         @"spaceName":spaceName,
+                                         @"complainContent":contentText
+                                         } mutableCopy];
+    
     if (tel) {
-        [parameters setValue:tel forKey:@"tel"];
+        [parameters setObject:tel forKey:@"tel"];
     }
+    if ([WOTUserSingleton shareUser].userInfo.userId) {
+        [parameters setObject:[WOTUserSingleton shareUser].userInfo.userId forKey:@"userId"];
+    }
+    if ([WOTUserSingleton shareUser].userInfo.userName) {
+        [parameters setObject:[WOTUserSingleton shareUser].userInfo.userName forKey:@"userName"];
+    }
+    
+    
+    
     [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];
         return model;

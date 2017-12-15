@@ -8,7 +8,8 @@
 
 #import "WOTFeedbackVC.h"
 #import "WOTSelectWorkspaceListVC.h"
-
+#import "WOTBaseModel.h"
+#import "MBProgressHUD+Extension.h"
 
 #define FeedTextViewPlaceholder @"*您的意见，是我们前进的动力"
 @interface WOTFeedbackVC ()<UITextFieldDelegate,UITextViewDelegate>
@@ -81,14 +82,26 @@
     } else{
 //        [[WOTUserSingleton shareUser]setValues];
         
-         [WOTHTTPNetwork postFeedBackInfoWithContent:self.textView.text spaceId:[[NSNumber alloc]initWithInt:57] userId:[[NSNumber alloc]initWithInt:[[WOTUserSingleton shareUser].userInfo.userId intValue]] userName:[WOTUserSingleton shareUser].userInfo.userName tel:self.phoneText.text  response:^(id bean, NSError *error) {
-             if (bean) {
-                 [MBProgressHUDUtil showMessage:((WOTBaseModel *)bean).result toView:self.view];
-             }
-             if (error) {
-                 [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
-             }
-         }];
+        [WOTHTTPNetwork feedBackWithSapceName:self.spaceName spaceId:self.spaceId contentText:self.textView.text tel:self.phoneText.text response:^(id bean, NSError *error) {
+            if (error) {
+                [MBProgressHUDUtil showMessage:@"提交失败，请稍后再试!" toView:self.view];
+            }
+            else {
+                WOTBaseModel *modle = (WOTBaseModel *)bean;
+                if ([modle.code isEqualToString:@"200"]) {
+                    [MBProgressHUD showMessage:@"提交成功,感谢您的宝贵意见！" toView:self.view hide:YES afterDelay:0.8f complete:^{
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.navigationController popViewControllerAnimated:YES];
+                        });
+                    }];
+
+                }
+                else {
+                    [MBProgressHUDUtil showMessage:@"提交失败，请稍后再试!" toView:self.view];
+
+                }
+            }
+        }];
     }
         
  
