@@ -267,12 +267,18 @@
     
     [_ymTextArray removeAllObjects];
     NSInteger showNum;
-    if (ymData.replyDataSource.count > 2) {
-        showNum = 2;
-        [openCommentBtn setHidden:NO];
-        [openCommentBtn setTitle:[NSString stringWithFormat:@"共%ld条评论>",ymData.replyDataSource.count] forState:UIControlStateNormal];
-    }else
-    {
+    if (!ymData.messageBody.isUnfold) {
+        if (ymData.replyDataSource.count > 2) {
+            showNum = 2;
+            [openCommentBtn setHidden:NO];
+            [openCommentBtn setTitle:[NSString stringWithFormat:@"共%ld条评论>",ymData.replyDataSource.count] forState:UIControlStateNormal];
+        }else
+        {
+            [openCommentBtn setHidden:YES];
+            showNum = ymData.replyDataSource.count;
+        }
+        
+    } else {
         [openCommentBtn setHidden:YES];
         showNum = ymData.replyDataSource.count;
     }
@@ -320,8 +326,12 @@
         [_ymTextArray addObject:_ilcoreText];
     }
     
+    if (!ymData.messageBody.isUnfold) {
+        backView_H += (showNum - 1)*5;
+    } else {
+        backView_H += (ymData.replyDataSource.count - 1)*5;
+    }
     
-    backView_H += (showNum - 1)*5;
     
     
     
@@ -398,6 +408,8 @@
 -(void)openCommentBtnMethod
 {
     NSLog(@"打开评论");
+    //[_delegate changeFoldState:tempDate onCellRow:self.stamp];
+    [_delegate showCommentWith:tempDate onCellRow:self.stamp];
 }
 
 

@@ -84,12 +84,19 @@
     
     ///for (int i = 0; i < self.replyDataSource.count; i ++ ) {
     NSInteger showNum;
-    if (self.replyDataSource.count > 2) {
-        showNum = 2;
+    if (!_messageBody.isUnfold) {
+        if (self.replyDataSource.count > 2) {
+            showNum = 2;
+        }else
+        {
+            showNum = self.replyDataSource.count;
+        }
     }else
     {
         showNum = self.replyDataSource.count;
     }
+    
+   
     for (int i = 0; i < showNum; i ++ ) {
         tempInt = i;
         

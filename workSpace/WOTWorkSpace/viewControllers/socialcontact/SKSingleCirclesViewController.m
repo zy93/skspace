@@ -1,12 +1,12 @@
 //
-//  WOTNearCirclesVC.m
+//  SKSingleCirclesViewController
 //  WOTWorkSpace
 //
 //  Created by 张姝枫 on 2017/7/21.
 //  Copyright © 2017年 北京物联港科技发展有限公司. All rights reserved.
 //
 
-#import "WOTNearCirclesVC.h"
+#import "SKSingleCirclesViewController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "WOTSocialContactCell.h"
 #import "MJRefresh.h"
@@ -20,7 +20,7 @@
 #import "WFMessageBody.h"
 #import "WFPopView.h"
 #import "WFActionSheet.h"
-#import "QueryCircleofFriendsModel.h"
+#import "QuerySingleCircleofFriendModel.h"
 #import "WOTUserSingleton.h"
 #import "IQKeyboardManager.h"
 #import "SKAddReply.h"
@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     FDSimulatedCacheModeCacheByKey
 };
 
-@interface WOTNearCirclesVC ()<UITableViewDelegate,UITableViewDataSource,cellDelegate,InputDelegate,UIActionSheetDelegate>{
+@interface SKSingleCirclesViewController ()<UITableViewDelegate,UITableViewDataSource,cellDelegate,InputDelegate,UIActionSheetDelegate>{
     NSMutableArray *_imageDataSource;
     
     NSMutableArray *_contentDataSource;//模拟接口给的数据
@@ -69,7 +69,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 @end
 
-@implementation WOTNearCirclesVC
+@implementation SKSingleCirclesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -153,14 +153,15 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     // mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
     mainTable.mj_header.automaticallyChangeAlpha = YES;
+    mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainTable.delegate = self;
     mainTable.dataSource = self;
-//    if (@available (iOS 11,*)) {
-//        mainTable.estimatedRowHeight = 0;
-//    }
-//    mainTable.estimatedRowHeight = 0;
-//    mainTable.estimatedSectionHeaderHeight = 0;
-//    mainTable.estimatedSectionFooterHeight = 0;
+    //    if (@available (iOS 11,*)) {
+    //        mainTable.estimatedRowHeight = 0;
+    //    }
+    //    mainTable.estimatedRowHeight = 0;
+    //    mainTable.estimatedSectionHeaderHeight = 0;
+    //    mainTable.estimatedSectionFooterHeight = 0;
     [self.view addSubview:mainTable];
     
 }
@@ -189,7 +190,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         if ([infoModel.circleMessage isKindOfClass:[NSString class]]) {
             NSLog(@"sdfsdsfsf");
         }
-
+        
         NSLog(@"ok:%@",infoModel.circleMessage);
         messBody.posterContent = infoModel.circleMessage;
         NSString *httpService = @"http://219.143.170.98:10011/SKwork";
@@ -217,7 +218,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         messBody.posterIntro = @"";
         messBody.posterFavour = [NSMutableArray new];
         messBody.focusId = infoModel.focusId;
-        messBody.isUnfold = NO;
+        messBody.isUnfold = YES;
         if ([infoModel.focus isEqualToNumber:@0]) {
             messBody.isFavour = NO;
         }else
@@ -239,35 +240,35 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     //先判断是否已经登录
     [self.circleofFriendsList removeAllObjects];
     if ([WOTUserSingleton shareUser].userInfo.spaceId) {
-        [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@1000 response:^(id bean, NSError *error) {
-            [self StopRefresh];
-            QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
-            self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self configData];
-                [self loadTextData];
-               // [mainTable reloadData];
-                 [UIView performWithoutAnimation:^{
-                    [mainTable reloadData];
-                 }];
-            });
+//        [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@1000 response:^(id bean, NSError *error) {
+//            [self StopRefresh];
+//            QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
+//            self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self configData];
+//                [self loadTextData];
+//                // [mainTable reloadData];
+//                [UIView performWithoutAnimation:^{
+//                    [mainTable reloadData];
+//                }];
+//            });
+//        }];
+        [WOTHTTPNetwork querySingleCircleofFriendsWithFriendId:self.friendId userid:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+                [self StopRefresh];
+                QuerySingleCircleofFriendModel *model = (QuerySingleCircleofFriendModel*)bean;
+                self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:@[model.msg]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self configData];
+                    [self loadTextData];
+                    [UIView performWithoutAnimation:^{
+                        [mainTable reloadData];
+                    }];
+                });
         }];
     } else {
         [MBProgressHUDUtil showMessage:@"请先登录后再查看！" toView:self.view];
     }
 }
-
-#pragma mark -- Refresh method
-/**
- *  添加下拉刷新事件
- */
-//- (void)AddRefreshHeader
-//{
-//    __weak UITableView *pTableView = _tableView;
-//    ///添加刷新事件
-//    pTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
-//    pTableView.mj_header.automaticallyChangeAlpha = YES;
-//}
 
 - (void)StartRefresh
 {
@@ -376,7 +377,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                 [self createRequest];
             } else {
                 [MBProgressHUDUtil showMessage:@"关注失败！" toView:self.view];
-               
+                
             }
         }];
     } else {
@@ -386,34 +387,34 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             WOTBaseModel *baseModel = (WOTBaseModel *)bean;
             if ([baseModel.code isEqualToString:@"200"]) {
                 [MBProgressHUDUtil showMessage:@"取消成功！" toView:self.view];
-                 [self createRequest];
+                [self createRequest];
             } else {
                 [MBProgressHUDUtil showMessage:@"取消失败！" toView:self.view];
             }
         }];
     }
-
+    
     ymData.messageBody = m;
     [ymData.attributedDataFavour removeAllObjects];
     [_tableDataSource replaceObjectAtIndex:_selectedIndexPath.row withObject:ymData];
     
     //NSIndexPath *indexPath=[NSIndexPath indexPathForRow:inputTag inSection:0];
-//    [UIView animateWithDuration:0 animations:^{
-//        [mainTable performBatchUpdates:^{
-//            [mainTable reloadData];
-//        } completion:nil];
-//    }];
-//    [UIView setAnimationsEnabled:NO];
-//
-//    [mainTable performBatchUpdates:^{
-//        [mainTable reloadData];
-//    } completion:^(BOOL finished) {
-//        [UIView setAnimationsEnabled:YES];
-//    }];
-//    [mainTable performBatchUpdates:^{
-//        //[mainTable reloadRowsAtIndexPaths:[NSArray arrayWithObjects:_selectedIndexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-//        [mainTable reloadData];
-//    }];
+    //    [UIView animateWithDuration:0 animations:^{
+    //        [mainTable performBatchUpdates:^{
+    //            [mainTable reloadData];
+    //        } completion:nil];
+    //    }];
+    //    [UIView setAnimationsEnabled:NO];
+    //
+    //    [mainTable performBatchUpdates:^{
+    //        [mainTable reloadData];
+    //    } completion:^(BOOL finished) {
+    //        [UIView setAnimationsEnabled:YES];
+    //    }];
+    //    [mainTable performBatchUpdates:^{
+    //        //[mainTable reloadRowsAtIndexPaths:[NSArray arrayWithObjects:_selectedIndexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+    //        [mainTable reloadData];
+    //    }];
     //[mainTable reloadData];
     
 }
@@ -565,33 +566,33 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                              byReplyname:addReply.byReplyname replyId:addReply.replyId
                                replyName:addReply.replyName
                                replyInfo:addReply.replyInfo
-                              replyState:self.replyState
+                                replyState:self.replyState
                                 response:^(id bean, NSError *error) {
-        WOTBaseModel *baseModel = (WOTBaseModel *)bean;
-        if ([baseModel.code isEqualToString:@"200"]) {
-            [MBProgressHUDUtil showMessage:@"评论成功！" toView:self.view];
-            //清空属性数组。否则会重复添加
-            [ymData.completionReplySource removeAllObjects];
-            [ymData.attributedDataReply removeAllObjects];
-            
-            
-            ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
-            [_tableDataSource replaceObjectAtIndex:inputTag withObject:ymData];
-            NSIndexPath *indexPath=[NSIndexPath indexPathForRow:inputTag inSection:0];
-            [UIView performWithoutAnimation:^{
-                [mainTable reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-
-            }];
-
-        }else
-        {
-            //清空属性数组。否则会重复添加
-            [ymData.completionReplySource removeAllObjects];
-            [ymData.attributedDataReply removeAllObjects];
-            [MBProgressHUDUtil showMessage:@"评论失败！" toView:self.view];
-        }
+                                    WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+                                    if ([baseModel.code isEqualToString:@"200"]) {
+                                        [MBProgressHUDUtil showMessage:@"评论成功！" toView:self.view];
+                                        //清空属性数组。否则会重复添加
+                                        [ymData.completionReplySource removeAllObjects];
+                                        [ymData.attributedDataReply removeAllObjects];
+                                        
+                                        
+                                        ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
+                                        [_tableDataSource replaceObjectAtIndex:inputTag withObject:ymData];
+                                        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:inputTag inSection:0];
+                                        [UIView performWithoutAnimation:^{
+                                            [mainTable reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+                                            
+                                        }];
+                                        
+                                    }else
+                                    {
+                                        //清空属性数组。否则会重复添加
+                                        [ymData.completionReplySource removeAllObjects];
+                                        [ymData.attributedDataReply removeAllObjects];
+                                        [MBProgressHUDUtil showMessage:@"评论失败！" toView:self.view];
+                                    }
                                     
-    }];
+                                }];
 }
 
 - (void)destorySelf{
@@ -631,26 +632,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 }
 
 
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self createRequest];
 }
-
-- (void)showCommentWith:(YMTextData *)ymD onCellRow:(NSInteger) cellStamp
-{
-    //NSLog(@"打开评论");
-    SKSingleCirclesViewController *singleVC = [[SKSingleCirclesViewController alloc]init];
-    singleVC.friendId = ymD.messageBody.friendId;
-    [self.navigationController pushViewController:singleVC animated:YES];
-    
-}
-
-//- (void)dealloc{
-//    
-//    NSLog(@"销毁");
-//    
-//}
 
 @end

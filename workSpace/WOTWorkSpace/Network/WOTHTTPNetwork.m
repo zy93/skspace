@@ -35,6 +35,8 @@
 #import "QueryCircleofFriendsModel.h"
 #import "WXApi.h"
 #import "WOTWXPayModel.h"
+#import "QuerySingleCircleofFriendModel.h"
+#import "QueryCommentModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -808,7 +810,8 @@
     } response:response];
 }
 
-+(void)addReplyWithFriendId:(NSNumber *)friendId byReplyid:(NSNumber *)byReplyid byReplyname:(NSString *)byReplyname replyId:(NSNumber *)replyId replyName:(NSString *)replyName replyInfo:(NSString *)replyInfo response:(response)response
++(void)addReplyWithFriendId:(NSNumber *)friendId byReplyid:(NSNumber *)byReplyid byReplyname:(NSString *)byReplyname replyId:(NSNumber *)replyId replyName:(NSString *)replyName replyInfo:(NSString *)replyInfo replyState:(NSString *)replyState response:(response)response;
+
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/ReplyRecor/addReplyRecord",HTTPBaseURL];
     NSDictionary *parameters = @{@"friendId":friendId,
@@ -816,7 +819,8 @@
                                  @"byReplyname":byReplyname,
                                  @"replyId":replyId,
                                  @"replyName":replyName,
-                                 @"replyInfo":replyInfo
+                                 @"replyInfo":replyInfo,
+                                 @"replyState":replyState
                                  };
     
     [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
@@ -838,5 +842,75 @@
     } response:response];
 }
 
++(void)deleteFocusWithFocusId:(NSNumber *)focusId response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/FocusTable/del",HTTPBaseURL];
+    NSDictionary *parameters = @{@"focusId":focusId
+                                 };
+    
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model15 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model15;
+    } response:response];
+}
+
++(void)sendMessageWithUserId:(NSNumber *)userId userName:(NSString *)userName circleMessage:(NSString *)circleMessage photosArray:(NSArray *)photosArray response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/addCircleFriends",HTTPBaseURL];
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"userName":userName,
+                                 @"circleMessage":circleMessage
+                                 };
+    [self doFileRequestWithParameters:parameters useUrl:url image:photosArray complete:^JSONModel *(id responseobj) {
+        NSError *error = nil;
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:&error];
+        if (response) {
+            response(model, nil);
+        }
+        return model;
+    } response:response];
+}
+
++(void)queryFocusCircleofFriendsWithFocusPeopleid:(NSNumber *)focusPeopleid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/findFoucsPeople",HTTPBaseURL];
+    NSDictionary *parameters = @{@"pageNo":pageNo,
+                                 @"pageSize":pageSize,
+                                 @"focusPeopleid":focusPeopleid
+                                 };
+    
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        QueryCircleofFriendsModel *model13 = [[QueryCircleofFriendsModel alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
+}
+
++(void)querySingleCircleofFriendsWithFriendId:(NSNumber *)friendid userid:(NSNumber *)userid response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/findById",HTTPBaseURL];
+    NSDictionary *parameters = @{@"friendId":friendid,
+                                 @"focusPeopleid":userid
+                                 };
+    
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        QuerySingleCircleofFriendModel *model13 = [[QuerySingleCircleofFriendModel alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
+}
+
+///model 写完后需更改
++(void)queryMyCircleofFriendsCommentWithbyReplyid:(NSNumber *)byReplyid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/ReplyRecor/findByBeFoucs",HTTPBaseURL];
+    NSDictionary *parameters = @{@"byReplyid":byReplyid,
+                                 @"pageNo":pageNo,
+                                 @"pageSize":pageSize
+                                 };
+    
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        QueryCommentModel *model13 = [[QueryCommentModel alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
+}
 
 @end

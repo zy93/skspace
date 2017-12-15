@@ -153,7 +153,6 @@
 
 // 通过表情名获得表情的图片
 - (UIImage *)getEmotionForKey:(NSString *)key{
-    
     NSString *nameStr = [NSString stringWithFormat:@"%@.png",key];
     return [UIImage imageNamed:nameStr];
 }

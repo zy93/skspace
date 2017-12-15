@@ -314,10 +314,11 @@ typedef void(^response)(id bean,NSError *error);
  @param replyId 评论人id
  @param replyName 评论人名字
  @param replyInfo 评论内容
+  @param replyState 评论状态
  @param response 结果回调
  */
 
-+(void)addReplyWithFriendId:(NSNumber *)friendId byReplyid:(NSNumber *)byReplyid byReplyname:(NSString *)byReplyname replyId:(NSNumber *)replyId replyName:(NSString *)replyName replyInfo:(NSString *)replyInfo response:(response)response;
++(void)addReplyWithFriendId:(NSNumber *)friendId byReplyid:(NSNumber *)byReplyid byReplyname:(NSString *)byReplyname replyId:(NSNumber *)replyId replyName:(NSString *)replyName replyInfo:(NSString *)replyInfo replyState:(NSString *)replyState response:(response)response;
 
 
 /**
@@ -337,5 +338,48 @@ typedef void(^response)(id bean,NSError *error);
  @param response 结果回调
  */
 +(void)deleteFocusWithFocusId:(NSNumber *)focusId response:(response)response;
+
+
+/**
+ 发布朋友圈接口
+
+ @param userId 发布人id
+ @param userName 发布人姓名
+ @param circleMessage 发布的信息
+ @param photosArray 发布的图片数组
+ @param response 结果回调
+ */
++(void)sendMessageWithUserId:(NSNumber *)userId userName:(NSString *)userName circleMessage:(NSString *)circleMessage photosArray:(NSArray *)photosArray response:(response)response;
+/**
+ 查询我关注人的朋友圈
+ 
+ @param focusPeopleid  登录用户的userid
+ @param pageNo 页数
+ @param pageSize 条数
+ @param response 结果回调
+ */
++(void)queryFocusCircleofFriendsWithFocusPeopleid:(NSNumber *)focusPeopleid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response;
+
+
+/**
+ 查询单条朋友圈信息
+
+ @param friendid 朋友圈id
+ @param userid 用户id
+ @param response 结果回调
+ */
++(void)querySingleCircleofFriendsWithFriendId:(NSNumber *)friendid userid:(NSNumber *)userid response:(response)response;
+
+
+/**
+ 查询我的朋友圈评论
+
+ @param byReplyid 被评论人id
+ @param pageNo 页数
+ @param pageSize 条数
+ @param response 结果回调
+ */
++(void)queryMyCircleofFriendsCommentWithbyReplyid:(NSNumber *)byReplyid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response;
+
 
 @end

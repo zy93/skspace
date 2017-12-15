@@ -132,14 +132,12 @@
     NSMutableArray *arr =  self.photosArray;
     [arr removeObjectAtIndex:0];
     [MBProgressHUDUtil showLoadingWithMessage:@"发布中" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
-        [WOTHTTPNetwork sendMessageToSapceWithSpaceId:[WOTUserSingleton shareUser].userInfo.spaceId text:self.textView.text images:arr response:^(id bean, NSError *error) {
-            
+        [WOTHTTPNetwork sendMessageWithUserId:[WOTUserSingleton shareUser].userInfo.userId userName:[WOTUserSingleton shareUser].userInfo.userName circleMessage:self.textView.text photosArray:arr response:^(id bean, NSError *error) {
             if (!error) {
                 [hud setLabelText:@"完成"];
                 [hud setMode:MBProgressHUDModeCustomView];
                 [hud setCustomView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mbp_down.png"]]];
                 NSLog(@"发布完成");
-//                [self back];
             }
             else {
                 [hud setLabelText:@"失败"];
@@ -154,6 +152,7 @@
     }];
 }
 - (IBAction)createNewLocation:(id)sender {
+    
 }
 
 

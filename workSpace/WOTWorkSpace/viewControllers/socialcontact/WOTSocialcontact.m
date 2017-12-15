@@ -12,6 +12,8 @@
 #import "WOTPublishSocialTrendsVC.h"
 #import "MJRefresh.h"
 #import "UIColor+ColorChange.h"
+#import "SKFocusCirclesViewController.h"
+#import "SKCommentViewController.h"
 
 @interface WOTSocialcontact ()<XXPageTabViewDelegate>
 
@@ -77,17 +79,14 @@
     WOTNearCirclesVC *circle = [[UIStoryboard storyboardWithName:@"Socialcontact" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTNearCirclesVCID"];
     [self addChildViewController:circle];
     
-    UIViewController *circle1 = [[UIViewController alloc]init];
+    SKFocusCirclesViewController *circle1 = [[SKFocusCirclesViewController alloc]init];
     circle1.view.backgroundColor = White;
-    [MBProgressHUDUtil showMessage:@"敬请期待" toView:circle1.view];
+    //[MBProgressHUDUtil showMessage:@"敬请期待" toView:circle1.view];
     [self addChildViewController:circle1];
     
-    UIViewController *circle2 = [[UIViewController alloc]init];
+    SKCommentViewController *circle2 = [[SKCommentViewController alloc]init];
     circle2.view.backgroundColor = White;
-    [MBProgressHUDUtil showMessage:@"敬请期待" toView:circle2.view];
-    
-    
-    
+    //[MBProgressHUDUtil showMessage:@"敬请期待" toView:circle2.view];
     [self addChildViewController:circle2];
     
     
