@@ -69,10 +69,12 @@
 
 //#define HTTPBaseURL @"http://192.168.6.219:8080/workSpace"//石宇驰电脑
 //#define HTTPBaseURL @"http://192.168.38.149:8080/workSpace"
-#define HTTPBaseURL @"http://219.143.170.98:10011"//公共
+//#define HTTPBaseURL @"http://219.143.170.98:10011"//公共
+
 //#define HTTPBaseURL @"http://192.168.6.219:8080"//石宇驰电脑
 //#define HTTPBaseURL @"http://192.168.1.216:8080"//公共你
-//#define HTTPBaseURL @"http://219.143.170.98:10011"//公共
+
+#define HTTPBaseURL @"http://219.143.170.98:10011"//公共
 //#define HTTPBaseURL @"http://192.168.6.166"//公共
 //#define HTTPBaseURL @"http://192.168.34.80:8080"//测试
 

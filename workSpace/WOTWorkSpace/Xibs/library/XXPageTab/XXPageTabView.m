@@ -274,6 +274,7 @@
     [self.tabView setContentOffset:CGPointMake(reviseX, 0) animated:isAnimate];
 }
 
+
 /**
  tabview修正完成后的操作，无论是点击还是滑动body，此方法都是真正意义上的最后一步
  */

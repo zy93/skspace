@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSString *replyInfo;//回复的信息
 @property (nonatomic, strong) NSString *replyName;//回复的名字
 @property (nonatomic, strong) NSString *replyTime;
+@property (nonatomic, strong) NSString *replyState;
 
 @end
 
@@ -36,7 +37,7 @@
 @property (nonatomic, strong) NSArray<ReplyModel> *ReplyRecord;
 @property (nonatomic, strong) NSString <Optional>*circleMessage;
 @property (nonatomic, assign) NSNumber <Optional> *focus;
-@property (nonatomic, strong) NSString <Optional>*focusId;
+@property (nonatomic, assign) NSNumber <Optional>*focusId;
 @property (nonatomic, assign) NSNumber <Optional>*friendId;
 @property (nonatomic, strong) NSString <Optional>*friendTime;
 @property (nonatomic, strong) NSString <Optional>*imageMessage;

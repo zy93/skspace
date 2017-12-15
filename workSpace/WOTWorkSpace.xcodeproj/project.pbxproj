@@ -129,6 +129,9 @@
 		C55A298C1FD6E16B001E0DB7 /* UIColor+ColorChange.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A298A1FD6E16B001E0DB7 /* UIColor+ColorChange.m */; };
 		C56684DE1FD6AC0000DC5782 /* SKBookStationNumberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */; };
 		C580842D1FD781C10091DCC4 /* StationOrderInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C580842B1FD781C10091DCC4 /* StationOrderInfoViewController.m */; };
+		C595C9781FE1126E0083430A /* SKFocusCirclesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C595C9771FE1126E0083430A /* SKFocusCirclesViewController.m */; };
+		C595C97B1FE11A830083430A /* SKSingleCirclesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C595C97A1FE11A830083430A /* SKSingleCirclesViewController.m */; };
+		C595C97E1FE121F00083430A /* QuerySingleCircleofFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C595C97D1FE121F00083430A /* QuerySingleCircleofFriendModel.m */; };
 		C59840451FDE3206009B49CE /* PublishCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */; };
 		C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */; };
 		C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */ = {isa = PBXBuildFile; fileRef = C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */; };
@@ -149,6 +152,11 @@
 		C59D56FF1FDA2D6A001870B2 /* WFPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56F51FDA2D69001870B2 /* WFPopView.m */; };
 		C59D57001FDA2D6A001870B2 /* YMShowImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56F71FDA2D6A001870B2 /* YMShowImageView.m */; };
 		C59D57011FDA2D6A001870B2 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56F81FDA2D6A001870B2 /* YMReplyInputView.m */; };
+		C5A125B01FE229DD0058AA0C /* QueryCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125AF1FE229DD0058AA0C /* QueryCommentModel.m */; };
+		C5A125B31FE22A260058AA0C /* QueryCommentModel_msg.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125B21FE22A260058AA0C /* QueryCommentModel_msg.m */; };
+		C5A125B61FE242660058AA0C /* SKCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125B51FE242660058AA0C /* SKCommentViewController.m */; };
+		C5A125BA1FE242CD0058AA0C /* SKCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125B81FE242CD0058AA0C /* SKCommentTableViewCell.m */; };
+		C5A125BB1FE242CD0058AA0C /* SKCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A125B91FE242CD0058AA0C /* SKCommentTableViewCell.xib */; };
 		C7901EC51F789CF500692F02 /* JudgmentTime.m in Sources */ = {isa = PBXBuildFile; fileRef = C7901EC31F789CF400692F02 /* JudgmentTime.m */; };
 		C79C2D3A1F7E36870052DF23 /* WOTBookStationReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C79C2D391F7E36870052DF23 /* WOTBookStationReservationsModel.m */; };
 		C7B4DD2C1F7A793C00009011 /* JXPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4DD291F7A793C00009011 /* JXPopoverView.m */; };
@@ -610,6 +618,12 @@
 		C56684DD1FD6AC0000DC5782 /* SKBookStationNumberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKBookStationNumberModel.m; sourceTree = "<group>"; };
 		C580842B1FD781C10091DCC4 /* StationOrderInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationOrderInfoViewController.m; sourceTree = "<group>"; };
 		C580842C1FD781C10091DCC4 /* StationOrderInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationOrderInfoViewController.h; sourceTree = "<group>"; };
+		C595C9761FE1126E0083430A /* SKFocusCirclesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKFocusCirclesViewController.h; sourceTree = "<group>"; };
+		C595C9771FE1126E0083430A /* SKFocusCirclesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKFocusCirclesViewController.m; sourceTree = "<group>"; };
+		C595C9791FE11A830083430A /* SKSingleCirclesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSingleCirclesViewController.h; sourceTree = "<group>"; };
+		C595C97A1FE11A830083430A /* SKSingleCirclesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSingleCirclesViewController.m; sourceTree = "<group>"; };
+		C595C97C1FE121F00083430A /* QuerySingleCircleofFriendModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuerySingleCircleofFriendModel.h; sourceTree = "<group>"; };
+		C595C97D1FE121F00083430A /* QuerySingleCircleofFriendModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuerySingleCircleofFriendModel.m; sourceTree = "<group>"; };
 		C598403C1FDE3205009B49CE /* QueryCircleofFriendsModel_msg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCircleofFriendsModel_msg.h; sourceTree = "<group>"; };
 		C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishCircleofFriendsModel.m; sourceTree = "<group>"; };
 		C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryCircleofFriendsModel.m; sourceTree = "<group>"; };
@@ -651,6 +665,15 @@
 		C59D56F61FDA2D6A001870B2 /* YMReplyInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMReplyInputView.h; sourceTree = "<group>"; };
 		C59D56F71FDA2D6A001870B2 /* YMShowImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMShowImageView.m; sourceTree = "<group>"; };
 		C59D56F81FDA2D6A001870B2 /* YMReplyInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMReplyInputView.m; sourceTree = "<group>"; };
+		C5A125AE1FE229DD0058AA0C /* QueryCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueryCommentModel.h; sourceTree = "<group>"; };
+		C5A125AF1FE229DD0058AA0C /* QueryCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QueryCommentModel.m; sourceTree = "<group>"; };
+		C5A125B11FE22A260058AA0C /* QueryCommentModel_msg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueryCommentModel_msg.h; sourceTree = "<group>"; };
+		C5A125B21FE22A260058AA0C /* QueryCommentModel_msg.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QueryCommentModel_msg.m; sourceTree = "<group>"; };
+		C5A125B41FE242660058AA0C /* SKCommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCommentViewController.h; sourceTree = "<group>"; };
+		C5A125B51FE242660058AA0C /* SKCommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCommentViewController.m; sourceTree = "<group>"; };
+		C5A125B71FE242CD0058AA0C /* SKCommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCommentTableViewCell.h; sourceTree = "<group>"; };
+		C5A125B81FE242CD0058AA0C /* SKCommentTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCommentTableViewCell.m; sourceTree = "<group>"; };
+		C5A125B91FE242CD0058AA0C /* SKCommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKCommentTableViewCell.xib; sourceTree = "<group>"; };
 		C7901EC31F789CF400692F02 /* JudgmentTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JudgmentTime.m; sourceTree = "<group>"; };
 		C7901EC41F789CF400692F02 /* JudgmentTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JudgmentTime.h; sourceTree = "<group>"; };
 		C79C2D381F7E36870052DF23 /* WOTBookStationReservationsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTBookStationReservationsModel.h; sourceTree = "<group>"; };
@@ -1525,12 +1548,15 @@
 		C598403A1FDE2D98009B49CE /* SKCircleofFriends */ = {
 			isa = PBXGroup;
 			children = (
+				C5A125AD1FE2279E0058AA0C /* CommentModel */,
 				C598403F1FDE3205009B49CE /* PublishCircleofFriendsModel.h */,
 				C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */,
 				C598403C1FDE3205009B49CE /* QueryCircleofFriendsModel_msg.h */,
 				C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */,
 				C59840421FDE3206009B49CE /* QueryCircleofFriendsModel.h */,
 				C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */,
+				C595C97C1FE121F00083430A /* QuerySingleCircleofFriendModel.h */,
+				C595C97D1FE121F00083430A /* QuerySingleCircleofFriendModel.m */,
 				C598E9001FDFC4A300CBAD8E /* SKAddReply.h */,
 				C598E9011FDFC4A300CBAD8E /* SKAddReply.m */,
 			);
@@ -1591,6 +1617,17 @@
 				C59D56EE1FDA2D69001870B2 /* YMTapGestureRecongnizer.m */,
 			);
 			path = SKView;
+			sourceTree = "<group>";
+		};
+		C5A125AD1FE2279E0058AA0C /* CommentModel */ = {
+			isa = PBXGroup;
+			children = (
+				C5A125AE1FE229DD0058AA0C /* QueryCommentModel.h */,
+				C5A125AF1FE229DD0058AA0C /* QueryCommentModel.m */,
+				C5A125B11FE22A260058AA0C /* QueryCommentModel_msg.h */,
+				C5A125B21FE22A260058AA0C /* QueryCommentModel_msg.m */,
+			);
+			path = CommentModel;
 			sourceTree = "<group>";
 		};
 		C7B4DD251F7A793C00009011 /* JXPopoverView */ = {
@@ -2522,6 +2559,15 @@
 				E8693B191F05100800772BC1 /* WOTSocialcontactNaviController.m */,
 				E86594861F21CFF00093B796 /* WOTNearCirclesVC.h */,
 				E86594871F21CFF00093B796 /* WOTNearCirclesVC.m */,
+				C595C9761FE1126E0083430A /* SKFocusCirclesViewController.h */,
+				C595C9771FE1126E0083430A /* SKFocusCirclesViewController.m */,
+				C595C9791FE11A830083430A /* SKSingleCirclesViewController.h */,
+				C595C97A1FE11A830083430A /* SKSingleCirclesViewController.m */,
+				C5A125B41FE242660058AA0C /* SKCommentViewController.h */,
+				C5A125B51FE242660058AA0C /* SKCommentViewController.m */,
+				C5A125B71FE242CD0058AA0C /* SKCommentTableViewCell.h */,
+				C5A125B81FE242CD0058AA0C /* SKCommentTableViewCell.m */,
+				C5A125B91FE242CD0058AA0C /* SKCommentTableViewCell.xib */,
 				E8F42AC11F2F21EA0011C595 /* WOTPublishSocialTrendsVC.h */,
 				E8F42AC21F2F21EA0011C595 /* WOTPublishSocialTrendsVC.m */,
 			);
@@ -2819,6 +2865,7 @@
 				E8190D9F1F0F69660000B07C /* WOTTEnterpriseListCell.xib in Resources */,
 				2A3B54F81FD93C2F00358B8A /* image.bundle in Resources */,
 				2A4214741F146A700010B003 /* share_qqkongjian@2x.png in Resources */,
+				C5A125BB1FE242CD0058AA0C /* SKCommentTableViewCell.xib in Resources */,
 				E86C05B71F2B17C2000ABDBF /* spaceMain.storyboard in Resources */,
 				E8190DB51F0F69660000B07C /* WOTMyuserCell.xib in Resources */,
 				2A42146E1F146A700010B003 /* share_pengyouquan_select@2x.png in Resources */,
@@ -3110,6 +3157,7 @@
 				E86FD1F31F20742A009BE16A /* WOTApplyRepairCell.m in Sources */,
 				2A3B54F51FD93C2F00358B8A /* UIView+Frame.m in Sources */,
 				E869E83D1F1DE1DF00DBDBB9 /* WOTPhotosBaseUtils.m in Sources */,
+				C595C9781FE1126E0083430A /* SKFocusCirclesViewController.m in Sources */,
 				C55A29891FD6DFD9001E0DB7 /* RegisterViewController.m in Sources */,
 				E8190DAA1F0F69660000B07C /* WOTMyActivitiesCell.m in Sources */,
 				E8A2001A1F1C8266003C8A86 /* WOTSliderModel.m in Sources */,
@@ -3140,6 +3188,7 @@
 				2A345AA61F5E576500DC6B31 /* WOTSendFriendsModel.m in Sources */,
 				2A1624ED1F0E21CB00F216F9 /* WOTSelectCityCodeVC.m in Sources */,
 				2AD2BE2C1F274CB700D4C3BC /* WOTShortcutMenuView.m in Sources */,
+				C5A125B31FE22A260058AA0C /* QueryCommentModel_msg.m in Sources */,
 				E868E0E61F42E8C700573B66 /* MD5DataSigner.m in Sources */,
 				E85032D41F0B477F00E79257 /* WOTSingtleton.m in Sources */,
 				E8BA0D8D1F0CFAAB00B81C3D /* WOTMyPublishDemandsLIstVC.m in Sources */,
@@ -3148,6 +3197,7 @@
 				E8190DA31F0F69660000B07C /* WOTworkSpaceScrollVIewCell.m in Sources */,
 				2AF78CF41F0A3DCB00F7B56D /* WOTMaintenanceApplyVC.m in Sources */,
 				2A3B54F61FD93C2F00358B8A /* HCScanQRViewController.m in Sources */,
+				C595C97E1FE121F00083430A /* QuerySingleCircleofFriendModel.m in Sources */,
 				E868E0E01F42E8C700573B66 /* APAuthV2Info.m in Sources */,
 				C7B4DD2E1F7A793C00009011 /* JXPopoverAction.m in Sources */,
 				E868E0E51F42E8C700573B66 /* DataVerifier.m in Sources */,
@@ -3207,6 +3257,7 @@
 				E8EACF961F035ABA0015535D /* WOTOrderLIstBaseVC.m in Sources */,
 				E86245681F3D4F4900CF0D9D /* SRError.m in Sources */,
 				C59D56FF1FDA2D6A001870B2 /* WFPopView.m in Sources */,
+				C5A125BA1FE242CD0058AA0C /* SKCommentTableViewCell.m in Sources */,
 				E85A85F21F0202460016FCA1 /* MASViewConstraint.m in Sources */,
 				E8190DC01F0F69660000B07C /* WOTServiceCell.m in Sources */,
 				E8BA0D871F0CF9F800B81C3D /* WOTMyAppointmentListVC.m in Sources */,
@@ -3240,6 +3291,7 @@
 				E86B81DF1F383134002AAC63 /* WOTMapManager.m in Sources */,
 				2A1624F61F0E3F4B00F216F9 /* WOTUserRegisterVC.m in Sources */,
 				C59840451FDE3206009B49CE /* PublishCircleofFriendsModel.m in Sources */,
+				C5A125B61FE242660058AA0C /* SKCommentViewController.m in Sources */,
 				E8190D971F0F69660000B07C /* WOTInformationLIstCell.m in Sources */,
 				E8DDCCD21F11D151007D001C /* WOTEnterpriseTypeVC.m in Sources */,
 				2AF7B18C1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m in Sources */,
@@ -3263,6 +3315,7 @@
 				C59D56FB1FDA2D6A001870B2 /* WFHudView.m in Sources */,
 				2A345AA91F5E579000DC6B31 /* WOTFriendsMessageListModel.m in Sources */,
 				E8CF9FD41F0F8EA400EF0F46 /* WOTBookStationCell.m in Sources */,
+				C595C97B1FE11A830083430A /* SKSingleCirclesViewController.m in Sources */,
 				2A3B54F41FD93C2F00358B8A /* UIFont+MyFont.m in Sources */,
 				E85A85951F0201F30016FCA1 /* WOTWorkSpace.xcdatamodeld in Sources */,
 				C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */,
@@ -3345,6 +3398,7 @@
 				E86245651F3D4F4900CF0D9D /* SRRunLoopThread.m in Sources */,
 				2AF18A351F136034004681CE /* WOTOrderForBookStationCell.m in Sources */,
 				E86245691F3D4F4900CF0D9D /* SRHash.m in Sources */,
+				C5A125B01FE229DD0058AA0C /* QueryCommentModel.m in Sources */,
 				E8693AE51F04AEB900772BC1 /* WORTMyEnterpriseVC.m in Sources */,
 				E8370F201F0E04850070C077 /* WOTInformationListVC.m in Sources */,
 				E86245661F3D4F4900CF0D9D /* SRPinningSecurityPolicy.m in Sources */,
