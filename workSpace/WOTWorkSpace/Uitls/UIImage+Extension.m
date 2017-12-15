@@ -55,5 +55,18 @@
     return newImage;
 }
 
+// 获取屏幕截图
++ (UIImage *)getScreenSnap {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    // 打开上下文
+    UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 0);
+    //将window的内容渲染到上下文中
+    [window drawViewHierarchyInRect:window.bounds afterScreenUpdates:false];
+    //获取上下文种的图片
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    // 关闭上下文
+    UIGraphicsEndImageContext();
+    return image;
+}
 
 @end

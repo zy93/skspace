@@ -59,7 +59,7 @@
 #pragma mark - action
 -(void)selectDoneAction
 {
-   UIViewController *previousVC = [(WOTServiceNaviController*)self.navigationController getPreviousViewController];
+   UIViewController *previousVC = [(WOTBaseNavigationController*)self.navigationController getPreviousViewController];
     ((WOTGETServiceViewController *)previousVC).selectServiceList = selectServiceCategoryList;
     if (_selectServiceBlock) {
         self.selectServiceBlock(selectServiceCategoryList);

@@ -7,13 +7,8 @@
 //
 
 #import "WOTSettingVC.h"
-
-
 #import "WOTSettingCell.h"
-
 #import "WOTLoginVC.h"
-
-#import "WOTLoginNaviController.h"
 #import "WOTPersionalInformation.h"
 @interface WOTSettingVC ()
 

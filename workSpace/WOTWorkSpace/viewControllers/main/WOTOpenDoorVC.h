@@ -10,4 +10,6 @@
 
 @interface WOTOpenDoorVC : UIViewController
 
+-(void)showView:(UIViewController *)vc;
+
 @end

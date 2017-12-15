@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOTMyNaviController.h"
 #import "WOTTableViewBaseVC.h"
 @interface WOTMyVC : WOTTableViewBaseVC
-
-@property(nonatomic,strong)WOTMyNaviController *mynavi;
 
 @end

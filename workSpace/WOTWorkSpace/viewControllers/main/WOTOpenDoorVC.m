@@ -33,7 +33,6 @@
     self.QRBgView.layer.shadowRadius = 8;//阴影半径，默认3
     self.QRBgView.layer.shadowOpacity = 0.8;//阴影透明度，默认0
     
-
     
 }
 
@@ -42,6 +41,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)showView:(UIViewController *)vc
+{
+    [vc.view addSubview:self.view];
+}
 
 #pragma mark - Navigation
 

@@ -77,16 +77,6 @@
         self.hiddenKeyboardBlcok();
     }
 }
-//懒加载登录模块navigationController
--(WOTLoginNaviController *)nav{
-    if (_nav == nil) {
-//        WOTLoginVC *vc = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTLoginVC"];
-//       _nav = [[WOTLoginNaviController alloc]initWithRootViewController:vc];
-        LoginViewController *loginVC = [[LoginViewController alloc] init];
-        _nav = [[WOTLoginNaviController alloc]initWithRootViewController:loginVC];;
-    }
-    return _nav;
-}
 
 //跳转到登录页面通用方法
 -(void)showLoginVC:(UIViewController *)persentVC{

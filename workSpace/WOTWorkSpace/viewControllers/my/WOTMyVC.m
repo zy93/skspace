@@ -14,7 +14,6 @@
 #import "WOTMyActivitiesVC.h"
 #import "WOTMyHistoryVC.h"
 #import "WOTLoginVC.h"
-#import "WOTLoginNaviController.h"
 #import "WOTReservationsMeetingVC.h"
 #import "LoginViewController.h"
 

@@ -8,8 +8,11 @@
 
 #import "WOTTabBarVCViewController.h"
 #import "LoginViewController.h"
+#import "CLTabBar.h"
+#import "WOTOpenDoorView.h"
+#import "HCScanQRViewController.h"
 
-@interface WOTTabBarVCViewController ()
+@interface WOTTabBarVCViewController () <UIViewControllerTransitioningDelegate>
 
 @end
 
@@ -18,6 +21,43 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    // 自定义TabBar
+    CLTabBar *tabBar = [[CLTabBar alloc] init];
+    HCScanQRViewController *vc = [[HCScanQRViewController alloc] init];
+    vc.transitioningDelegate = self;
+    tabBar.composeButtonClick = ^{
+        NSLog(@"点击按钮,弹出菜单");
+//        CLComposeView *composeView = [[CLComposeView alloc] init];
+//        [composeView showWithController:self];
+        WOTOpenDoorView *view = [[WOTOpenDoorView alloc] init];
+        [view showWithController:self];
+        view.btnClick = ^(NSString *str) {
+            
+            
+            CATransition *animation = [CATransition animation];
+            animation.duration = 0.5;
+            animation.timingFunction = UIViewAnimationCurveEaseInOut;
+            animation.type = @"oglFlip";
+            //animation.type = kCATransitionPush;
+            animation.subtype = kCATransitionFromRight;
+            [vc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+//            [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+            [self.view.window.layer addAnimation:animation forKey:nil];
+            [self presentViewController:vc animated:NO completion:^{
+                
+            }];
+            [vc successfulGetQRCodeInfo:^(NSString *QRCodeInfo) {
+                NSLog(@"QR Info : %@", QRCodeInfo);
+                [vc dismissViewControllerAnimated:YES completion:nil];
+            }];
+            
+        };
+    };
+    
+    [self setValue:tabBar forKey:@"tabBar"];
+    
+    
     [self loadSubControllers];
     [self configTab];
 
@@ -32,62 +72,37 @@
 }
 
 -(void)loadSubControllers{
-    NSMutableArray *vcarray = [[NSMutableArray alloc]init];
-    
-    WOTMainVC *mainvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTMainVCID"];
-    WOTMainNavigationController *mainnav = [[WOTMainNavigationController alloc]initWithRootViewController:mainvc];
-    
-    mainvc.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"首页" image:[UIImage imageNamed:@"main"] selectedImage:[UIImage imageNamed:@"main_select"]];
 
-    NSDictionary *dictHome = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:252.f/255.f green:91.f/255.f blue:17.f/255.f alpha:1] forKey:NSForegroundColorAttributeName];
-    [mainvc.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
-
-    
-    WOTSocialcontact *socialvc = [[UIStoryboard storyboardWithName:@"Socialcontact" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTSocialcontactID"];
-    socialvc.navigationItem.title = @"众创空间移动客户端";
-    
-    WOTSocialcontactNaviController *socialnav = [[WOTSocialcontactNaviController alloc]initWithRootViewController:socialvc];
-    socialnav.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"社交" image:[UIImage imageNamed:@"socialcontact"] selectedImage:[UIImage imageNamed:@"socialcontact_select"]];
-    [socialnav.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
-    
-    
-
-    WOTOpenDoorVC *openVC = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOpenDoorVC"];
-    UIImage *img = [UIImage imageNamed:@"openDoor"];
-    img = [img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIImage *selectImg = [UIImage imageNamed:@"openDoor_select"];
-    selectImg = [selectImg imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    openVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"开门" image:img selectedImage:selectImg];
-    openVC.tabBarItem.imageInsets  = UIEdgeInsetsMake(-10, 0, 10, 0);
-    [openVC.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
-    WOTBaseNavigationController *scanQRNav = [[WOTBaseNavigationController alloc]initWithRootViewController:openVC];
-
-    
-    
-    WOTServiceVC *servicevc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTServiceVC"];
-    servicevc.navigationItem.title = @"众创空间移动客户端";
-    WOTServiceNaviController *servicnav = [[WOTServiceNaviController alloc]initWithRootViewController:servicevc];
-    servicnav.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"服务" image:[UIImage imageNamed:@"service"] selectedImage:[UIImage imageNamed:@"service_select"]];
-    [servicnav.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
-    
-//    WOTMyNaviController *myvc = [[WOTMyNaviController alloc]initWithRootViewController:[[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTMyVCID"]];
-    WOTMyNaviController *myvc = [[WOTMyNaviController alloc]initWithRootViewController:[[WOTMyVC alloc]init]];
-    
-    myvc.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"我的" image:[UIImage imageNamed:@"my"] selectedImage:[UIImage imageNamed:@"my_select"]];
-    [myvc.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
-    
-    [vcarray addObject:mainnav];
-    [vcarray addObject:socialnav];
-    [vcarray addObject:openVC];
-    [vcarray addObject:servicnav];
-    [vcarray addObject:myvc];
-    self.viewControllers = vcarray;
+    [self addChildViewControllerWithStoryboardName:@"spaceMain" ClassName:@"WOTMainVCID" title:@"首页" imageName:@"main"];
+    [self addChildViewControllerWithStoryboardName:@"Socialcontact" ClassName:@"WOTSocialcontactID" title:@"社交" imageName:@"socialcontact"];
+    [self addChildViewControllerWithStoryboardName:@"Service" ClassName:@"WOTServiceVC" title:@"服务" imageName:@"service"];
+    [self addChildViewControllerWithStoryboardName:@"My" ClassName:@"WOTMyVC" title:@"我的" imageName:@"my"];
 }
 -(void)configTab{
    
     [self.tabBar setBackgroundImage:[UIImage imageNamed:@"fgcolor"]];
     
 }
+
+- (void)addChildViewControllerWithStoryboardName:(NSString *)storyboardName ClassName:(NSString *)className title:(NSString *)title imageName:(NSString *)imageName {
+//    Class Clz = NSClassFromString(className);
+    UIViewController *vController = [[UIStoryboard storyboardWithName:storyboardName bundle:nil] instantiateViewControllerWithIdentifier:className];;
+    vController.title = title;
+    vController.tabBarItem.image = [[UIImage imageNamed:imageName]  imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    vController.tabBarItem.selectedImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@_select", imageName]];
+    NSDictionary *dictHome = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:252.f/255.f green:91.f/255.f blue:17.f/255.f alpha:1] forKey:NSForegroundColorAttributeName];
+    [vController.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
+    [vController.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateHighlighted];
+
+    NSDictionary *dic = @{NSForegroundColorAttributeName:UIColorFromRGB(0x656565),NSFontAttributeName:[UIFont fontWithName:@"Arial" size:10.f]};
+    [vController.tabBarItem setTitleTextAttributes:dic forState:UIControlStateNormal];
+
+    
+    WOTBaseNavigationController *navController = [[WOTBaseNavigationController alloc] initWithRootViewController:vController];
+    [self addChildViewController:navController];
+
+}
+
 
 /*
 #pragma mark - Navigation

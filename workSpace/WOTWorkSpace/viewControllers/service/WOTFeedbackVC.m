@@ -7,12 +7,17 @@
 //
 
 #import "WOTFeedbackVC.h"
+#import "WOTSelectWorkspaceListVC.h"
+
+
 #define FeedTextViewPlaceholder @"*您的意见，是我们前进的动力"
 @interface WOTFeedbackVC ()<UITextFieldDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UIButton *customerServiceBtn;
 @property (weak, nonatomic) IBOutlet UIButton *submitBtn;
 @property (weak, nonatomic) IBOutlet UITextField *phoneText;
+@property (weak, nonatomic) IBOutlet UIButton *chooseCommunityBtn;
+@property (weak, nonatomic) IBOutlet UITextField *communityNameLab;
+@property (weak, nonatomic) IBOutlet UILabel *textNumberLab;
 
 @end
 
@@ -55,14 +60,19 @@
     }
 }
 
-- (IBAction)callCustomerServices:(id)sender {
-    
-    //TODO:打电话给客服
+#pragma mark - action
+
+- (IBAction)chooseCommunity:(id)sender {
+    WOTSelectWorkspaceListVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTSelectWorkspaceListVC"];
+    __weak typeof(self) weakSelf = self;
+    WOTSelectWorkspaceListVC *lc = (WOTSelectWorkspaceListVC*)vc;//1
+    lc.selectSpaceBlock = ^(WOTSpaceModel *model){
+        weakSelf.spaceId = model.spaceId;
+        weakSelf.spaceName = model.spaceName;
+        [weakSelf.communityNameLab setText:model.spaceName];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
-
-
-
-
 
 - (IBAction)submitFeedbackInfo:(id)sender {
     
@@ -97,11 +107,21 @@
     if ([_textView.text isEqualToString:FeedTextViewPlaceholder]) {
         _textView.text = @"";
     }
-    
-    
     _textView.textColor = Black;
     return YES;
 }
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (textView.text.length+text.length>200) {
+        return NO;
+    }
+    [self.textNumberLab setText:[NSString stringWithFormat:@"%d/200",(int)(textView.text.length+text.length)]];
+    
+    return YES;
+}
+
+
 
 /*
 #pragma mark - Navigation
