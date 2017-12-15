@@ -73,7 +73,6 @@
 		2A4ABBAD1F2AE50D00BEE21D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A4ABBAC1F2AE50D00BEE21D /* LaunchScreen.storyboard */; };
 		2A5B230E1F0F7DBE00466BEF /* WOTEnterTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5B230D1F0F7DBE00466BEF /* WOTEnterTextVC.m */; };
 		2A5B23171F0F9AA300466BEF /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5B23161F0F9AA300466BEF /* UIDevice+Resolutions.m */; };
-		2A628AA91FDA76CA00BDD45B /* zhanwei.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A628AA81FDA76CA00BDD45B /* zhanwei.png */; };
 		2A6442BB1F5FE80100E84273 /* MBProgressHUD+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6442BA1F5FE80100E84273 /* MBProgressHUD+Extension.m */; };
 		2A69A84A1FE2282C00C0862A /* WOTEnterpriseScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A69A83B1FE2282B00C0862A /* WOTEnterpriseScrollView.m */; };
 		2A69A84B1FE2282C00C0862A /* WOTElasticityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A69A83C1FE2282B00C0862A /* WOTElasticityView.m */; };
@@ -99,6 +98,7 @@
 		2AD2BE211F2711BD00D4C3BC /* WOTCurtainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AD2BE1F1F2711BD00D4C3BC /* WOTCurtainCell.xib */; };
 		2AD2BE281F271BE400D4C3BC /* WOTLightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD2BE261F271BE400D4C3BC /* WOTLightCell.m */; };
 		2AD2BE291F271BE400D4C3BC /* WOTLightCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AD2BE271F271BE400D4C3BC /* WOTLightCell.xib */; };
+		2AE2E74C1FE3E50F006155D0 /* WOTWorkSpaceListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE2E74A1FE3E50F006155D0 /* WOTWorkSpaceListVC.m */; };
 		2AE57C441F2ECB0600A1F149 /* WOTH5VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AE57C431F2ECB0600A1F149 /* WOTH5VC.m */; };
 		2AF18A241F131898004681CE /* WOTPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF18A231F131898004681CE /* WOTPickerView.m */; };
 		2AF18A271F131BEE004681CE /* WOTReservationsMeetingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AF18A261F131BEE004681CE /* WOTReservationsMeetingVC.m */; };
@@ -508,7 +508,6 @@
 		2A5B230D1F0F7DBE00466BEF /* WOTEnterTextVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTEnterTextVC.m; sourceTree = "<group>"; };
 		2A5B23151F0F9AA300466BEF /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
 		2A5B23161F0F9AA300466BEF /* UIDevice+Resolutions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Resolutions.m"; sourceTree = "<group>"; };
-		2A628AA81FDA76CA00BDD45B /* zhanwei.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhanwei.png; sourceTree = "<group>"; };
 		2A6442B91F5FE80100E84273 /* MBProgressHUD+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Extension.h"; sourceTree = "<group>"; };
 		2A6442BA1F5FE80100E84273 /* MBProgressHUD+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Extension.m"; sourceTree = "<group>"; };
 		2A69A8381FE2282B00C0862A /* WOTEnterpriseScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTEnterpriseScrollView.h; sourceTree = "<group>"; };
@@ -557,6 +556,8 @@
 		2AD2BE251F271BE400D4C3BC /* WOTLightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTLightCell.h; sourceTree = "<group>"; };
 		2AD2BE261F271BE400D4C3BC /* WOTLightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTLightCell.m; sourceTree = "<group>"; };
 		2AD2BE271F271BE400D4C3BC /* WOTLightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTLightCell.xib; sourceTree = "<group>"; };
+		2AE2E74A1FE3E50F006155D0 /* WOTWorkSpaceListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTWorkSpaceListVC.m; sourceTree = "<group>"; };
+		2AE2E74B1FE3E50F006155D0 /* WOTWorkSpaceListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTWorkSpaceListVC.h; sourceTree = "<group>"; };
 		2AE57C421F2ECB0600A1F149 /* WOTH5VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTH5VC.h; sourceTree = "<group>"; };
 		2AE57C431F2ECB0600A1F149 /* WOTH5VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTH5VC.m; sourceTree = "<group>"; };
 		2AF18A221F131898004681CE /* WOTPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTPickerView.h; sourceTree = "<group>"; };
@@ -1942,7 +1943,6 @@
 				2A69A8481FE2282C00C0862A /* socialcontact */,
 				2A69A83E1FE2282C00C0862A /* tabbar */,
 				E8DAE7421F30228E00830A2F /* reloadView */,
-				2A628AA81FDA76CA00BDD45B /* zhanwei.png */,
 				2AF18A221F131898004681CE /* WOTPickerView.h */,
 				2AF18A231F131898004681CE /* WOTPickerView.m */,
 				2AFAC8921F0FB796001BAB14 /* WOTRadioView.h */,
@@ -2195,6 +2195,8 @@
 				E8693B0E1F04F90E00772BC1 /* WOTMainVC.m */,
 				2AE57C421F2ECB0600A1F149 /* WOTH5VC.h */,
 				2AE57C431F2ECB0600A1F149 /* WOTH5VC.m */,
+				2AE2E74B1FE3E50F006155D0 /* WOTWorkSpaceListVC.h */,
+				2AE2E74A1FE3E50F006155D0 /* WOTWorkSpaceListVC.m */,
 				E8370F191F0DD9EE0070C077 /* WOTMenuViewParentVC.m */,
 				E8370F181F0DD9EE0070C077 /* WOTMenuViewParentVC.h */,
 				E85033031F0B819A00E79257 /* WOTEnterpriseLIstVC.h */,
@@ -2918,7 +2920,6 @@
 				E8190DA91F0F69660000B07C /* WOTFeedBackLIstCell.xib in Resources */,
 				E8605CA61F132221005C09F4 /* WOTEnterpriseHeaderView.xib in Resources */,
 				2A4ABBAD1F2AE50D00BEE21D /* LaunchScreen.storyboard in Resources */,
-				2A628AA91FDA76CA00BDD45B /* zhanwei.png in Resources */,
 				E8747AE71F26E1E400125CEB /* WOTAirconditioningCell.xib in Resources */,
 				E86594821F21C9260093B796 /* WOTSocialContactCell.xib in Resources */,
 				E86FD1F41F20742A009BE16A /* WOTApplyRepairCell.xib in Resources */,
@@ -3242,6 +3243,7 @@
 				E868E0E81F42E8C700573B66 /* openssl_wrapper.m in Sources */,
 				2AF18A381F136074004681CE /* WOTOrderForSiteCell.m in Sources */,
 				E8EACF921F035A990015535D /* WOTOrderLIstVC.m in Sources */,
+				2AE2E74C1FE3E50F006155D0 /* WOTWorkSpaceListVC.m in Sources */,
 				2A69A84B1FE2282C00C0862A /* WOTElasticityView.m in Sources */,
 				E8190DC81F0F69660000B07C /* WOTMenuView.m in Sources */,
 				E850330B1F0B922000E79257 /* WOTEnumUtils.m in Sources */,
