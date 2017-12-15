@@ -23,13 +23,21 @@
 
 - (CGSize)labelAutoCalculateRectWith:(NSString *)text FontSize:(CGFloat)fontSize MaxSize:(CGSize)maxSize;
 -(NSArray<NSString *>*)separatedWithString:(NSString *)separatedString;
+//字符串转Url
 -(NSURL *)ToUrl;
+//资源转字符串
+-(NSURL *)ToResourcesUrl;
+//字符串型资源地址
+-(NSString *)stringToResourcesUrl;
 @end
 
 @interface NSString (Date)
+
+/** 获取年、月、日字符串 例：2017/12/12 10:58:20 返回 2017/12/12
+ @return 年、月、日字符串 */
+-(NSString *)getDate;
 //将NSString类型的时间 根据格式字符串 转换为NSDate类型
 +(NSDate *)dataWithFormat:(NSString *)format;
-
 //获取年、月、日、时、分、秒数组 传入： 2017/07/18 12:20:59, 传出：@[@(2017),@(7),@(18),@(12),@(20),@(59)]
 -(NSArray*)getYearToSecondArray;
 //获取时、分、秒数组 //传入：12:20:59, 传出：@[@(12),@(20),@(59)]

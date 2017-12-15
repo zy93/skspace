@@ -10,14 +10,17 @@
 #import "WOTFilterTypeModel.h"
 #import "WOTActivitiesListCell.h"
 #import "WOTH5VC.h"
+
 @interface WOTActivitiesLIstVC ()<UITableViewDataSource,UITableViewDelegate>
+{
+    NSInteger page;
+    
+}
 @property (weak, nonatomic) IBOutlet UIView *communityView;
 @property (weak, nonatomic) IBOutlet UILabel *communityName;
 @property (weak, nonatomic) IBOutlet UIImageView *community_arrowdown;
 @property (weak, nonatomic) IBOutlet UIView *categoryView;
-
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
-
 @property (weak, nonatomic) IBOutlet UIImageView *category_arrowdown;
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 
@@ -37,14 +40,46 @@ bool ismenu1 =  NO;
     [self.tableVIew registerNib:[UINib nibWithNibName:@"WOTworkSpaceCommonCell" bundle:nil] forCellReuseIdentifier:@"WOTworkSpaceCommonCellID"];
     self.communityName.text = ((WOTFilterTypeModel *)self.menu1Array[0]).filterName;
     self.categoryLabel.text = ((WOTFilterTypeModel *)self.menu2Array[0]).filterName;
-    
+    page = 1;
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
+    [self crectRequest];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)configNav{
+    [self configNaviBackItem];
+    self.navigationItem.title = @"我的活动";
+}
+
+
+#pragma mark - request
+-(void)crectRequest
+{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getActivitiesWithPage:@(page) response:^(id bean, NSError *error) {
+        if (bean) {
+            WOTActivityModel_msg *modle = (WOTActivityModel_msg *)bean;
+            weakSelf.dataSource = modle.msg.list;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableVIew reloadData];
+            });
+        }
+        else {
+            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
+        }
+    }];
+}
+
+#pragma mark - action
 - (IBAction)communityBtnAction:(id)sender {
     ismenu1 = YES;
     [self.menuView1 menuTappedWithSuperView:self.view];
@@ -55,17 +90,6 @@ bool ismenu1 =  NO;
     
     [self.menuView2 menuTappedWithSuperView:self.view];
     [self.menuView2 reloadData];
-}
-
--(void)configNav{
-    [self configNaviBackItem];
-    self.navigationItem.title = @"我的活动";
-}
-
-
--(void)viewWillAppear:(BOOL)animated{
-    [self.navigationController.navigationBar setHidden:NO];
-    
 }
 
 -(NSMutableArray<WOTFilterTypeModel *> *)menu_filterDataArray {
@@ -134,14 +158,14 @@ bool ismenu1 =  NO;
     
 }
 
-
+#pragma mark - table data & source
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
    
-    return _dataSource.count;
+    return self.dataSource.count;
 }
 
 
@@ -161,38 +185,17 @@ bool ismenu1 =  NO;
     
     activitycell.activityTitle.text = _dataSource[indexPath.row].title;
     activitycell.activityLocation.text = _dataSource[indexPath.row].spaceName;
-    activitycell.activityState.text = @"活动进行中";
-    NSString *pictureurl = [_dataSource[indexPath.row].pictureSite separatedWithString:@","].count==0? @"":[_dataSource[indexPath.row].pictureSite separatedWithString:@","][0];
-    [activitycell.activityImage sd_setImageWithURL:[pictureurl ToUrl]  placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+    activitycell.activityState.text = [_dataSource[indexPath.row].starTime getDate];
+    [activitycell.activityImage sd_setImageWithURL:[_dataSource[indexPath.row].pictureSite ToResourcesUrl]  placeholderImage:[UIImage imageNamed:@"placeholder_activity"]];
     
     return activitycell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    //detailvc.url = [NSString stringWithFormat:@"%@%@",@"http://",_dataSource[indexPath.row].spared3];
-    [self.navigationController pushViewController:detailvc animated:YES];
+    WOTH5VC *h5vc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+    h5vc.url = [_dataSource[indexPath.row].htmlLocation stringToResourcesUrl];
+    [self.navigationController pushViewController:h5vc animated:YES];
 }
-
--(void)getActivityDataFromWeb:(void(^)())complete{
-    
-    [WOTHTTPNetwork getActivitiesResponse:^(id bean, NSError *error) {
-        
-        complete();
-        if (bean) {
-            WOTActivityModel_msg *dd = (WOTActivityModel_msg *)bean;
-            _dataSource = dd.msg.list;
-           
-            [self.tableVIew reloadData];
-            
-        }
-        if (error) {
-            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
-        }
-        
-    }];
-}
-
 
 /*
 #pragma mark - Navigation

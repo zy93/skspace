@@ -59,10 +59,17 @@ typedef void(^response)(id bean,NSError *error);
 +(void)getSpaceSitationBlock:(response)response;
 
 /**
- *根据集团获取所有空间接口
+ *获取所有空间
  *
  */
 +(void)getSapaceFromGroupBlock:(response)response;
+/**
+ *获取所有空间
+ * @param page 页码
+ * @param pageSize 大小
+ * @param response 返回响应
+ */
++(void)getSapaceWithPage:(NSNumber*)page pageSize:(NSNumber *)pageSize response:(response)response;
 
 /**
  根据空间id获取空间
@@ -98,22 +105,26 @@ typedef void(^response)(id bean,NSError *error);
 
 //+(void)getSpaceWith
 
+
 /**
- *  根据空间id 和状态请求筛选 获取活动列表
-   @param response 回调数据返回上层
- */
-+(void)getActivitiesResponse:(response)response;
-/**
- *获取空间下的友邻企业
+ * 获取空间下的友邻企业
  *@param spaceid  空间id
  *@param response  对象返回上层，错误返回error
  */
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response;
 
 /**
- *获取全部资讯列表
+ *  获取活动列表  根据页码
+ *  @param page 页码/每页查询10个数据
+ *  @param response 回调数据返回上层
  */
-+(void)getAllNewInformation:(response)response;
++(void)getActivitiesWithPage:(NSNumber *)page response:(response)response;
+
+
+/**
+ * 获取全部资讯列表
+ */
++(void)getNewsWithPage:(NSNumber *)page response:(response)response;
 
 /**
  *获取首页页面轮播图资源数据

@@ -21,6 +21,7 @@
 #import "UIView+Extension.h"
 #import "NSDate+Uitls.h"
 #import "NSString+Category.h"
+#import "UIImageView+AFNetworking.h"
 
 //Network
 #import "WOTHTTPNetwork.h"
@@ -28,7 +29,6 @@
 
 //viewControllers
 #import "WOTTabBarVCViewController.h"
-#import "WOTOpenDoorVC.h"
 #import "WOTMyVC.h"
 #import "WOTBaseNavigationController.h"
 #import "WOTSettingVC.h"

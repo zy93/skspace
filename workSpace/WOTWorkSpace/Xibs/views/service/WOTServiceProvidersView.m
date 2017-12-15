@@ -34,7 +34,7 @@
         [self addSubview:self.topBgView];
         
         self.iconIV = [[UIImageView alloc] initWithFrame:CGRectMake(22, 22, 55, 55)];
-        [self.iconIV setImage:[UIImage imageNamed:@"zhanwei"]];
+        [self.iconIV setImage:[UIImage imageNamed:@"placeholder_logo"]];
         self.iconIV.layer.cornerRadius = _iconIV.size.height/2;
         self.iconIV.clipsToBounds = YES;
         [self.topBgView addSubview:self.iconIV];

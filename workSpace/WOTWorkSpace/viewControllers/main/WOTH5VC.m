@@ -21,6 +21,12 @@
 
 @implementation WOTH5VC
 
++(WOTH5VC *)loadH5VC
+{
+    WOTH5VC *h5vc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+    return h5vc;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

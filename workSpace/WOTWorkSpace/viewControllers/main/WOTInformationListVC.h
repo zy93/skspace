@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WOTTableViewBaseVC.h"
-#import "WOTNewInformationModel.h"
+#import "WOTNewsModel.h"
 @interface WOTInformationListVC : WOTTableViewBaseVC
-@property(nonatomic,strong)NSMutableArray<NSArray<WOTNewInformationModel *> *> *dataSource;
--(void)getInfoDataFromWeb:(void(^)())complete;
+@property(nonatomic,strong)NSMutableArray<WOTNewsModel*> *dataSource;
 @end

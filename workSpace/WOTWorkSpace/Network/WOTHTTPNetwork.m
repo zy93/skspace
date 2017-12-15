@@ -12,7 +12,7 @@
 #import "WOTSpaceModel.h"
 #import "WOTActivityModel.h"
 #import "WOTEnterpriseModel.h"
-#import "WOTNewInformationModel.h"
+#import "WOTNewsModel.h"
 #import "WOTSliderModel.h"
 #import "WOTMyFeedBackModel.h"
 #import "WOTBaseModel.h"
@@ -302,16 +302,24 @@
 #pragma mark - 获取所有的空间列表
 +(void)getSapaceFromGroupBlock:(response)response
 {
+    [WOTHTTPNetwork getSapaceWithPage:@1 pageSize:@1000 response:response];
+}
+
+
+
++(void)getSapaceWithPage:(NSNumber *)page pageSize:(NSNumber *)pageSize response:(response)response
+{
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/find"];
-    NSDictionary *parameters = @{@"pageNo":@1,
-                                 @"pageSize":@1000
+    NSDictionary *parameters = @{@"pageNo":page,
+                                 @"pageSize":pageSize
                                  };
-    
     [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
         WOTSpaceModel_msg * spacemodel = [[WOTSpaceModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  spacemodel;
     } response:response];
 }
+
+
 
 +(void)getSpaceWithLocation:(CGFloat)lat lon:(CGFloat)lon response:(response)response
 {
@@ -340,21 +348,6 @@
     
 }
 
-+(void)getActivitiesResponse:(response)response
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findforApp"];
-    NSDictionary * parameters = @{@"pageNo":@(1),
-                                  @"pageSize":@(1)
-                                  };
-     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
-         
-         WOTActivityModel_msg * activitymodel = [[WOTActivityModel_msg alloc]initWithDictionary:responseobj error:nil];
-         
-         return  activitymodel;
-         
-         
-     } response:response];
-}
 
 
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response{
@@ -373,10 +366,27 @@
     }response:response];
 }
 
-+(void)getAllNewInformation:(response)response{
-    NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Message/findAllMessageToApp"];
-    [self doRequestWithParameters:nil useUrl:infourl complete:^JSONModel *(id responseobj) {
-        WOTNewInformationModel_msg *infomodel = [[WOTNewInformationModel_msg alloc]initWithDictionary:responseobj error:nil];
++(void)getActivitiesWithPage:(NSNumber *)page response:(response)response
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findforApp"];
+    NSDictionary * parameters = @{@"pageNo":page,
+                                  @"pageSize":@(10)
+                                  };
+    [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
+        WOTActivityModel_msg * activitymodel = [[WOTActivityModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  activitymodel;
+    } response:response];
+}
+
+
++(void)getNewsWithPage:(NSNumber *)page response:(response)response
+{
+    NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Message/findforApp"];
+    NSDictionary * parameters = @{@"pageNo":page,
+                                  @"pageSize":@(10)
+                                  };
+    [self doRequestWithParameters:parameters useUrl:infourl complete:^JSONModel *(id responseobj) {
+        WOTNewsModel_msg *infomodel = [[WOTNewsModel_msg alloc]initWithDictionary:responseobj error:nil];
         return infomodel;
     } response:response];
 }

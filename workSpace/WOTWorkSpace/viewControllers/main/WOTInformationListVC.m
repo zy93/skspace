@@ -11,7 +11,9 @@
 #import "WOTCommonHeaderVIew.h"
 #import "WOTH5VC.h"
 @interface WOTInformationListVC ()
-
+{
+    NSInteger page;
+}
 
 @end
 
@@ -24,11 +26,7 @@
     [self configNav];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTInformationLIstCell" bundle:nil] forCellReuseIdentifier:@"WOTInformationLIstCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTCommonHeaderVIew" bundle:nil] forHeaderFooterViewReuseIdentifier:@"WOTCommonHeaderVIewID"];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    page = 1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,60 +34,66 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     self.tabBarController.tabBar.translucent = NO;
     self.edgesForExtendedLayout = UIRectEdgeBottom;
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setHidden:NO];
+    [self createRequest];
 }
 -(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     self.navigationController.navigationBar.translucent = YES;
 }
 -(void)configNav{
     [self configNaviBackItem];  
-    self.navigationItem.title = @"我的资讯";
+    self.navigationItem.title = @"资讯列表";
 }
--(NSMutableArray<NSArray<WOTNewInformationModel *> *>*)dataSource{
-    if (_dataSource == nil) {
-        _dataSource = [[NSMutableArray alloc]init];
-    }
-    return _dataSource;
+
+
+#pragma mark - request
+-(void)createRequest
+{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getNewsWithPage:@(page) response:^(id bean, NSError *error) {
+        if (bean) {
+            WOTNewsModel_msg *modle = (WOTNewsModel_msg *)bean;
+            weakSelf.dataSource = [modle.msg.list mutableCopy];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView reloadData];
+            });
+        }
+        else {
+            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
+        }
+    }];
 }
+
+
+
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return _dataSource.count;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    switch (section) {
-        case 0:
-            return _dataSource[0].count;
-            break;
-        case 1:
-            return _dataSource[1].count;
-            break;
-        default:
-            break;
-    }
-    return 0;
+    return _dataSource.count;
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    WOTCommonHeaderVIew *view = [[NSBundle mainBundle]loadNibNamed:@"WOTCommonHeaderVIew" owner:nil options:nil].lastObject;
-    if (section == 0) {
-        view.headerTitle.text = @"空间资讯";
-    } else {
-        view.headerTitle.text = @"企业资讯";
-    }
-    return view;
-}
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+//    WOTCommonHeaderVIew *view = [[NSBundle mainBundle]loadNibNamed:@"WOTCommonHeaderVIew" owner:nil options:nil].lastObject;
+//    return view;
+//}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 125;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 50;
+    return 10;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
 
@@ -97,35 +101,33 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WOTInformationLIstCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTInformationLIstCellID"forIndexPath:indexPath];
-    cell.infoValue.text = _dataSource[indexPath.section][indexPath.row].messageInfo;
-    cell.infoTime.text = _dataSource[indexPath.section][indexPath.row].issueTime;
-    NSString *urlstring = [_dataSource[indexPath.section][indexPath.row].pictureSite separatedWithString:@","].count != 0? [_dataSource[indexPath.section][indexPath.row].pictureSite separatedWithString:@","][0]:@"";
-    [cell.infoImage sd_setImageWithURL:[urlstring ToUrl] placeholderImage:[UIImage imageNamed:@"infoImage"]];
+    cell.infoValue.text = _dataSource[indexPath.row].messageInfo;
+    cell.infoTime.text = _dataSource[indexPath.row].issueTime;
+    [cell.infoImage setImageWithURL:[_dataSource[indexPath.row].pictureSite ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_activity"]];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-       //detailvc.url = [NSString stringWithFormat:@"%@%@",@"http://",_dataSource[indexPath.section][indexPath.row].spared3];
-
+    WOTH5VC *detailvc = [WOTH5VC loadH5VC];
+    detailvc.url = [_dataSource[indexPath.row].htmlLocation stringToResourcesUrl];
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 //
 -(void)getInfoDataFromWeb:(void(^)())complete{
     
-    [WOTHTTPNetwork getAllNewInformation:^(id bean, NSError *error) {
-        complete();
-        if (bean) {
-            WOTNewInformationModel_msg *dd = (WOTNewInformationModel_msg *)bean;
-            
-            [_dataSource addObject:dd.msg.space];
-            [_dataSource addObject:dd.msg.firm];
-        }
-        if (error) {
-            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
-        }
-        
-    }];
+//    [WOTHTTPNetwork getAllNewInformation:^(id bean, NSError *error) {
+//        complete();
+//        if (bean) {
+//            WOTNewInformationModel_msg *dd = (WOTNewInformationModel_msg *)bean;
+//            
+//            [_dataSource addObject:dd.msg.space];
+//            [_dataSource addObject:dd.msg.firm];
+//        }
+//        if (error) {
+//            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
+//        }
+//        
+//    }];
 }
 
 

@@ -50,6 +50,15 @@
 @end
 
 @implementation NSString (Date)
+-(NSString *)getDate
+{
+    NSString *result = self ;
+    if (self.length>=10) {
+        result = [self substringFromIndex:10];
+    }
+    return result;
+}
+
 +(NSDate *)dataWithFormat:(NSString *)format
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -61,6 +70,17 @@
 -(NSURL *)ToUrl{
     NSString *base = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,self];
     return [NSURL URLWithString:base];
+}
+
+-(NSURL *)ToResourcesUrl
+{
+    NSString *base = [NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,self];
+    return [NSURL URLWithString:base];
+}
+
+-(NSString *)stringToResourcesUrl
+{
+    return [NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,self];
 }
 
 -(NSArray *)getYearToSecondArray

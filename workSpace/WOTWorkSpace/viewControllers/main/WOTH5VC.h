@@ -11,6 +11,10 @@
 @interface WOTH5VC : UIViewController
 @property (weak, nonatomic) IBOutlet UIWebView *web;
 
-//直接打开H5
+//H5地址
 @property (nonatomic, strong) NSString *url;
+
++(WOTH5VC *)loadH5VC;
+
+
 @end
