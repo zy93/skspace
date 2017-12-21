@@ -61,8 +61,7 @@
     
 }
 -(void)configNavi{
-    self.navigationItem.title = @"易创客";
-  
+    self.navigationItem.title = @"社交";
     [self configNaviRightItemWithImage:[UIImage imageNamed:@"publishSocial"]];
 }
 

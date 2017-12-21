@@ -188,7 +188,6 @@
             response(nil, error);
         }
     }];
-  
 }
 
 
@@ -921,6 +920,7 @@
         QueryCommentModel *model13 = [[QueryCommentModel alloc] initWithDictionary:responseobj error:nil];
         return model13;
     } response:response];
+    
 }
 
 @end

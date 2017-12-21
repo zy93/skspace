@@ -92,7 +92,11 @@
 }
 
 - (void)disappear{
-    
+   // [self.superview.tabBarController.tabBar setHidden:NO];
+    if ([_delegate respondsToSelector:@selector(showTarbar)]) {
+        [_delegate showTarbar];
+
+    }
     _removeImg();
    
 }
