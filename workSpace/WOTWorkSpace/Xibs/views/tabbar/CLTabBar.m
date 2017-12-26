@@ -102,12 +102,15 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
     UIView *view = [super hitTest:point withEvent:event];
+    if (!self.isUserInteractionEnabled || self.isHidden || self.alpha <= 0.01) {
+        return nil;
+    }
     if (view == nil) {
         // 转换坐标系
         CGFloat w = SCREEN_WIDTH/5;
 //        CGPoint newPoint = [self.composeButton convertPoint:point fromView:self];
         // 判断触摸点是否在button上
-        if (CGRectContainsPoint(CGRectMake(w*2, -11, w, self.bounds.size.height), point)) {
+        if (CGRectContainsPoint(CGRectMake(w*2, -15, w, self.bounds.size.height), point)) {
             view = self.composeButton;
         }
     }
