@@ -110,7 +110,7 @@
         CGFloat w = SCREEN_WIDTH/5;
 //        CGPoint newPoint = [self.composeButton convertPoint:point fromView:self];
         // 判断触摸点是否在button上
-        if (CGRectContainsPoint(CGRectMake(w*2, -15, w, self.bounds.size.height), point)) {
+        if (CGRectContainsPoint(CGRectMake(w*2, -15 , w, self.bounds.size.height), point)) {
             view = self.composeButton;
         }
     }
