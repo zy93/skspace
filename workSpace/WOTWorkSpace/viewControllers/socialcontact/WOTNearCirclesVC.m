@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     FDSimulatedCacheModeCacheByKey
 };
 
-@interface WOTNearCirclesVC ()<UITableViewDelegate,UITableViewDataSource,cellDelegate,InputDelegate,UIActionSheetDelegate>{
+@interface WOTNearCirclesVC ()<UITableViewDelegate,UITableViewDataSource,cellDelegate,InputDelegate,UIActionSheetDelegate,YMShowImageViewDelegate>{
     NSMutableArray *_imageDataSource;
     
     NSMutableArray *_contentDataSource;//模拟接口给的数据
@@ -155,12 +155,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     mainTable.mj_header.automaticallyChangeAlpha = YES;
     mainTable.delegate = self;
     mainTable.dataSource = self;
-//    if (@available (iOS 11,*)) {
-//        mainTable.estimatedRowHeight = 0;
-//    }
-//    mainTable.estimatedRowHeight = 0;
-//    mainTable.estimatedSectionHeaderHeight = 0;
-//    mainTable.estimatedSectionFooterHeight = 0;
+    mainTable.estimatedRowHeight = 0;
+
     [self.view addSubview:mainTable];
     
 }
@@ -209,6 +205,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             body.repliedUser = replyModel.byReplyname;
             body.replyInfo = replyModel.replyInfo;
             body.replyUserId = replyModel.replyId;
+            body.recordId = replyModel.recordId;
             [replyModelList addObject:body];
         }
         messBody.posterReplies = replyModelList;
@@ -243,13 +240,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             [self StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
+
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self configData];
                 [self loadTextData];
-               // [mainTable reloadData];
-                 [UIView performWithoutAnimation:^{
-                    [mainTable reloadData];
-                 }];
             });
         }];
     } else {
@@ -395,8 +389,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
     ymData.messageBody = m;
     [ymData.attributedDataFavour removeAllObjects];
-    [_tableDataSource replaceObjectAtIndex:_selectedIndexPath.row withObject:ymData];
-    
+    //[_tableDataSource replaceObjectAtIndex:_selectedIndexPath.row withObject:ymData];
+    [mainTable reloadSections:[NSIndexSet indexSetWithIndex:0]withRowAnimation:UITableViewRowAnimationNone];
     //NSIndexPath *indexPath=[NSIndexPath indexPathForRow:inputTag inSection:0];
 //    [UIView animateWithDuration:0 animations:^{
 //        [mainTable performBatchUpdates:^{
@@ -451,21 +445,18 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 #pragma mark - 图片点击事件回调
 - (void)showImageViewWithImageViews:(NSArray *)imageViews byClickWhich:(NSInteger)clickTag{
-    
+    //[UIScreen mainScreen ].applicationFrame
+    [self.tabBarController.tabBar setHidden:YES];
     UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
     maskview.backgroundColor = [UIColor blackColor];
     [self.view addSubview:maskview];
-    
     YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews];
+    ymImageV.delegate = self;
     [ymImageV show:maskview didFinish:^(){
-        
         [UIView animateWithDuration:0.5f animations:^{
-            
             ymImageV.alpha = 0.0f;
             maskview.alpha = 0.0f;
-            
         } completion:^(BOOL finished) {
-            
             [ymImageV removeFromSuperview];
             [maskview removeFromSuperview];
         }];
@@ -582,6 +573,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                 [mainTable reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
 
             }];
+            [self createRequest];
 
         }else
         {
@@ -605,23 +597,44 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 - (void)actionSheet:(WFActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
         //delete
+        
         YMTextData *ymData = (YMTextData *)[_tableDataSource objectAtIndex:actionSheet.actionIndex];
         WFMessageBody *m = ymData.messageBody;
-        [m.posterReplies removeObjectAtIndex:_replyIndex];
-        ymData.messageBody = m;
-        [ymData.completionReplySource removeAllObjects];
-        [ymData.attributedDataReply removeAllObjects];
-        
-        
-        ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
-        [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
-        
-        [mainTable reloadData];
+        WFReplyBody *body  = m.posterReplies[_replyIndex];
+        [WOTHTTPNetwork deleteReplyRecorWithRecordId:body.recordId response:^(id bean, NSError *error) {
+            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+            if ([baseModel.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUDUtil showMessage:@"删除成功！" toView:self.view];
+                    [m.posterReplies removeObjectAtIndex:_replyIndex];
+                    ymData.messageBody = m;
+                    [ymData.completionReplySource removeAllObjects];
+                    [ymData.attributedDataReply removeAllObjects];
+                    
+                    
+                    ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
+                    [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
+                    
+                    [mainTable reloadData];
+                });
+               
+            }
+            else
+            {
+                [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
+            }
+        }];
+       
         
     }else{
         
     }
-    _replyIndex = -1;
+    //_replyIndex = -1;
+}
+
+-(void)updateDeleteComment
+{
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -645,6 +658,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     singleVC.friendId = ymD.messageBody.friendId;
     [self.navigationController pushViewController:singleVC animated:YES];
     
+}
+
+#pragma mark - YMShowImageViewDelegate
+-(void)showTarbar
+{
+    [self.tabBarController.tabBar setHidden:NO];
 }
 
 //- (void)dealloc{

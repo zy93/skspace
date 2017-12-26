@@ -27,12 +27,13 @@
 #import "WOTRefreshControlUitls.h"
 #import "UIImageView+AFNetworking.h"
 #import "WOTEnterpriseScrollView.h"
-@interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,CardViewDelegate,CardViewDataSource>
+@interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
 
 //空间
-@property (weak, nonatomic) IBOutlet CardView *spaceView;
+//@property (weak, nonatomic) IBOutlet CardView *spaceView;
+@property (weak, nonatomic) IBOutlet SDCycleScrollView *spaceView;
 
 //企业
 @property (weak, nonatomic) IBOutlet WOTEnterpriseScrollView *enterpriseScrollView;
@@ -46,6 +47,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *newsNameLab;
 @property (weak, nonatomic) IBOutlet UILabel *newsDateLab;
 
+@property (nonatomic,strong) NSMutableArray *imageUrlStrings;
+@property (nonatomic,strong) NSMutableArray *spaceImageUrlStrings;
+@property (nonatomic,strong) NSMutableArray *spaceTitleArray;
+
+
+
 @property (nonatomic,strong) NSArray *bannerData;  //轮播图list 类型未确定
 @property (nonatomic,strong) NSArray <WOTActivityModel*> *activityData; //活动list
 @property (nonatomic,strong) NSArray <WOTSpaceModel *>   *spaceData;  //空间list
@@ -58,15 +65,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //    [self load3DBallView];
-    
+    self.spaceImageUrlStrings = [[NSMutableArray alloc] init];
+    self.spaceTitleArray = [[NSMutableArray alloc] init];
     [self loadAutoScrollView];
     [self configScrollView];
     self.ballView.delegate = self;
-    self.spaceView.delegate   = self;
-    self.spaceView.dataSource = self;
-    self.spaceView.maxItems   = 3;
-    self.spaceView.scaleRatio = 0.05;
-    [self.spaceView registerXibFile:@"WOTCardViewItem" forItemReuseIdentifier:@"WOTCardViewItem"];
+//    self.spaceView.delegate   = self;
+//    self.spaceView.dataSource = self;
+//    self.spaceView.maxItems   = 3;
+//    self.spaceView.scaleRatio = 0.05;
+//    [self.spaceView registerXibFile:@"WOTCardViewItem" forItemReuseIdentifier:@"WOTCardViewItem"];
 
 //    self.cardViewHeightConstraint.constant = CARD_ITEM_H + 100;
     
@@ -103,6 +111,7 @@ int a = 0;
 
 #pragma mark - setup view
 
+#pragma mark - 加载所有的数据
 -(void)getAllData{
     
 //    dispatch_queue_t queue = dispatch_queue_create("com.workspacek.gcd.group", DISPATCH_QUEUE_CONCURRENT);
@@ -139,7 +148,8 @@ int a = 0;
     [self getDataSourceFromWebFWithCity:nil complete:^{
     } loadVIews:^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.spaceView reloadData];
+           // [self.spaceView reloadData];
+            [self loadAutoScrollView];
         });
     }];
     [self getEnterpriseListDataFromWeb:^{
@@ -151,8 +161,6 @@ int a = 0;
     
     [self getInfoDataFromWeb:^{
     }];
-    
-    
     
 }
 
@@ -227,21 +235,27 @@ int a = 0;
 }
 */
 
+#pragma mark - 加载滚动视图
 -(void)loadAutoScrollView{
     
 
-//    self.autoScrollView.imageURLStringsGroup = _imageUrlStrings;
+    self.autoScrollView.imageURLStringsGroup = _imageUrlStrings;
 //    self.autoScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
     
 //    self.autoScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;  //设置图片填充格式
-//    self.autoScrollView.delegate = self;
+    self.autoScrollView.delegate = self;
     //self.autoScrollView.titlesGroup = _imageTitles;
     //self.autoScrollView.currentPageDotColor = [UIColor yellowColor]; // 自定义分页控件小圆标颜色
-//    self.autoScrollView.pageDotColor = [[UIColor alloc] initWithRed:13.0/255.0f green:13.0/255.0f blue:13.0/255.0f alpha:0.2];
+    self.autoScrollView.pageDotColor = [[UIColor alloc] initWithRed:13.0/255.0f green:13.0/255.0f blue:13.0/255.0f alpha:0.2];
     //self.autoScrollView.currentPageDotColor = [UIColor blueColor];//dong
     //pageDotColor
     //self.autoScrollView.placeholderImage = [UIImage imageNamed:@"placeholder"];
     
+    self.spaceView.imageURLStringsGroup = _spaceImageUrlStrings;
+    self.spaceView.delegate = self;
+    self.spaceView.titlesGroup = _spaceTitleArray;
+    //self.spaceView.pageDotColor = [[UIColor alloc] initWithRed:13.0/255.0f green:13.0/255.0f blue:13.0/255.0f alpha:0.2];
+    //self.spaceView.onlyDisplayText = YES;
 }
 
 
@@ -396,46 +410,46 @@ int a = 0;
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-#pragma mark - NewPagedFlowView Delegate
-- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
-    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
-}
-- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
-    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    [self.navigationController pushViewController:detailvc animated:YES];
-}
-
-#pragma mark  NewPagedFlowView Datasource
-- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
-    return self.bannerData.count;
-}
-
-- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
-    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
-    if (!bannerView) {
-        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 9 / 16)];
-        bannerView.tag = index;
-        bannerView.layer.cornerRadius = 4;
-        bannerView.layer.masksToBounds = YES;
-    }
-    //从网络加载图片用
-    //NSLog(@"网络图片地址：%@",[self.spaceData[index] objectForKey:@"spacePicture"]);
-    NSLog(@"----%@",self.spaceData[index].spacePicture);
-    
-      [bannerView.mainImageView sd_setImageWithURL:[[NSString stringWithFormat:@"%@%@",HTTPBaseURL,self.spaceData[index].spacePicture] ToUrl]placeholderImage:[UIImage imageNamed:@"spacedefault"]];
-    
-    if ([self.spaceData[index].spacePicture separatedWithString:@","].count!=0) {
-        [bannerView.mainImageView sd_setImageWithURL:[[self.spaceData[index].spacePicture separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"spacedefault"]];
-        
-        NSLog(@"图片地址：%@",[NSString stringWithFormat:@"%@%@",HTTPBaseURL,[self.spaceData[index].spacePicture separatedWithString:@","][0]]);
-    }
-    return bannerView;
-}
-
-- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
-    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
-}
+//#pragma mark - NewPagedFlowView Delegate
+//- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
+//    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
+//}
+//- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
+//    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+//    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+//    [self.navigationController pushViewController:detailvc animated:YES];
+//}
+//
+//#pragma mark  NewPagedFlowView Datasource
+//- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
+//    return self.bannerData.count;
+//}
+//
+//- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+//    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
+//    if (!bannerView) {
+//        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 9 / 16)];
+//        bannerView.tag = index;
+//        bannerView.layer.cornerRadius = 4;
+//        bannerView.layer.masksToBounds = YES;
+//    }
+//    //从网络加载图片用
+//    //NSLog(@"网络图片地址：%@",[self.spaceData[index] objectForKey:@"spacePicture"]);
+//    NSLog(@"----%@",self.spaceData[index].spacePicture);
+//
+//      [bannerView.mainImageView sd_setImageWithURL:[[NSString stringWithFormat:@"%@%@",HTTPBaseURL,self.spaceData[index].spacePicture] ToUrl]placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+//
+//    if ([self.spaceData[index].spacePicture separatedWithString:@","].count!=0) {
+//        [bannerView.mainImageView sd_setImageWithURL:[[self.spaceData[index].spacePicture separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+//
+//        NSLog(@"图片地址：%@",[NSString stringWithFormat:@"%@%@",HTTPBaseURL,[self.spaceData[index].spacePicture separatedWithString:@","][0]]);
+//    }
+//    return bannerView;
+//}
+//
+//- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
+//    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
+//}
 
 
 #pragma mark - shortcut delegate
@@ -493,37 +507,35 @@ int a = 0;
     WOTNewsModel *modle = self.newsData.firstObject;
     detailvc.url = [modle.htmlLocation stringToResourcesUrl];
     [self.navigationController pushViewController:detailvc animated:YES];
-    
-    
 }
 
-#pragma mark - Card Delegate & DataSource  空间卡片
--(NSInteger)numberOfItemsInCardView:(CardView *)cardView
-{
-    return self.spaceData.count;
-}
-
--(CardViewItem *)cardView:(CardView *)cardView itemAtIndex:(NSInteger)index
-{
-    WOTCardViewItem *item = (WOTCardViewItem *)[cardView dequeueReusableCellWithIdentifier:@"WOTCardViewItem"];
-    WOTSpaceModel *model = self.spaceData[index];
-    
-    NSArray *urlArr= [model.spacePicture componentsSeparatedByString:@","];
-    NSString *urlstr = urlArr.firstObject;
-    [item.bgIV setImageWithURL:[urlstr ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
-    [item.title setText:model.spaceName];
-    return item;
-}
-
--(CGRect)cardView:(CardView *)cardView rectForItemAtIndex:(NSInteger)index
-{
-    return CGRectMake(0, 0, SCREEN_WIDTH-40, self.spaceView.height - 35);
-}
-
--(void)cardView:(CardView *)cardView didSelectItemAtIndex:(NSInteger)index
-{
-    NSLog(@"卡片%ld被选中", (long)index);
-}
+//#pragma mark - Card Delegate & DataSource  空间卡片
+//-(NSInteger)numberOfItemsInCardView:(CardView *)cardView
+//{
+//    return self.spaceData.count;
+//}
+//
+//-(CardViewItem *)cardView:(CardView *)cardView itemAtIndex:(NSInteger)index
+//{
+//    WOTCardViewItem *item = (WOTCardViewItem *)[cardView dequeueReusableCellWithIdentifier:@"WOTCardViewItem"];
+//    WOTSpaceModel *model = self.spaceData[index];
+//
+//    NSArray *urlArr= [model.spacePicture componentsSeparatedByString:@","];
+//    NSString *urlstr = urlArr.firstObject;
+//    [item.bgIV setImageWithURL:[urlstr ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
+//    [item.title setText:model.spaceName];
+//    return item;
+//}
+//
+//-(CGRect)cardView:(CardView *)cardView rectForItemAtIndex:(NSInteger)index
+//{
+//    return CGRectMake(0, 0, SCREEN_WIDTH-40, self.spaceView.height - 35);
+//}
+//
+//-(void)cardView:(CardView *)cardView didSelectItemAtIndex:(NSInteger)index
+//{
+//    NSLog(@"卡片%ld被选中", (long)index);
+//}
 
 //MARK:SDCycleScrollView   Delegate  点击轮播图显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
@@ -575,8 +587,7 @@ int a = 0;
 //        }
 //    }];
 }
-
-//从网络获取空间数据
+#pragma mark - 网络获取空间数据
 -(void)getDataSourceFromWebFWithCity:( NSString * __nullable )city complete:(void(^)())complete loadVIews:(void(^)())loadViews{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getSapaceWithPage:@1 pageSize:@5 response:^(id bean, NSError *error) {
@@ -588,6 +599,14 @@ int a = 0;
                     weakSelf.spaceData = [modle.msg.list subarrayWithRange:NSMakeRange(0, 4)];
             } else {
                     weakSelf.spaceData = modle.msg.list ;
+            }
+            for (WOTSpaceModel *spaceModel in modle.msg.list) {
+                NSLog(@"地址：%@",spaceModel.spacePicture);
+                NSArray *array = [spaceModel.spacePicture componentsSeparatedByString:@","];
+                [_spaceImageUrlStrings addObject:[NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,array.firstObject]];
+                [_spaceTitleArray addObject:spaceModel.spaceName];
+                
+                
             }
             loadViews();
         }

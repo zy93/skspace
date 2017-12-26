@@ -14,6 +14,7 @@
 #import "UIColor+ColorChange.h"
 #import "SKFocusCirclesViewController.h"
 #import "SKCommentViewController.h"
+#import "SKFocusListViewController.h"
 
 @interface WOTSocialcontact ()<XXPageTabViewDelegate>
 
@@ -61,8 +62,7 @@
     
 }
 -(void)configNavi{
-    self.navigationItem.title = @"易创客";
-  
+    self.navigationItem.title = @"社交";
     [self configNaviRightItemWithImage:[UIImage imageNamed:@"publishSocial"]];
 }
 
@@ -79,14 +79,12 @@
     WOTNearCirclesVC *circle = [[UIStoryboard storyboardWithName:@"Socialcontact" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTNearCirclesVCID"];
     [self addChildViewController:circle];
     
-    SKFocusCirclesViewController *circle1 = [[SKFocusCirclesViewController alloc]init];
+    SKFocusListViewController *circle1 = [[SKFocusListViewController alloc]init];
     circle1.view.backgroundColor = White;
-    //[MBProgressHUDUtil showMessage:@"敬请期待" toView:circle1.view];
     [self addChildViewController:circle1];
     
     SKCommentViewController *circle2 = [[SKCommentViewController alloc]init];
     circle2.view.backgroundColor = White;
-    //[MBProgressHUDUtil showMessage:@"敬请期待" toView:circle2.view];
     [self addChildViewController:circle2];
     
     

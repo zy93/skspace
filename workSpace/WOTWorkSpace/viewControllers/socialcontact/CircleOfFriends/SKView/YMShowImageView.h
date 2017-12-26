@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol YMShowImageViewDelegate <NSObject>
+-(void)showTarbar;
+@end
+
 typedef  void(^didRemoveImage)(void);
 
 @interface YMShowImageView : UIView<UIScrollViewDelegate>
@@ -15,6 +19,7 @@ typedef  void(^didRemoveImage)(void);
     UIImageView *showImage;
 }
 @property (nonatomic,copy) didRemoveImage removeImg;
+@property(nonatomic,weak) id<YMShowImageViewDelegate> delegate;
 
 - (void)show:(UIView *)bgView didFinish:(didRemoveImage)tempBlock;
 
