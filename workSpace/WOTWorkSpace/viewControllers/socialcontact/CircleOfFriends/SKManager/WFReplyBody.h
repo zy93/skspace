@@ -32,4 +32,10 @@
 @property (nonatomic,assign) NSNumber *replyUserId;
 
 
+/**
+ *  评论id
+ */
+@property (nonatomic,assign) NSNumber *recordId;
+
+
 @end

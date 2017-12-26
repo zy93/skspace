@@ -205,6 +205,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             body.repliedUser = replyModel.byReplyname;
             body.replyInfo = replyModel.replyInfo;
             body.replyUserId = replyModel.replyId;
+            body.recordId = replyModel.recordId;
             [replyModelList addObject:body];
         }
         messBody.posterReplies = replyModelList;
@@ -572,6 +573,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                 [mainTable reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
 
             }];
+            [self createRequest];
 
         }else
         {
@@ -595,23 +597,44 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 - (void)actionSheet:(WFActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
         //delete
+        
         YMTextData *ymData = (YMTextData *)[_tableDataSource objectAtIndex:actionSheet.actionIndex];
         WFMessageBody *m = ymData.messageBody;
-        [m.posterReplies removeObjectAtIndex:_replyIndex];
-        ymData.messageBody = m;
-        [ymData.completionReplySource removeAllObjects];
-        [ymData.attributedDataReply removeAllObjects];
-        
-        
-        ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
-        [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
-        
-        [mainTable reloadData];
+        WFReplyBody *body  = m.posterReplies[_replyIndex];
+        [WOTHTTPNetwork deleteReplyRecorWithRecordId:body.recordId response:^(id bean, NSError *error) {
+            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+            if ([baseModel.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUDUtil showMessage:@"删除成功！" toView:self.view];
+                    [m.posterReplies removeObjectAtIndex:_replyIndex];
+                    ymData.messageBody = m;
+                    [ymData.completionReplySource removeAllObjects];
+                    [ymData.attributedDataReply removeAllObjects];
+                    
+                    
+                    ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
+                    [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
+                    
+                    [mainTable reloadData];
+                });
+               
+            }
+            else
+            {
+                [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
+            }
+        }];
+       
         
     }else{
         
     }
-    _replyIndex = -1;
+    //_replyIndex = -1;
+}
+
+-(void)updateDeleteComment
+{
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated

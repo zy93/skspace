@@ -14,6 +14,7 @@
 #import "QueryCommentModel.h"
 #import "QueryCommentModel_msg.h"
 #import "UIImageView+WebCache.h"
+#import "SKSingleCirclesViewController.h"
 
 
 @interface SKCommentViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -45,7 +46,7 @@
         make.top.equalTo(self.view);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-48);
     }];
 }
 
@@ -81,7 +82,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"点击单元格");
+    SKSingleCirclesViewController *singleVC = [[SKSingleCirclesViewController alloc]init];
+    singleVC.friendId = self.commentList[indexPath.row].ReplyRecord.friendId;
+    [self.navigationController pushViewController:singleVC animated:YES];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

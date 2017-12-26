@@ -10,4 +10,6 @@
 
 @interface SKFocusCirclesViewController : UIViewController
 
+@property(nonatomic,strong)NSNumber *userIdNum;
+
 @end

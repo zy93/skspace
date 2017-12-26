@@ -147,19 +147,13 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 - (void) initTableview{
     
-    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64-48-40)];
+    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64-48)];
     mainTable.backgroundColor = [UIColor clearColor];
     // mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
     mainTable.mj_header.automaticallyChangeAlpha = YES;
     mainTable.delegate = self;
     mainTable.dataSource = self;
-    //    if (@available (iOS 11,*)) {
-    //        mainTable.estimatedRowHeight = 0;
-    //    }
-    //    mainTable.estimatedRowHeight = 0;
-    //    mainTable.estimatedSectionHeaderHeight = 0;
-    //    mainTable.estimatedSectionFooterHeight = 0;
     [self.view addSubview:mainTable];
     
 }
@@ -236,18 +230,16 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 {
     //先判断是否已经登录
     [self.circleofFriendsList removeAllObjects];
-    if ([WOTUserSingleton shareUser].userInfo.spaceId) {
-        [WOTHTTPNetwork queryFocusCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@1000 response:^(id bean, NSError *error) {
+    if ([WOTUserSingleton shareUser].userInfo.spaceId){
+//        [WOTHTTPNetwork querySingleCircleofFriendsWithFriendId:[WOTUserSingleton shareUser].userInfo.userId userid:self.userIdNum  pageNo:@1 pageSize:@1000 response:^(id bean, NSError *error) {
+        [WOTHTTPNetwork querysingleCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@1000 userId:self.userIdNum response:^(id bean, NSError *error) {
             [self StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self configData];
                 [self loadTextData];
-                // [mainTable reloadData];
-                [UIView performWithoutAnimation:^{
-                    [mainTable reloadData];
-                }];
             });
         }];
     } else {
@@ -636,11 +628,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     [self createRequest];
 }
 
-//- (void)dealloc{
-//
-//    NSLog(@"销毁");
-//
-//}
 
 @end
 

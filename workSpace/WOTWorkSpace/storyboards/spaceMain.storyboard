@@ -50,7 +50,7 @@
                                                     <constraint firstAttribute="height" constant="20" id="u19-d9-TBL"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tmB-rj-951" customClass="CardView">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tmB-rj-951" customClass="SDCycleScrollView">
                                                 <rect key="frame" x="0.0" y="46" width="375" height="234"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </view>
@@ -374,7 +374,7 @@
                         <outlet property="newsIV" destination="ujs-Ej-V8Z" id="rk2-dC-6f7"/>
                         <outlet property="newsNameLab" destination="g6c-tj-dT2" id="puR-qW-qLp"/>
                         <outlet property="scrollVIew" destination="6Ga-9d-eZb" id="eyj-TW-Wt7"/>
-                        <outlet property="spaceView" destination="tmB-rj-951" id="aBA-hG-NTL"/>
+                        <outlet property="spaceView" destination="tmB-rj-951" id="cPr-dY-SMK"/>
                         <outlet property="workspaceView" destination="xlm-Cg-Xxw" id="xWC-Gq-Vdc"/>
                     </connections>
                 </viewController>

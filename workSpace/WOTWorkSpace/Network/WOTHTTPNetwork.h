@@ -393,4 +393,35 @@ typedef void(^response)(id bean,NSError *error);
 +(void)queryMyCircleofFriendsCommentWithbyReplyid:(NSNumber *)byReplyid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response;
 
 
+
+/**
+ 查询关注人的信息
+
+ @param byUserId 查看人的userid
+ @param response 结果回调
+ */
++(void)queryFocusOnPeopleWithFocusPeopleid:(NSNumber *)byUserId response:(response)response;
+
+
+/**
+ 查询某个人所发朋友圈
+
+ @param focusPeopleid 查询人id
+ @param pageNo 页数
+ @param pageSize 条数
+ @param userId 被查看人的id
+ @param response 结果回调
+ */
++(void)querysingleCircleofFriendsWithFocusPeopleid:(NSNumber *)focusPeopleid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize userId:(NSNumber *)userId response:(response)response;
+
+
+/**
+ 删除评论
+
+ @param recordId 评论id
+ @param response 结果回调
+ */
++(void)deleteReplyRecorWithRecordId:(NSNumber *)recordId response:(response)response;
+
+
 @end
