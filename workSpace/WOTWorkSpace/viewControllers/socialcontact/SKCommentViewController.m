@@ -15,6 +15,7 @@
 #import "QueryCommentModel_msg.h"
 #import "UIImageView+WebCache.h"
 #import "SKSingleCirclesViewController.h"
+#import "MJRefresh.h"
 
 
 @interface SKCommentViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -29,12 +30,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     self.commentList = [[NSMutableArray alloc] init];
     self.commentTableView = [[UITableView alloc] init];
     self.commentTableView.delegate = self;
     self.commentTableView.dataSource = self;
     //self.commentTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
+    self.commentTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [self.commentTableView.mj_header beginRefreshing];
     self.commentTableView.tableFooterView = [UIView new] ;
     [self.view addSubview:self.commentTableView];
     //[self requestCommentData];
@@ -46,7 +50,7 @@
         make.top.equalTo(self.view);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-48);
+        make.bottom.equalTo(self.view);
     }];
 }
 
@@ -122,6 +126,13 @@
             [MBProgressHUDUtil showMessage:@"请求失败！" toView:self.view];
         }
     }];
+}
+
+-(void)loadNewData
+{
+    [self requestCommentData];
+    [self.commentTableView reloadData];
+    [self.commentTableView.mj_header endRefreshing];
 }
 
 #pragma mark - 计算评论时间与当前时间差

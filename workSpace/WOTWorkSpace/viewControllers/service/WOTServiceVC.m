@@ -17,6 +17,7 @@
 #import "WOTSliderModel.h"
 #import "WOTH5VC.h"
 #import "MJRefresh.h"
+#import "SKRepairsViewController.h"
 
 
 #define getService @"WOTGETServiceCell"
@@ -212,9 +213,24 @@
     if ([serviceName isEqualToString:@"意见反馈"]) {
         [self pushVCByVCName:@"WOTFeedbackVC"];
     }
-    else {
-        [self pushVCByVCName:@"WOTGETServiceViewController"];
+    
+    if ([serviceName isEqualToString:@"客户预约"]) {
+        NSLog(@"客户预约");
     }
+    
+    if ([serviceName isEqualToString:@"问题报修"]) {
+        
+        SKRepairsViewController *repairsVC = [[SKRepairsViewController alloc] init];
+        [self.navigationController pushViewController:repairsVC animated:YES];
+    }
+    
+    if ([serviceName isEqualToString:@"发布需求"]) {
+        NSLog(@"发布需求");
+    }
+    
+//    else {
+//        [self pushVCByVCName:@"WOTGETServiceViewController"];
+//    }
 }
 
 #pragma mark - Table delegate & dataSource

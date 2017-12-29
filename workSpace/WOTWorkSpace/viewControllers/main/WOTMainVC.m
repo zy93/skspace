@@ -27,6 +27,8 @@
 #import "WOTRefreshControlUitls.h"
 #import "UIImageView+AFNetworking.h"
 #import "WOTEnterpriseScrollView.h"
+#import "SKGiftBagViewController.h"
+
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
@@ -96,6 +98,12 @@
     self.tabBarController.tabBar.translucent = NO;
     [self.navigationController.navigationBar setHidden:YES];
     [self.tabBarController.tabBar setHidden:NO];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
 }
 int a = 0;
 
@@ -456,7 +464,9 @@ int a = 0;
 -(void)pushToVCWithStoryBoardName:(NSString *)sbName vcName:(NSString *)vcName
 {
     if ([vcName isEqualToString:@"WOTOpenLockScanVCID"]) {
-        [MBProgressHUDUtil showMessage:@"敬请期待" toView:self.view];
+        SKGiftBagViewController * giftBagVC = [[SKGiftBagViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:giftBagVC animated:YES];
         return;
     }
     
