@@ -10,7 +10,7 @@
 
 @class WOTPickerView;
 
-typedef void (^MyBasicBlock)(id _Nullable result);
+typedef void (^MyBasicBlock)(BOOL status, _Nullable id result);
 
 
 
@@ -47,5 +47,6 @@ typedef void (^MyBasicBlock)(id _Nullable result);
 @property (nonatomic, copy) MyBasicBlock _Nullable selectBlock;
 
 - (void)popPickerView;
+- (void)reloadData;
 
 @end

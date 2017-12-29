@@ -57,8 +57,8 @@
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getNewsWithPage:@(page) response:^(id bean, NSError *error) {
         if (bean) {
-            WOTNewsModel_msg *modle = (WOTNewsModel_msg *)bean;
-            weakSelf.dataSource = [modle.msg.list mutableCopy];
+            WOTNewsModel_msg *model = (WOTNewsModel_msg *)bean;
+            weakSelf.dataSource = [model.msg.list mutableCopy];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
             });

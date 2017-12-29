@@ -7,10 +7,10 @@
 //
 
 #import "WOTSearchVC.h"
-
-#import "WOTOrderCell.h"
-@interface WOTSearchVC ()
-
+#import "WOTMyEnterPriseCell.h"
+#import "WOTEnterpriseIntroduceVC.h"
+@interface WOTSearchVC () <UITableViewDelegate>
+//@property (
 @end
 
 @implementation WOTSearchVC
@@ -18,27 +18,50 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configNaviBackItem];
-    [self configNaviView:@"请输入关键字" block:^(){
-        
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [self configNaviView:@"请输入关键字"  searchBlock:^(NSString *searchString) {
+        if (strIsEmpty(searchString)) {
+            return ;
+        }
+        [WOTHTTPNetwork searchEnterprisesWithName:searchString response:^(id bean, NSError *error) {
+            WOTEnterpriseModel_msg *model = (WOTEnterpriseModel_msg*)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                weakSelf.dataSource = model.msg.list;
+                [weakSelf.tableView reloadData];
+            }
+            
+        }];
+
+
+    } clearBlock:^{
+        [weakSelf back];
     }];
-  [self.tableView registerNib:[UINib nibWithNibName:@"WOTOrderCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"orderlistCellID"];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"myenterpriseCellID"];
     // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)setDataSource:(NSArray *)dataSource{
-    if (dataSource) {
-         dataSource = [[NSArray alloc]init];
-    }
-   
+
+
+
+-(void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
+
+
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataSource.count;
+    return self.dataSource.count;
 }
 
 
@@ -46,15 +69,31 @@
     return 70;
 }
 
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTOrderCell *companycell = (WOTOrderCell *)[tableView dequeueReusableCellWithIdentifier:@"orderlistCellID"];
-    
-
-    return companycell;
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.0001;
 }
 
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return nil;
+}
 
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    WOTMyEnterPriseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myenterpriseCellID"];
+    WOTEnterpriseModel *model = self.dataSource[indexPath.row];
+    [cell.enterpriseHeaderImage setImageWithURL:[model.companyPicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
+    cell.enterpariseName.text = self.dataSource[indexPath.row].companyName;
+    cell.joinEnterpriseTime.text = self.dataSource[indexPath.row].companyType;
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+    vc.model = self.dataSource[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 /*
 #pragma mark - Navigation

@@ -9,8 +9,14 @@
 
 #import <UIKit/UIKit.h>
 #import "WOTRefreshControlUitls.h"
-@interface UIViewController(Extension)
 
+typedef void(^searchBlock)(NSString* searchString);
+typedef void(^clearSearchBlock)();
+
+@interface UIViewController(Extension) <UISearchBarDelegate>
+
+@property (nonatomic, strong) searchBlock block; //该属性需要与VC中定义相同。
+@property (nonatomic, strong) clearSearchBlock clearBlock; //该属性需要与VC中定义相同。
 
 ///**
 // *	@brief 添加下拉刷新View
@@ -19,7 +25,7 @@
 // */
 //-(void)instenceWithScrollView:(UIScrollView *)scrollView;
 -(void)configNaviBackItem;
--(void)configNaviView:(NSString *)searchTitle block:(void(^)())search;
+-(void)configNaviView:(NSString *)searchTitle searchBlock:(searchBlock)block clearBlock:(clearSearchBlock)clearBlock;
 -(void)configNaviRightItemWithImage:(UIImage *)image;
 -(void)configNaviRightItemWithTitle:(NSString *)title textColor:(UIColor *)textColor;
 

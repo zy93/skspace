@@ -17,7 +17,7 @@
 #import "WOTReservationsMeetingVC.h"
 #import "LoginViewController.h"
 
-@interface WOTMyVC ()<WOTOrderCellDelegate,WOTOMyCellDelegate>
+@interface WOTMyVC ()<WOTOrderCellDelegate,WOTOMyCellDelegate, UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic,strong)WOTSettingVC *settingvc;
 @property(nonatomic,strong)WOTPersionalInformation *persionalVC;
 
@@ -30,7 +30,11 @@
     [super viewDidLoad];
 //    [self.tableView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    
+    //解决布局空白问题
+    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
+    if (is7Version) {
+        self.edgesForExtendedLayout=UIRectEdgeNone;
+    }
     
     [self.tableView registerClass:[WOTMycommonCell class] forCellReuseIdentifier:@"mycommonCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderCell" bundle:nil] forCellReuseIdentifier:@"myorderCellID"];
@@ -52,7 +56,6 @@
     [self.tabBarController.tabBar setHidden:NO];
      self.tabBarController.tabBar.translucent = NO;
     [self.navigationController.navigationBar setHidden:YES];
-    
     [self.tableView reloadData];
     
 }
@@ -69,7 +72,8 @@
 }
 
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 3;
 }
 
@@ -97,7 +101,7 @@
             return 270;
             break;
         case 1:
-            return 117;
+            return 100;
             break;
         case 2:
             return 50;
@@ -108,13 +112,19 @@
     return  0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return  0.00001;
+} 
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 0){
-        return 0;
-    } else {
-        return 10;
-    }
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return nil;
 }
 
 

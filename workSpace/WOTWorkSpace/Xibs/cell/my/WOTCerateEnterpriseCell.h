@@ -12,7 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textfield;
-
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImage;
 @property (weak, nonatomic) IBOutlet UIImageView *nextImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageWidth;

@@ -13,10 +13,7 @@
 
 @interface WORTMyEnterpriseVC ()<UIScrollViewDelegate>
 
-@property(nonatomic,strong)WOTJoiningEnterpriseVC *joinvc;
-@property(nonatomic,strong)WOTCreateEnterpriseVC *createvc;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollVIew;
-
 @property (weak, nonatomic) IBOutlet UILabel *joinLabel;
 @property (weak, nonatomic) IBOutlet UILabel *createLabel;
 
@@ -53,14 +50,8 @@
 }
 
 - (IBAction)createEnterprise:(id)sender {
-    
-    
-    _createvc = [[WOTCreateEnterpriseVC alloc]init];
-    _createvc.view.frame = CGRectMake(self.scrollVIew.frame.size.width,0,self.scrollVIew.frame.size.width,self.scrollVIew.frame.size.height);
-    _createvc.supervc = self;
-    
-    [self.navigationController pushViewController:_createvc animated:YES];
-    
+    WOTCreateEnterpriseVC *vc = [[WOTCreateEnterpriseVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)viewDidLayoutSubviews{
@@ -69,12 +60,12 @@
 }
 
 -(void)loadScrollViewSubviews{
-    _joinvc = [[WOTJoiningEnterpriseVC alloc]init];
-    _joinvc.view.frame = CGRectMake(0, 0, self.scrollVIew.frame.size.width, self.scrollVIew.frame.size.height);
-    _joinvc.supervc = self;
-    self.scrollVIew.showsHorizontalScrollIndicator = NO;
-    self.scrollVIew.showsVerticalScrollIndicator = NO;
-    [self.scrollVIew addSubview:_joinvc.view];
+//    _joinvc = [[WOTJoiningEnterpriseVC alloc]init];
+//    _joinvc.view.frame = CGRectMake(0, 0, self.scrollVIew.frame.size.width, self.scrollVIew.frame.size.height);
+//    _joinvc.supervc = self;
+//    self.scrollVIew.showsHorizontalScrollIndicator = NO;
+//    self.scrollVIew.showsVerticalScrollIndicator = NO;
+//    [self.scrollVIew addSubview:_joinvc.view];
   
     
 }

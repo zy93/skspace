@@ -366,6 +366,43 @@
     }response:response];
 }
 
++(void)searchEnterprisesWithName:(NSString *)name response:(response)response
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/CompanyInfo/find"];
+    NSDictionary * parameters = @{@"pageNo":@(1),
+                                  @"pageSize":@(1000),
+                                  @"companyName":name
+                                  };
+    
+    [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
+        
+        WOTEnterpriseModel_msg * enterprisemodel = [[WOTEnterpriseModel_msg alloc]initWithDictionary:responseobj error:nil];
+        
+        return  enterprisemodel;
+        
+        
+    }response:response];
+}
+
++(void)getUserEnterpriseWithCompanyId:(NSString *)companyId response:(response)response{
+    
+    NSString *myenterpriseurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/CompanyInfo/findMyCompany"];
+    NSDictionary *parameters = @{@"companyId":companyId};
+    [self doRequestWithParameters:parameters useUrl:myenterpriseurl complete:^JSONModel *(id responseobj) {
+        WOTEnterpriseModel_msg * activitymodel = [[WOTEnterpriseModel_msg alloc]initWithDictionary:responseobj error:nil];
+        
+        return  activitymodel;
+        
+        
+    } response:response];
+}
+
++(void)joinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId response:(response)response
+{
+    
+}
+
+
 +(void)getActivitiesWithPage:(NSNumber *)page response:(response)response
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findforApp"];
@@ -417,6 +454,20 @@
      NSDictionary * parameters = @{@"userId":userId};
     [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
         WOTMyFeedBackModel_msg *model = [[WOTMyFeedBackModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)searchMemberWithName:(NSString *)name spaceId:(NSNumber *)spaceId response:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/User/find"];
+    NSDictionary * parameters = @{@"userName":name,
+                                  @"spaceId":spaceId,
+                                  @"pageNo":@(1),
+                                  @"pageSize":@(100)
+                                  };
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        WOTSearchModel_model *model = [[WOTSearchModel_model alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
 }
@@ -697,18 +748,6 @@
 }
 
 
-+(void)getUserEnterpriseWithCompanyId:(NSString *)companyId response:(response)response{
-    
-    NSString *myenterpriseurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/CompanyInfo/findMyCompany"];
-    NSDictionary *parameters = @{@"companyId":companyId};
-    [self doRequestWithParameters:parameters useUrl:myenterpriseurl complete:^JSONModel *(id responseobj) {
-            WOTEnterpriseModel_msg * activitymodel = [[WOTEnterpriseModel_msg alloc]initWithDictionary:responseobj error:nil];
-            
-            return  activitymodel;
-      
-        
-    } response:response];
-}
 
 
 

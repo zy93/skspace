@@ -18,16 +18,19 @@
 #import "WOTConstants.h"
 #import "JudgmentTime.h"
 #import "WOTElasticityView.h"
+#import "WOTPickerView.h"
+#import "WOTSearchMemberVC.h"
 
-@interface WOTVisitorsAppointmentVC () <UIScrollViewDelegate, WOTVisitorsAppointmentSubmitCellDelegate, WOTVisitorsAppointmentCellDelegate, WOTVisitTypeCellDelegate>
+@interface WOTVisitorsAppointmentVC ()<UIScrollViewDelegate, WOTVisitorsAppointmentSubmitCellDelegate, WOTVisitorsAppointmentCellDelegate, WOTVisitTypeCellDelegate, WOTPickerViewDelegate, WOTPickerViewDataSource>
 {
     NSArray *tableList;
     NSArray *tableSubtitleList;
     NSMutableArray *contentList;
     NSString *time;
     UIImage *headImage;
-    
     CGFloat topViewHeight;
+    NSArray *pickerData;
+    BOOL isSelectSex;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet WOTElasticityView *topView;
@@ -72,6 +75,7 @@
 
 @property (nonatomic, strong) WOTDatePickerView *datepickerview;
 @property (nonatomic, strong) JudgmentTime *judgmentTime;
+@property (nonatomic, strong) WOTPickerView *pickerView;
 @property (nonatomic, assign) BOOL isValidTime;
 @end
 
@@ -150,7 +154,7 @@
     _datepickerview.okBlock = ^(NSInteger year,NSInteger month,NSInteger day,NSInteger hour,NSInteger min){
         weakSelf.datepickerview.hidden = YES;
         NSLog(@"%ld年%ld月%ld日",year,month,day);
-        self.isValidTime = [self.judgmentTime judgementTimeWithYear:year month:month day:day];
+        weakSelf.isValidTime = [self.judgmentTime judgementTimeWithYear:year month:month day:day];
         dispatch_async(dispatch_get_main_queue(), ^{
             if (self.isValidTime) {
                 time = [NSString stringWithFormat:@"%02d/%02d/%02d ",(int)year, (int)month, (int)day];
@@ -220,6 +224,51 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
+
+
+#pragma  mark - action
+
+- (IBAction)selectSex:(id)sender {
+    pickerData = @[@"男", @"女"];
+    isSelectSex = YES;
+    [self.pickerView reloadData];
+    [self.pickerView popPickerView];
+
+}
+- (IBAction)selectSpace:(id)sender {
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTSelectWorkspaceListVC"];
+    __weak typeof(self) weakSelf = self;
+    WOTSelectWorkspaceListVC *lc = (WOTSelectWorkspaceListVC*)vc;//1
+    lc.selectSpaceBlock = ^(WOTSpaceModel *model){
+        weakSelf.spaceId = model.spaceId;
+        weakSelf.spaceName = model.spaceName;
+        weakSelf.communityValueLab.text = weakSelf.spaceName;
+        
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+- (IBAction)selectType:(id)sender {
+    pickerData = @[@"商务", @"面试", @"私人", @"参观"];
+    isSelectSex = NO;
+    [self.pickerView reloadData];
+    [self.pickerView popPickerView];
+}
+- (IBAction)selectMember:(id)sender {
+    
+    if (!self.spaceId) {
+        [MBProgressHUDUtil showMessage:@"请选择访问空间！" toView:self.view];
+        return;
+    }
+    
+    WOTSearchMemberVC *vc = (WOTSearchMemberVC*)[[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTSearchMemberVC"];
+    vc.spaceId = self.spaceId;
+    vc.selectMemberBlock = ^(WOTLoginModel *model) {
+        
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 #pragma mark - cell delegate
 -(void)submitVisitorInfo:(WOTVisitorsAppointmentSubmitCell *)cell
@@ -303,8 +352,6 @@
 //        self.topViewHeightConstraints.constant = height;
         [self.topView scrollViewPoint:CGPointMake(0, -yOffset) isEnd:NO];
     }
-
-    
 }
 
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
@@ -331,6 +378,44 @@
 //    UIView *view = [UIView new];
 //    return view;
 //}
+
+#pragma mark - picker delegate
+-(NSInteger)numberOfComponentsInPickerView:(WOTPickerView *)pickerView
+{
+    return 1;
+}
+-(NSInteger)pickerView:(WOTPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return pickerData.count;
+}
+
+-(NSString *)pickerView:(WOTPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return pickerData[row];
+}
+
+-(void)pickerView:(WOTPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSLog(@"-----%@",pickerData[row]);
+    if (isSelectSex) {
+        self.genderValueLab.text = pickerData[row];
+    }
+    else {
+        self.accessTypeValueLab.text = pickerData[row];
+    }
+}
+
+-(WOTPickerView *)pickerView
+{
+    if (!_pickerView) {
+        _pickerView = [[WOTPickerView alloc] init];
+        _pickerView.dataSource = self;
+        _pickerView.delegate = self;
+        [self.view addSubview:_pickerView];
+        [_pickerView popPickerView];
+    }
+    return  _pickerView;
+}
 
 
 /*

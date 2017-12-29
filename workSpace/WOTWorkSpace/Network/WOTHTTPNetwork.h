@@ -90,7 +90,7 @@ typedef void(^response)(id bean,NSError *error);
 /**
  通过空间id获取所有工位
 
- @param spaceID spaceId
+ @param spaceId spaceId
  @param response
  */
 +(void)getBookStationWithSpaceId:(NSNumber *)spaceId response:(response)response;
@@ -105,13 +105,39 @@ typedef void(^response)(id bean,NSError *error);
 
 //+(void)getSpaceWith
 
-
+#pragma mark - 企业
 /**
  * 获取空间下的友邻企业
  *@param spaceid  空间id
  *@param response  对象返回上层，错误返回error
  */
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response;
+
+
+/**
+ 搜索企业
+
+ @param name 企业名称
+ @param response 数据响应
+ */
++(void)searchEnterprisesWithName:(NSString *)name response:(response)response;
+
+
+/**
+ *我的--我的企业
+ @param companyId  企业id 登录接口返回用户的companyId,字符串
+ */
++(void)getUserEnterpriseWithCompanyId:(NSString *)companyId  response:(response)response;
+
+
+/**
+ 申请加入企业
+
+ @param enterpriseId 企业id
+ @param response 响应回调
+ */
++(void)joinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId response:(response)response;
+
 
 /**
  *  获取活动列表  根据页码
@@ -143,6 +169,16 @@ typedef void(^response)(id bean,NSError *error);
  */
 
 +(void)getMyHistoryFeedBackData:(NSNumber *)userId response:(response)response;
+
+
+/**
+ 查询某空间内会员
+
+ @param name 会员名称
+ @param spaceId 空间id
+ @param response 返回响应
+ */
++(void)searchMemberWithName:(NSString *)name spaceId:(NSNumber *)spaceId response:(response)response;
 
 
 #pragma mark - 服务商
@@ -252,11 +288,7 @@ typedef void(^response)(id bean,NSError *error);
  *我的--我的活动
  */
 +(void)getUserActivitiseWithUserId:(NSNumber *)userId state:(NSString *)state response:(response)response;
-/**
-*我的--我的企业
- @param companyId  企业id 登录接口返回用户的companyId,字符串
-*/
-+(void)getUserEnterpriseWithCompanyId:(NSString *)companyId  response:(response)response;
+
 
 
 /**

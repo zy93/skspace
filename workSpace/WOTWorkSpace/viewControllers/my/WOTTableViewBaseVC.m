@@ -31,7 +31,7 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)loadSubViews{
-    self.tableView = [[UITableView alloc]init];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     self.tableView.backgroundColor = CLEARCOLOR;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -67,10 +67,14 @@
     return  70;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return  0.00001;
+}
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 0.01;
-    
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0;
 }
 
 

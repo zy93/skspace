@@ -212,6 +212,11 @@
     if ([serviceName isEqualToString:@"意见反馈"]) {
         [self pushVCByVCName:@"WOTFeedbackVC"];
     }
+    
+    else if ([serviceName isEqualToString:@"问题报修"]){
+        [self pushVCByVCName:@"WOTMainAppleRepairVC"];
+    }
+    
     else {
         [self pushVCByVCName:@"WOTGETServiceViewController"];
     }

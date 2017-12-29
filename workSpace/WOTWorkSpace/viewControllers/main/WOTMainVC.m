@@ -495,8 +495,8 @@ int a = 0;
     
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     
-    WOTActivityModel *modle = self.activityData.firstObject;
-    detailvc.url = [modle.htmlLocation stringToResourcesUrl];
+    WOTActivityModel *model = self.activityData.firstObject;
+    detailvc.url = [model.htmlLocation stringToResourcesUrl];
     [self.navigationController pushViewController:detailvc animated:YES];
     
     
@@ -504,8 +504,8 @@ int a = 0;
 //跳转新闻详情页
 - (IBAction)showInfoDetail:(id)sender {
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    WOTNewsModel *modle = self.newsData.firstObject;
-    detailvc.url = [modle.htmlLocation stringToResourcesUrl];
+    WOTNewsModel *model = self.newsData.firstObject;
+    detailvc.url = [model.htmlLocation stringToResourcesUrl];
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 
@@ -593,14 +593,14 @@ int a = 0;
     [WOTHTTPNetwork getSapaceWithPage:@1 pageSize:@5 response:^(id bean, NSError *error) {
         complete();
         if (bean) {
-            WOTSpaceModel_msg *modle = (WOTSpaceModel_msg *)bean;
-            weakSelf.spaceData = modle.msg.list;
+            WOTSpaceModel_msg *model = (WOTSpaceModel_msg *)bean;
+            weakSelf.spaceData = model.msg.list;
             if (self.spaceData.count>5) {
-                    weakSelf.spaceData = [modle.msg.list subarrayWithRange:NSMakeRange(0, 4)];
+                    weakSelf.spaceData = [model.msg.list subarrayWithRange:NSMakeRange(0, 4)];
             } else {
-                    weakSelf.spaceData = modle.msg.list ;
+                    weakSelf.spaceData = model.msg.list ;
             }
-            for (WOTSpaceModel *spaceModel in modle.msg.list) {
+            for (WOTSpaceModel *spaceModel in model.msg.list) {
                 NSLog(@"地址：%@",spaceModel.spacePicture);
                 NSArray *array = [spaceModel.spacePicture componentsSeparatedByString:@","];
                 [_spaceImageUrlStrings addObject:[NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,array.firstObject]];
@@ -623,9 +623,9 @@ int a = 0;
     [WOTHTTPNetwork getActivitiesWithPage:@(1) response:^(id bean, NSError *error) {
         complete();
         if (bean) {
-            WOTActivityModel_msg *modle = (WOTActivityModel_msg *)bean;
-            weakSelf.activityData = modle.msg.list;
-            WOTActivityModel *activModle= modle.msg.list.firstObject;
+            WOTActivityModel_msg *model = (WOTActivityModel_msg *)bean;
+            weakSelf.activityData = model.msg.list;
+            WOTActivityModel *activModle= model.msg.list.firstObject;
             [weakSelf.activityIV setImageWithURL:[activModle.pictureSite ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_activity"]];
             [weakSelf.activityNameLab setText:activModle.title];
             [weakSelf.activityDateLab setText:[activModle.starTime getDate]];
@@ -645,9 +645,9 @@ int a = 0;
     [WOTHTTPNetwork getNewsWithPage:@(1) response:^(id bean, NSError *error) {
         complete();
         if (bean) {
-            WOTNewsModel_msg *modle = (WOTNewsModel_msg *)bean;
-            weakSelf.newsData = modle.msg.list;
-            WOTNewsModel *newsModle = modle.msg.list.firstObject;
+            WOTNewsModel_msg *model = (WOTNewsModel_msg *)bean;
+            weakSelf.newsData = model.msg.list;
+            WOTNewsModel *newsModle = model.msg.list.firstObject;
             [weakSelf.newsIV setImageWithURL:[newsModle.pictureSite ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_activity"]];
             [weakSelf.newsNameLab setText:newsModle.title];
             [weakSelf.newsDateLab setText:[newsModle.issueTime getDate]];

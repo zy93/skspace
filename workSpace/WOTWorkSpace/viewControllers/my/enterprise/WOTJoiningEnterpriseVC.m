@@ -51,8 +51,8 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTMyEnterPriseCell *enterprisecell = [tableView dequeueReusableCellWithIdentifier:@"myenterpriseCellID" forIndexPath:indexPath];
-    enterprisecell.enterpariseName.text = endataSource[indexPath.row].companyName;
-    enterprisecell.joinEnterpriseTime.text = endataSource[indexPath.row].spared1;
+//    enterprisecell.enterpariseName.text = endataSource[indexPath.row].companyName;
+//    enterprisecell.joinEnterpriseTime.text = endataSource[indexPath.row].givingRemainingTime;
     [enterprisecell.enterpriseHeaderImage sd_setImageWithURL:[endataSource[indexPath.row].companyPicture ToUrl] placeholderImage:[UIImage imageNamed:@"enterprise_default"]];
     if (indexPath.row == [tableView numberOfRowsInSection:0]-1) {
         enterprisecell.lineView.hidden = YES;

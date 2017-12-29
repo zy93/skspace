@@ -47,8 +47,23 @@
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSString *result;
 @property(nonatomic,strong)WOTLoginModel<WOTLoginModel> *msg;
+@end
 
 
+
+@interface WOTSearchModel_msg : JSONModel
+
+@property (nonatomic, strong) NSNumber *bottomPageNo;
+@property(nonatomic,strong)NSArray <WOTLoginModel> *list;
+@end
+
+
+
+@interface WOTSearchModel_model : JSONModel
+
+@property(nonatomic,strong)NSString *code;
+@property(nonatomic,strong)NSString *result;
+@property(nonatomic,strong)WOTSearchModel_msg  *msg;
 @end
 
 
