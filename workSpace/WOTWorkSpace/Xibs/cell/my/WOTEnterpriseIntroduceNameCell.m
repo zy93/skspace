@@ -22,6 +22,9 @@
     // Configure the view for the selected state
 }
 - (IBAction)applyJoinBtn:(id)sender {
+    if ([_delegate respondsToSelector:@selector(enterpriseCellApplyJoin:)]) {
+        [_delegate enterpriseCellApplyJoin:self];
+    }
 }
 
 @end

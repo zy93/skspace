@@ -1,14 +1,14 @@
 //
-//  WOTEnterCell.m
+//  WOTTitleAndEnterCell.m
 //  WOTWorkSpace
 //
-//  Created by 张雨 on 2017/12/28.
+//  Created by 张雨 on 2017/12/29.
 //  Copyright © 2017年 北京物联港科技发展有限公司. All rights reserved.
 //
 
-#import "WOTEnterCell.h"
+#import "WOTTitleAndEnterCell.h"
 
-@implementation WOTEnterCell
+@implementation WOTTitleAndEnterCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -22,16 +22,14 @@
     // Configure the view for the selected state
 }
 
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *str = textField.text;
     str = [str stringByReplacingCharactersInRange:range withString:string];
-    if ([_delegate respondsToSelector:@selector(enterCell:textDidChange:)]) {
-        [_delegate enterCell:self textDidChange:str];
+    if ([_delegate respondsToSelector:@selector(enterCell:didEnterText:)]) {
+        [_delegate enterCell:self didEnterText:str];
     }
     return YES;
 }
-
 
 @end

@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class WOTEnterpriseIntroduceNameCell;
+
+@protocol WOTEnterpriseIntroduceNameCellDelegate <NSObject>
+-(void)enterpriseCellApplyJoin:(WOTEnterpriseIntroduceNameCell *)cell;
+@end
+
 @interface WOTEnterpriseIntroduceNameCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *logoIV;
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLab;
 @property (weak, nonatomic) IBOutlet UIButton *applyJoinBtn;
+@property (nonatomic, strong) id <WOTEnterpriseIntroduceNameCellDelegate> delegate;
 
 @end

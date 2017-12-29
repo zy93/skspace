@@ -117,7 +117,8 @@
 
 //上传文件网络请求
 +(void)doFileRequestWithParameters:(NSDictionary *)parameters
-                            useUrl:(NSString *)Url image:(NSArray<UIImage *> *)images
+                            useUrl:(NSString *)Url
+                             image:(NSArray<UIImage *> *)images
                           complete:(JSONModel *(^)(id responseobj))complete
                           response:(response)response {
     
@@ -349,7 +350,7 @@
 }
 
 
-
+#pragma mark - 企业
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response{
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/CompanyInfo/find"];
     NSDictionary * parameters = @{@"pageNo":@(1),
@@ -400,6 +401,21 @@
 +(void)joinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId response:(response)response
 {
     
+}
+
++(void)createEnterpriseWithEnterpriseName:(NSString *)enterpriseName enterpriseType:(NSString *)enterpriseType enterpriseLogo:(UIImage *)enterpriseLogo contactsName:(NSString *)contactsName contactsTel:(NSString *)tel contactsEmail:(NSString *)email response:(response)response
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/CompanyInfo/addCompanyInfo"];
+    NSDictionary * parameters = @{@"companyName":enterpriseName,
+                                  @"companyType":enterpriseType,
+                                  @"contacts":contactsName,
+                                  @"tel":tel,
+                                  @"mailbox":email,
+                                  };
+    [self doFileRequestWithParameters:parameters useUrl:urlString image:@[enterpriseLogo] complete:^JSONModel *(id responseobj) {
+        WOTBusinessModel *model = [[WOTBusinessModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
 }
 
 

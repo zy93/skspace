@@ -113,7 +113,6 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response;
 
-
 /**
  搜索企业
 
@@ -122,13 +121,11 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)searchEnterprisesWithName:(NSString *)name response:(response)response;
 
-
 /**
  *我的--我的企业
  @param companyId  企业id 登录接口返回用户的companyId,字符串
  */
 +(void)getUserEnterpriseWithCompanyId:(NSString *)companyId  response:(response)response;
-
 
 /**
  申请加入企业
@@ -140,12 +137,25 @@ typedef void(^response)(id bean,NSError *error);
 
 
 /**
+ 创建企业
+
+ @param enterpriseName 企业名称
+ @param enterpriseType 企业类型
+ @param enterpriseLogo 企业logo
+ @param contactsName 联系人
+ @param tel 联系电话
+ @param email 邮箱
+ @param response 响应回调
+ */
++(void)createEnterpriseWithEnterpriseName:(NSString *)enterpriseName enterpriseType:(NSString *)enterpriseType enterpriseLogo:(UIImage *)enterpriseLogo contactsName:(NSString *)contactsName contactsTel:(NSString *)tel contactsEmail:(NSString *)email response:(response)response;
+
+
+/**
  *  获取活动列表  根据页码
  *  @param page 页码/每页查询10个数据
  *  @param response 回调数据返回上层
  */
 +(void)getActivitiesWithPage:(NSNumber *)page response:(response)response;
-
 
 /**
  * 获取全部资讯列表

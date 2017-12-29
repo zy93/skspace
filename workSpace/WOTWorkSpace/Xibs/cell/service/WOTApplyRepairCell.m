@@ -16,7 +16,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _cellTitle.textColor = HighTextColor;
+    _cellTitle.textColor = UIColor_black_33;
     _cellValue.textColor = MiddleTextColor;
     _collectionView.delegate = self;
     _collectionView.dataSource =self;

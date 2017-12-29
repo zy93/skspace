@@ -10,7 +10,7 @@
 #import "WOTEnterpriseIntroduceNameCell.h"
 #import "WOTEnterpriseIntroduceMessageCell.h"
 
-@interface WOTEnterpriseIntroduceVC () <UITableViewDataSource, UITableViewDelegate>
+@interface WOTEnterpriseIntroduceVC () <WOTEnterpriseIntroduceNameCellDelegate>
 {
 }
 @property (nonatomic, strong) NSArray *tableList;
@@ -38,6 +38,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - cell delegate
+-(void)enterpriseCellApplyJoin:(WOTEnterpriseIntroduceNameCell *)cell
+{
+//    [WOTHTTPNetwork joinEnterpriseWithEnterpriseId:<#(NSNumber *)#> response:<#^(id bean, NSError *error)response#>];
+}
+
 
 #pragma mark - table delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -55,6 +61,10 @@
 {
     if (indexPath.section==0) {
         return 70;
+    }
+    else if (indexPath.section == 3) {
+        
+        return ([self.model.companyProfile heightWithFont:[UIFont systemFontOfSize:17.f] maxWidth:SCREEN_WIDTH-80] +8+8);
     }
     return 40;
 }
@@ -93,6 +103,13 @@
         [cell.logoIV setImageWithURL:ur placeholderImage:im];
         cell.titleLab.text = self.model.companyName;
         cell.subtitleLab.text = self.model.internetEnterprises;
+        cell.delegate = self;
+        //判断当前用户是否是该企业员工
+        if ([[WOTUserSingleton shareUser].userInfo.companyId isEqualToString:(NSString *)self.model.companyId] && !strIsEmpty([WOTUserSingleton shareUser].userInfo.companyId)) {
+            cell.applyJoinBtn.hidden = YES;
+        }
+        
+        
         return cell;
     }
     else {
@@ -120,8 +137,7 @@
             
         }
         else if ([arr[indexPath.row] isEqualToString:@"企业介绍"]) {
-            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.internetEnterprises?self.model.internetEnterprises:@"暂未填写"]];
-            
+            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.companyProfile?self.model.companyProfile:@"暂未填写"]];
         }
         
          return cell;

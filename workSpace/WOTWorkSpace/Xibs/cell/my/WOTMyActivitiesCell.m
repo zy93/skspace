@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-   [[WOTConfigThemeUitls shared] setLabelColorss:[NSArray arrayWithObjects:self.activityLocation,self.activityTitle,_activityTime,_locationTitle,_activityLocation, nil] withColor:HighTextColor];
+   [[WOTConfigThemeUitls shared] setLabelColorss:[NSArray arrayWithObjects:self.activityLocation,self.activityTitle,_activityTime,_locationTitle,_activityLocation, nil] withColor:UIColor_black_33];
     [_activityBtn setTitleColor:MainOrangeColor forState:UIControlStateNormal];
     [_activityBtn setCorenerRadius:10 borderColor:MainOrangeColor];
     self.contentView.backgroundColor = CLEARCOLOR;

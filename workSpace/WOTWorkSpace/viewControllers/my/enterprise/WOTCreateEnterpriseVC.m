@@ -9,37 +9,61 @@
 #import "WOTCreateEnterpriseVC.h"
 #import "WOTCerateEnterpriseCell.h"
 #import "WOTEnterpriseTypeVC.h"
-#import "WOTEnterpriseConnectsInfoVC.h"
+#import "WOTEnterpriseContactsInfoVC.h"
 #import "WOTPhotosBaseUtils.h"
 #import "WOTBusinessModel.h"
 #import "WOTEnterEnterpriseNameVC.h"
 @interface WOTCreateEnterpriseVC ()<UITextFieldDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,strong)NSArray *tableTitleList;
 @property(nonatomic,strong)NSArray *tableSubtitleList;
+@property(nonatomic,strong)NSString *enterpriseName;
 @property(nonatomic,strong)NSString *enterpriseType;
-@property(nonatomic,strong)NSString *enterpriseConntects;
+@property(nonatomic,strong)NSString *contactsName; //联系人
+@property(nonatomic,strong)NSString *contactsTel;
+@property(nonatomic,strong)NSString *contactsEmail;
 @property(nonatomic,strong)UIImage *enterpriseLogo;
 @end
 
 @implementation WOTCreateEnterpriseVC
 
 - (void)viewDidLoad {
-    
-    __weak typeof(self) weakSelf = self;
     [super viewDidLoad];
     
     [self createDataSource];
     self.navigationItem.title = @"创建企业";
-    [self configNaviRightItemWithTitle:@"保存" textColor:[UIColor redColor]];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTCerateEnterpriseCell" bundle:nil] forCellReuseIdentifier:@"WOTCerateEnterpriseCellID"];
-
-//    [self setViewHidden];
-    // Do any additional setup after loading the view.
-}
--(void)rightItemAction {
-    //TODO:调用接口保存企业信息
     
-    if (strIsEmpty(_enterpriseConntects)) {
+    //保存按钮
+    UIButton *createBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [createBtn setBackgroundColor:UIColor_black_33];
+    [createBtn.layer setCornerRadius:5.f];
+    [createBtn setTitle:@"创 建 企 业" forState:UIControlStateNormal];
+    [createBtn addTarget:self action:@selector(createEnterpriseBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:createBtn];
+    
+    [createBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(50);
+        make.left.mas_equalTo(20);
+        make.bottom.mas_equalTo(-20);
+        make.right.mas_equalTo(-20);
+    }];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - action
+-(void)createEnterpriseBtn:(UIButton *)sender
+{
+    if (strIsEmpty(_enterpriseName)) {
         [MBProgressHUDUtil showMessage:@"请填写企业名称" toView:self.view];
         return;
     }
@@ -47,45 +71,35 @@
         [MBProgressHUDUtil showMessage:@"请选择企业类型" toView:self.view];
         return;
     }
-//    else if (strIsEmpty(_connectvc.nameTextfield.text)) {
-//        [MBProgressHUDUtil showMessage:@"请输入联系人姓名" toView:self.view];
-//        return;
-//    }
-//    else if (strIsEmpty(_connectvc.telTextfield.text)) {
-//        [MBProgressHUDUtil showMessage:@"请输入联系人电话" toView:self.view];
-//        return;
-//    }
-//    else if (strIsEmpty(_connectvc.emailTextfield.text)) {
-//        [MBProgressHUDUtil showMessage:@"请输入联系人邮箱" toView:self.view];
-//        return;
-//    }
-//    [MBProgressHUDUtil showLoadingWithMessage:@"请稍后" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
-//        [WOTHTTPNetwork addBusinessWithLogo:_enterpriseLogo name:_enterpriseConntects type:_enterpriseType contactName:_connectvc.nameTextfield.text contactTel:_connectvc.telTextfield.text contactEmail:_connectvc.emailTextfield.text response:^(id bean, NSError *error) {
-//            WOTBusinessModel*model;
-//
-//            if (bean) {
-//                model = (WOTBusinessModel*)bean;
-//            }
-//            if (model.code.integerValue==200) {
-//                [hud setLabelText:@"信息已提交，请等待管理人员审核"];
-//                [hud hide:YES afterDelay:2.f];
-//            }
-//            else {
-//            }
-//
-//        }];
-//    }];
+    else if (strIsEmpty(_contactsName)) {
+        [MBProgressHUDUtil showMessage:@"请填写联系人" toView:self.view];
+        return;
+    }
+    else if (!_enterpriseLogo) {
+        return;
+    }
     
-    
-    
+    [MBProgressHUDUtil showLoadingWithMessage:@"请稍后" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+        
+        [WOTHTTPNetwork createEnterpriseWithEnterpriseName:self.enterpriseName enterpriseType:self.enterpriseType enterpriseLogo:self.enterpriseLogo contactsName:self.contactsName contactsTel:self.contactsTel contactsEmail:self.contactsEmail response:^(id bean, NSError *error) {
+            WOTBusinessModel*model = bean;
+            if ([model.code isEqualToString:@"200"]) {
+                [hud setLabelText:@"创建成功!"];
+                [hud hide:YES afterDelay:2.f complete:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self back];
+                    });
+                }];
+            }
+            else {
+                [hud setLabelText:strIsEmpty(model.result)?@"提交失败，请稍后再试！": model.result];
+            }
+
+        }];
+    }];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
+#pragma mark - table delegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return self.tableTitleList.count;
@@ -115,11 +129,15 @@
     WOTCerateEnterpriseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTCerateEnterpriseCellID" forIndexPath:indexPath];
     cell.titleLabel.text = self.tableTitleList[indexPath.row];
     cell.textfield.placeholder = self.tableSubtitleList[indexPath.row];
-    if (indexPath.row == 2 && !strIsEmpty(_enterpriseType)) {
+    
+    if (indexPath.row == 1 && !strIsEmpty(_enterpriseName)) {
+        cell.textfield.placeholder = _enterpriseName;
+    }
+    else if (indexPath.row == 2 && !strIsEmpty(_enterpriseType)) {
         cell.textfield.placeholder = _enterpriseType;
     }
-    else if (indexPath.row == 3 && !strIsEmpty(_enterpriseConntects)) {
-        cell.textfield.placeholder = _enterpriseConntects;
+    else if (indexPath.row == 3 && !strIsEmpty(self.contactsName)) {
+        cell.textfield.placeholder = self.contactsName;
     }
     
 
@@ -144,6 +162,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    __weak typeof(self) weakSelf = self;
     if (indexPath.row == 0) {
         WOTPhotosBaseUtils *photo = [[WOTPhotosBaseUtils alloc]init];
         photo.onlyOne = YES;
@@ -152,30 +171,29 @@
         [photo showSelectedPhotoSheet];
     } else if (indexPath.row == 1) {
         WOTEnterEnterpriseNameVC *vc = [[WOTEnterEnterpriseNameVC alloc] init];
+        vc.enterpriseName = ^(NSString *enterpriseName) {
+            _enterpriseName = enterpriseName;
+            [weakSelf.tableView reloadData];
+        };
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if (indexPath.row == 2) {
-        WOTEnterpriseTypeVC *typevc = [[UIStoryboard storyboardWithName:@"My" bundle:nil]instantiateViewControllerWithIdentifier:@"WOTEnterpriseTypeVCID"];
-        typevc.gobackBlock = ^(NSString *type){
+        WOTEnterpriseTypeVC *vc = [[UIStoryboard storyboardWithName:@"My" bundle:nil]instantiateViewControllerWithIdentifier:@"WOTEnterpriseTypeVCID"];
+        vc.gobackBlock = ^(NSString *type){
             _enterpriseType = type;
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
         };
-        [self.supervc.navigationController pushViewController:typevc animated:YES];
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.row == 3){
-//        [self showView];
-        
-        WOTEnterpriseConnectsInfoVC * vc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTEnterpriseConnectsInfoVCID"];
-        vc.view.frame = self.view.frame;
-        
-        vc.cancelBlokc  = ^{
-//            [weakSelf setViewHidden];
+        WOTEnterpriseContactsInfoVC * vc = [[WOTEnterpriseContactsInfoVC alloc] init];
+
+        vc.contactsBlock = ^(NSString *name, NSString *tel, NSString *email) {
+            _contactsName = name;
+            _contactsTel = tel;
+            _contactsEmail = email;
+            [weakSelf.tableView reloadData];
         };
-        vc.okBlock = ^(NSString *name,NSString *tel, NSString *email){
-            _enterpriseConntects = name;
-            [self.tableView reloadData];
-//            [weakSelf setViewHidden];
-            //TODO:保存输入的企业信息
-        };
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

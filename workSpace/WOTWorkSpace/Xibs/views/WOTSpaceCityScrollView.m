@@ -110,8 +110,8 @@
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
 //    WOTSpaceCityCollectionCell *cell = (WOTSpaceCityCollectionCell *) [collectionView cellForItemAtIndexPath:indexPath];
-//    cell.cityName.textColor = HighTextColor;
-//    [cell.cityName setCorenerRadius:10 borderColor:HighTextColor];
+//    cell.cityName.textColor = UIColor_black_33;
+//    [cell.cityName setCorenerRadius:10 borderColor:UIColor_black_33];
 }
 - (IBAction)moreAction:(id)sender {
     

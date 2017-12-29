@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _titleLabel.textColor = HighTextColor;
+    _titleLabel.textColor = UIColor_black_33;
     _textfield.textAlignment = NSTextAlignmentRight;
     // Initialization code
 }

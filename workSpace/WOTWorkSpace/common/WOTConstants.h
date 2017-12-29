@@ -52,9 +52,9 @@
 #define InteligenceDeviceSelectedColor [UIColor colorWithRed:92.0/255.0 green:193.0/255.0 blue:57.0/255.0 alpha:1.0]
 #define White [UIColor whiteColor]
 #define Black [UIColor blackColor]
-#define HighTextColor UIColorFromRGB(0x333333)
+#define UIColor_black_33   UIColorFromRGB(0x333333)
 #define MiddleTextColor UIColorFromRGB(0x666666)
-#define LowTextColor UIColorFromRGB(0x888888)
+#define LowTextColor    UIColorFromRGB(0x888888)
 #define MainOrangeColor UIColorFromRGB(0x4087ee)
 
 #define UIColor_gray_d6 UIColorFromRGB(0xd6d6d6)

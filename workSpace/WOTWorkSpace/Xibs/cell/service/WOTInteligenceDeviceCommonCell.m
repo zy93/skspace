@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _cellTitle.textColor = HighTextColor;
+    _cellTitle.textColor = UIColor_black_33;
     [_cellSwitch setOn:NO];
     // Initialization code
 }
