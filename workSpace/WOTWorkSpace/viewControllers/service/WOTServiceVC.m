@@ -214,12 +214,14 @@
         [self pushVCByVCName:@"WOTFeedbackVC"];
     }
     
-    else if ([serviceName isEqualToString:@"问题报修"]){
-        [self pushVCByVCName:@"WOTMainAppleRepairVC"];
+    if ([serviceName isEqualToString:@"客户预约"]) {
+        NSLog(@"客户预约");
     }
     
-    else {
-        [self pushVCByVCName:@"WOTGETServiceViewController"];
+    if ([serviceName isEqualToString:@"问题报修"]) {
+        
+        SKRepairsViewController *repairsVC = [[SKRepairsViewController alloc] init];
+        [self.navigationController pushViewController:repairsVC animated:YES];
     }
     
     if ([serviceName isEqualToString:@"发布需求"]) {
