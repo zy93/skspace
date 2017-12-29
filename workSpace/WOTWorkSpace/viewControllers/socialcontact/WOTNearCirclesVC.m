@@ -594,6 +594,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     
 }
 
+#pragma mark - 删除评论操作
 - (void)actionSheet:(WFActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
         //delete

@@ -17,6 +17,7 @@
 #import "WOTSliderModel.h"
 #import "WOTH5VC.h"
 #import "MJRefresh.h"
+#import "SKRepairsViewController.h"
 
 
 #define getService @"WOTGETServiceCell"
@@ -220,6 +221,14 @@
     else {
         [self pushVCByVCName:@"WOTGETServiceViewController"];
     }
+    
+    if ([serviceName isEqualToString:@"发布需求"]) {
+        NSLog(@"发布需求");
+    }
+    
+//    else {
+//        [self pushVCByVCName:@"WOTGETServiceViewController"];
+//    }
 }
 
 #pragma mark - Table delegate & dataSource
