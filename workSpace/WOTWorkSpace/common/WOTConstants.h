@@ -57,6 +57,7 @@
 #define LowTextColor    UIColorFromRGB(0x888888)
 #define MainOrangeColor UIColorFromRGB(0x4087ee)
 
+
 #define UIColor_gray_d6 UIColorFromRGB(0xd6d6d6)
 #define UIColor_gray_f7 UIColorFromRGB(0xf7f7f7)
 #define UIColor_gray_89 UIColorFromRGB(0x898989)
@@ -64,6 +65,7 @@
 #define UIColor_blue_40 UIColorFromRGB(0x4087ee)
 #define UIColor_green_12 UIColorFromRGB(0x12c700)
 #define UIColor_green_37 UIColorFromRGB(0x37c922)
+#define UIColor_black_b3 UIColorFromRGB(0xb3b3b3)
 
 #define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
 //#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮

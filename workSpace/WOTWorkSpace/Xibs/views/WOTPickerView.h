@@ -10,7 +10,7 @@
 
 @class WOTPickerView;
 
-typedef void (^MyBasicBlock)(BOOL status, _Nullable id result);
+typedef void (^MyBasicBlock)(BOOL status, NSInteger row);
 
 
 

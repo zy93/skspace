@@ -36,7 +36,7 @@
 - (IBAction)okAction:(id)sender {
    
     if (_okBlock) {
-        self.okBlock(_dataPicker.year,_dataPicker.month, _dataPicker.day,@0,@0);
+        self.okBlock(_dataPicker.year,_dataPicker.month, _dataPicker.day, _dataPicker.hour, @0);
     }
     
     

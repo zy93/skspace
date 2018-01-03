@@ -588,31 +588,26 @@
 
 
 
-+(void)visitorAppointmentWithVisitorName:(NSString *)name headPortrait:(UIImage *)head sex:(NSString *)sex papersType:(NSNumber *)papersType papersNumber:(NSString *)papersNumber tel:(NSString *)tel spaceId:(NSNumber *)spaceId accessType:(NSNumber *)accessType userName:(NSString *)userName visitorInfo:(NSString *)visitorInfo peopleNum:(NSNumber *)peopleNum visitTime:(NSString *)time response:(response)response
++(void)visitorAppointmentWithVisitorName:(NSString *)name sex:(NSString *)sex tel:(NSString *)tel spaceId:(NSNumber *)spaceId accessType:(NSNumber *)accessType targetName:(NSString *)targetName targetId:(NSNumber *)targetId visitorInfo:(NSString *)visitorInfo peopleNum:(NSNumber *)peopleNum visitTime:(NSString *)time response:(response)response
 {
     NSDictionary *dic = @{
                           @"visitorName":name,
+                          @"visitorUserId":[WOTUserSingleton shareUser].userInfo.userId,
                           @"sex":sex,
-                          @"papersType":papersType,
-                          @"papersNum":papersNumber,
                           @"visitorTel":tel,
                           @"spaceId":spaceId,
                           @"accessType":accessType,
-                          @"userName":userName,
+                          @"targetName":targetName,
                           @"visitInfo":visitorInfo,
                           @"peopleNum":peopleNum,
-                          @"visitTime":time,
+                          @"appointmentVisitTime":time,
+                          @"infoState":@"0",
+                          @"targetAlias":@"aaaaaaaaaaaaaaaaa"
                         };
+
+    NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/addVisitorOrUpdate"];
     
-    NSArray *heads = nil;
-    
-    if (head) {
-        heads = @[head];
-    }
-    
-    NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Visitor/addVisitorOrUpdate"];
-    
-    [self doFileRequestWithParameters:dic useUrl:registerurl image:heads complete:^JSONModel *(id responseobj) {
+    [self doRequestWithParameters:dic useUrl:registerurl complete:^JSONModel *(id responseobj) {
         NSError *error = nil;
         WOTVisitorsModel *model = [[WOTVisitorsModel alloc] initWithDictionary:responseobj error:&error];
         if (response) {

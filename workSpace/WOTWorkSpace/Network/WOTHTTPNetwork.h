@@ -245,13 +245,22 @@ typedef void(^response)(id bean,NSError *error);
 
 +(void)getFlexSliderSouceInfo:(response)response;
 
-
 /**
- *  访客预约
+ 访客申请
+
+ @param name 访客姓名
+ @param sex 访客性别
+ @param tel 访客电话
+ @param spaceId 访问空间id
+ @param accessType 访问类型
+ @param targetName 受访者姓名
+ @param targetId 受访者userId
+ @param visitorInfo 访问事由
+ @param peopleNum 访问人数
+ @param time 到访时间
+ @param response 响应回调
  */
-+(void)visitorAppointmentWithVisitorName:(NSString *)name
-                            headPortrait:(UIImage *)head
-                                     sex:(NSString *)sex papersType:(NSNumber *)papersType papersNumber:(NSString *)papersNumber tel:(NSString *)tel spaceId:(NSNumber *)spaceId accessType:(NSNumber*)accessType userName:(NSString *)userName visitorInfo:(NSString*)visitorInfo peopleNum:(NSNumber*)peopleNum visitTime:(NSString*)time response:(response)response;
++(void)visitorAppointmentWithVisitorName:(NSString *)name sex:(NSString *)sex tel:(NSString *)tel spaceId:(NSNumber *)spaceId accessType:(NSNumber *)accessType targetName:(NSString *)targetName targetId:(NSNumber *)targetId visitorInfo:(NSString *)visitorInfo peopleNum:(NSNumber *)peopleNum visitTime:(NSString *)time response:(response)response;
 /**
  *  添加企业
  */

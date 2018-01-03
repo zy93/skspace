@@ -185,7 +185,7 @@
 - (void)pickerViewBtnOK:(id)sender
 {
     if (self.selectBlock) {
-        self.selectBlock(YES,@"WTF???");
+        self.selectBlock(YES, [self.pickerV selectedRowInComponent:0]);
     }
     [self dismissPickerView];
 }
@@ -194,7 +194,7 @@
 - (void)pickerViewBtnCancel:(id)sender
 {
     if (self.selectBlock) {
-        self.selectBlock(NO,nil);
+        self.selectBlock(NO,0);
     }
     
     [self dismissPickerView];
