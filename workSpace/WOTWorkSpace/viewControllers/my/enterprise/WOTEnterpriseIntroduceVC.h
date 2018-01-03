@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "WOTTableViewBaseVC.h"
 #import "WOTEnterpriseModel.h"
+
+typedef NS_ENUM(NSInteger, INTRODUCE_VC_TYPE) {
+    INTRODUCE_VC_TYPE_Enterprise = 0, //企业
+    INTRODUCE_VC_TYPE_Providers,     //服务商
+};
+
 @interface WOTEnterpriseIntroduceVC : WOTTableViewBaseVC
 @property (nonatomic, strong) WOTEnterpriseModel *model;
+@property (nonatomic, assign) INTRODUCE_VC_TYPE  vcType;
+
 @end

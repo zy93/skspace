@@ -39,7 +39,7 @@
         [weakSelf back];
     }];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"myenterpriseCellID"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTMyEnterPriseCell"];
     // Do any additional setup after loading the view.
     
 }
@@ -80,7 +80,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTMyEnterPriseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myenterpriseCellID"];
+    WOTMyEnterPriseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyEnterPriseCell"];
     WOTEnterpriseModel *model = self.dataSource[indexPath.row];
     [cell.enterpriseHeaderImage setImageWithURL:[model.companyPicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
     cell.enterpariseName.text = self.dataSource[indexPath.row].companyName;
@@ -92,6 +92,7 @@
 {
     WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
     vc.model = self.dataSource[indexPath.row];
+    vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

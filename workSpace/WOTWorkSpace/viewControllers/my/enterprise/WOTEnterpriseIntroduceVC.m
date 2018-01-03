@@ -9,11 +9,14 @@
 #import "WOTEnterpriseIntroduceVC.h"
 #import "WOTEnterpriseIntroduceNameCell.h"
 #import "WOTEnterpriseIntroduceMessageCell.h"
+#import "WOTApplyJoinEnterpriseModel.h"
+
 
 @interface WOTEnterpriseIntroduceVC () <WOTEnterpriseIntroduceNameCellDelegate>
 {
 }
 @property (nonatomic, strong) NSArray *tableList;
+@property (nonatomic, strong) NSArray *iconList;
 
 @end
 
@@ -41,7 +44,12 @@
 #pragma mark - cell delegate
 -(void)enterpriseCellApplyJoin:(WOTEnterpriseIntroduceNameCell *)cell
 {
-//    [WOTHTTPNetwork joinEnterpriseWithEnterpriseId:<#(NSNumber *)#> response:<#^(id bean, NSError *error)response#>];
+    [WOTHTTPNetwork applyJoinEnterpriseWithEnterpriseId:self.model.companyId enterpriseName:self.model.companyName response:^(id bean, NSError *error) {
+        WOTApplyJoinEnterpriseModel_msg *joinModel = bean;
+        if ([joinModel.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showMessage:@"申请已提交，等待企业管理员审核!" toView:self.view];
+        }
+    }];
 }
 
 
@@ -104,25 +112,36 @@
         cell.titleLab.text = self.model.companyName;
         cell.subtitleLab.text = self.model.internetEnterprises;
         cell.delegate = self;
-        //判断当前用户是否是该企业员工
-        if ([[WOTUserSingleton shareUser].userInfo.companyId isEqualToString:(NSString *)self.model.companyId] && !strIsEmpty([WOTUserSingleton shareUser].userInfo.companyId)) {
-            cell.applyJoinBtn.hidden = YES;
-        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        //加载button
+        if (self.vcType == INTRODUCE_VC_TYPE_Enterprise) {
+            //判断当前用户是否是该企业员工
+            if ([WOTUitls stringArrayContainsStringWithArrayStr:[WOTUserSingleton shareUser].userInfo.companyId string:[NSString stringWithFormat:@"%@",self.model.companyId]] || [WOTUitls stringArrayContainsStringWithArrayStr:[WOTUserSingleton shareUser].userInfo.companyIdAdmin string:[NSString stringWithFormat:@"%@",self.model.companyId]]) {
+                cell.applyJoinBtn.hidden = YES;
+            }
+            else {
+                cell.applyJoinBtn.hidden = NO;
+            }
+        }
         
         return cell;
     }
     else {
         WOTEnterpriseIntroduceMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTEnterpriseIntroduceMessageCell"];
         NSArray *arr = self.tableList[indexPath.section];
-        [cell.iconIV setImage:[UIImage imageNamed:@"placeholder_comm"]];
+        if (indexPath.section!=0) {
+            [cell.iconIV setImage:[UIImage imageNamed:self.iconList[indexPath.section][indexPath.row]]];
+        }
+        else {
+            
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([arr[indexPath.row] isEqualToString:@"联系人"]) {
             [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.contacts?self.model.contacts:@"暂未填写"]];
-
         }
         else if ([arr[indexPath.row] isEqualToString:@"联系电话"]) {
             [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.tel?self.model.tel:@"暂未填写"]];
-            
         }
         else if ([arr[indexPath.row] isEqualToString:@"邮箱"]) {
             [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.mailbox?self.model.mailbox:@"暂未填写"]];
@@ -153,6 +172,14 @@
         _tableList = @[@[@"企业名称"], @[@"联系人", @"联系电话", @"邮箱"], @[@"员工人数", @"企业状态"], @[@"企业介绍"]];
     }
     return _tableList;
+}
+
+-(NSArray *)iconList
+{
+    if (!_iconList) {
+        _iconList = @[@[@"企业名称"], @[@"enterprise_contacts", @"enterprise_tel", @"enterprise_email"], @[@"enterprise_number", @"enterprise_state"], @[@"enterprise_introduce"]];
+    }
+    return _iconList;
 }
 
 /*

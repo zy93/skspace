@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"输入企业名称";
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTEnterCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTEnterCell"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"myenterpriseCellID"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTMyEnterPriseCell"];
     [self configNaviRightItemWithTitle:@"保存" textColor:[UIColor blackColor]];
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector (keyboardHide:) name: UIKeyboardDidHideNotification object:nil];
@@ -140,7 +140,7 @@
     }
     else {
         
-        WOTMyEnterPriseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myenterpriseCellID"];
+        WOTMyEnterPriseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyEnterPriseCell"];
         NSArray *modelList= self.tableList[indexPath.section];
         WOTEnterpriseModel *model = modelList[indexPath.row];
         [cell.enterpriseHeaderImage setImageWithURL:[model.companyPicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
@@ -156,6 +156,7 @@
     if (indexPath.section==1) {
         WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
         vc.model = self.tableList[indexPath.section][indexPath.row];
+        vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

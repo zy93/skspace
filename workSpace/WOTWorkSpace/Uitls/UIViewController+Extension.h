@@ -30,4 +30,6 @@ typedef void(^clearSearchBlock)();
 -(void)configNaviRightItemWithTitle:(NSString *)title textColor:(UIColor *)textColor;
 
 
+-(void)rightItemAction; //右button响应方法
+
 @end

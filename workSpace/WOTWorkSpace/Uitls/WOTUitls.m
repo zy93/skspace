@@ -83,5 +83,22 @@
     return data;
 }
 
++(BOOL)stringArrayContainsStringWithArrayStr:(NSString *)arrStr string:(NSString *)str
+{
+    NSArray *arr = [arrStr componentsSeparatedByString:@","];
+    if (arr) {
+        for (NSString *conentStr in arr) {
+            if ([conentStr isEqualToString:str]) {
+                return YES;
+            }
+        }
+    }
+    else {
+        if ([arrStr isEqualToString:str]) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 @end

@@ -10,10 +10,8 @@
 
 @interface WOTMyEnterPriseCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *enterpriseHeaderImage;
-
 @property (weak, nonatomic) IBOutlet UILabel *enterpariseName;
 @property (weak, nonatomic) IBOutlet UILabel *joinEnterpriseTime;
-
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 
 

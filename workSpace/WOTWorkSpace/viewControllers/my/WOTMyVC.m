@@ -189,7 +189,7 @@
             case 2:
                 if (indexPath.row ==0 ) {
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"My" bundle:[NSBundle mainBundle]];
-                    WORTMyEnterpriseVC *myenterprisevc = [storyboard instantiateViewControllerWithIdentifier:@"WORTMyEnterpriseVCID"];
+                    WOTMyEnterpriseVC *myenterprisevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTMyEnterpriseVC"];
                     [self.navigationController pushViewController:myenterprisevc animated:YES];
                     
                     

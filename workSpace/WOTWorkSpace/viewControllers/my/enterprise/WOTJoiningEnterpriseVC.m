@@ -10,6 +10,82 @@
 #import "WOTMyEnterPriseCell.h"
 #import "WOTEnterpriseModel.h"
 #import "WOTH5VC.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////这个是那个页面?  zy 2018.1.2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @interface WOTJoiningEnterpriseVC (){
     NSArray<WOTEnterpriseModel *> *endataSource;
 }
@@ -29,7 +105,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = MainColor;
     self.tableView.showsVerticalScrollIndicator = NO;
-     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"myenterpriseCellID"];
+     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTMyEnterPriseCell"];
     [self getMyEnterpriseDataSourceFromWeb];
     // Do any additional setup after loading the view.
 }
@@ -50,7 +126,7 @@
     return 70;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTMyEnterPriseCell *enterprisecell = [tableView dequeueReusableCellWithIdentifier:@"myenterpriseCellID" forIndexPath:indexPath];
+    WOTMyEnterPriseCell *enterprisecell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyEnterPriseCell" forIndexPath:indexPath];
 //    enterprisecell.enterpariseName.text = endataSource[indexPath.row].companyName;
 //    enterprisecell.joinEnterpriseTime.text = endataSource[indexPath.row].givingRemainingTime;
     [enterprisecell.enterpriseHeaderImage sd_setImageWithURL:[endataSource[indexPath.row].companyPicture ToUrl] placeholderImage:[UIImage imageNamed:@"enterprise_default"]];
@@ -68,12 +144,12 @@
 }
 -(void)getMyEnterpriseDataSourceFromWeb{
 //    [[WOTUserSingleton shareUser]setValues];
-    [WOTHTTPNetwork getUserEnterpriseWithCompanyId:[WOTUserSingleton shareUser].userInfo.companyId response:^(id bean, NSError *error) {
-        WOTEnterpriseModel_msg *dd = (WOTEnterpriseModel_msg*)bean;
-        endataSource = dd.msg;
-        [self.tableView reloadData];
-        
-    }];
+//    [WOTHTTPNetwork getUserEnterpriseWithCompanyId:[WOTUserSingleton shareUser].userInfo.companyId response:^(id bean, NSError *error) {
+//        WOTEnterpriseModel_msg *dd = (WOTEnterpriseModel_msg*)bean;
+//        endataSource = dd.msg;
+//        [self.tableView reloadData];
+//
+//    }];
     
     
 }

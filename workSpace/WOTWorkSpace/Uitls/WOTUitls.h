@@ -18,4 +18,8 @@
 +(NSData *)StringToByte:(NSString *)str;
 
 
+
+//判断","分割的字符串arrStr，是否有某个字符串str
++ (BOOL)stringArrayContainsStringWithArrayStr:(NSString *)arrStr string:(NSString *)str;
+
 @end

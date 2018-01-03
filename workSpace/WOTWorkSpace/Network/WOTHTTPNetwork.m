@@ -38,6 +38,7 @@
 #import "QuerySingleCircleofFriendModel.h"
 #import "QueryCommentModel.h"
 #import "SKFocusListModel.h"
+#import "WOTApplyJoinEnterpriseModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -387,21 +388,48 @@
 
 +(void)getUserEnterpriseWithCompanyId:(NSString *)companyId response:(response)response{
     
-    NSString *myenterpriseurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/CompanyInfo/findMyCompany"];
-    NSDictionary *parameters = @{@"companyId":companyId};
+    NSString *myenterpriseurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/CompanyInfo/find"];
+    NSDictionary *parameters = @{@"companyIdlist":companyId,
+                                 @"pageNo":@(1),
+                                 @"pageSize":@(100),
+                                 };
     [self doRequestWithParameters:parameters useUrl:myenterpriseurl complete:^JSONModel *(id responseobj) {
         WOTEnterpriseModel_msg * activitymodel = [[WOTEnterpriseModel_msg alloc]initWithDictionary:responseobj error:nil];
-        
         return  activitymodel;
-        
-        
     } response:response];
 }
 
-+(void)joinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId response:(response)response
++(void)applyJoinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId enterpriseName:(NSString *)name response:(response)response
 {
-    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Applyforcompany/AddApplyforcompany"];
+    NSDictionary * parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                  @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                  @"headPortrait":[WOTUserSingleton shareUser].userInfo.headPortrait,
+                                  @"companyName":name,
+                                  @"companyId":enterpriseId,
+                                  @"applyForState":@"待处理",
+                                  };
+    [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
+         WOTApplyJoinEnterpriseModel_msg *model = [[WOTApplyJoinEnterpriseModel_msg alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
 }
+
++(void)disposeApplyJoinEnterprise:(NSNumber *)applyId response:(response)response
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Applyforcompany/AddApplyforcompany"];
+    NSDictionary * parameters = @{@"id":applyId,
+                                  @"handlerId":[WOTUserSingleton shareUser].userInfo.userId,
+                                  @"handlerName":[WOTUserSingleton shareUser].userInfo.userName,
+                                  @"applyForState":@"同意",
+                                  };
+    [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
+        WOTApplyJoinEnterpriseModel_msg *model = [[WOTApplyJoinEnterpriseModel_msg alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
 
 +(void)createEnterpriseWithEnterpriseName:(NSString *)enterpriseName enterpriseType:(NSString *)enterpriseType enterpriseLogo:(UIImage *)enterpriseLogo contactsName:(NSString *)contactsName contactsTel:(NSString *)tel contactsEmail:(NSString *)email response:(response)response
 {
@@ -414,6 +442,20 @@
                                   };
     [self doFileRequestWithParameters:parameters useUrl:urlString image:@[enterpriseLogo] complete:^JSONModel *(id responseobj) {
         WOTBusinessModel *model = [[WOTBusinessModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
+
++(void)getApplyJoinEnterpriseListWithEnterpriseIds:(NSString *)enterpriseIds response:(response)response
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Applyforcompany/find"];
+    NSDictionary * parameters = @{@"companyIdlist":enterpriseIds,
+                                  @"pageNo":@(1),
+                                  @"pageSize":@(1000)
+                                  };
+    [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
+        WOTApplyJoinEnterpriseModel_msg *model = [[WOTApplyJoinEnterpriseModel_msg alloc] initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
 }

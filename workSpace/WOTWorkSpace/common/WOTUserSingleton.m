@@ -76,7 +76,7 @@
 -(NSDictionary *)readUserInfoFromPlist{
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *plistPath1 = [paths objectAtIndex:0];
-       NSString *filename=[plistPath1 stringByAppendingPathComponent:@"userInfo.plist"];
+    NSString *filename=[plistPath1 stringByAppendingPathComponent:@"userInfo.plist"];
     NSMutableDictionary *user = [[NSMutableDictionary alloc] initWithContentsOfFile:filename];
     
     NSLog(@"%@", user);

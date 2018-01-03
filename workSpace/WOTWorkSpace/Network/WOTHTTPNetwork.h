@@ -123,7 +123,8 @@ typedef void(^response)(id bean,NSError *error);
 
 /**
  *我的--我的企业
- @param companyId  企业id 登录接口返回用户的companyId,字符串
+ @param companyId  企业id 登录接口返回用户的companyId+companyIdAdmin,字符串
+ @param response 响应回调
  */
 +(void)getUserEnterpriseWithCompanyId:(NSString *)companyId  response:(response)response;
 
@@ -131,10 +132,18 @@ typedef void(^response)(id bean,NSError *error);
  申请加入企业
 
  @param enterpriseId 企业id
+ @param name 企业名称
  @param response 响应回调
  */
-+(void)joinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId response:(response)response;
++(void)applyJoinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId enterpriseName:(NSString *)name response:(response)response;
 
+/**
+ 处理加入企业的申请
+ 
+ @param applyId 申请id
+ @param response 响应回调
+ */
++(void)disposeApplyJoinEnterprise:(NSNumber *)applyId response:(response)response;
 
 /**
  创建企业
@@ -149,6 +158,14 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)createEnterpriseWithEnterpriseName:(NSString *)enterpriseName enterpriseType:(NSString *)enterpriseType enterpriseLogo:(UIImage *)enterpriseLogo contactsName:(NSString *)contactsName contactsTel:(NSString *)tel contactsEmail:(NSString *)email response:(response)response;
 
+
+/**
+ 获取申请加入企业的请求
+
+ @param enterpriseIds 企业id，用『,』分割
+ @param response 响应回调
+ */
++(void)getApplyJoinEnterpriseListWithEnterpriseIds:(NSString *)enterpriseIds response:(response)response;
 
 /**
  *  获取活动列表  根据页码

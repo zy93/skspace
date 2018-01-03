@@ -141,7 +141,7 @@
         <!--My EnterpriseVC-->
         <scene sceneID="1P7-KT-i0v">
             <objects>
-                <viewController storyboardIdentifier="WORTMyEnterpriseVCID" hidesBottomBarWhenPushed="YES" id="jm1-ru-KQV" customClass="WORTMyEnterpriseVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WOTMyEnterpriseVC" hidesBottomBarWhenPushed="YES" id="jm1-ru-KQV" customClass="WOTMyEnterpriseVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lbu-in-jRd"/>
                         <viewControllerLayoutGuide type="bottom" id="0HK-FG-7qt"/>
@@ -151,18 +151,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SA0-nD-QwH">
-                                <rect key="frame" x="187" y="74" width="1" height="35"/>
+                                <rect key="frame" x="187" y="6" width="1" height="35"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="ksG-j4-gCC"/>
-                                    <constraint firstAttribute="width" constant="1" id="ysj-0G-nRt"/>
+                                    <constraint firstAttribute="width" constant="0.5" id="ysj-0G-nRt"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bl5-UV-f7G">
-                                <rect key="frame" x="0.0" y="114" width="375" height="553"/>
-                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kuU-WC-HEM">
-                                <rect key="frame" x="0.0" y="64" width="187" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="加入企业" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keJ-nf-k3N">
                                         <rect key="frame" x="71" y="16" width="65.5" height="19.5"/>
@@ -198,7 +195,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PjX-fs-CmW">
-                                <rect key="frame" x="188" y="64" width="187" height="50"/>
+                                <rect key="frame" x="188" y="0.0" width="187" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="创建企业" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvm-2A-S1e">
                                         <rect key="frame" x="71" y="16" width="65.5" height="19.5"/>
@@ -233,27 +230,37 @@
                                     <constraint firstItem="eIt-3u-oGE" firstAttribute="centerY" secondItem="PjX-fs-CmW" secondAttribute="centerY" id="zOl-uJ-kfd"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hr2-KJ-zuU">
+                                <rect key="frame" x="0.0" y="50.5" width="375" height="616.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="jm1-ru-KQV" id="wH5-Qf-DoR"/>
+                                    <outlet property="delegate" destination="jm1-ru-KQV" id="CQP-le-AK2"/>
+                                </connections>
+                            </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Bl5-UV-f7G" firstAttribute="leading" secondItem="cWM-Zc-bG7" secondAttribute="leading" id="26r-3R-5Qm"/>
+                            <constraint firstItem="kuU-WC-HEM" firstAttribute="top" secondItem="cWM-Zc-bG7" secondAttribute="top" constant="0.5" id="3AT-CR-etu"/>
+                            <constraint firstItem="0HK-FG-7qt" firstAttribute="top" secondItem="Hr2-KJ-zuU" secondAttribute="bottom" id="5Do-jq-QZh"/>
                             <constraint firstItem="PjX-fs-CmW" firstAttribute="leading" secondItem="SA0-nD-QwH" secondAttribute="trailing" id="8Ew-1W-czJ"/>
-                            <constraint firstItem="SA0-nD-QwH" firstAttribute="top" secondItem="cWM-Zc-bG7" secondAttribute="top" constant="74" id="8n1-au-AuF"/>
-                            <constraint firstItem="kuU-WC-HEM" firstAttribute="top" secondItem="cWM-Zc-bG7" secondAttribute="top" constant="64" id="9zH-cJ-IrD"/>
+                            <constraint firstItem="SA0-nD-QwH" firstAttribute="top" secondItem="cWM-Zc-bG7" secondAttribute="top" constant="6" id="8n1-au-AuF"/>
                             <constraint firstItem="SA0-nD-QwH" firstAttribute="leading" secondItem="kuU-WC-HEM" secondAttribute="trailing" id="HFW-eA-DMM"/>
-                            <constraint firstAttribute="trailing" secondItem="Bl5-UV-f7G" secondAttribute="trailing" id="Jia-Fh-gnH"/>
                             <constraint firstItem="kuU-WC-HEM" firstAttribute="leading" secondItem="cWM-Zc-bG7" secondAttribute="leading" id="Mio-gh-ZLU"/>
-                            <constraint firstItem="0HK-FG-7qt" firstAttribute="top" secondItem="Bl5-UV-f7G" secondAttribute="bottom" id="OeM-gx-iVS"/>
                             <constraint firstItem="SA0-nD-QwH" firstAttribute="centerX" secondItem="cWM-Zc-bG7" secondAttribute="centerX" id="UJa-g6-uuU"/>
-                            <constraint firstItem="Bl5-UV-f7G" firstAttribute="top" secondItem="kuU-WC-HEM" secondAttribute="bottom" id="a8L-kG-Mal"/>
-                            <constraint firstItem="PjX-fs-CmW" firstAttribute="top" secondItem="cWM-Zc-bG7" secondAttribute="top" constant="64" id="dJG-DD-RP9"/>
+                            <constraint firstItem="Hr2-KJ-zuU" firstAttribute="top" secondItem="kuU-WC-HEM" secondAttribute="bottom" constant="0.5" id="VRn-Nk-nGF"/>
+                            <constraint firstAttribute="trailing" secondItem="Hr2-KJ-zuU" secondAttribute="trailing" id="YbG-co-oPr"/>
+                            <constraint firstItem="Hr2-KJ-zuU" firstAttribute="leading" secondItem="cWM-Zc-bG7" secondAttribute="leading" id="a3y-0u-6NK"/>
+                            <constraint firstItem="PjX-fs-CmW" firstAttribute="top" secondItem="cWM-Zc-bG7" secondAttribute="top" constant="0.5" id="dJG-DD-RP9"/>
                             <constraint firstAttribute="trailing" secondItem="PjX-fs-CmW" secondAttribute="trailing" id="fug-LL-YZe"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="createLabel" destination="pvm-2A-S1e" id="Jr9-q2-jbP"/>
                         <outlet property="joinLabel" destination="keJ-nf-k3N" id="chF-YQ-H9R"/>
-                        <outlet property="scrollVIew" destination="Bl5-UV-f7G" id="U3X-MT-5ZS"/>
+                        <outlet property="table" destination="Hr2-KJ-zuU" id="TgE-EX-qEc"/>
+                        <outlet property="topView" destination="kuU-WC-HEM" id="dyd-hN-hbQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KET-yA-yqV" userLabel="First Responder" sceneMemberID="firstResponder"/>
