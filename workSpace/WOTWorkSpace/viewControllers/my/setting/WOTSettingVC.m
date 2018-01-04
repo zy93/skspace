@@ -25,9 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    [self.tableView registerNib:[UINib nibWithNibName:@"WOTSettingCell" bundle:nil] forCellReuseIdentifier:@"settingCellID"];
     self.navigationItem.title = @"设置";
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.quitButton];
