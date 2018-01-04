@@ -17,9 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = MainColor;
+    self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
   
-    self.tableView.backgroundColor = CLEARCOLOR;
+    self.tableView.backgroundColor = UICOLOR_CLEAR;
     self.tableView.showsVerticalScrollIndicator = NO;
     [self configNav];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTPersionalInformationCommonCell" bundle:nil] forCellReuseIdentifier:@"WOTPersionalInformationCommonCellID"];

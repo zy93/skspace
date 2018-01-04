@@ -15,17 +15,17 @@
     // Initialization code
     
     self.enterpriseBtn.layer.borderWidth = 1.f;
-    self.enterpriseBtn.layer.borderColor = UIColor_blue_40.CGColor;
-    [self.enterpriseBtn setTitleColor:UIColor_blue_40 forState:UIControlStateSelected];
+    self.enterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    [self.enterpriseBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateSelected];
     self.enterpriseBtn.selected = YES;
     self.personBtn.layer.borderWidth = 1.f;
-    self.personBtn.layer.borderColor = UIColor_gray_d6.CGColor;
+    self.personBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.separatorInset = UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0); // ViewWidth  [宏] 指的是手机屏幕的宽度
     
-    [self.enterpriseBtn setTitleColor:UIColor_gray_89 forState:UIControlStateNormal];
-    [self.enterpriseBtn setTitleColor:UIColor_blue_40 forState:UIControlStateSelected];
-    [self.personBtn setTitleColor:UIColor_gray_89 forState:UIControlStateNormal];
-    [self.personBtn setTitleColor:UIColor_blue_40 forState:UIControlStateSelected];
+    [self.enterpriseBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateNormal];
+    [self.enterpriseBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateSelected];
+    [self.personBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateNormal];
+    [self.personBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateSelected];
 
 
 }
@@ -40,14 +40,14 @@
 {
     _enterprise = enterprise;
     if (enterprise) {
-        self.enterpriseBtn.layer.borderColor = UIColor_blue_40.CGColor;
-        self.personBtn.layer.borderColor = UIColor_gray_d6.CGColor;
+        self.enterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+        self.personBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
         self.enterpriseBtn.selected = YES;
         self.personBtn.selected = NO;
     }
     else {
-        self.enterpriseBtn.layer.borderColor = UIColor_gray_d6.CGColor;
-        self.personBtn.layer.borderColor = UIColor_blue_40.CGColor;
+        self.enterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+        self.personBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
         self.enterpriseBtn.selected = NO;
         self.personBtn.selected = YES;
     }

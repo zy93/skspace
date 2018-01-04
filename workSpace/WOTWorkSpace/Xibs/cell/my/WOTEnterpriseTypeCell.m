@@ -12,8 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.contentView.backgroundColor = White;
-    [_selectedImage setCorenerRadius:_selectedImage.frame.size.width/2 borderColor:CLEARCOLOR];
+    self.contentView.backgroundColor = UICOLOR_WHITE;
+    [_selectedImage setCorenerRadius:_selectedImage.frame.size.width/2 borderColor:UICOLOR_CLEAR];
     // Initialization code
 }
 

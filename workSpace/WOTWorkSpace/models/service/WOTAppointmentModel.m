@@ -15,6 +15,23 @@
 }
 @end
 
-@implementation WOTAppointmentModel_msg
+@implementation WOTAppointmentModel_list
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+@end
 
+@implementation WOTAppointmentModel_msg
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+@end
+
+@implementation WOTVisitorsModel
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 @end

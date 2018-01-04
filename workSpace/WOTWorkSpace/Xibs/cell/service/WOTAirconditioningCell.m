@@ -21,22 +21,22 @@
     [super awakeFromNib];
     _btnWidth.constant = (self.bgview.frame.size.width-60)/4;
     
-    [self setTextColor:InteligenceDeviceSelectedColor middle:MiddleTextColor high:MiddleTextColor autoControl:MiddleTextColor];
+    [self setTextColor:UICOLOR_GRAY_99 middle:UICOLOR_MAIN_TEXT high:UICOLOR_MAIN_TEXT autoControl:UICOLOR_MAIN_TEXT];
     _progressView.progress = 0.333;
     _autoControlImage.image = [UIImage imageNamed:@"autoControl"];
     
   
-    [_lowBtn setTitleColor:MiddleTextColor forState:UIControlStateNormal];
-    [_middleBtn setTitleColor:MiddleTextColor forState:UIControlStateNormal];
-    [_highBtn setTitleColor:MiddleTextColor forState:UIControlStateNormal];
-    _temperatureLabel.textColor = MiddleTextColor;
+    [_lowBtn setTitleColor:UICOLOR_MAIN_TEXT forState:UIControlStateNormal];
+    [_middleBtn setTitleColor:UICOLOR_MAIN_TEXT forState:UIControlStateNormal];
+    [_highBtn setTitleColor:UICOLOR_MAIN_TEXT forState:UIControlStateNormal];
+    _temperatureLabel.textColor = UICOLOR_MAIN_TEXT;
     
-    [_controlView setShadow:Black];
+    [_controlView setShadow:UICOLOR_MAIN_BLACK];
     
     lab = [[UILabel alloc] initWithFrame:CGRectZero];
     lab.font = [UIFont systemFontOfSize:16.f];
     lab.text = [NSString stringWithFormat:@"%.2f%@",_temperatureSlider.value,@"℃"];
-    lab.textColor = MiddleTextColor;
+    lab.textColor = UICOLOR_MAIN_TEXT;
     
     [self.controlView addSubview:lab];
    
@@ -59,37 +59,37 @@
 }
 - (IBAction)lowAction:(id)sender {
    
-    [self setTextColor:InteligenceDeviceSelectedColor middle:MiddleTextColor high:MiddleTextColor autoControl:MiddleTextColor];
+    [self setTextColor:UICOLOR_GRAY_99 middle:UICOLOR_MAIN_TEXT high:UICOLOR_MAIN_TEXT autoControl:UICOLOR_MAIN_TEXT];
     _progressView.progress = 0.333;
      _autoControlImage.image = [UIImage imageNamed:@"autoControl"];
 }
 - (IBAction)middleAction:(id)sender {
     
-      [self setTextColor:MiddleTextColor middle:InteligenceDeviceSelectedColor high:MiddleTextColor autoControl:MiddleTextColor];
+      [self setTextColor:UICOLOR_MAIN_TEXT middle:UICOLOR_GRAY_99 high:UICOLOR_MAIN_TEXT autoControl:UICOLOR_MAIN_TEXT];
     _progressView.progress = 0.666;
     _autoControlImage.image = [UIImage imageNamed:@"autoControl"];
 }
 - (IBAction)highAction:(id)sender {
     
-      [self setTextColor:MiddleTextColor middle:MiddleTextColor high:InteligenceDeviceSelectedColor autoControl:MiddleTextColor];
+      [self setTextColor:UICOLOR_MAIN_TEXT middle:UICOLOR_MAIN_TEXT high:UICOLOR_GRAY_99 autoControl:UICOLOR_MAIN_TEXT];
     _progressView.progress = 1.0;
     _autoControlImage.image = [UIImage imageNamed:@"autoControl"];
 }
 - (IBAction)autoControlAction:(id)sender {
     
-    [self setTextColor:MiddleTextColor middle:MiddleTextColor high:MiddleTextColor autoControl:InteligenceDeviceSelectedColor];
+    [self setTextColor:UICOLOR_MAIN_TEXT middle:UICOLOR_MAIN_TEXT high:UICOLOR_MAIN_TEXT autoControl:UICOLOR_GRAY_99];
     _autoControlImage.image = [UIImage imageNamed:@"autoControl_selected"];
 }
 - (IBAction)refrigerationAction:(id)sender {
-    [self setImageTextSelected:InteligenceDeviceSelectedColor fanspeed:MiddleTextColor heating:MiddleTextColor refrigerationImage:@"refrigeration_selected" fanspeedImage:@"fanspeed" heatingImage:@"heating"];
+    [self setImageTextSelected:UICOLOR_GRAY_99 fanspeed:UICOLOR_MAIN_TEXT heating:UICOLOR_MAIN_TEXT refrigerationImage:@"refrigeration_selected" fanspeedImage:@"fanspeed" heatingImage:@"heating"];
 }
 
 - (IBAction)fanspeedAction:(id)sender {
-    [self setImageTextSelected:MiddleTextColor fanspeed:InteligenceDeviceSelectedColor heating:MiddleTextColor refrigerationImage:@"refrigeration" fanspeedImage:@"fanspeed_selected" heatingImage:@"heating"];
+    [self setImageTextSelected:UICOLOR_MAIN_TEXT fanspeed:UICOLOR_GRAY_99 heating:UICOLOR_MAIN_TEXT refrigerationImage:@"refrigeration" fanspeedImage:@"fanspeed_selected" heatingImage:@"heating"];
 }
 
 - (IBAction)heatingAction:(id)sender {
-    [self setImageTextSelected:MiddleTextColor fanspeed:MiddleTextColor heating:InteligenceDeviceSelectedColor refrigerationImage:@"refrigeration" fanspeedImage:@"fanspeed" heatingImage:@"heating_selected"];
+    [self setImageTextSelected:UICOLOR_MAIN_TEXT fanspeed:UICOLOR_MAIN_TEXT heating:UICOLOR_GRAY_99 refrigerationImage:@"refrigeration" fanspeedImage:@"fanspeed" heatingImage:@"heating_selected"];
 }
 
 - (IBAction)temperatureControl:(id)sender {

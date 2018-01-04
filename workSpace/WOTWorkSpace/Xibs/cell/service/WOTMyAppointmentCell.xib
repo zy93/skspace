@@ -25,20 +25,20 @@
                                 <rect key="frame" x="10" y="53" width="280" height="104.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ybY-pO-asB">
-                                        <rect key="frame" x="15" y="10" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="15" y="10" width="37.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjq-06-NMe">
-                                        <rect key="frame" x="15" y="41" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="15" y="38" width="37.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zH3-F4-1jS">
-                                        <rect key="frame" x="15" y="72" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="15" y="66" width="37.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -131,6 +131,7 @@
                 <outlet property="agreeBtn" destination="OUx-E1-x5i" id="WED-mt-8dD"/>
                 <outlet property="bgView" destination="wfo-Lj-bVo" id="QVq-Qd-7iC"/>
                 <outlet property="contentBGView" destination="RIN-ET-yBB" id="RIZ-Q0-dXr"/>
+                <outlet property="contentBGViewConstraint" destination="tlg-3B-135" id="0bI-04-9mQ"/>
                 <outlet property="firstLab" destination="ybY-pO-asB" id="Lte-WH-QSm"/>
                 <outlet property="rejectBtn" destination="09E-bg-AV7" id="Kz9-Dh-e3S"/>
                 <outlet property="secondLab" destination="bjq-06-NMe" id="HW8-zi-a21"/>

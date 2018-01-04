@@ -35,7 +35,7 @@
     
     //保存按钮
     UIButton *createBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [createBtn setBackgroundColor:UIColor_black_33];
+    [createBtn setBackgroundColor:UICOLOR_MAIN_BLACK];
     [createBtn.layer setCornerRadius:5.f];
     [createBtn setTitle:@"创 建 企 业" forState:UIControlStateNormal];
     [createBtn addTarget:self action:@selector(createEnterpriseBtn:) forControlEvents:UIControlEventTouchUpInside];

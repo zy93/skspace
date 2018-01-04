@@ -18,7 +18,7 @@
     NSLog(@"%lf",CGRectGetWidth(self.iconIV.frame)/2);
     self.agreeBtn.layer.cornerRadius = 2.f;
     self.agreeBtn.layer.borderWidth = 0.5f;
-    self.agreeBtn.layer.borderColor = UIColor_gray_89.CGColor;
+    self.agreeBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

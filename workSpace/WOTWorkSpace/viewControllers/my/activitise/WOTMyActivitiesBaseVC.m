@@ -30,7 +30,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.tableHeaderView.backgroundColor = CLEARCOLOR;
+    self.tableView.tableHeaderView.backgroundColor = UICOLOR_CLEAR;
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyActivitiesCell" bundle:nil] forCellReuseIdentifier:@"WOTMyActivitiesCellID"];
   
     

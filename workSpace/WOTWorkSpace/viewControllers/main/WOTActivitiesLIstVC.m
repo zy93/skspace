@@ -31,8 +31,8 @@
 bool ismenu1 =  NO;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = MainColor;
-    self.tableVIew.backgroundColor = CLEARCOLOR;
+    self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
+    self.tableVIew.backgroundColor = UICOLOR_CLEAR;
     [self configNav];
 
     

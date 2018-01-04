@@ -30,8 +30,8 @@
     [super viewDidLoad];
   
     
-    self.view.backgroundColor = MainColor;
-    self.tableVIew.backgroundColor = CLEARCOLOR;
+    self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
+    self.tableVIew.backgroundColor = UICOLOR_CLEAR;
     self.tableVIew.showsVerticalScrollIndicator = NO;
     
     [WOTSingtleton shared].spaceCityArray = [NSMutableArray arrayWithObjects:@"全部", @"北京",@"上海",@"天津",@"深圳",@"北京",@"上海",@"天津",@"深圳",nil];

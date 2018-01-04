@@ -19,9 +19,9 @@
     _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, self.contentView.frame.size.height)];
     
     [_searchBar changeLeftPlaceholder:@"搜索城市或空间"];
-    [_searchBar setBarTintColor:White];
-    [_searchBar setTintColor:White];
-    [_searchBar setBackgroundColor:White];
+    [_searchBar setBarTintColor:UICOLOR_WHITE];
+    [_searchBar setTintColor:UICOLOR_WHITE];
+    [_searchBar setBackgroundColor:UICOLOR_WHITE];
     _searchBar.delegate = self;
     _searchBar.searchBarStyle = UISearchBarStyleMinimal; 
     _searchBar.layer.borderWidth = 0;
@@ -42,7 +42,7 @@
             }
         }
     }
-    _searchField.backgroundColor = MainColor;
+    _searchField.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     
     [self.contentView addSubview:_searchBar];
 

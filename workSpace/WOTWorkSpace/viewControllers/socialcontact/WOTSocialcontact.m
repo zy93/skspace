@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = MainColor;
+    self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     [self configNavi];
     //解决布局空白问题
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
@@ -80,11 +80,11 @@
     [self addChildViewController:circle];
     
     SKFocusListViewController *circle1 = [[SKFocusListViewController alloc]init];
-    circle1.view.backgroundColor = White;
+    circle1.view.backgroundColor = UICOLOR_WHITE;
     [self addChildViewController:circle1];
     
     SKCommentViewController *circle2 = [[SKCommentViewController alloc]init];
-    circle2.view.backgroundColor = White;
+    circle2.view.backgroundColor = UICOLOR_WHITE;
     [self addChildViewController:circle2];
     
     

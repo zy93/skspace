@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = MainColor;
+    self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     [self configNavi];
     
     // Do any additional setup after loading the view.

@@ -16,10 +16,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _contactName.textColor = MainOrangeColor;
-    _time.textColor = MiddleTextColor;
-    _contactName.textColor = UIColor_black_33;
-    [_headerImage setCorenerRadius:_headerImage.frame.size.height/2 borderColor:CLEARCOLOR];
+    _contactName.textColor = UICOLOR_GRAY_66;
+    _time.textColor = UICOLOR_MAIN_TEXT;
+    _contactName.textColor = UICOLOR_MAIN_BLACK;
+    [_headerImage setCorenerRadius:_headerImage.frame.size.height/2 borderColor:UICOLOR_CLEAR];
     _collectionview.delegate = self;
     _collectionview.dataSource =self;
     [_collectionview setScrollEnabled:NO];

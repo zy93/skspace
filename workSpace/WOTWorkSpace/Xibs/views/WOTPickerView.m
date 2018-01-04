@@ -55,7 +55,7 @@
     [_baseView addSubview:toolView];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 39, SCREEN_WIDTH, .5f)];
-    [line setBackgroundColor:UIColorFromRGB(0x898989)];
+    [line setBackgroundColor:UICOLOR_GRAY_99];
     [toolView addSubview:line];
     
     _pickerV = [[UIPickerView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(toolView.frame), SCREEN_WIDTH, PICKERVIEW_HEIGHT-CGRectGetHeight(toolView.frame))];
@@ -65,11 +65,11 @@
     [_baseView addSubview:_pickerV];
     
     UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_pickerV.frame)/2+CGRectGetMinY(_pickerV.frame)-19, SCREEN_WIDTH, .5f)];
-    [line2 setBackgroundColor:UIColorFromRGB(0x898989)];
+    [line2 setBackgroundColor:UICOLOR_GRAY_99];
     [_baseView addSubview:line2];
     
     UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_pickerV.frame)/2+CGRectGetMinY(_pickerV.frame)+18.5, SCREEN_WIDTH, .5f)];
-    [line3 setBackgroundColor:UIColorFromRGB(0x898989)];
+    [line3 setBackgroundColor:UICOLOR_GRAY_99];
     [_baseView addSubview:line3];
     
     
@@ -81,7 +81,7 @@
     
     UIButton *btnCancel = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 40, 40)];
     [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
-    [btnCancel setTitleColor:UIColorFromRGB(0x898989) forState:UIControlStateNormal];
+    [btnCancel setTitleColor:UICOLOR_GRAY_99 forState:UIControlStateNormal];
     [btnCancel addTarget:self action:@selector(pickerViewBtnCancel:) forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:btnCancel];
     

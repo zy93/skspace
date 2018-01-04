@@ -78,7 +78,7 @@
         result = [adminList mutableCopy];
     }
     if (!strIsEmpty(employees)) {
-        NSString *a =  [NSString stringWithFormat:@"%@%@",employees,strIsEmpty(result)?@"":@","];
+        NSString *a =  [NSString stringWithFormat:@"%@%@",strIsEmpty(result)?@"":@",",employees];
         [result appendString:a];
     }
     if (strIsEmpty(result)) {

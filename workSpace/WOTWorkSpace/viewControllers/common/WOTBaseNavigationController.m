@@ -15,14 +15,14 @@
 
 -(instancetype)initWithRootViewController:(UIViewController *)rootViewController{
     if (self = [super initWithRootViewController:rootViewController]) {
-        self.navigationBar.barTintColor = NavigationBGColor;
+        self.navigationBar.barTintColor = UICOLOR_WHITE;
         [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:18]}];
         self.navigationItem.titleView = nil;
-        self.navigationBar.tintColor = UIColorFromRGB(0x888888);
+        self.navigationBar.tintColor = UICOLOR_GRAY_99;
         self.navigationBar.shadowImage = [[UIImage alloc]init];
         self.tabBarController.tabBar.tintColor = [UIColor blackColor];
         UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 0.5)];
-        line.backgroundColor = UIColor_black_b3;
+        line.backgroundColor = UICOLOR_MAIN_BLACK;
         [self.navigationBar addSubview:line];
     }
     return self;

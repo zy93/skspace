@@ -36,7 +36,7 @@ bool istags =  NO;
     [self configNav];
    
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTTEnterpriseListCell" bundle:nil] forCellReuseIdentifier:@"WOTTEnterpriseListCellID"];
-    self.tableView.backgroundColor = MainColor;
+    self.tableView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.enterpriseTag.text = ((WOTFilterTypeModel *)self.menuArray[0]).filterName;
     self.enterpriseStyle.text = ((WOTFilterTypeModel *)self.stylemenuArray[0]).filterName;
     

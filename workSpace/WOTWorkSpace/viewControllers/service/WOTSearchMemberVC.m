@@ -37,7 +37,7 @@
     [self.searchBar setBackgroundImage:searchBarBg];
     UITextField *textField = [self.searchBar valueForKey:@"_searchField"];
     [textField.layer setCornerRadius:2.f];
-    [textField setBackgroundColor:UIColorFromRGB(0xf0f3f5)];
+    [textField setBackgroundColor:UICOLOR_GRAY_DD];
     [self.searchBar changeLeftPlaceholder:@" 请输入姓名"];
     
     //table

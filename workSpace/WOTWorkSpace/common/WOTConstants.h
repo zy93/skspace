@@ -34,42 +34,27 @@
 // 获取RGB颜色
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
 #define RGB(r,g,b) RGBA(r,g,b,1.0f)
+//清除颜色
+#define UICOLOR_CLEAR [UIColor clearColor]
+//白色
+#define UICOLOR_WHITE  [UIColor whiteColor]
+#define UICOLOR_BLACK  [UIColor blackColor]
 
-//背景色
-#define BACKGROUND_COLOR [UIColor colorWithRed:242.0/255.0 green:236.0/255.0 blue:231.0/255.0 alpha:1.0]
-
-//清除背景色
-#define CLEARCOLOR [UIColor clearColor]
-
-
-#define MainColor [UIColor colorWithRed:243.0/255.0 green:243.0/255.0 blue:243.0/255.0 alpha:1.0];
-
-//#define NavigationBGColor [UIColor colorWithRed:53.0/255.0 green:128.0/255.0 blue:81.0/255.0 alpha:1.0];
-#define NavigationBGColor [UIColor whiteColor]
-#define TabBGColor [UIColor colorWithRed:39.0/255.0 green:90.0/255.0 blue:134.0/255.0 alpha:1.0]
-#define LINE_COLOR [UIColor colorWithRed:214.0/255.0 green:214.0/255.0 blue:214.0/255.0 alpha:1.0]
-#define ViewBorderColor [UIColor colorWithRed:123.0/255.0 green:163.0/255.0 blue:238.0/255.0 alpha:1.0]
-#define InteligenceDeviceSelectedColor [UIColor colorWithRed:92.0/255.0 green:193.0/255.0 blue:57.0/255.0 alpha:1.0]
-#define White [UIColor whiteColor]
-#define Black [UIColor blackColor]
-#define UIColor_black_33   UIColorFromRGB(0x333333)
-#define MiddleTextColor UIColorFromRGB(0x666666)
-#define LowTextColor    UIColorFromRGB(0x888888)
-#define MainOrangeColor UIColorFromRGB(0x4087ee)
+#define UICOLOR_MAIN_BACKGROUND UIColorFromRGB(0xf9f9f9) //主背景色
+#define UICOLOR_MAIN_TEXT       UIColorFromRGB(0x363636) //主文字颜色(普通文字)
+#define UICOLOR_MAIN_BLACK      UIColorFromRGB(0x333333) //黑色，需要突出使用的。
+#define UICOLOR_MAIN_ORANGE     UIColorFromRGB(0xff5907) //主橙色
+#define UICOLOR_MAIN_PINK       UIColorFromRGB(0xff7171) //主粉色
+#define UICOLOR_MAIN_LINE       UIColorFromRGB(0xeeeeee) //主线条使用
+#define UICOLOR_GRAY_66     UIColorFromRGB(0x666666) //灰色 中等等级，副标题。
+#define UICOLOR_GRAY_99     UIColorFromRGB(0x999999) //灰色 低等标题，底纹文字。
+#define UICOLOR_GRAY_DD     UIColorFromRGB(0xdddddd) //灰色 最不明显使用。
 
 
-#define UIColor_gray_d6 UIColorFromRGB(0xd6d6d6)
-#define UIColor_gray_f7 UIColorFromRGB(0xf7f7f7)
-#define UIColor_gray_89 UIColorFromRGB(0x898989)
-#define UIColor_gray_90 UIColorFromRGB(0x909090)
-#define UIColor_blue_40 UIColorFromRGB(0x4087ee)
-#define UIColor_green_12 UIColorFromRGB(0x12c700)
-#define UIColor_green_37 UIColorFromRGB(0x37c922)
-#define UIColor_black_b3 UIColorFromRGB(0xb3b3b3)
 
 //#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
-#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
-//#define HTTPBaseURL @"http://192.168.34.80:8080"//石宇驰
+//#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
+#define HTTPBaseURL @"http://192.168.34.80:8080"//石宇驰
 
 //集团的appid
 //#define YLGTEST_APPID @"c4ca4238a0b923820dcc509a6f75849b"//易联港测试

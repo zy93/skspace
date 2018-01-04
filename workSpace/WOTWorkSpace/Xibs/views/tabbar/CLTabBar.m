@@ -148,8 +148,8 @@
         
         
         
-        [_composeButton setTitleColor:UIColorFromRGB(0x535353) forState:UIControlStateNormal];
-        [_composeButton setTitleColor:UIColorFromRGB(0xfc410c) forState:UIControlStateHighlighted];
+        [_composeButton setTitleColor:UICOLOR_GRAY_66 forState:UIControlStateNormal];
+        [_composeButton setTitleColor:UICOLOR_MAIN_ORANGE forState:UIControlStateHighlighted];
         
         [_composeButton addTarget:self action:@selector(composeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [_composeButton setImage:[UIImage imageNamed:@"openDoor"] forState:UIControlStateNormal];

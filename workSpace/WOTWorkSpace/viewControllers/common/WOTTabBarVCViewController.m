@@ -94,7 +94,7 @@
     [vController.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateSelected];
     [vController.tabBarItem setTitleTextAttributes:dictHome forState:UIControlStateHighlighted];
 
-    NSDictionary *dic = @{NSForegroundColorAttributeName:UIColorFromRGB(0x656565),NSFontAttributeName:[UIFont fontWithName:@"Arial" size:10.f]};
+    NSDictionary *dic = @{NSForegroundColorAttributeName:UICOLOR_GRAY_66,NSFontAttributeName:[UIFont fontWithName:@"Arial" size:10.f]};
     [vController.tabBarItem setTitleTextAttributes:dic forState:UIControlStateNormal];
 
     

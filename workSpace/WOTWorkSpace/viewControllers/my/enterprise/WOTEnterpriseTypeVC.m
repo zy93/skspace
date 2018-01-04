@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = White;
+    self.view.backgroundColor = UICOLOR_WHITE;
     self.selectedArray = [NSMutableArray array];
     [self configNav];
     [self congitCollectionView];

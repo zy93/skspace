@@ -22,7 +22,7 @@
     [super awakeFromNib];
     _collectionVIew.delegate = self;
     _collectionVIew.dataSource = self;
-    self.contentView.backgroundColor = White;
+    self.contentView.backgroundColor = UICOLOR_WHITE;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(scrollToCity:) name:@"scrollToDestinationCity" object:nil];
     _moreImage.image = [UIImage imageNamed:@"mainmore_unselected"];
     [_moreBtn setSelected: NO];
@@ -67,8 +67,8 @@
         _collectionCell.cityName.textColor = RGBA(77.0, 139.0, 231.0, 1.0);
         [_collectionCell.cityName setCorenerRadius:10 borderColor:RGBA(77.0, 139.0, 231.0, 1.0)];
     } else {
-        _collectionCell.cityName.textColor = MiddleTextColor;
-        [_collectionCell.cityName setCorenerRadius:10 borderColor:MiddleTextColor];
+        _collectionCell.cityName.textColor = UICOLOR_MAIN_TEXT;
+        [_collectionCell.cityName setCorenerRadius:10 borderColor:UICOLOR_MAIN_TEXT];
     }
     
    
@@ -110,8 +110,8 @@
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
 //    WOTSpaceCityCollectionCell *cell = (WOTSpaceCityCollectionCell *) [collectionView cellForItemAtIndexPath:indexPath];
-//    cell.cityName.textColor = UIColor_black_33;
-//    [cell.cityName setCorenerRadius:10 borderColor:UIColor_black_33];
+//    cell.cityName.textColor = UICOLOR_MAIN_BLACK;
+//    [cell.cityName setCorenerRadius:10 borderColor:UICOLOR_MAIN_BLACK];
 }
 - (IBAction)moreAction:(id)sender {
     

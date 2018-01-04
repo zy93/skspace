@@ -27,10 +27,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        self.layer.borderColor = UIColorFromRGB(0xf0f0f0).CGColor;
+        self.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
         self.layer.borderWidth = 1.f;
         self.topBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height/2)];
-        self.topBgView.backgroundColor = UIColorFromRGB(0xf0f0f0);
+        self.topBgView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
         [self addSubview:self.topBgView];
         
         self.iconIV = [[UIImageView alloc] initWithFrame:CGRectMake(22, 22, 55, 55)];
@@ -54,14 +54,14 @@
         
         self.projectNameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.topBgView.frame)+15, 120, 18)];
         [self.projectNameLab setText:@"服务项目"];
-        [self.projectNameLab setTextColor:UIColorFromRGB(0xf0f0f0)];
+        [self.projectNameLab setTextColor:UICOLOR_MAIN_BACKGROUND];
         [self addSubview:self.projectNameLab];
         
         UILabel *la = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.projectNameLab.frame), CGRectGetMaxY(self.projectNameLab.frame)+13, 5*17, 25)];
         [la setTextAlignment:NSTextAlignmentCenter];
-        [la setTextColor:UIColorFromRGB(0xf0f0f0)];
+        [la setTextColor:UICOLOR_MAIN_BACKGROUND];
         [la.layer setCornerRadius:25/2];
-        [la.layer setBorderColor:UIColorFromRGB(0xf0f0f0).CGColor];
+        [la.layer setBorderColor:UICOLOR_MAIN_BACKGROUND.CGColor];
         [la.layer setBorderWidth:1.f];
         [la setFont:[UIFont systemFontOfSize:13.f]];
         [la setText:@"代理记账"];

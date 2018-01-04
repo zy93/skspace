@@ -16,6 +16,7 @@
 #import "WOTLoginVC.h"
 #import "WOTReservationsMeetingVC.h"
 #import "LoginViewController.h"
+#import "WOTMyAppointmentHistoryVC.h"
 
 @interface WOTMyVC ()<WOTOrderCellDelegate,WOTOMyCellDelegate, UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic,strong)WOTSettingVC *settingvc;
@@ -195,10 +196,17 @@
                 } else if (indexPath.row == 1){
                     WOTMyActivitiesVC *activityvc = [[WOTMyActivitiesVC alloc]init];
                     [self.navigationController pushViewController:activityvc animated:YES];
-                } else {
+                } else if (indexPath.row ==2) {
+                    WOTMyAppointmentHistoryVC *vc = [[WOTMyAppointmentHistoryVC alloc]init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else {
+                    
                     WOTMyHistoryVC *historyvc = [[WOTMyHistoryVC alloc]init];
                     [self.navigationController pushViewController:historyvc animated:YES];
                 }
+                
             default:
                 break;
         }

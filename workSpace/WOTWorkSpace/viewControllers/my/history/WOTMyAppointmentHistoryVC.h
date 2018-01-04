@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WOTTableViewBaseVC.h"
 
-@interface WOTMyAppointmentHistoryVC : UIViewController
+@interface WOTMyAppointmentHistoryVC : WOTTableViewBaseVC
 
 @end

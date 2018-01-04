@@ -21,15 +21,15 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    self.visitBtn.layer.borderColor = UIColor_blue_40.CGColor;
+    self.visitBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.visitBtn.layer.borderWidth = 1.f;
     self.visitBtn.layer.cornerRadius = 5.f;
     
-    self.visitEnterpriseBtn.layer.borderColor = UIColor_gray_89.CGColor;
+    self.visitEnterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.visitEnterpriseBtn.layer.borderWidth = 1.f;
     self.visitEnterpriseBtn.layer.cornerRadius = 5.f;
     
-    self.visitIndividualBtn.layer.borderColor = UIColor_gray_89.CGColor;
+    self.visitIndividualBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.visitIndividualBtn.layer.borderWidth = 1.f;
     self.visitIndividualBtn.layer.cornerRadius = 5.f;
 }
@@ -44,9 +44,9 @@
     self.visitBtn.selected = YES;
     self.visitEnterpriseBtn.selected = NO;
     self.visitIndividualBtn.selected = NO;
-    self.visitBtn.layer.borderColor = UIColor_blue_40.CGColor;
-    self.visitEnterpriseBtn.layer.borderColor = UIColor_gray_89.CGColor;
-    self.visitIndividualBtn.layer.borderColor = UIColor_gray_89.CGColor;
+    self.visitBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    self.visitEnterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    self.visitIndividualBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     if ([_delegate respondsToSelector:@selector(selectVisitType:type:)]) {
         [_delegate selectVisitType:self type:2];
     }
@@ -56,9 +56,9 @@
     self.visitBtn.selected = NO;
     self.visitEnterpriseBtn.selected = YES;
     self.visitIndividualBtn.selected = NO;
-    self.visitBtn.layer.borderColor = UIColor_gray_89.CGColor;
-    self.visitEnterpriseBtn.layer.borderColor = UIColor_blue_40.CGColor;
-    self.visitIndividualBtn.layer.borderColor = UIColor_gray_89.CGColor;
+    self.visitBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    self.visitEnterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    self.visitIndividualBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     if ([_delegate respondsToSelector:@selector(selectVisitType:type:)]) {
         [_delegate selectVisitType:self type:0];
     }
@@ -68,9 +68,9 @@
     self.visitBtn.selected = NO;
     self.visitEnterpriseBtn.selected = NO;
     self.visitIndividualBtn.selected = YES;
-    self.visitBtn.layer.borderColor = UIColor_gray_89.CGColor;
-    self.visitEnterpriseBtn.layer.borderColor = UIColor_gray_89.CGColor;
-    self.visitIndividualBtn.layer.borderColor = UIColor_blue_40.CGColor;
+    self.visitBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    self.visitEnterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    self.visitIndividualBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     if ([_delegate respondsToSelector:@selector(selectVisitType:type:)]) {
         [_delegate selectVisitType:self type:1];
     }

@@ -16,6 +16,7 @@
 
 @interface WOTLoginModel : JSONModel
 @property (nonatomic, strong) NSString *appId;//集团编号
+@property (nonatomic, strong) NSString *alias;
 @property (nonatomic, strong) NSString *birthDate;
 @property (nonatomic, strong) NSString *companyId;    //公司id，员工身份
 @property (nonatomic, strong) NSString *companyIdAdmin; //公司id，管理员身份

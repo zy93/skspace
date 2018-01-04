@@ -27,44 +27,6 @@
             </objects>
             <point key="canvasLocation" x="-2100" y="-227"/>
         </scene>
-        <!--My Appointment HistoryVC-->
-        <scene sceneID="hSm-Xv-lJ4">
-            <objects>
-                <viewController storyboardIdentifier="WOTMyAppointmentHistoryVC" id="pnA-EY-Hzw" customClass="WOTMyAppointmentHistoryVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Zhw-P3-lar"/>
-                        <viewControllerLayoutGuide type="bottom" id="bwG-j8-Y6I"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="qX8-y9-dN3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CUJ-D5-lV1">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="pnA-EY-Hzw" id="AQr-5W-LfC"/>
-                                    <outlet property="delegate" destination="pnA-EY-Hzw" id="HPA-GP-uie"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="CUJ-D5-lV1" secondAttribute="trailing" id="by8-Xm-7zP"/>
-                            <constraint firstItem="bwG-j8-Y6I" firstAttribute="top" secondItem="CUJ-D5-lV1" secondAttribute="bottom" id="izu-nh-f9y"/>
-                            <constraint firstItem="CUJ-D5-lV1" firstAttribute="leading" secondItem="qX8-y9-dN3" secondAttribute="leading" id="l54-qE-rtu"/>
-                            <constraint firstItem="CUJ-D5-lV1" firstAttribute="top" secondItem="qX8-y9-dN3" secondAttribute="top" id="tnK-xo-XAL"/>
-                        </constraints>
-                    </view>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <connections>
-                        <outlet property="tableView" destination="CUJ-D5-lV1" id="Jsa-aZ-cEF"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ln1-LU-fOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1420" y="-227"/>
-        </scene>
         <!--Enterprise TypeVC-->
         <scene sceneID="cxA-Dg-lcy">
             <objects>

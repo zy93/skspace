@@ -267,7 +267,7 @@
         return;
     }
     
-    [WOTHTTPNetwork userRegisterWitVerifyCode:self.registerVCodeText.text tel:self.registerTelTextField.text password:self.registerPWText.text response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork userRegisterWitVerifyCode:self.registerVCodeText.text tel:self.registerTelTextField.text password:self.registerPWText.text alias:[NSString stringWithFormat:@"%@C",self.registerTelTextField.text] response:^(id bean, NSError *error) {
         WOTRegisterModel *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"注册成功" toView:self.view];

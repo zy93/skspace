@@ -46,16 +46,16 @@
 
 -(void)getDataSourceFromWeb{
 //    [[WOTUserSingleton shareUser]setValues];
-   [WOTHTTPNetwork getMyAppointmentWithUserId:[[NSNumber alloc]initWithInt:[[WOTUserSingleton shareUser].userInfo.userId intValue]] response:^(id bean, NSError *error) {
-       if (bean) {
-           WOTAppointmentModel_msg *dd = (WOTAppointmentModel_msg *)bean;
-           _appintmentDataSource = dd.msg;
-           [self.tableView reloadData];
-       }
-       if (error) {
-           [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
-       }
-   }];
+//   [WOTHTTPNetwork getMyAppointmentWithUserId:[[NSNumber alloc]initWithInt:[[WOTUserSingleton shareUser].userInfo.userId intValue]] response:^(id bean, NSError *error) {
+//       if (bean) {
+//           WOTAppointmentModel_msg *dd = (WOTAppointmentModel_msg *)bean;
+//           _appintmentDataSource = dd.msg;
+//           [self.tableView reloadData];
+//       }
+//       if (error) {
+//           [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
+//       }
+//   }];
     
 }
 

@@ -225,7 +225,7 @@
         return;
     }
     
-    [WOTHTTPNetwork userLoginWithTelOrEmail:self.userTelField.text password:self.verificationCodeField.text response:^(id bean,NSError *error) {
+    [WOTHTTPNetwork userLoginWithTelOrEmail:self.userTelField.text password:self.verificationCodeField.text alias:[NSString stringWithFormat:@"%@C",self.userTelField.text] response:^(id bean,NSError *error) {
         NSLog(@"");
         if (bean) {
             WOTLoginModel_msg *model = (WOTLoginModel_msg *)bean;

@@ -47,7 +47,7 @@
 -(void)CreateSubViews
 {
     m_pBackView = [[UIView alloc] initWithFrame:self.bounds];
-    m_pBackView.backgroundColor = UIColorFromRGB(0x000000);
+    m_pBackView.backgroundColor = [UIColor blackColor];
     m_pBackView.alpha = 0.5;
     [self addSubview:m_pBackView];
     
@@ -55,11 +55,11 @@
     [m_pBackView addGestureRecognizer:tap];
     
     m_pShareView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height, self.frame.size.width, 200*[WOTUitls GetLengthAdaptRate])];
-    m_pShareView.backgroundColor = UIColorFromRGB(0xf2f2f2);
+    m_pShareView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     [self addSubview:m_pShareView];
     
     m_pIconView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, m_pShareView.frame.size.width, 140*[WOTUitls GetLengthAdaptRate])];
-    m_pIconView.backgroundColor = UIColorFromRGB(0xffffff);
+    m_pIconView.backgroundColor = UICOLOR_WHITE;
     [m_pShareView addSubview:m_pIconView];
     
     UIImage *pIconImg = [UIImage imageNamed:m_arrIcon[0]];
@@ -78,7 +78,7 @@
         
         UILabel *pTitleLab = [[UILabel alloc] initWithFrame:CGRectMake(fBackViewX + (i * (fIconSizeW+fBackViewInterval)), pButton.bottom + 13*[WOTUitls GetLengthAdaptRate], fIconSizeW, 12)];
         pTitleLab.text = m_arrTitle[i];
-        pTitleLab.textColor = UIColorFromRGB(0x2e5597);
+        pTitleLab.textColor = UICOLOR_MAIN_BLACK;
         pTitleLab.textAlignment = NSTextAlignmentCenter;
         pTitleLab.font = [UIFont fontWithName:@"Arial" size:11.0f];
         [m_pIconView addSubview:pTitleLab];
@@ -86,8 +86,8 @@
     
     m_pCancelBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, m_pIconView.bottom + 5*[WOTUitls GetLengthAdaptRate], self.width, 55*[WOTUitls GetLengthAdaptRate])];
     [m_pCancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [m_pCancelBtn setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [m_pCancelBtn setTitleColor:UIColorFromRGB(0x2e5597) forState:UIControlStateNormal];
+    [m_pCancelBtn setBackgroundColor:UICOLOR_WHITE];
+    [m_pCancelBtn setTitleColor:UICOLOR_MAIN_BLACK forState:UIControlStateNormal];
     [m_pCancelBtn addTarget:self action:@selector(ShowView) forControlEvents:UIControlEventTouchUpInside];
     [m_pShareView addSubview:m_pCancelBtn];
 }

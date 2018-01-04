@@ -14,7 +14,7 @@
 #import "WOTVisitorsAppointmentSubmitCell.h"
 #import "WOTRadioView.h"
 #import "WOTDatePickerView.h"
-#import "WOTVisitorsModel.h"
+#import "WOTAppointmentModel.h"
 #import "WOTConstants.h"
 #import "JudgmentTime.h"
 #import "WOTElasticityView.h"
@@ -103,8 +103,9 @@
     [self addShadowWith:self.accessDateBGView];
     self.contentBGView.layer.cornerRadius =radius;
     self.accessNumberText.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    self.contentBGView.backgroundColor = UIColorFromRGB(0xf1f1f1);
-    self.topView.backgroundColor = UIColorFromRGB(0xff7371);
+    self.telText.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.contentBGView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
+    self.topView.backgroundColor = UICOLOR_MAIN_ORANGE;
     topViewHeight = self.topViewHeightConstraints.constant;
     self.commitBtn.layer.cornerRadius = 5.f;
     temporarilyText = [[UITextField alloc]init];
@@ -194,11 +195,11 @@
 
 -(void)addShadowWith:(UIView *)view
 {
-    view.backgroundColor = UIColorFromRGB(0xe1e1e1);
+    view.backgroundColor = UICOLOR_BLACK;
     view.layer.borderWidth = 1.f;
-    view.layer.borderColor = UIColorFromRGB(0xcccccc).CGColor;
+    view.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     view.layer.cornerRadius =5.f;
-    view.layer.shadowColor = UIColorFromRGB(0xd5d5d5).CGColor;//shadowColor阴影颜色
+    view.layer.shadowColor = UICOLOR_BLACK.CGColor;//shadowColor阴影颜色
     view.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
     view.layer.shadowRadius = 3;//阴影半径，默认3
     view.layer.shadowOpacity = 1.f;//阴影透明度，默认0
@@ -340,11 +341,12 @@
         return;
     }
     
-    __weak typeof(self) weakSelf = self;
+//    __weak typeof(self) weakSelf = self;
     WOTVisitorsResultVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTVisitorsResultVC"];
 
     [MBProgressHUDUtil showLoadingWithMessage:@"请稍后" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
-        [WOTHTTPNetwork visitorAppointmentWithVisitorName:visitorName sex:sex tel:tel spaceId:self.spaceId accessType:type targetName:userName targetId:self.userModel.userId visitorInfo:visitorInfo peopleNum:number visitTime:tim response:^(id bean, NSError *error) {
+        
+        [WOTHTTPNetwork visitorAppointmentWithVisitorName:visitorName sex:sex tel:tel  spaceId:self.spaceId spaceName:self.spaceName accessType:type targetName:userName targetId:self.userModel.userId targetAlias:self.userModel.alias visitorInfo:visitorInfo peopleNum:number visitTime:tim response:^(id bean, NSError *error) {
             WOTVisitorsModel *model = bean;
             if ([model.code isEqualToString:@"200"]) {
                 vc.isSuccess = YES;
@@ -352,8 +354,8 @@
             else {
                 vc.isSuccess = NO;
             }
-            [weakSelf.navigationController pushViewController:vc animated:YES];
-
+            [hud hide:YES];
+            [self.navigationController pushViewController:vc animated:YES];
         }];
     }];
     

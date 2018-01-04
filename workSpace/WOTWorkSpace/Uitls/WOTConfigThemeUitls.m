@@ -47,7 +47,7 @@
         label.frame = CGRectMake(leading, top,[title widthWithFont:[UIFont systemFontOfSize:15]]+15, 30);
         label.text = title;
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = ViewBorderColor;
+        label.textColor = UICOLOR_MAIN_BLACK;
         [label setCorenerRadius:10 borderColor:[UIColor colorWithRed:123.0/255.0 green:163.0/255.0 blue:238.0/255.0 alpha:1.0]];
     
         [tagsView addSubview:label];
@@ -80,12 +80,8 @@
 
 //跳转到登录页面通用方法
 -(void)showLoginVC:(UIViewController *)persentVC{
-    
-    
-//    [persentVC presentViewController:self.nav animated:YES completion:^{
-//
-//    }];
     LoginViewController *loginVC = [[LoginViewController alloc] init];
+    loginVC.hidesBottomBarWhenPushed = YES;
     [persentVC.navigationController pushViewController:loginVC animated:YES];
 }
 

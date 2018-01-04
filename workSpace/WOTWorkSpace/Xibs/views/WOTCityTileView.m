@@ -31,10 +31,10 @@
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         
         
-        self.backgroundColor = CLEARCOLOR;
+        self.backgroundColor = UICOLOR_CLEAR;
         
         _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(frame.origin.x,0, SCREEN_WIDTH,[WOTSingtleton shared].spaceCityArray.count/4*50+50) collectionViewLayout:layout];
-        _collectionView.backgroundColor = White;
+        _collectionView.backgroundColor = UICOLOR_WHITE;
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         [self addSubview:_collectionView];
@@ -81,8 +81,8 @@
     
     collectionCell.cityName.text = [[WOTSingtleton shared].spaceCityArray objectAtIndex:indexPath.row];
    
-        collectionCell.cityName.textColor = MiddleTextColor;
-        [collectionCell.cityName setCorenerRadius:10 borderColor:MiddleTextColor];
+        collectionCell.cityName.textColor = UICOLOR_MAIN_TEXT;
+        [collectionCell.cityName setCorenerRadius:10 borderColor:UICOLOR_MAIN_TEXT];
 
     return collectionCell;
     

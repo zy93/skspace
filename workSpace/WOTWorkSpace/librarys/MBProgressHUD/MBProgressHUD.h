@@ -472,13 +472,13 @@ typedef void (^MBProgressHUDCompletionBlock)();
 
 /**
  * Indicator progress color.
- * Defaults to white [UIColor whiteColor]
+ * Defaults to UICOLOR_WHITE [UIColor whiteColor]
  */
 @property (nonatomic, MB_STRONG) UIColor *progressTintColor;
 
 /**
  * Indicator background (non-progress) color.
- * Defaults to translucent white (alpha 0.1)
+ * Defaults to translucent UICOLOR_WHITE (alpha 0.1)
  */
 @property (nonatomic, MB_STRONG) UIColor *backgroundTintColor;
 
@@ -502,7 +502,7 @@ typedef void (^MBProgressHUDCompletionBlock)();
 
 /**
  * Bar border line color.
- * Defaults to white [UIColor whiteColor].
+ * Defaults to UICOLOR_WHITE [UIColor whiteColor].
  */
 @property (nonatomic, MB_STRONG) UIColor *lineColor;
 
@@ -514,7 +514,7 @@ typedef void (^MBProgressHUDCompletionBlock)();
 
 /**
  * Bar progress color.
- * Defaults to white [UIColor whiteColor].
+ * Defaults to UICOLOR_WHITE [UIColor whiteColor].
  */
 @property (nonatomic, MB_STRONG) UIColor *progressColor;
 

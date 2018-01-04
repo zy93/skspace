@@ -21,21 +21,21 @@
     self.contentBGView.layer.shadowOffset = CGSizeMake(1, 1);
     self.contentBGView.layer.cornerRadius = 4.f;
     
-    [self.openBtn setImage:[[UIImage imageNamed:@"curtain_on_icon"] imageWithColor:UIColor_gray_90] forState:UIControlStateNormal];
-    [self.openBtn setImage:[[UIImage imageNamed:@"curtain_on_icon"] imageWithColor:UIColor_green_37] forState:UIControlStateSelected];
-    [self.openBtn setTitleColor:UIColor_gray_90  forState:UIControlStateNormal];
-    [self.openBtn setTitleColor:UIColor_green_37 forState:UIControlStateSelected];
+    [self.openBtn setImage:[[UIImage imageNamed:@"curtain_on_icon"] imageWithColor:UICOLOR_GRAY_99] forState:UIControlStateNormal];
+    [self.openBtn setImage:[[UIImage imageNamed:@"curtain_on_icon"] imageWithColor:UICOLOR_GRAY_99] forState:UIControlStateSelected];
+    [self.openBtn setTitleColor:UICOLOR_GRAY_99  forState:UIControlStateNormal];
+    [self.openBtn setTitleColor:UICOLOR_GRAY_99 forState:UIControlStateSelected];
     
     
-    [self.stopBtn setImage:[[UIImage imageNamed:@"stop_icon"] imageWithColor:UIColor_gray_90] forState:UIControlStateNormal];
-    [self.stopBtn setImage:[[UIImage imageNamed:@"stop_icon"] imageWithColor:UIColor_green_37] forState:UIControlStateSelected];
-    [self.stopBtn setTitleColor:UIColor_gray_90  forState:UIControlStateNormal];
-    [self.stopBtn setTitleColor:UIColor_green_37 forState:UIControlStateSelected];
+    [self.stopBtn setImage:[[UIImage imageNamed:@"stop_icon"] imageWithColor:UICOLOR_GRAY_99] forState:UIControlStateNormal];
+    [self.stopBtn setImage:[[UIImage imageNamed:@"stop_icon"] imageWithColor:UICOLOR_GRAY_99] forState:UIControlStateSelected];
+    [self.stopBtn setTitleColor:UICOLOR_GRAY_99  forState:UIControlStateNormal];
+    [self.stopBtn setTitleColor:UICOLOR_GRAY_99 forState:UIControlStateSelected];
     
-    [self.offBtn setImage:[[UIImage imageNamed:@"curtain_off_icon"] imageWithColor:UIColor_gray_90] forState:UIControlStateNormal];
-    [self.offBtn setImage:[[UIImage imageNamed:@"curtain_off_icon"] imageWithColor:UIColor_green_37] forState:UIControlStateSelected];
-    [self.offBtn setTitleColor:UIColor_gray_90  forState:UIControlStateNormal];
-    [self.offBtn setTitleColor:UIColor_green_37 forState:UIControlStateSelected];
+    [self.offBtn setImage:[[UIImage imageNamed:@"curtain_off_icon"] imageWithColor:UICOLOR_GRAY_99] forState:UIControlStateNormal];
+    [self.offBtn setImage:[[UIImage imageNamed:@"curtain_off_icon"] imageWithColor:UICOLOR_GRAY_99] forState:UIControlStateSelected];
+    [self.offBtn setTitleColor:UICOLOR_GRAY_99  forState:UIControlStateNormal];
+    [self.offBtn setTitleColor:UICOLOR_GRAY_99 forState:UIControlStateSelected];
     
     self.openBtn.selected = YES;
 }

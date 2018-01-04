@@ -36,7 +36,7 @@
     _passwordText.delegate = self;
     self.loginBtn.layer.cornerRadius = 8;
     self.registerBtn.layer.cornerRadius = 8;
-    self.registerBtn.layer.borderColor = UIColorFromRGB(0x4088ef).CGColor;
+    self.registerBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.registerBtn.layer.borderWidth = 1.f;
    
     [_showPasswordBtn setImage:[UIImage imageNamed:@"eye_close_icon"] forState:UIControlStateNormal];
@@ -102,7 +102,7 @@
         } else {
             [MBProgressHUDUtil showLoadingWithMessage:@"登录中..." toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
                 
-                [WOTHTTPNetwork userLoginWithTelOrEmail:self.accountText.text password:self.passwordText.text response:^(id bean,NSError *error) {
+                [WOTHTTPNetwork userLoginWithTelOrEmail:self.accountText.text password:self.passwordText.text alias:[NSString stringWithFormat:@"%@C",self.passwordText.text] response:^(id bean,NSError *error) {
                     [hud setHidden:YES];
                     NSLog(@"");
                     if (bean) {

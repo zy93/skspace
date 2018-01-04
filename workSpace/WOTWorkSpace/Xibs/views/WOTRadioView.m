@@ -117,7 +117,7 @@ typedef void (^WOTAnimationCompletionBlock)(BOOL); // Internal.
         UIView *circleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
         circleView.center = CGPointMake(CGRectGetMaxX(otherButton.bounds)-10, CGRectGetHeight(otherButton.bounds)*0.5f);
         circleView.layer.cornerRadius = 5;
-        circleView.backgroundColor = LowTextColor;
+        circleView.backgroundColor = UICOLOR_GRAY_99;
         [otherButton addSubview:circleView];
         if (i < self.otherButtons.count-1) {
             otherButtonRect = CGRectMake(CGRectGetMinX(otherButton.frame) , CGRectGetMaxY(otherButton.frame),CGRectGetWidth(otherButton.frame), WOTOtherButtonDefaultHeight);

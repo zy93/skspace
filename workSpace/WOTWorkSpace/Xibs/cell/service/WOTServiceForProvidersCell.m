@@ -24,7 +24,7 @@
         [self setSeparatorInset:UIEdgeInsetsZero];
     }
     UIImage *im = self.arrowIV.image;
-    im = [im imageWithColor:UIColorFromRGB(0xFF5908)];
+    im = [im imageWithColor:UICOLOR_MAIN_ORANGE];
     [self.arrowIV setImage:im];
 }
 

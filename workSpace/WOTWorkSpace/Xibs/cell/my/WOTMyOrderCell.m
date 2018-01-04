@@ -26,8 +26,8 @@
 //    self.viewWidth.constant = SCREEN_WIDTH/2;
 //    self.mettingroomView.backgroundColor = CLEARCOLOR;
 //    self.stationView.backgroundColor = CLEARCOLOR;
-//    self.mettingroomLabel.textColor = LowTextColor;
-//    self.stationLabel.textColor = LowTextColor;
+//    self.mettingroomLabel.textColor = UICOLOR_GRAY_99;
+//    self.stationLabel.textColor = UICOLOR_GRAY_99;
     // Initialization code
 }
 

@@ -36,11 +36,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.zsImagePicker.zs_delegate = self;
-    self.view.backgroundColor = MainColor;
-    self.tableView.backgroundColor = CLEARCOLOR;
+    self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
+    self.tableView.backgroundColor = UICOLOR_CLEAR;
     [self setupView];
      selectedPhotoArray = [[NSMutableArray alloc]init];
-    [_submitBtn setCorenerRadius:8.0 borderColor:CLEARCOLOR];
+    [_submitBtn setCorenerRadius:8.0 borderColor:UICOLOR_CLEAR];
     [self configNav];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTApplyRepairCell" bundle:nil] forCellReuseIdentifier:@"WOTApplyRepairCellID"];
       [selectedPhotoArray addObject:[UIImage imageNamed:@"addPhoto"]];

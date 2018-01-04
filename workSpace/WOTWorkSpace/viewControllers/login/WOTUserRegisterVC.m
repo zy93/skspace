@@ -38,11 +38,11 @@
     // Do any additional setup after loading the view.
     
     self.registerBtn.layer.cornerRadius = 8;
-    self.registerBtn.layer.borderColor = UIColorFromRGB(0x4088ef).CGColor;
+    self.registerBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.registerBtn.layer.borderWidth = 1.f;
     
     self.getVerificationCodeBtn.layer.cornerRadius = 8;
-    self.getVerificationCodeBtn.layer.borderColor = UIColorFromRGB(0x888888).CGColor;
+    self.getVerificationCodeBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.getVerificationCodeBtn.layer.borderWidth = 1.f;
     
     [[WOTConfigThemeUitls shared] touchViewHiddenKeyboard:self.view];
@@ -154,7 +154,7 @@
     else {
         {
             
-            [WOTHTTPNetwork userRegisterWitVerifyCode:self.verificationCodeText.text tel:self.phoneText.text password:self.passwordText.text response:^(id bean, NSError *error) {
+            [WOTHTTPNetwork userRegisterWitVerifyCode:self.verificationCodeText.text tel:self.phoneText.text password:self.passwordText.text alias:[NSString stringWithFormat:@"%@C",self.phoneText.text] response:^(id bean, NSError *error) {
                 WOTRegisterModel *model = bean;
                 if ([model.code isEqualToString:@"200"]) {
                     [MBProgressHUDUtil showMessage:@"注册成功" toView:self.view];

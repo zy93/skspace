@@ -14,7 +14,7 @@
     [super awakeFromNib];
     // Initialization code
     self.submitBtn.layer.cornerRadius = 5.f;
-//    self.backgroundColor = UIColor_gray_d6;
+//    self.backgroundColor = UICOLOR_MAIN_LINE;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 

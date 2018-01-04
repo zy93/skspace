@@ -25,7 +25,7 @@
  
     _nameLabel = [[UILabel alloc]init];
     _nameLabel.font = [UIFont systemFontOfSize:14];
-    _nameLabel.textColor = UIColor_black_33;
+    _nameLabel.textColor = UICOLOR_MAIN_BLACK;
     _nextImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"backAcssory"]];
     _cellImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"enterprise"]];
     _cellImage.contentMode = UIViewContentModeScaleAspectFit;

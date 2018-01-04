@@ -34,7 +34,7 @@
     [WOTConfigThemeUitls shared].hiddenKeyboardBlcok = ^(){
         [self.textView resignFirstResponder];
         [self.phoneText resignFirstResponder];
-        _textView.textColor = LowTextColor;
+        _textView.textColor = UICOLOR_GRAY_99;
         if ([_textView.text isEqualToString:@""]||[_textView.text isEqualToString:FeedTextViewPlaceholder]) {
             _textView.text = FeedTextViewPlaceholder;
         }
@@ -120,7 +120,7 @@
     if ([_textView.text isEqualToString:FeedTextViewPlaceholder]) {
         _textView.text = @"";
     }
-    _textView.textColor = Black;
+    _textView.textColor = UICOLOR_MAIN_BLACK;
     return YES;
 }
 

@@ -176,7 +176,7 @@ int a = 0;
     self.scrollVIew.delegate = self;
     self.scrollVIew.showsHorizontalScrollIndicator = NO;
     self.scrollVIew.showsVerticalScrollIndicator = NO;
-    self.scrollVIew.backgroundColor = MainColor;
+    self.scrollVIew.backgroundColor = UICOLOR_MAIN_BACKGROUND;
 }
 
 #pragma mark -- 获取最近空间
@@ -206,9 +206,9 @@ int a = 0;
     for (int i = 0; i < [WOTSingtleton shared].ballTitle.count; i++) {
         UIView * subview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80,80)];
 //        subview.backgroundColor = UIColorFromRGB(0x86d3ff);
-        subview.backgroundColor = CLEARCOLOR;
+        subview.backgroundColor = UICOLOR_CLEAR;
       
-        [subview setCorenerRadius:subview.frame.size.width/2 borderColor:CLEARCOLOR];
+        [subview setCorenerRadius:subview.frame.size.width/2 borderColor:UICOLOR_CLEAR];
         UIImageView *bgimage = [[UIImageView alloc]initWithFrame:subview.bounds];
         [bgimage setImage:[UIImage imageNamed:@"ball_iconbgimage"]];
         [subview addSubview:bgimage];
@@ -223,10 +223,10 @@ int a = 0;
         [subview addSubview:title];
         UIButton *subbtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80,80)];
         
-        [subbtn setBackgroundColor:CLEARCOLOR];
+        [subbtn setBackgroundColor:UICOLOR_CLEAR];
         subbtn.alpha = 0.5;
         subbtn.tag = i;
-        [subbtn setCorenerRadius:subbtn.frame.size.width/2 borderColor:CLEARCOLOR];
+        [subbtn setCorenerRadius:subbtn.frame.size.width/2 borderColor:UICOLOR_CLEAR];
         [subbtn addTarget:self action:@selector(subVClick:) forControlEvents:UIControlEventTouchUpInside];
         [subview addSubview:subbtn];
         [views addObject:subview];

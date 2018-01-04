@@ -13,18 +13,18 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.bgview1.layer.borderColor = UIColorFromRGB(0xdddddd).CGColor;
+    self.bgview1.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.bgview1.layer.borderWidth = 1.f;
-    self.bgview2.layer.borderColor = UIColorFromRGB(0xdddddd).CGColor;
+    self.bgview2.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.bgview2.layer.borderWidth = 1.f;
-    self.bgview3.layer.borderColor = UIColorFromRGB(0xdddddd).CGColor;
+    self.bgview3.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.bgview3.layer.borderWidth = 1.f;
     
-    self.ico1.layer.borderColor = UIColorFromRGB(0xdddddd).CGColor;
+    self.ico1.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.ico1.layer.borderWidth = 1.f;
-    self.ico2.layer.borderColor = UIColorFromRGB(0xdddddd).CGColor;
+    self.ico2.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.ico2.layer.borderWidth = 1.f;
-    self.ico3.layer.borderColor = UIColorFromRGB(0xdddddd).CGColor;
+    self.ico3.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.ico3.layer.borderWidth = 1.f;
     
     self.selectTimeScroll.mDelegate = self;

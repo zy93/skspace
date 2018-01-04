@@ -7,6 +7,7 @@
 //
 
 #import "WOTVisitorsResultVC.h"
+#import "WOTMyAppointmentHistoryVC.h"
 
 @interface WOTVisitorsResultVC ()
 @property (weak, nonatomic) IBOutlet UIImageView *iconIV;
@@ -22,11 +23,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.gotoMainVCBtn.layer.cornerRadius = 4.f;
-    self.gotoMainVCBtn.layer.borderColor = UIColor_black_b3.CGColor;
+    self.gotoMainVCBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.gotoMainVCBtn.layer.borderWidth = 0.5f;
     
     self.otherBtn.layer.cornerRadius = 4.f;
-    self.otherBtn.layer.borderColor = UIColor_black_b3.CGColor;
+    self.otherBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.otherBtn.layer.borderWidth = 0.5f;
     
     
@@ -34,11 +35,13 @@
         [self.iconIV setImage:[UIImage imageNamed:@"success"]];
         self.resultLab.text = @"您的预约申请已发送，请等待对方审核结果";
         [self.otherBtn setTitle:@"查看我的预约" forState:UIControlStateNormal];
+        self.navigationItem.title = @"申请已提交";
     }
     else {
         [self.iconIV setImage:[UIImage imageNamed:@"fail"]];
         self.resultLab.text = @"您的预约申请失败，请稍后再试";
         [self.otherBtn setTitle:@"返回" forState:UIControlStateNormal];
+        self.navigationItem.title = @"申请提交失败";
     }
     
 }
@@ -57,7 +60,13 @@
 
 - (IBAction)otherBtn:(id)sender {
     if (self.isSuccess) {
-        
+        //goto history
+        WOTMyAppointmentHistoryVC *vc = [[WOTMyAppointmentHistoryVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else {
+        //back
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

@@ -16,9 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.scrollView.backgroundColor = Black;
-    self.imageView.backgroundColor = Black;
-    self.view.backgroundColor = Black;
+    self.scrollView.backgroundColor = UICOLOR_MAIN_BLACK;
+    self.imageView.backgroundColor = UICOLOR_MAIN_BLACK;
+    self.view.backgroundColor = UICOLOR_MAIN_BLACK;
     _mainimageurl = @"";
     
     if (_mainimage) {

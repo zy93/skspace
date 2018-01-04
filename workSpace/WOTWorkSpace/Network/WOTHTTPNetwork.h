@@ -18,9 +18,10 @@ typedef void(^response)(id bean,NSError *error);
  * 登录接口
  @param telOrEmail  登录账号手机号或邮箱
  @param pwd         登录密码 md5加密
+ @param alias       用户设备alias
  @param response    回调数据到上层
  */
-+(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd response:(response)response;
++(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd alias:(NSString *)alias response:(response)response;
 
 /**
  * 发送手机验证码
@@ -33,9 +34,10 @@ typedef void(^response)(id bean,NSError *error);
  @param code 验证码
  @param tel  手机号注册
  @param pass 用户密码
+ @param alias       用户设备alias
  @param response    回调数据到上层
  */
-+(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass response:(response)response;
++(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass alias:(NSString *)alias response:(response)response;
 
 /**
  * 修改密码接口
@@ -245,6 +247,8 @@ typedef void(^response)(id bean,NSError *error);
 
 +(void)getFlexSliderSouceInfo:(response)response;
 
+
+#pragma mark - 访客
 /**
  访客申请
 
@@ -255,14 +259,46 @@ typedef void(^response)(id bean,NSError *error);
  @param accessType 访问类型
  @param targetName 受访者姓名
  @param targetId 受访者userId
+ @param targetAlias 受访者alias
  @param visitorInfo 访问事由
  @param peopleNum 访问人数
  @param time 到访时间
  @param response 响应回调
  */
-+(void)visitorAppointmentWithVisitorName:(NSString *)name sex:(NSString *)sex tel:(NSString *)tel spaceId:(NSNumber *)spaceId accessType:(NSNumber *)accessType targetName:(NSString *)targetName targetId:(NSNumber *)targetId visitorInfo:(NSString *)visitorInfo peopleNum:(NSNumber *)peopleNum visitTime:(NSString *)time response:(response)response;
++(void)visitorAppointmentWithVisitorName:(NSString *)name
+                                     sex:(NSString *)sex
+                                     tel:(NSString *)tel
+                                 spaceId:(NSNumber *)spaceId
+                               spaceName:(NSString *)spaceName
+                              accessType:(NSNumber *)accessType
+                              targetName:(NSString *)targetName
+                                targetId:(NSNumber *)targetId
+                             targetAlias:(NSString *)targetAlias
+                             visitorInfo:(NSString *)visitorInfo
+                               peopleNum:(NSNumber *)peopleNum
+                               visitTime:(NSString *)time
+                                response:(response)response;
+
+
 /**
- *  添加企业
+ *获取我的预约 （我发出的+我收到的）
+ @param response 响应回调
+ */
++(void)getMyAppointmentResponse:(response)response;
+
+
+/**
+ 处理访客预约
+
+ @param visitorId 预约id
+ @param result 处理结果
+ @param response 响应回调
+ */
++(void)disposeAppointmentWithVisitorId:(NSNumber *)visitorId result:(NSString *)result response:(response)response;
+
+
+/**
+ *  添加服务商
  */
 +(void)addBusinessWithLogo:(UIImage*)logo name:(NSString*)name type:(NSString *)type contactName:(NSString*)contactName contactTel:(NSString *)contactTel contactEmail:(NSString*)email response:(response)response;
 
@@ -348,12 +384,7 @@ typedef void(^response)(id bean,NSError *error);
 +(void)postRepairApplyWithUserId:(NSNumber *)userId type:(NSString *)type info:(NSString *)info appointmentTime:(NSString *)appointmentTime address:(NSString *)address file:(NSArray<UIImage *> *)file alias:(NSString *)alias  response:(response)response;
 
 
-/**
- *我的历史--我的预约
- */
 
-
-+(void)getMyAppointmentWithUserId:(NSNumber *)userId   response:(response)response;
 
 
 #pragma mark - 订单

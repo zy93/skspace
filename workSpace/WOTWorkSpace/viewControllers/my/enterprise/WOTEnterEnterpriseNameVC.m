@@ -114,7 +114,7 @@
         UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
         UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 30)];
         [lab setFont:[UIFont systemFontOfSize:12]];
-        [lab setTextColor:UIColorFromRGB(0x999999)];
+        [lab setTextColor:UICOLOR_GRAY_99];
         lab.text = @"公司名称不能是已存在的哦！";
         [view addSubview:lab];
         return view;
@@ -123,7 +123,7 @@
         UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
         UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 30)];
         [lab setFont:[UIFont systemFontOfSize:12]];
-        [lab setTextColor:UIColorFromRGB(0x999999)];
+        [lab setTextColor:UICOLOR_GRAY_99];
         lab.text = @"没有更多的公司了！";
         [view addSubview:lab];
         return view;

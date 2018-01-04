@@ -44,8 +44,8 @@
     self.view.backgroundColor = RGBA(121.0, 121.0,121.0, 1.0);
     
     self.navigationItem.title = @"开门";
-    [_scanView setCorenerRadius:_scanView.frame.size.width/2 borderColor:CLEARCOLOR];
-    [_blueToothView setCorenerRadius:_blueToothView.frame.size.width/2 borderColor:CLEARCOLOR];
+    [_scanView setCorenerRadius:_scanView.frame.size.width/2 borderColor:UICOLOR_CLEAR];
+    [_blueToothView setCorenerRadius:_blueToothView.frame.size.width/2 borderColor:UICOLOR_CLEAR];
     _blueToothView.backgroundColor = RGBA(203.0, 203.0, 203.0, 1.0);
     _scanView.backgroundColor = RGBA(203.0, 203.0, 203.0, 1.0);
      _scanImage.image = [UIImage imageNamed:@"scan_selected"];

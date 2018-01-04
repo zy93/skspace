@@ -17,7 +17,7 @@
         [self setSeparatorInset:UIEdgeInsetsZero];
     }
     self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
-    self.selectedBackgroundView.backgroundColor = UIColorFromRGB(0xffffff);
+    self.selectedBackgroundView.backgroundColor = UICOLOR_WHITE;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

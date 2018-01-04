@@ -92,7 +92,6 @@
 		2A99FB621F258A0F00869732 /* WOTBookStationListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB5C1F258A0F00869732 /* WOTBookStationListModel.m */; };
 		2A99FB631F258A0F00869732 /* WOTMeetingListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB5E1F258A0F00869732 /* WOTMeetingListModel.m */; };
 		2A99FB641F258A0F00869732 /* WOTMeetingReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB601F258A0F00869732 /* WOTMeetingReservationsModel.m */; };
-		2A99FB671F258A4000869732 /* WOTVisitorsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB661F258A4000869732 /* WOTVisitorsModel.m */; };
 		2A99FB6A1F25C37E00869732 /* WOTVisitorsAppointmentSubmitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB691F25C37E00869732 /* WOTVisitorsAppointmentSubmitCell.m */; };
 		2A99FB701F25EA8300869732 /* WOTSocialContactsBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB6F1F25EA8300869732 /* WOTSocialContactsBean.m */; };
 		2A99FB761F25F2C000869732 /* WOTAppointmentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB751F25F2C000869732 /* WOTAppointmentModel.m */; };
@@ -569,8 +568,6 @@
 		2A99FB5E1F258A0F00869732 /* WOTMeetingListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMeetingListModel.m; sourceTree = "<group>"; };
 		2A99FB5F1F258A0F00869732 /* WOTMeetingReservationsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMeetingReservationsModel.h; sourceTree = "<group>"; };
 		2A99FB601F258A0F00869732 /* WOTMeetingReservationsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTMeetingReservationsModel.m; sourceTree = "<group>"; };
-		2A99FB651F258A4000869732 /* WOTVisitorsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTVisitorsModel.h; sourceTree = "<group>"; };
-		2A99FB661F258A4000869732 /* WOTVisitorsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTVisitorsModel.m; sourceTree = "<group>"; };
 		2A99FB681F25C37E00869732 /* WOTVisitorsAppointmentSubmitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTVisitorsAppointmentSubmitCell.h; sourceTree = "<group>"; };
 		2A99FB691F25C37E00869732 /* WOTVisitorsAppointmentSubmitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTVisitorsAppointmentSubmitCell.m; sourceTree = "<group>"; };
 		2A99FB6E1F25EA8300869732 /* WOTSocialContactsBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSocialContactsBean.h; sourceTree = "<group>"; };
@@ -1589,8 +1586,6 @@
 				2A99FB5E1F258A0F00869732 /* WOTMeetingListModel.m */,
 				2A99FB5F1F258A0F00869732 /* WOTMeetingReservationsModel.h */,
 				2A99FB601F258A0F00869732 /* WOTMeetingReservationsModel.m */,
-				2A99FB651F258A4000869732 /* WOTVisitorsModel.h */,
-				2A99FB661F258A4000869732 /* WOTVisitorsModel.m */,
 				E86592B71F346C170055ABC8 /* WOTServiceCategoryModel.h */,
 				E86592B81F346C170055ABC8 /* WOTServiceCategoryModel.m */,
 				E86245751F3D4FAB00CF0D9D /* WOTDeviceInfoModel.h */,
@@ -3556,7 +3551,6 @@
 				E85A85F61F0202460016FCA1 /* MBProgressHUD.m in Sources */,
 				E85E63431F3B0B650050ABB6 /* WOTBueToothManager.m in Sources */,
 				E8190DA81F0F69660000B07C /* WOTFeedBackLIstCell.m in Sources */,
-				2A99FB671F258A4000869732 /* WOTVisitorsModel.m in Sources */,
 				E8605CD71F1356BF005C09F4 /* UISearchBar+JCSearchBarPlaceholder.m in Sources */,
 				E8747AE21F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.m in Sources */,
 				C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */,

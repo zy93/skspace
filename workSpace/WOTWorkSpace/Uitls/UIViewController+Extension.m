@@ -52,7 +52,7 @@
             }
         }
     }
-    searchTextField.backgroundColor = MainColor;
+    searchTextField.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     [bgView addSubview:searchview];
     
     UIButton *butt = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -18,7 +18,7 @@
     [super viewDidLoad];
     [self loadSubViews];
     
-    self.view.backgroundColor = MainColor;
+    self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.showsHorizontalScrollIndicator = NO;
     // Do any additional setup after loading the view.
@@ -32,11 +32,11 @@
 }
 -(void)loadSubViews{
     self.tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    self.tableView.backgroundColor = CLEARCOLOR;
+    self.tableView.backgroundColor = UICOLOR_CLEAR;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.tableHeaderView.backgroundColor = CLEARCOLOR;
+    self.tableView.tableHeaderView.backgroundColor = UICOLOR_CLEAR;
     
     [self.view addSubview:_tableView];
 }

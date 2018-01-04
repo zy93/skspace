@@ -21,7 +21,6 @@
 #import "WOTMeetingReservationsModel.h"
 #import "WOTMyHistoryDemandsModel.h"
 #import "WOTBookStationListModel.h"
-#import "WOTVisitorsModel.h"
 #import "WOTAppointmentModel.h"
 #import "WOTGetVerifyModel.h"
 #import "WOTRegisterModel.h"
@@ -195,10 +194,12 @@
 
 
 //登录
-+(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd response:(response)response
++(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd alias:(NSString *)alias response:(response)response
 {
     NSDictionary *dic = @{@"tel" :telOrEmail,
-                          @"password":[WOTUitls md5HexDigestByString:pwd]};
+                          @"password":[WOTUitls md5HexDigestByString:pwd],
+                          @"alias":alias
+                          };
     NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/Login"];
     
     [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
@@ -218,11 +219,13 @@
     } response:response];
 }
 
-+(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass response:(response)response
++(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass alias:(NSString *)alias response:(response)response
 {
     NSDictionary *dic = @{@"tel":tel,
                           @"verifyNum": code,
-                          @"password":[WOTUitls md5HexDigestByString:pass]};
+                          @"password":[WOTUitls md5HexDigestByString:pass],
+                          @"alias":alias
+                          };
     NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/register"];
     
     [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
@@ -437,9 +440,12 @@
     NSDictionary * parameters = @{@"companyName":enterpriseName,
                                   @"companyType":enterpriseType,
                                   @"contacts":contactsName,
+                                  @"spaceId":@(-1),
                                   @"tel":tel,
                                   @"mailbox":email,
                                   };
+    
+    
     [self doFileRequestWithParameters:parameters useUrl:urlString image:@[enterpriseLogo] complete:^JSONModel *(id responseobj) {
         WOTBusinessModel *model = [[WOTBusinessModel alloc] initWithDictionary:responseobj error:nil];
         return model;
@@ -586,38 +592,68 @@
 }
 
 
+#pragma mark - 访客
 
-
-+(void)visitorAppointmentWithVisitorName:(NSString *)name sex:(NSString *)sex tel:(NSString *)tel spaceId:(NSNumber *)spaceId accessType:(NSNumber *)accessType targetName:(NSString *)targetName targetId:(NSNumber *)targetId visitorInfo:(NSString *)visitorInfo peopleNum:(NSNumber *)peopleNum visitTime:(NSString *)time response:(response)response
++(void)visitorAppointmentWithVisitorName:(NSString *)name sex:(NSString *)sex tel:(NSString *)tel spaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName accessType:(NSNumber *)accessType targetName:(NSString *)targetName targetId:(NSNumber *)targetId targetAlias:(NSString *)targetAlias visitorInfo:(NSString *)visitorInfo peopleNum:(NSNumber *)peopleNum visitTime:(NSString *)time response:(response)response
 {
     NSDictionary *dic = @{
                           @"visitorName":name,
                           @"visitorUserId":[WOTUserSingleton shareUser].userInfo.userId,
                           @"sex":sex,
                           @"visitorTel":tel,
+                          @"visitorAlias":[WOTUserSingleton shareUser].userInfo.alias,
+                          @"visitorInfo":visitorInfo,
                           @"spaceId":spaceId,
+                          @"spaceName":spaceName,
                           @"accessType":accessType,
                           @"targetName":targetName,
-                          @"visitInfo":visitorInfo,
+                          @"targetId":targetId,
                           @"peopleNum":peopleNum,
                           @"appointmentVisitTime":time,
                           @"infoState":@"0",
-                          @"targetAlias":@"aaaaaaaaaaaaaaaaa"
+                          @"targetAlias":targetAlias
                         };
-
     NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/addVisitorOrUpdate"];
     
     [self doRequestWithParameters:dic useUrl:registerurl complete:^JSONModel *(id responseobj) {
-        NSError *error = nil;
-        WOTVisitorsModel *model = [[WOTVisitorsModel alloc] initWithDictionary:responseobj error:&error];
-        if (response) {
-            response(model, nil);
-        }
+        WOTVisitorsModel *model = [[WOTVisitorsModel alloc] initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
     
 }
 
++(void)getMyAppointmentResponse:(response)response
+{
+    
+    NSString *applyurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/find"];
+    NSDictionary *parameters = @{
+                                 @"pageNo":@(1),
+                                 @"pageSize":@(1000),
+                                 @"userId":[WOTUserSingleton shareUser].userInfo.userId};
+    [self doRequestWithParameters:parameters useUrl:applyurl  complete:^JSONModel *(id responseobj) {
+        WOTAppointmentModel_msg *model = [[WOTAppointmentModel_msg alloc]initWithDictionary:responseobj error:nil];
+
+        return  model;
+    } response:response];
+}
+
++(void)disposeAppointmentWithVisitorId:(NSNumber *)visitorId result:(NSString *)result response:(response)response
+{
+    NSDictionary *dic = @{
+                          @"visitorId":visitorId,
+                          @"infoState":result,
+                          };
+    
+    NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/addVisitorOrUpdate"];
+    
+    [self doRequestWithParameters:dic useUrl:registerurl complete:^JSONModel *(id responseobj) {
+        WOTVisitorsModel *model = [[WOTVisitorsModel alloc] initWithDictionary:responseobj error:nil];
+        if (response) {
+            response(model, nil);
+        }
+        return model;
+    } response:response];
+}
 
 
 +(void)addBusinessWithLogo:(UIImage *)logo name:(NSString *)name type:(NSString *)type contactName:(NSString *)contactName contactTel:(NSString *)contactTel contactEmail:(NSString *)email response:(response)response
@@ -820,16 +856,7 @@
 }
 
 
-+(void)getMyAppointmentWithUserId:(NSNumber *)userId   response:(response)response{
-    
-    NSString *applyurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Visitor/findVisitorByUserId"];
-    NSDictionary *parameters = @{@"userId":userId};
-    [self doRequestWithParameters:parameters useUrl:applyurl  complete:^JSONModel *(id responseobj) {
-        WOTAppointmentModel_msg *model = [[WOTAppointmentModel_msg alloc]initWithDictionary:responseobj error:nil];
-        
-        return  model;
-    } response:response];
-}
+
 
 
 +(void)postRepairApplyWithUserId:(NSNumber *)userId type:(NSString *)type info:(NSString *)info appointmentTime:(NSString *)appointmentTime address:(NSString *)address file:(NSArray<UIImage *> *)file alias:(NSString *)alias  response:(response)response{
@@ -964,11 +991,7 @@
                                  @"circleMessage":circleMessage
                                  };
     [self doFileRequestWithParameters:parameters useUrl:url image:photosArray complete:^JSONModel *(id responseobj) {
-        NSError *error = nil;
-        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:&error];
-        if (response) {
-            response(model, nil);
-        }
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
 }

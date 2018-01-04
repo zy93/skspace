@@ -47,7 +47,7 @@
 
 - (void)setupUI {
     self.frame = [UIScreen mainScreen].bounds;
-    self.backgroundColor = UIColorFromRGB(0xf9f9f9);
+    self.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     
     
     NSString *str = @"人傻是打发斯蒂芬人傻是打发斯蒂芬人傻是打发斯蒂芬人傻是打发斯蒂芬人傻是打发斯蒂芬";

@@ -24,13 +24,13 @@
 {
     [super setSelected:selected];
     if (selected) {
-        [self setBackgroundColor:UIColor_blue_40];
+        [self setBackgroundColor:UICOLOR_MAIN_LINE];
         [self setImage:[UIImage imageNamed:@"time_selected"]  forState:UIControlStateNormal];
-        [self.layer setBorderColor:UIColor_blue_40.CGColor];
+        [self.layer setBorderColor:UICOLOR_MAIN_LINE.CGColor];
     }
     else {
         [self setBackgroundColor:[UIColor whiteColor]];
-        [self.layer setBorderColor:UIColor_gray_d6.CGColor];
+        [self.layer setBorderColor:UICOLOR_MAIN_LINE.CGColor];
     }
 }
 
@@ -38,7 +38,7 @@
 {
     [super setEnabled:enabled];
     if (!enabled) {
-        [self setBackgroundColor:UIColor_gray_d6];
+        [self setBackgroundColor:UICOLOR_MAIN_LINE];
         [self setImage:[UIImage imageNamed:@"time_invalid"]  forState:UIControlStateNormal];
     }
     else {
@@ -230,7 +230,7 @@
 {
     WOTScrollButton *button = [WOTScrollButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchUpInside];
-//    button.layer.borderColor = UIColor_gray_d6.CGColor;
+//    button.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
 //    button.layer.borderWidth = 1.f;
     if (title) {
         [button setTitle:title forState:UIControlStateNormal];
@@ -330,7 +330,7 @@
     
     CAShapeLayer *lineLayer = [CAShapeLayer layer];
     lineLayer.lineWidth = 1;
-    lineLayer.strokeColor = UIColorFromRGB(0xdddddd).CGColor;
+    lineLayer.strokeColor = UICOLOR_GRAY_DD.CGColor;
     lineLayer.path = linePath.CGPath;
     lineLayer.fillColor = nil; // 默认为blackColor
     [btn.layer addSublayer:lineLayer];
@@ -348,7 +348,7 @@
     
     CAShapeLayer *lineLayer = [CAShapeLayer layer];
     lineLayer.lineWidth = 1;
-    lineLayer.strokeColor = UIColorFromRGB(0xdddddd).CGColor;
+    lineLayer.strokeColor = UICOLOR_GRAY_DD.CGColor;
     lineLayer.path = linePath.CGPath;
     lineLayer.fillColor = nil; // 默认为blackColor
     [btn.layer addSublayer:lineLayer];

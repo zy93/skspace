@@ -135,7 +135,7 @@
     }
     self.confirmButton.layer.cornerRadius = 5.f;
     self.confirmButton.layer.borderWidth = 1.f;
-    self.confirmButton.layer.borderColor = [UIColor colorWithHexString:@"00a910"].CGColor;
+    self.confirmButton.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
 }
 
 -(void)creatDataPickerView

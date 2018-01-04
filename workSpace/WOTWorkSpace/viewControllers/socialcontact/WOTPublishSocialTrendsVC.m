@@ -47,8 +47,8 @@
         } else {
              [_textView.text stringByReplacingOccurrencesOfString:TextViewPlaceholder withString:@""];
         }
-        _textView.textColor = LowTextColor;
-        [self configNaviRightItemWithTitle:@"发布" textColor:MiddleTextColor];
+        _textView.textColor = UICOLOR_GRAY_99;
+        [self configNaviRightItemWithTitle:@"发布" textColor:UICOLOR_MAIN_TEXT];
     }];
     
     _collectionView.delegate = self;
@@ -122,9 +122,9 @@
 }
 
 -(void)themeDefatultConfi{
-    _textView.textColor = LowTextColor;
+    _textView.textColor = UICOLOR_GRAY_99;
     _textView.text = TextViewPlaceholder;
-    [self configNaviRightItemWithTitle:@"发布" textColor:MiddleTextColor];
+    [self configNaviRightItemWithTitle:@"发布" textColor:UICOLOR_MAIN_TEXT];
     
 }
 -(void)rightItemAction{
@@ -158,7 +158,7 @@
 
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     
-    [self configNaviRightItemWithTitle:@"发布" textColor:MainOrangeColor];
+    [self configNaviRightItemWithTitle:@"发布" textColor:UICOLOR_GRAY_66];
 
     if ([_textView.text isEqualToString:TextViewPlaceholder]) {
          _textView.text = @"";

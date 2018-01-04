@@ -12,8 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.infoTime.textColor = UIColor_black_33;
-    self.infoValue.textColor = UIColor_black_33;
+    self.infoTime.textColor = UICOLOR_MAIN_BLACK;
+    self.infoValue.textColor = UICOLOR_MAIN_BLACK;
     self.infoValue.userInteractionEnabled = YES;
     // Initialization code
 }

@@ -13,7 +13,7 @@
 -(void)awakeFromNib{
     [super awakeFromNib];
     
-    _headerTitle.textColor = UIColor_black_33;
+    _headerTitle.textColor = UICOLOR_MAIN_BLACK;
     
     
 }

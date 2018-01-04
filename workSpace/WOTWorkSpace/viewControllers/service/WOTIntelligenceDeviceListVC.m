@@ -118,7 +118,7 @@
             aircell.delegate = self;
             [aircell.cellSwitch setOn:airConditionOpen];
             aircell.bgview.hidden = !airConditionOpen;
-            [aircell.lowBtn setTitleColor:aircell.lowBtn.isSelected?InteligenceDeviceSelectedColor:UIColor_black_33 forState:UIControlStateNormal];
+            [aircell.lowBtn setTitleColor:aircell.lowBtn.isSelected?UICOLOR_GRAY_99:UICOLOR_MAIN_BLACK forState:UIControlStateNormal];
             
             commoncell = aircell;
         } else {

@@ -41,9 +41,9 @@ typedef NS_ENUM(NSInteger, XXPageTabIndicatorStyle) {
 @property (nonatomic, strong) UIColor *unSelectedColor;
 /*当前选中颜色*/
 @property (nonatomic, strong) UIColor *selectedColor;
-/*tab背景色，默认white*/
+/*tab背景色，默认UICOLOR_WHITE*/
 @property (nonatomic, strong) UIColor *tabBackgroundColor;
-/*body背景色，默认white*/
+/*body背景色，默认UICOLOR_WHITE*/
 @property (nonatomic, strong) UIColor *bodyBackgroundColor;
 /*是否打开body的边界弹动效果*/
 @property (nonatomic, assign) BOOL bodyBounces;

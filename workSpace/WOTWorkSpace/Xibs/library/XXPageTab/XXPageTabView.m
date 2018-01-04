@@ -127,7 +127,7 @@
                 
                     if (i < _tabItems.count-1) {
                         UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(tabItem.frame.size.width-1, 10, 1, tabItem.frame.size.height-20)];
-                        lineview.backgroundColor = UIColorFromRGB(0xd6d6d6);
+                        lineview.backgroundColor = UICOLOR_GRAY_DD;
                         [tabItem addSubview:lineview];
                     }
                 
@@ -167,8 +167,8 @@
     _tabItems = [NSMutableArray array];
     _tabBackgroundColor = [UIColor whiteColor];
     _bodyBackgroundColor = [UIColor whiteColor];
-    _unSelectedColor = UIColor_black_33;
-    _selectedColor = MainOrangeColor;
+    _unSelectedColor = UICOLOR_MAIN_BLACK;
+    _selectedColor = UICOLOR_GRAY_66;
     _isNeedRefreshLayout = YES;
     _isChangeByClick = NO;
     _bodyBounces = YES;
@@ -641,7 +641,7 @@
 - (UIView *)lineView {
     if(!_lineView) {
         _lineView = [UIView new];
-        _lineView.backgroundColor = UIColorFromRGB(0xd6d6d6);
+        _lineView.backgroundColor = UICOLOR_GRAY_DD;
     }
     return _lineView;
 }
