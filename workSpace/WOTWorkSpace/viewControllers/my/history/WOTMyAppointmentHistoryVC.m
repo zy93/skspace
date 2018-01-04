@@ -1,19 +1,19 @@
 //
-//  WOTAppointmentRemindPopView.m
+//  WOTMyAppointmentHistoryVC.m
 //  WOTWorkSpace
 //
 //  Created by 张姝枫 on 2017/8/3.
 //  Copyright © 2017年 北京物联港科技发展有限公司. All rights reserved.
 //
 
-#import "WOTAppointmentRemindPopView.h"
+#import "WOTMyAppointmentHistoryVC.h"
 #import "WOTMyAppointmentCell.h"
-@interface WOTAppointmentRemindPopView ()<UITableViewDelegate,UITableViewDataSource>
+@interface WOTMyAppointmentHistoryVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
-@implementation WOTAppointmentRemindPopView
+@implementation WOTMyAppointmentHistoryVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view.
 }
 -(void)configNav{
-    self.navigationItem.title = @"我的提醒";
+    self.navigationItem.title = @"我的预约";
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -38,11 +38,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTMyAppointmentCell *appointmentcell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyAppointmentCellID" forIndexPath:indexPath];
-    appointmentcell.appointmentCommunityValue.text =
-    @"aaa";
-    appointmentcell.appointmentObjectValue.text = @"bbb";
-    appointmentcell.appointmentTimeValue.text = @"2017-08-02 12:22:22";
-    appointmentcell.appointmentReasionValue.text = @"ccc";
+    
     return appointmentcell;
     
 }

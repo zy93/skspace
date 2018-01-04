@@ -26,15 +26,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTMyAppointmentCell *appointmentcell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyAppointmentCellID" forIndexPath:indexPath];
-    appointmentcell.appointmentCommunityLabel.text = @"报修类型:";
-    appointmentcell.appointmentCommunityValue.text = @"清洁";
-      appointmentcell.appontmentObjectLabel.text =@"报修位置:";
-    appointmentcell.appointmentObjectValue.text =@"2012旁边饮水机旁";
-    appointmentcell.appintmentTimeLabel.text = @"报修时间:";
-    appointmentcell.appointmentTimeValue.text = @"2017-07-11 12:30:23";
-    appointmentcell.appointmentReasionLabel.text = @"描      述:";
-    appointmentcell.appointmentReasionValue.text = @"讨论新项目需求";
-    [appointmentcell.remindmeBtn setTitle:@"尚未处理" forState:UIControlStateNormal];
     return appointmentcell;
     
 }

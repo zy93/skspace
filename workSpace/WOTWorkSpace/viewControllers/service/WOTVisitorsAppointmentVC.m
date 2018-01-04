@@ -20,6 +20,7 @@
 #import "WOTElasticityView.h"
 #import "WOTPickerView.h"
 #import "WOTSearchMemberVC.h"
+#import "WOTVisitorsResultVC.h"
 
 @interface WOTVisitorsAppointmentVC ()<UIScrollViewDelegate, WOTVisitTypeCellDelegate, WOTPickerViewDelegate, WOTPickerViewDataSource>
 {
@@ -339,16 +340,20 @@
         return;
     }
     
-    
+    __weak typeof(self) weakSelf = self;
+    WOTVisitorsResultVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTVisitorsResultVC"];
+
     [MBProgressHUDUtil showLoadingWithMessage:@"请稍后" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
         [WOTHTTPNetwork visitorAppointmentWithVisitorName:visitorName sex:sex tel:tel spaceId:self.spaceId accessType:type targetName:userName targetId:self.userModel.userId visitorInfo:visitorInfo peopleNum:number visitTime:tim response:^(id bean, NSError *error) {
             WOTVisitorsModel *model = bean;
             if ([model.code isEqualToString:@"200"]) {
-                
+                vc.isSuccess = YES;
             }
             else {
-                
+                vc.isSuccess = NO;
             }
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+
         }];
     }];
     
