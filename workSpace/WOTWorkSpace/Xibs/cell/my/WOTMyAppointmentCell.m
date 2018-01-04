@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [[WOTConfigThemeUitls shared] setLabelColorss:[NSArray arrayWithObjects:self.appintmentTimeLabel,self.appointmentTimeValue,self.appontmentObjectLabel,self.appointmentObjectValue,self.appointmentReasionLabel,self.appointmentReasionValue,self.appointmentCommunityLabel,self.appointmentCommunityValue,nil] withColor:HighTextColor];
+    [[WOTConfigThemeUitls shared] setLabelColorss:[NSArray arrayWithObjects:self.appintmentTimeLabel,self.appointmentTimeValue,self.appontmentObjectLabel,self.appointmentObjectValue,self.appointmentReasionLabel,self.appointmentReasionValue,self.appointmentCommunityLabel,self.appointmentCommunityValue,nil] withColor:UIColor_black_33];
     [_remindmeBtn setTitleColor:MainOrangeColor forState:UIControlStateNormal];
     [_remindmeBtn setCorenerRadius:10 borderColor:MainOrangeColor];
     self.contentView.backgroundColor = CLEARCOLOR;

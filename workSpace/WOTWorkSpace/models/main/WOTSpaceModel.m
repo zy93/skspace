@@ -14,25 +14,6 @@
 {
     return YES;
 }
-
--(instancetype)initWithSpaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName spaceDescribe:(NSString *)spaceDescribe city:(NSString *)city spaceSite:(NSString *)spaceSite fixPhone:(NSString *)fixPhone relationTel:(NSString *)relationTel spaceState:(NSNumber *)spaceState creationTime:(NSString *)creationTime spacePicture:(NSString *)spacePicture{
-    self = [super init];
-    if (self) {
-        self.spaceId = spaceId;
-        self.spaceName = spaceName;
-        self.spaceDescribe = spaceDescribe;
-        self.city = city;
-        self.spaceSite = spaceSite;
-        self.fixPhone = self.fixPhone;
-        self.relationTel = self.relationTel;
-        self.spaceState = self.spaceState;
-        self.creationTime = self.creationTime;
-        self.spacePicture  = self.spacePicture;
-        
-        
-    }
-    return  self;
-}
 @end
 
 @implementation WOTSpaceModel_m

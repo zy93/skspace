@@ -87,8 +87,8 @@
                 [MBProgressHUDUtil showMessage:@"提交失败，请稍后再试!" toView:self.view];
             }
             else {
-                WOTBaseModel *modle = (WOTBaseModel *)bean;
-                if ([modle.code isEqualToString:@"200"]) {
+                WOTBaseModel *model = (WOTBaseModel *)bean;
+                if ([model.code isEqualToString:@"200"]) {
                     [MBProgressHUD showMessage:@"提交成功,感谢您的宝贵意见！" toView:self.view hide:YES afterDelay:0.8f complete:^{
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self.navigationController popViewControllerAnimated:YES];

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOTPageMenuParentVC.h"
-@interface WORTMyEnterpriseVC : UIViewController
+
+@interface WOTMyEnterpriseVC : UIViewController
 
 @end

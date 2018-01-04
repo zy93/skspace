@@ -90,7 +90,7 @@ typedef void(^response)(id bean,NSError *error);
 /**
  通过空间id获取所有工位
 
- @param spaceID spaceId
+ @param spaceId spaceId
  @param response
  */
 +(void)getBookStationWithSpaceId:(NSNumber *)spaceId response:(response)response;
@@ -105,7 +105,7 @@ typedef void(^response)(id bean,NSError *error);
 
 //+(void)getSpaceWith
 
-
+#pragma mark - 企业
 /**
  * 获取空间下的友邻企业
  *@param spaceid  空间id
@@ -114,12 +114,65 @@ typedef void(^response)(id bean,NSError *error);
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response;
 
 /**
+ 搜索企业
+
+ @param name 企业名称
+ @param response 数据响应
+ */
++(void)searchEnterprisesWithName:(NSString *)name response:(response)response;
+
+/**
+ *我的--我的企业
+ @param companyId  企业id 登录接口返回用户的companyId+companyIdAdmin,字符串
+ @param response 响应回调
+ */
++(void)getUserEnterpriseWithCompanyId:(NSString *)companyId  response:(response)response;
+
+/**
+ 申请加入企业
+
+ @param enterpriseId 企业id
+ @param name 企业名称
+ @param response 响应回调
+ */
++(void)applyJoinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId enterpriseName:(NSString *)name response:(response)response;
+
+/**
+ 处理加入企业的申请
+ 
+ @param applyId 申请id
+ @param response 响应回调
+ */
++(void)disposeApplyJoinEnterprise:(NSNumber *)applyId response:(response)response;
+
+/**
+ 创建企业
+
+ @param enterpriseName 企业名称
+ @param enterpriseType 企业类型
+ @param enterpriseLogo 企业logo
+ @param contactsName 联系人
+ @param tel 联系电话
+ @param email 邮箱
+ @param response 响应回调
+ */
++(void)createEnterpriseWithEnterpriseName:(NSString *)enterpriseName enterpriseType:(NSString *)enterpriseType enterpriseLogo:(UIImage *)enterpriseLogo contactsName:(NSString *)contactsName contactsTel:(NSString *)tel contactsEmail:(NSString *)email response:(response)response;
+
+
+/**
+ 获取申请加入企业的请求
+
+ @param enterpriseIds 企业id，用『,』分割
+ @param response 响应回调
+ */
++(void)getApplyJoinEnterpriseListWithEnterpriseIds:(NSString *)enterpriseIds response:(response)response;
+
+/**
  *  获取活动列表  根据页码
  *  @param page 页码/每页查询10个数据
  *  @param response 回调数据返回上层
  */
 +(void)getActivitiesWithPage:(NSNumber *)page response:(response)response;
-
 
 /**
  * 获取全部资讯列表
@@ -143,6 +196,16 @@ typedef void(^response)(id bean,NSError *error);
  */
 
 +(void)getMyHistoryFeedBackData:(NSNumber *)userId response:(response)response;
+
+
+/**
+ 查询某空间内会员
+
+ @param name 会员名称
+ @param spaceId 空间id
+ @param response 返回响应
+ */
++(void)searchMemberWithName:(NSString *)name spaceId:(NSNumber *)spaceId response:(response)response;
 
 
 #pragma mark - 服务商
@@ -182,13 +245,22 @@ typedef void(^response)(id bean,NSError *error);
 
 +(void)getFlexSliderSouceInfo:(response)response;
 
-
 /**
- *  访客预约
+ 访客申请
+
+ @param name 访客姓名
+ @param sex 访客性别
+ @param tel 访客电话
+ @param spaceId 访问空间id
+ @param accessType 访问类型
+ @param targetName 受访者姓名
+ @param targetId 受访者userId
+ @param visitorInfo 访问事由
+ @param peopleNum 访问人数
+ @param time 到访时间
+ @param response 响应回调
  */
-+(void)visitorAppointmentWithVisitorName:(NSString *)name
-                            headPortrait:(UIImage *)head
-                                     sex:(NSString *)sex papersType:(NSNumber *)papersType papersNumber:(NSString *)papersNumber tel:(NSString *)tel spaceId:(NSNumber *)spaceId accessType:(NSNumber*)accessType userName:(NSString *)userName visitorInfo:(NSString*)visitorInfo peopleNum:(NSNumber*)peopleNum visitTime:(NSString*)time response:(response)response;
++(void)visitorAppointmentWithVisitorName:(NSString *)name sex:(NSString *)sex tel:(NSString *)tel spaceId:(NSNumber *)spaceId accessType:(NSNumber *)accessType targetName:(NSString *)targetName targetId:(NSNumber *)targetId visitorInfo:(NSString *)visitorInfo peopleNum:(NSNumber *)peopleNum visitTime:(NSString *)time response:(response)response;
 /**
  *  添加企业
  */
@@ -252,11 +324,7 @@ typedef void(^response)(id bean,NSError *error);
  *我的--我的活动
  */
 +(void)getUserActivitiseWithUserId:(NSNumber *)userId state:(NSString *)state response:(response)response;
-/**
-*我的--我的企业
- @param companyId  企业id 登录接口返回用户的companyId,字符串
-*/
-+(void)getUserEnterpriseWithCompanyId:(NSString *)companyId  response:(response)response;
+
 
 
 /**

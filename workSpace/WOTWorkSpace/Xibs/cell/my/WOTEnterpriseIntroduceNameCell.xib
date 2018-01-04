@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WOTEnterpriseIntroduceNameCell" rowHeight="60" id="KGk-i7-Jjw" customClass="WOTEnterpriseIntroduceNameCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_logo" translatesAutoresizingMaskIntoConstraints="NO" id="jTZ-cW-bLf">
+                        <rect key="frame" x="20" y="10" width="49.5" height="49.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="jTZ-cW-bLf" secondAttribute="height" multiplier="1:1" id="xBc-zE-NT5"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uk7-ZW-xTp">
+                        <rect key="frame" x="84.5" y="10" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uwp-76-dhD">
+                        <rect key="frame" x="84.5" y="42.5" width="35.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="url-QN-BWP">
+                        <rect key="frame" x="238" y="21.5" width="62" height="27"/>
+                        <color key="backgroundColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="62" id="4ev-N0-Lg1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="申请加入">
+                            <color key="titleColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="applyJoinBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nVF-Qp-m3Y"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Uwp-76-dhD" firstAttribute="leading" secondItem="Uk7-ZW-xTp" secondAttribute="leading" id="1MB-JG-Dwh"/>
+                    <constraint firstItem="jTZ-cW-bLf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="45H-KU-yi4"/>
+                    <constraint firstItem="Uwp-76-dhD" firstAttribute="bottom" secondItem="jTZ-cW-bLf" secondAttribute="bottom" id="47R-Sm-b24"/>
+                    <constraint firstItem="Uk7-ZW-xTp" firstAttribute="top" secondItem="jTZ-cW-bLf" secondAttribute="top" id="Ixo-sE-MlM"/>
+                    <constraint firstAttribute="bottom" secondItem="jTZ-cW-bLf" secondAttribute="bottom" constant="10" id="JL0-DN-q9N"/>
+                    <constraint firstItem="Uk7-ZW-xTp" firstAttribute="leading" secondItem="jTZ-cW-bLf" secondAttribute="trailing" constant="15" id="KmJ-n9-k1y"/>
+                    <constraint firstAttribute="trailing" secondItem="url-QN-BWP" secondAttribute="trailing" constant="20" id="QHL-Ld-uns"/>
+                    <constraint firstItem="jTZ-cW-bLf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="bpY-AX-Rmi"/>
+                    <constraint firstItem="url-QN-BWP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ir7-gk-3KF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="applyJoinBtn" destination="url-QN-BWP" id="YVL-Ds-dlW"/>
+                <outlet property="logoIV" destination="jTZ-cW-bLf" id="Tkd-mZ-ofe"/>
+                <outlet property="subtitleLab" destination="Uwp-76-dhD" id="HJa-eD-Sfw"/>
+                <outlet property="titleLab" destination="Uk7-ZW-xTp" id="yrZ-7B-45L"/>
+            </connections>
+            <point key="canvasLocation" x="25" y="60"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="placeholder_logo" width="115" height="80"/>
+    </resources>
+</document>

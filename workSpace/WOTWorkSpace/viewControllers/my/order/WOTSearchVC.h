@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WOTTableViewBaseVC.h"
+#import "WOTEnterpriseModel.h"
+#import "UIViewController+Extension.h"
 @interface WOTSearchVC : WOTTableViewBaseVC
 
-@property(nonatomic,strong)NSArray *dataSource;
+@property (nonatomic, strong)NSArray <WOTEnterpriseModel *> *dataSource;
+@property (nonatomic, strong) searchBlock block;  //该属性需要与extension中定义相同。
+@property (nonatomic, strong) clearSearchBlock clearBlock; //该属性需要与extension中定义相同。
 @end
+

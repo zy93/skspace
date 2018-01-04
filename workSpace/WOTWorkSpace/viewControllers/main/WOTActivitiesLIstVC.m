@@ -67,8 +67,8 @@ bool ismenu1 =  NO;
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getActivitiesWithPage:@(page) response:^(id bean, NSError *error) {
         if (bean) {
-            WOTActivityModel_msg *modle = (WOTActivityModel_msg *)bean;
-            weakSelf.dataSource = modle.msg.list;
+            WOTActivityModel_msg *model = (WOTActivityModel_msg *)bean;
+            weakSelf.dataSource = model.msg.list;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableVIew reloadData];
             });

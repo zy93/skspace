@@ -10,7 +10,4 @@
 
 @interface WOTVisitorsAppointmentVC : UIViewController
 
-@property (nonatomic, strong) NSNumber *spaceId;
-@property (nonatomic, strong) NSString *spaceName;
-
 @end

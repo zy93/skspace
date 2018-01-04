@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.enterpriseName.textColor = MiddleTextColor;
-    self.enterpriseInfo.textColor = HighTextColor;
+    self.enterpriseInfo.textColor = UIColor_black_33;
     // Initialization code
 }
 

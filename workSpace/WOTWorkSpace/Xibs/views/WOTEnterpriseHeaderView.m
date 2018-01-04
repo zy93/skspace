@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _headerTitle.textColor = HighTextColor;
+    _headerTitle.textColor = UIColor_black_33;
     // Initialization code
 }
 

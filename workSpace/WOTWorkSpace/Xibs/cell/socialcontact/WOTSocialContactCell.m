@@ -18,7 +18,7 @@
     [super awakeFromNib];
     _contactName.textColor = MainOrangeColor;
     _time.textColor = MiddleTextColor;
-    _contactName.textColor = HighTextColor;
+    _contactName.textColor = UIColor_black_33;
     [_headerImage setCorenerRadius:_headerImage.frame.size.height/2 borderColor:CLEARCOLOR];
     _collectionview.delegate = self;
     _collectionview.dataSource =self;

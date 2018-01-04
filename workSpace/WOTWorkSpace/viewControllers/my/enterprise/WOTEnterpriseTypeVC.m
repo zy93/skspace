@@ -41,7 +41,7 @@
 }
 -(void)configNav{
     self.navigationItem.title = @"创建企业";
-    [self configNaviRightItemWithTitle:@"保存" textColor:[UIColor redColor]];
+    [self configNaviRightItemWithTitle:@"保存" textColor:[UIColor blackColor]];
 }
 
 -(void)makeCollectionDataSource{

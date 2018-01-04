@@ -61,7 +61,7 @@
         [formatter setDateFormat:@"mm"];
         min = [[formatter stringFromDate:date] intValue];
         */
-        for (int i = year-16; i<=year+1; i++) {
+        for (int i = year; i<=(month==12?year+1:year); i++) {
             NSString *str = [NSString stringWithFormat:@"%d",i];
 //            NSLog(@"%@",str);
             [_yeararr addObject:str];

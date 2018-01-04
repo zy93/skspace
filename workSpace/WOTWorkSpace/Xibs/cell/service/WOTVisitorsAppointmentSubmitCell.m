@@ -24,8 +24,8 @@
     // Configure the view for the selected state
 }
 - (IBAction)submitBtn:(id)sender {
-    if ([_delegate respondsToSelector:@selector(submitVisitorInfo:)]) {
-        [_delegate submitVisitorInfo:self];
+    if ([_delegate respondsToSelector:@selector(cellSubmitVisitorInfo:)]) {
+        [_delegate cellSubmitVisitorInfo:self];
     }
 }
 

@@ -18,16 +18,16 @@
 #import "WOTConstants.h"
 #import "JudgmentTime.h"
 #import "WOTElasticityView.h"
+#import "WOTPickerView.h"
+#import "WOTSearchMemberVC.h"
 
-@interface WOTVisitorsAppointmentVC () <UIScrollViewDelegate, WOTVisitorsAppointmentSubmitCellDelegate, WOTVisitorsAppointmentCellDelegate, WOTVisitTypeCellDelegate>
+@interface WOTVisitorsAppointmentVC ()<UIScrollViewDelegate, WOTVisitTypeCellDelegate, WOTPickerViewDelegate, WOTPickerViewDataSource>
 {
-    NSArray *tableList;
-    NSArray *tableSubtitleList;
-    NSMutableArray *contentList;
-    NSString *time;
     UIImage *headImage;
-    
     CGFloat topViewHeight;
+    UITextField *temporarilyText;
+    BOOL isSelectSex;
+    
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet WOTElasticityView *topView;
@@ -72,7 +72,16 @@
 
 @property (nonatomic, strong) WOTDatePickerView *datepickerview;
 @property (nonatomic, strong) JudgmentTime *judgmentTime;
+@property (nonatomic, strong) WOTPickerView *pickerView;
+@property (nonatomic, strong) NSArray *pickerData;
+
 @property (nonatomic, assign) BOOL isValidTime;
+@property (nonatomic, strong) NSString *visitTime;
+@property (nonatomic, strong) NSString *spaceName;
+@property (nonatomic, strong) NSNumber *spaceId;
+@property (nonatomic, strong) NSNumber *accessType;
+@property (nonatomic, strong) WOTLoginModel *userModel;
+
 @end
 
 @implementation WOTVisitorsAppointmentVC
@@ -92,16 +101,16 @@
     [self addShadowWith:self.accessNumberBGView];
     [self addShadowWith:self.accessDateBGView];
     self.contentBGView.layer.cornerRadius =radius;
-//    self.contentBGView.hidden = YES;
+    self.accessNumberText.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     self.contentBGView.backgroundColor = UIColorFromRGB(0xf1f1f1);
     self.topView.backgroundColor = UIColorFromRGB(0xff7371);
     topViewHeight = self.topViewHeightConstraints.constant;
     self.commitBtn.layer.cornerRadius = 5.f;
-
+    temporarilyText = [[UITextField alloc]init];
+    temporarilyText.hidden = YES;
+    [self.view addSubview:temporarilyText];
     
-    [self configNav];
     [self setupView];
-    [self addData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -111,6 +120,13 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController.navigationBar setHidden:NO];
     self.judgmentTime = [[JudgmentTime alloc] init];
+    [self configNav];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self clearNav];
 }
 
 -(void)configNav{
@@ -136,6 +152,12 @@
 //    }
 }
 
+-(void)clearNav {
+    self.navigationController.navigationBar.translucent = NO;
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.clipsToBounds = NO;
+
+}
 
 
 
@@ -150,35 +172,23 @@
     _datepickerview.okBlock = ^(NSInteger year,NSInteger month,NSInteger day,NSInteger hour,NSInteger min){
         weakSelf.datepickerview.hidden = YES;
         NSLog(@"%ld年%ld月%ld日",year,month,day);
-        self.isValidTime = [self.judgmentTime judgementTimeWithYear:year month:month day:day];
+        weakSelf.isValidTime = [weakSelf.judgmentTime judgementTimeWithYear:year month:month day:day];
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.isValidTime) {
-                time = [NSString stringWithFormat:@"%02d/%02d/%02d ",(int)year, (int)month, (int)day];
-
-                _datepickerview.hidden  = YES;
+            if (weakSelf.isValidTime) {
+                weakSelf.visitTime = [NSString stringWithFormat:@"%02d/%02d/%02d ",(int)year, (int)month, (int)day];
+                weakSelf.accessDateValueLab.text = weakSelf.visitTime;
+                weakSelf.datepickerview.hidden  = YES;
             }else
             {
-                [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:self.view];
-                time = @"";
-                _datepickerview.hidden  = NO;
+                [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
+                weakSelf.visitTime = @"";
+                weakSelf.datepickerview.hidden  = NO;
             }
         });
     };
     [self.view addSubview:_datepickerview];
     _datepickerview.hidden = YES;
  
-}
-
--(void)addData
-{
-    tableList = @[@"访客照片", @"姓名", @"性别", @"手机号码", @"访问社区", @"访问类型", @"受访对象", @"来访事由", @"到访人数", @"到访日期", @"提交"];
-    contentList = [NSMutableArray new];
-    for (int i=0; i<tableList.count; i++) {
-        [contentList addObject:@""];
-    }
-    [contentList replaceObjectAtIndex:2 withObject:@"男"];
-    [contentList replaceObjectAtIndex:5 withObject:@(2)];
-    tableSubtitleList = @[@"", @"必填", @"MAN", @"必填", @"请选择", @"", @"必填", @"必填", @"必填", @"请选择"];
 }
 
 -(void)addShadowWith:(UIView *)view
@@ -221,24 +231,91 @@
     
 }
 
-#pragma mark - cell delegate
--(void)submitVisitorInfo:(WOTVisitorsAppointmentSubmitCell *)cell
-{
-    NSString *visitorName = contentList[1];
-    NSString *sex = contentList[2];
-    NSString *tel = contentList[3];
+
+#pragma  mark - action
+
+- (IBAction)selectSex:(id)sender {
+    self.pickerData = @[@"男", @"女"];
+    isSelectSex = YES;
+    [self.pickerView reloadData];
+    __weak typeof(self) weakSelf = self;
+    self.pickerView.selectBlock = ^(BOOL status, NSInteger row) {
+        if (status) {
+            weakSelf.genderValueLab.text = weakSelf.pickerData[row];
+        }
+    };
+    [temporarilyText becomeFirstResponder];
+    [temporarilyText resignFirstResponder];
+    _datepickerview.hidden = YES;
+    [self.pickerView popPickerView];
+}
+- (IBAction)selectSpace:(id)sender {
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTSelectWorkspaceListVC"];
+    __weak typeof(self) weakSelf = self;
+    WOTSelectWorkspaceListVC *lc = (WOTSelectWorkspaceListVC*)vc;//1
+    lc.selectSpaceBlock = ^(WOTSpaceModel *model){
+        weakSelf.spaceId = model.spaceId;
+        weakSelf.spaceName = model.spaceName;
+        weakSelf.communityValueLab.text = weakSelf.spaceName;
+        
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+- (IBAction)selectType:(id)sender {
+    self.pickerData = @[@"商务", @"面试", @"私人", @"参观"];
+    isSelectSex = NO;
+    [self.pickerView reloadData];
+    __weak typeof(self) weakSelf = self;
+    self.pickerView.selectBlock = ^(BOOL status, NSInteger row) {
+        if (status) {
+            weakSelf.accessTypeValueLab.text = weakSelf.pickerData[row];
+            weakSelf.accessType = @(row);
+        }
+    };
+    [temporarilyText becomeFirstResponder];
+    [temporarilyText resignFirstResponder];
+    [self.pickerView popPickerView];
+}
+- (IBAction)selectMember:(id)sender {
+    
+    if (!self.spaceId) {
+        [MBProgressHUDUtil showMessage:@"请选择访问空间！" toView:self.view];
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+
+    WOTSearchMemberVC *vc = (WOTSearchMemberVC*)[[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTSearchMemberVC"];
+    vc.spaceId = self.spaceId;
+    vc.selectMemberBlock = ^(WOTLoginModel *model) {
+        self.accessTargetValueLab.text = model.userName;
+        weakSelf.userModel = model;
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)selectDate:(id)sender {
+    [temporarilyText becomeFirstResponder];
+    [temporarilyText resignFirstResponder];
+    _datepickerview.hidden  = NO;
+}
+
+- (IBAction)submit:(id)sender {
+    NSString *visitorName = self.nameText.text;
+    NSString *sex = self.genderValueLab.text;
+    NSString *tel = self.telText.text;
     NSNumber *spaceId = self.spaceId;
-    NSNumber *type = contentList[5];
-    NSString *userName = contentList[6];
-    NSString *visitorInfo =contentList[7];
-    NSNumber *number = contentList[8];
-    NSString *tim = time;
+    NSNumber *type = self.accessType;
+    NSString *userName = self.accessTargetValueLab.text;
+    NSString *visitorInfo = self.accessReasonText.text;
+    NSNumber *number = @(self.accessNumberText.text.integerValue);
+    NSString *tim = self.visitTime;
     
     if (strIsEmpty(visitorName)) {
-        [MBProgressHUDUtil showMessage:@"姓名不能为空" toView:self.view];
+        [MBProgressHUDUtil showMessage:@"请输入访客姓名" toView:self.view];
         return;
     }else if (strIsEmpty(tel)) {
-        [MBProgressHUDUtil showMessage:@"电话不能为空" toView:self.view];
+        [MBProgressHUDUtil showMessage:@"请输入访客电话" toView:self.view];
         return;
         
     }else if (spaceId.integerValue<=0) {
@@ -264,30 +341,17 @@
     
     
     [MBProgressHUDUtil showLoadingWithMessage:@"请稍后" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
-        [WOTHTTPNetwork visitorAppointmentWithVisitorName:visitorName headPortrait:headImage sex:sex papersType:@(0) papersNumber:@"123456" tel:tel spaceId:spaceId accessType:type userName:userName visitorInfo:visitorInfo peopleNum:number visitTime:tim response:^(id bean, NSError *error) {
+        [WOTHTTPNetwork visitorAppointmentWithVisitorName:visitorName sex:sex tel:tel spaceId:self.spaceId accessType:type targetName:userName targetId:self.userModel.userId visitorInfo:visitorInfo peopleNum:number visitTime:tim response:^(id bean, NSError *error) {
             WOTVisitorsModel *model = bean;
-            if (model.code.integerValue==200) {
-                [hud setLabelText:@"信息已提交，请等待管理人员审核"];
-                [hud hide:YES afterDelay:2.f];
+            if ([model.code isEqualToString:@"200"]) {
+                
+            }
+            else {
                 
             }
         }];
     }];
     
-    
-}
-
--(void)textFiledEndEnter:(WOTVisitorsAppointmentCell *)cell text:(NSString *)text
-{
-    if (!text) {
-        return;
-    }
-    [contentList replaceObjectAtIndex:cell.index.row withObject:text];
-}
-
--(void)selectVisitType:(WOTVisitTypeCell *)cell type:(NSInteger)type
-{
-    [contentList replaceObjectAtIndex:cell.index.row withObject:@(type)];
 }
 
 #pragma mark - scrollview delegate
@@ -303,8 +367,6 @@
 //        self.topViewHeightConstraints.constant = height;
         [self.topView scrollViewPoint:CGPointMake(0, -yOffset) isEnd:NO];
     }
-
-    
 }
 
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
@@ -331,6 +393,44 @@
 //    UIView *view = [UIView new];
 //    return view;
 //}
+
+#pragma mark - picker delegate
+-(NSInteger)numberOfComponentsInPickerView:(WOTPickerView *)pickerView
+{
+    return 1;
+}
+-(NSInteger)pickerView:(WOTPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.pickerData.count;
+}
+
+-(NSString *)pickerView:(WOTPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return self.pickerData[row];
+}
+
+-(void)pickerView:(WOTPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSLog(@"-----%@",self.pickerData[row]);
+    if (isSelectSex) {
+        self.genderValueLab.text = self.pickerData[row];
+    }
+    else {
+        self.accessTypeValueLab.text = self.pickerData[row];
+    }
+}
+
+-(WOTPickerView *)pickerView
+{
+    if (!_pickerView) {
+        _pickerView = [[WOTPickerView alloc] init];
+        _pickerView.dataSource = self;
+        _pickerView.delegate = self;
+        [self.view addSubview:_pickerView];
+        [_pickerView popPickerView];
+    }
+    return  _pickerView;
+}
 
 
 /*

@@ -13,20 +13,66 @@
 @end
 
 @interface WOTEnterpriseModel : JSONModel
-@property(nonatomic,assign)NSNumber* companyId;
-@property(nonatomic,strong)NSString *companyName;
-@property(nonatomic,strong)NSString *companyPicture;
-@property(nonatomic,strong)NSString *companyProfile;
-@property(nonatomic,strong)NSString *companyType;
-@property(nonatomic,strong)NSString *contacts;
-@property(nonatomic,strong)NSString *mailbox;
-@property(nonatomic,assign)NSNumber *peopleNum;
-@property(nonatomic,assign)NSNumber *companyState;
-@property(nonatomic,strong)NSNumber *spaceId;
-@property(nonatomic,strong)NSString *tel;
-@property(nonatomic,strong)NSString *spared1;
-@property(nonatomic,strong)NSString *spared2;
-@property(nonatomic,strong)NSString *spared3;
+
+@property(nonatomic,strong)NSString* accountName ;
+@property(nonatomic,strong)NSString* administrative ;
+@property(nonatomic,strong)NSString* administrativeMail ;
+@property(nonatomic,strong)NSString* administrativeTel ;
+@property(nonatomic,strong)NSString* bankAccount ;
+@property(nonatomic,strong)NSString* businessNum ;
+@property(nonatomic,strong)NSString* businessPlan ;
+@property(nonatomic,strong)NSString* businessScope ;
+@property(nonatomic,strong)NSString* busnissTerm ;
+@property(nonatomic,assign)NSNumber* companyId ;
+@property(nonatomic,strong)NSString* companyName ;
+@property(nonatomic,strong)NSString* companyPicture ;
+@property(nonatomic,strong)NSString* companyProfile;
+@property(nonatomic,assign)NSNumber* companyState;
+@property(nonatomic,strong)NSString* companyType;
+@property(nonatomic,strong)NSString* contacts ;
+@property(nonatomic,strong)NSString* creditNum ;
+@property(nonatomic,strong)NSString* dateApproval ;
+@property(nonatomic,assign)NSNumber* developmentExpenses ;
+@property(nonatomic,assign)NSNumber* employeesNum ;
+@property(nonatomic,strong)NSString* englishName ;
+@property(nonatomic,strong)NSString* enterpriseBank ;
+@property(nonatomic,strong)NSString* enterprisePhone ;
+@property(nonatomic,strong)NSString* finance ;
+@property(nonatomic,strong)NSString* financeMail ;
+@property(nonatomic,strong)NSString* financeTel ;
+@property(nonatomic,strong)NSString* financingNum ;
+@property(nonatomic,assign)NSNumber* givingRemainingTime ;
+@property(nonatomic,assign)NSNumber* givingTimeTotal ;
+@property(nonatomic,strong)NSString* givingTimeType ;
+@property(nonatomic,assign)NSNumber* highTech ;
+@property(nonatomic,assign)NSNumber* highTechNum ;
+@property(nonatomic,strong)NSString* industry ;
+@property(nonatomic,strong)NSString* internetEnterprises ;
+@property(nonatomic,strong)NSString* joinDate ;
+@property(nonatomic,strong)NSString* legalPerson ;
+@property(nonatomic,strong)NSString* lettersUrl ;
+@property(nonatomic,strong)NSString* mailbox;
+@property(nonatomic,strong)NSString* organizingNum ;
+@property(nonatomic,strong)NSString* other ;
+@property(nonatomic,strong)NSString* otherDuty ;
+@property(nonatomic,strong)NSString* otherMail ;
+@property(nonatomic,strong)NSString* otherTel ;
+@property(nonatomic,assign)NSNumber* patentNum ;
+@property(nonatomic,assign)NSNumber* peopleNum ;
+@property(nonatomic,assign)NSNumber* ratepaying ;
+@property(nonatomic,strong)NSString* registeredAddress ;
+@property(nonatomic,strong)NSString* registeredCapital ;
+@property(nonatomic,strong)NSString* registrationAuthority ;
+@property(nonatomic,assign)NSNumber* researchNum ;
+@property(nonatomic,assign)NSNumber* revenue ;
+@property(nonatomic,assign)NSNumber* socialNum ;
+@property(nonatomic,strong)NSString* softwareCopyright ;
+@property(nonatomic,strong)NSString* softwareEnterprise ;
+@property(nonatomic,assign)NSNumber* spaceId;
+@property(nonatomic,strong)NSString* tatepayerNum ;
+@property(nonatomic,strong)NSString* tel ;
+@property(nonatomic,strong)NSString* typeEnterprise ;
+@property(nonatomic,assign)NSNumber* workNum ;
 
 @end
 

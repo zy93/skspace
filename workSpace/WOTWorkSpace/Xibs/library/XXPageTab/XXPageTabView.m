@@ -167,7 +167,7 @@
     _tabItems = [NSMutableArray array];
     _tabBackgroundColor = [UIColor whiteColor];
     _bodyBackgroundColor = [UIColor whiteColor];
-    _unSelectedColor = HighTextColor;
+    _unSelectedColor = UIColor_black_33;
     _selectedColor = MainOrangeColor;
     _isNeedRefreshLayout = YES;
     _isChangeByClick = NO;

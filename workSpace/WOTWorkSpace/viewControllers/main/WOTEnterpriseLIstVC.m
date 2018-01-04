@@ -63,10 +63,13 @@ bool istags =  NO;
 
 -(void)configNav{
     
-        [self configNaviBackItem];
-        [self configNaviView:@"输入企业名或标签" block:^{
-            
-        }];
+    [self configNaviBackItem];
+    [self configNaviView:@"输入企业名或标签"  searchBlock:^(NSString *searchString) {
+        NSLog(@"************%@", searchString);
+        
+    } clearBlock:^{
+        NSLog(@"**clear shearch");
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

@@ -25,3 +25,19 @@
 }
 @end
 
+
+
+@implementation WOTSearchModel_msg
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+@end
+
+
+@implementation WOTSearchModel_model
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+@end

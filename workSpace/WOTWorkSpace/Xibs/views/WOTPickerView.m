@@ -8,9 +8,9 @@
 
 #import "WOTPickerView.h"
 
-#define PICKERVIEW_HEIGHT  300
+#define PICKERVIEW_HEIGHT  240
 
-@interface WOTPickerView ()<UIPickerViewDelegate, UIPickerViewDataSource>
+@interface WOTPickerView () <UIPickerViewDelegate, UIPickerViewDataSource>
 {
     NSInteger selectRow;
 }
@@ -25,46 +25,73 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
-        _baseView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-PICKERVIEW_HEIGHT, SCREEN_WIDTH, PICKERVIEW_HEIGHT)];
-        _baseView.backgroundColor = [UIColor orangeColor];
-        _baseView.clipsToBounds = YES;
-        [self addSubview:_baseView];
-        
-        _pickerV = [[UIPickerView alloc] initWithFrame:CGRectMake(0, -10, SCREEN_WIDTH, PICKERVIEW_HEIGHT-20)];
-        _pickerV.delegate = self;
-        _pickerV.dataSource = self;
-        _pickerV.backgroundColor = [UIColor whiteColor];
-        [_baseView addSubview:_pickerV];
-
-        UIView *toolView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 40)];
-        [toolView setBackgroundColor:[UIColor whiteColor]];
-        [_baseView addSubview:toolView];
-        
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 39, self.bounds.size.width, 1)];
-        [line setBackgroundColor:UIColorFromRGB(0x898989)];
-        [toolView addSubview:line];
-        
-        UIButton *btnOK = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-50, 0, 40, 40)];
-        [btnOK setTitle:@"确定" forState:UIControlStateNormal];
-        [btnOK setTitleColor:UIColorFromRGB(0x10c801) forState:UIControlStateNormal];
-        [btnOK addTarget:self action:@selector(pickerViewBtnOK:) forControlEvents:UIControlEventTouchUpInside];
-        [toolView addSubview:btnOK];
-        
-        UIButton *btnCancel = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 40, 40)];
-        [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
-        [btnCancel setTitleColor:UIColorFromRGB(0x898989) forState:UIControlStateNormal];
-        [btnCancel addTarget:self action:@selector(pickerViewBtnCancel:) forControlEvents:UIControlEventTouchUpInside];
-        [toolView addSubview:btnCancel];
-        
-        
-        
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerView)];
-        [self addGestureRecognizer:tapGesture];
-        
+        [self commInit];
     }
     return self;
 }
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self commInit];
+    }
+    return self;
+}
+
+
+
+-(void)commInit
+{
+    
+    _baseView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-PICKERVIEW_HEIGHT, SCREEN_WIDTH, PICKERVIEW_HEIGHT)];
+    _baseView.backgroundColor = [UIColor orangeColor];
+    _baseView.clipsToBounds = YES;
+    [self addSubview:_baseView];
+    
+    
+    UIView *toolView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+    [toolView setBackgroundColor:[UIColor whiteColor]];
+    [_baseView addSubview:toolView];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 39, SCREEN_WIDTH, .5f)];
+    [line setBackgroundColor:UIColorFromRGB(0x898989)];
+    [toolView addSubview:line];
+    
+    _pickerV = [[UIPickerView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(toolView.frame), SCREEN_WIDTH, PICKERVIEW_HEIGHT-CGRectGetHeight(toolView.frame))];
+    _pickerV.delegate = self;
+    _pickerV.dataSource = self;
+    _pickerV.backgroundColor = [UIColor whiteColor];
+    [_baseView addSubview:_pickerV];
+    
+    UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_pickerV.frame)/2+CGRectGetMinY(_pickerV.frame)-19, SCREEN_WIDTH, .5f)];
+    [line2 setBackgroundColor:UIColorFromRGB(0x898989)];
+    [_baseView addSubview:line2];
+    
+    UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(_pickerV.frame)/2+CGRectGetMinY(_pickerV.frame)+18.5, SCREEN_WIDTH, .5f)];
+    [line3 setBackgroundColor:UIColorFromRGB(0x898989)];
+    [_baseView addSubview:line3];
+    
+    
+    UIButton *btnOK = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-50, 0, 40, 40)];
+    [btnOK setTitle:@"确定" forState:UIControlStateNormal];
+    [btnOK setTitleColor:UIColorFromRGB(0x10c801) forState:UIControlStateNormal];
+    [btnOK addTarget:self action:@selector(pickerViewBtnOK:) forControlEvents:UIControlEventTouchUpInside];
+    [toolView addSubview:btnOK];
+    
+    UIButton *btnCancel = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 40, 40)];
+    [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
+    [btnCancel setTitleColor:UIColorFromRGB(0x898989) forState:UIControlStateNormal];
+    [btnCancel addTarget:self action:@selector(pickerViewBtnCancel:) forControlEvents:UIControlEventTouchUpInside];
+    [toolView addSubview:btnCancel];
+    
+    
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPickerView)];
+    [self addGestureRecognizer:tapGesture];
+
+}
+
 
 #pragma mark - UIPickerViewDataSource
 
@@ -149,11 +176,16 @@
                      }];
 }
 
+-(void)reloadData
+{
+    [self.pickerV reloadAllComponents];
+}
+
 //确定
 - (void)pickerViewBtnOK:(id)sender
 {
     if (self.selectBlock) {
-        self.selectBlock(@"WTF???");
+        self.selectBlock(YES, [self.pickerV selectedRowInComponent:0]);
     }
     [self dismissPickerView];
 }
@@ -162,7 +194,7 @@
 - (void)pickerViewBtnCancel:(id)sender
 {
     if (self.selectBlock) {
-        self.selectBlock(nil);
+        self.selectBlock(NO,0);
     }
     
     [self dismissPickerView];

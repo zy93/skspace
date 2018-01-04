@@ -12,7 +12,7 @@
 
 @protocol WOTVisitorsAppointmentSubmitCellDelegate <NSObject>
 
--(void)submitVisitorInfo:(WOTVisitorsAppointmentSubmitCell*)cell;
+-(void)cellSubmitVisitorInfo:(WOTVisitorsAppointmentSubmitCell*)cell;
 
 @end
 

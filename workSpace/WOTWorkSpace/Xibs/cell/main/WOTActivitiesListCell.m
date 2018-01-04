@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [[WOTConfigThemeUitls shared]setLabelColorss:[NSArray arrayWithObjects:self.activityTitle,self.activityLocation,self.activityState, nil] withColor:HighTextColor];
+    [[WOTConfigThemeUitls shared]setLabelColorss:[NSArray arrayWithObjects:self.activityTitle,self.activityLocation,self.activityState, nil] withColor:UIColor_black_33];
     // Initialization code
 }
 

@@ -10,7 +10,7 @@
 #import "UISearchBar+JCSearchBarPlaceholder.h"
 
 
-@implementation UIViewController(Extension)
+@implementation UIViewController(Extension) 
 -(void)configNaviBackItem{
    
     UIBarButtonItem *backitem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(goback)];
@@ -23,13 +23,17 @@
 }
 
 
--(void)configNaviView:(NSString *)searchTitle block:(void(^)())search{
-    UISearchBar *searchview = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, 30.0)];
-
+-(void)configNaviView:(NSString *)searchTitle searchBlock:(searchBlock)block clearBlock:(clearSearchBlock)clearBlock
+{
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, 30.0)];
+    [bgView setBackgroundColor:[UIColor clearColor]];
+    UISearchBar *searchview = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, bgView.frame.size.width-130, 30.0)];
+    self.block = block;
+    self.clearBlock = clearBlock;
     [searchview changeLeftPlaceholder:searchTitle];
     [searchview setBarTintColor:[UIColor grayColor]];
-    
     [searchview setBarStyle:UIBarStyleBlackTranslucent];
+    searchview.delegate = self;
     
     UIView *searchTextField = nil;
     
@@ -49,9 +53,16 @@
         }
     }
     searchTextField.backgroundColor = MainColor;
-   
-    search();
-    [self.navigationItem setTitleView:searchview];
+    [bgView addSubview:searchview];
+    
+    UIButton *butt = [UIButton buttonWithType:UIButtonTypeCustom];
+    [butt setFrame:CGRectMake(CGRectGetMaxX(searchview.frame)+10, 0, 50, 30)];
+    [butt.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [butt setTitle:@"取消" forState:UIControlStateNormal];
+    [butt setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [butt addTarget:self action:@selector(clearSearchBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [bgView addSubview:butt];
+    [self.navigationItem setTitleView:bgView];
     
 }
 
@@ -81,14 +92,31 @@
 
 
 -(void)goback{
-    
     [self.navigationController popViewControllerAnimated:YES];
-    
-    
 }
 
 
 -(void)rightItemAction{
     //跳转页面
 }
+
+-(void)clearSearchBtn:(id)sender
+{
+    if (self.clearBlock) {
+        self.clearBlock();
+    }
+}
+
+
+#pragma mark - UISearchBar Delegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (self.block) {
+        self.block(searchText);
+    }
+}
+
+
+
+
 @end

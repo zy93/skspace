@@ -17,7 +17,8 @@
 @interface WOTLoginModel : JSONModel
 @property (nonatomic, strong) NSString *appId;//集团编号
 @property (nonatomic, strong) NSString *birthDate;
-@property (nonatomic, strong) NSString *companyId;
+@property (nonatomic, strong) NSString *companyId;    //公司id，员工身份
+@property (nonatomic, strong) NSString *companyIdAdmin; //公司id，管理员身份
 @property (nonatomic, strong) NSString *companyName;
 @property (nonatomic, strong) NSString *constellation;
 @property (nonatomic, strong) NSString *email;
@@ -47,8 +48,23 @@
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSString *result;
 @property(nonatomic,strong)WOTLoginModel<WOTLoginModel> *msg;
+@end
 
 
+
+@interface WOTSearchModel_msg : JSONModel
+
+@property (nonatomic, strong) NSNumber *bottomPageNo;
+@property(nonatomic,strong)NSArray <WOTLoginModel> *list;
+@end
+
+
+
+@interface WOTSearchModel_model : JSONModel
+
+@property(nonatomic,strong)NSString *code;
+@property(nonatomic,strong)NSString *result;
+@property(nonatomic,strong)WOTSearchModel_msg  *msg;
 @end
 
 

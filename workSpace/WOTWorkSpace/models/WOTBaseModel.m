@@ -9,16 +9,25 @@
 #import "WOTBaseModel.h"
 
 @implementation WOTBaseModel
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 @end
 
 @implementation WOTImagePathModel
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 
 @end
 
 @implementation WOTImagePathModel_w
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 
 
 @end
