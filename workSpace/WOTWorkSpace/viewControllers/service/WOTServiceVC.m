@@ -18,7 +18,7 @@
 #import "WOTH5VC.h"
 #import "MJRefresh.h"
 #import "SKRepairsViewController.h"
-
+#import "SKDemandViewController.h"
 
 #define getService @"WOTGETServiceCell"
 #define serviceScroll @"serviceScroll"
@@ -225,7 +225,9 @@
     }
     
     if ([serviceName isEqualToString:@"发布需求"]) {
-        NSLog(@"发布需求");
+        SKDemandViewController *demandVC = [[SKDemandViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:demandVC animated:YES];
     }
     
 //    else {

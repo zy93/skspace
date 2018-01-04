@@ -187,6 +187,9 @@
 		C5E565DE1FF2474700534546 /* SKGiftBagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565DD1FF2474700534546 /* SKGiftBagTableViewCell.m */; };
 		C5E565E11FF2486D00534546 /* SKGiftBagInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565E01FF2486D00534546 /* SKGiftBagInfoViewController.m */; };
 		C5FA65471FFDFCF800675A6A /* TZTestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA65451FFDFCF800675A6A /* TZTestCell.m */; };
+		C5FA654C1FFE0EB000675A6A /* SKDemandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA654B1FFE0EB000675A6A /* SKDemandViewController.m */; };
+		C5FA654F1FFE169D00675A6A /* SKDemandInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA654E1FFE169D00675A6A /* SKDemandInfoViewController.m */; };
+		C5FA65521FFE207A00675A6A /* SKTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA65511FFE207A00675A6A /* SKTypeView.m */; };
 		C7901EC51F789CF500692F02 /* JudgmentTime.m in Sources */ = {isa = PBXBuildFile; fileRef = C7901EC31F789CF400692F02 /* JudgmentTime.m */; };
 		C79C2D3A1F7E36870052DF23 /* WOTBookStationReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C79C2D391F7E36870052DF23 /* WOTBookStationReservationsModel.m */; };
 		C7B4DD2C1F7A793C00009011 /* JXPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4DD291F7A793C00009011 /* JXPopoverView.m */; };
@@ -752,6 +755,12 @@
 		C5E565E01FF2486D00534546 /* SKGiftBagInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKGiftBagInfoViewController.m; sourceTree = "<group>"; };
 		C5FA65451FFDFCF800675A6A /* TZTestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZTestCell.m; sourceTree = "<group>"; };
 		C5FA65461FFDFCF800675A6A /* TZTestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZTestCell.h; sourceTree = "<group>"; };
+		C5FA654A1FFE0EB000675A6A /* SKDemandViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKDemandViewController.h; sourceTree = "<group>"; };
+		C5FA654B1FFE0EB000675A6A /* SKDemandViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKDemandViewController.m; sourceTree = "<group>"; };
+		C5FA654D1FFE169D00675A6A /* SKDemandInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKDemandInfoViewController.h; sourceTree = "<group>"; };
+		C5FA654E1FFE169D00675A6A /* SKDemandInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKDemandInfoViewController.m; sourceTree = "<group>"; };
+		C5FA65501FFE207A00675A6A /* SKTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTypeView.h; sourceTree = "<group>"; };
+		C5FA65511FFE207A00675A6A /* SKTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKTypeView.m; sourceTree = "<group>"; };
 		C7901EC31F789CF400692F02 /* JudgmentTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JudgmentTime.m; sourceTree = "<group>"; };
 		C7901EC41F789CF400692F02 /* JudgmentTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JudgmentTime.h; sourceTree = "<group>"; };
 		C79C2D381F7E36870052DF23 /* WOTBookStationReservationsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTBookStationReservationsModel.h; sourceTree = "<group>"; };
@@ -1760,6 +1769,32 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		C5FA65481FFE0E5400675A6A /* Demand */ = {
+			isa = PBXGroup;
+			children = (
+				C5FA654A1FFE0EB000675A6A /* SKDemandViewController.h */,
+				C5FA654B1FFE0EB000675A6A /* SKDemandViewController.m */,
+				C5FA654D1FFE169D00675A6A /* SKDemandInfoViewController.h */,
+				C5FA654E1FFE169D00675A6A /* SKDemandInfoViewController.m */,
+				C5FA65501FFE207A00675A6A /* SKTypeView.h */,
+				C5FA65511FFE207A00675A6A /* SKTypeView.m */,
+			);
+			path = Demand;
+			sourceTree = "<group>";
+		};
+		C5FA65491FFE0E7300675A6A /* GiftBag */ = {
+			isa = PBXGroup;
+			children = (
+				C5E565D91FF246C600534546 /* SKGiftBagViewController.h */,
+				C5E565DA1FF246C600534546 /* SKGiftBagViewController.m */,
+				C5E565DC1FF2474700534546 /* SKGiftBagTableViewCell.h */,
+				C5E565DD1FF2474700534546 /* SKGiftBagTableViewCell.m */,
+				C5E565DF1FF2486D00534546 /* SKGiftBagInfoViewController.h */,
+				C5E565E01FF2486D00534546 /* SKGiftBagInfoViewController.m */,
+			);
+			path = GiftBag;
+			sourceTree = "<group>";
+		};
 		C7B4DD251F7A793C00009011 /* JXPopoverView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2372,12 +2407,8 @@
 				E86FD1F61F207734009BE16A /* WOTMainAppleRepairVC.m */,
 				E8747AE01F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.h */,
 				E8747AE11F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.m */,
-				C5E565D91FF246C600534546 /* SKGiftBagViewController.h */,
-				C5E565DA1FF246C600534546 /* SKGiftBagViewController.m */,
-				C5E565DC1FF2474700534546 /* SKGiftBagTableViewCell.h */,
-				C5E565DD1FF2474700534546 /* SKGiftBagTableViewCell.m */,
-				C5E565DF1FF2486D00534546 /* SKGiftBagInfoViewController.h */,
-				C5E565E01FF2486D00534546 /* SKGiftBagInfoViewController.m */,
+				C5FA65491FFE0E7300675A6A /* GiftBag */,
+				C5FA65481FFE0E5400675A6A /* Demand */,
 				C5FA65441FFDFCB900675A6A /* Repairs */,
 			);
 			path = service;
@@ -3350,6 +3381,7 @@
 				E8CF9FCE1F0F751B00EF0F46 /* WOTBookStationVC.m in Sources */,
 				C5E565E11FF2486D00534546 /* SKGiftBagInfoViewController.m in Sources */,
 				2A99FB631F258A0F00869732 /* WOTMeetingListModel.m in Sources */,
+				C5FA654F1FFE169D00675A6A /* SKDemandInfoViewController.m in Sources */,
 				E8A200171F1C8266003C8A86 /* WOTActivityModel.m in Sources */,
 				2AF78CEB1F0A0E6B00F7B56D /* WOTServiceProvidersCategoryVC.m in Sources */,
 				2A345AA61F5E576500DC6B31 /* WOTSendFriendsModel.m in Sources */,
@@ -3366,6 +3398,7 @@
 				2AF78CF41F0A3DCB00F7B56D /* WOTMaintenanceApplyVC.m in Sources */,
 				2A3B54F61FD93C2F00358B8A /* HCScanQRViewController.m in Sources */,
 				C59E27151FF0A93800791269 /* SKFocusListModel.m in Sources */,
+				C5FA65521FFE207A00675A6A /* SKTypeView.m in Sources */,
 				C595C97E1FE121F00083430A /* QuerySingleCircleofFriendModel.m in Sources */,
 				E868E0E01F42E8C700573B66 /* APAuthV2Info.m in Sources */,
 				C59E270F1FF0986E00791269 /* SKFocusListViewController.m in Sources */,
@@ -3420,6 +3453,7 @@
 				E8190D9C1F0F69660000B07C /* WOTSpaceDetailTeamCollectionCell.m in Sources */,
 				C59D56E41FDA2C6D001870B2 /* WFReplyBody.m in Sources */,
 				E85A85F31F0202460016FCA1 /* NSArray+MASAdditions.m in Sources */,
+				C5FA654C1FFE0EB000675A6A /* SKDemandViewController.m in Sources */,
 				E869E8401F1E15CA00DBDBB9 /* WOTPostImage.m in Sources */,
 				E8190DCD1F0F69660000B07C /* XXPageTabItemLable.m in Sources */,
 				E8190DC31F0F69660000B07C /* WOTServiceProvidersCell.m in Sources */,
