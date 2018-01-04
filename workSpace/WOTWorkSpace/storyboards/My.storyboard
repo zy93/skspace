@@ -27,10 +27,10 @@
             </objects>
             <point key="canvasLocation" x="-2100" y="-227"/>
         </scene>
-        <!--Appointment Remind Pop View-->
+        <!--My Appointment HistoryVC-->
         <scene sceneID="hSm-Xv-lJ4">
             <objects>
-                <viewController storyboardIdentifier="WOTAppointmentRemindPopViewID" id="pnA-EY-Hzw" customClass="WOTAppointmentRemindPopView" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WOTMyAppointmentHistoryVC" id="pnA-EY-Hzw" customClass="WOTMyAppointmentHistoryVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zhw-P3-lar"/>
                         <viewControllerLayoutGuide type="bottom" id="bwG-j8-Y6I"/>
@@ -63,7 +63,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ln1-LU-fOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1376" y="-220.3898050974513"/>
+            <point key="canvasLocation" x="-1420" y="-227"/>
         </scene>
         <!--Enterprise TypeVC-->
         <scene sceneID="cxA-Dg-lcy">
@@ -136,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oPQ-7S-mXY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-760.79999999999995" y="-222.63868065967017"/>
+            <point key="canvasLocation" x="-764" y="-227"/>
         </scene>
         <!--My EnterpriseVC-->
         <scene sceneID="1P7-KT-i0v">

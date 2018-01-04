@@ -11,9 +11,9 @@
 #import "WOTMyRepairdListVC.h"
 #import "WOTMyPublishDemandsLIstVC.h"
 #import "WOTMyFeedbackLIstVC.h"
-#import "WOTAppointmentRemindPopView.h"
+#import "WOTMyAppointmentHistoryVC.h"
 @interface WOTMyHistoryVC ()<UIPopoverPresentationControllerDelegate>
-@property(nonatomic,strong)WOTAppointmentRemindPopView *remindPopvc;
+@property(nonatomic,strong)WOTMyAppointmentHistoryVC *remindPopvc;
 @end
 
 @implementation WOTMyHistoryVC
@@ -65,8 +65,8 @@
 }
 -(NSArray<__kindof UIViewController *> *)createViewControllers{
     
-    WOTMyAppointmentListVC *appointmentvc = [[WOTMyAppointmentListVC alloc]init];
-    [self addChildViewController:appointmentvc];
+//    WOTMyAppointmentListVC *appointmentvc = [[WOTMyAppointmentListVC alloc]init];
+//    [self addChildViewController:appointmentvc];
     
     WOTMyRepairdListVC *repairvc = [[WOTMyRepairdListVC alloc]init];
     [self addChildViewController:repairvc];

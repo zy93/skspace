@@ -8,7 +8,7 @@
 
 #import "WOTMyAppointmentListVC.h"
 #import "WOTAppointmentModel.h"
-@interface WOTMyAppointmentListVC ()<WOTMyAppointRemindingDelegate>{
+@interface WOTMyAppointmentListVC (){
    
 }
 @property(nonatomic,strong)NSArray<WOTAppointmentModel *> *appintmentDataSource;
@@ -39,12 +39,6 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTMyAppointmentCell *appointmentcell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyAppointmentCellID" forIndexPath:indexPath];
-    appointmentcell.appointmentCommunityValue.text = _appintmentDataSource[indexPath.row].visitorName;
-    appointmentcell.appointmentObjectValue.text =_appintmentDataSource[indexPath.row].visitorName;
-    appointmentcell.appointmentTimeValue.text = _appintmentDataSource[indexPath.row].visitTime;
-    appointmentcell.appointmentReasionValue.text = _appintmentDataSource[indexPath.row].visitInfo;
-    appointmentcell.delegate = self;
-    appointmentcell.index = indexPath.row;
     return appointmentcell;
     
 }

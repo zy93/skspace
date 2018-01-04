@@ -86,7 +86,7 @@
             return 1;
             break;
         case 2:
-            return 3;
+            return 4;
             break;
         default:
             break;
@@ -127,7 +127,6 @@
     return nil;
 }
 
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
    
     UITableViewCell *commoncell;
@@ -167,8 +166,8 @@
         commoncell = ordercell;
     } else {
         WOTMycommonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycommonCellID" forIndexPath:indexPath];
-        NSArray *titlearray = [NSArray arrayWithObjects:@"我的企业",@"我的活动",@"我的历史",nil];
-        NSArray *imageNameArray = [NSArray arrayWithObjects:@"enterprise",@"activities",@"history",nil];
+        NSArray *titlearray = [NSArray arrayWithObjects:@"我的企业",@"我的活动",@"我的预约", @"我的维修",nil];
+        NSArray *imageNameArray = [NSArray arrayWithObjects:@"enterprise",@"activities",@"history", @"repairs_history",nil];
         cell.nameLabel.text = titlearray[indexPath.row];
         cell.cellImage.image = [UIImage imageNamed:imageNameArray[indexPath.row]];
         commoncell = cell;
@@ -187,7 +186,7 @@
             case 1:
                 break;
             case 2:
-                if (indexPath.row ==0 ) {
+                if (indexPath.row == 0) {
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"My" bundle:[NSBundle mainBundle]];
                     WOTMyEnterpriseVC *myenterprisevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTMyEnterpriseVC"];
                     [self.navigationController pushViewController:myenterprisevc animated:YES];

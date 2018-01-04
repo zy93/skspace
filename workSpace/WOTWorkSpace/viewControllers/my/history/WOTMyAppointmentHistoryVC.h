@@ -1,5 +1,5 @@
 //
-//  WOTAppointmentRemindPopView.h
+//  WOTMyAppointmentHistoryVC.h
 //  WOTWorkSpace
 //
 //  Created by 张姝枫 on 2017/8/3.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WOTAppointmentRemindPopView : UIViewController
+@interface WOTMyAppointmentHistoryVC : UIViewController
 
 @end
