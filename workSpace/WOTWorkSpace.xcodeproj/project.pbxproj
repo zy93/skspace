@@ -190,6 +190,7 @@
 		C5FA654C1FFE0EB000675A6A /* SKDemandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA654B1FFE0EB000675A6A /* SKDemandViewController.m */; };
 		C5FA654F1FFE169D00675A6A /* SKDemandInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA654E1FFE169D00675A6A /* SKDemandInfoViewController.m */; };
 		C5FA65521FFE207A00675A6A /* SKTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA65511FFE207A00675A6A /* SKTypeView.m */; };
+		C5FA65551FFE378400675A6A /* SKAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA65541FFE378400675A6A /* SKAboutViewController.m */; };
 		C7901EC51F789CF500692F02 /* JudgmentTime.m in Sources */ = {isa = PBXBuildFile; fileRef = C7901EC31F789CF400692F02 /* JudgmentTime.m */; };
 		C79C2D3A1F7E36870052DF23 /* WOTBookStationReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C79C2D391F7E36870052DF23 /* WOTBookStationReservationsModel.m */; };
 		C7B4DD2C1F7A793C00009011 /* JXPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4DD291F7A793C00009011 /* JXPopoverView.m */; };
@@ -761,6 +762,8 @@
 		C5FA654E1FFE169D00675A6A /* SKDemandInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKDemandInfoViewController.m; sourceTree = "<group>"; };
 		C5FA65501FFE207A00675A6A /* SKTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTypeView.h; sourceTree = "<group>"; };
 		C5FA65511FFE207A00675A6A /* SKTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKTypeView.m; sourceTree = "<group>"; };
+		C5FA65531FFE378400675A6A /* SKAboutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKAboutViewController.h; sourceTree = "<group>"; };
+		C5FA65541FFE378400675A6A /* SKAboutViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKAboutViewController.m; sourceTree = "<group>"; };
 		C7901EC31F789CF400692F02 /* JudgmentTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JudgmentTime.m; sourceTree = "<group>"; };
 		C7901EC41F789CF400692F02 /* JudgmentTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JudgmentTime.h; sourceTree = "<group>"; };
 		C79C2D381F7E36870052DF23 /* WOTBookStationReservationsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTBookStationReservationsModel.h; sourceTree = "<group>"; };
@@ -2917,6 +2920,8 @@
 			children = (
 				E8EACF901F035A990015535D /* WOTSettingVC.h */,
 				E8EACF911F035A990015535D /* WOTSettingVC.m */,
+				C5FA65531FFE378400675A6A /* SKAboutViewController.h */,
+				C5FA65541FFE378400675A6A /* SKAboutViewController.m */,
 			);
 			path = setting;
 			sourceTree = "<group>";
@@ -3559,6 +3564,7 @@
 				E86B81F41F3847B7002AAC63 /* WOTMD5.m in Sources */,
 				E8190DC71F0F69660000B07C /* WOTFilterTypeModel.m in Sources */,
 				E8190DB41F0F69660000B07C /* WOTMyuserCell.m in Sources */,
+				C5FA65551FFE378400675A6A /* SKAboutViewController.m in Sources */,
 				E86B81F71F38480C002AAC63 /* JSONKit.m in Sources */,
 				E8370F171F0DD8BF0070C077 /* WOTActivitiesLIstVC.m in Sources */,
 				E85A85891F0201F30016FCA1 /* main.m in Sources */,

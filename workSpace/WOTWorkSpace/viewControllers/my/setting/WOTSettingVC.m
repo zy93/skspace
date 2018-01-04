@@ -7,11 +7,17 @@
 //
 
 #import "WOTSettingVC.h"
-#import "WOTSettingCell.h"
 #import "WOTLoginVC.h"
 #import "WOTPersionalInformation.h"
-@interface WOTSettingVC ()
+#import "UIColor+ColorChange.h"
+#import "SKAboutViewController.h"
+#import "TZImagePickerController.h"
+#import <Photos/Photos.h>
+@interface WOTSettingVC ()<UITableViewDelegate,UITableViewDataSource,TZImagePickerControllerDelegate>
 
+@property(nonatomic,strong)UITableView *tableView;
+@property(nonatomic,strong)UIButton *quitButton;
+@property (nonatomic, strong) NSMutableArray *selectedPhotos;
 @end
 
 @implementation WOTSettingVC
@@ -19,17 +25,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = MainColor;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    [self.tableView registerNib:[UINib nibWithNibName:@"WOTSettingCell" bundle:nil] forCellReuseIdentifier:@"settingCellID"];
     self.navigationItem.title = @"设置";
-    
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.quitButton];
     //解决布局空白问题
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
     if (is7Version) {
         self.edgesForExtendedLayout=UIRectEdgeNone;
     }
-    // Do any additional setup after loading the view.
+    [self layoutSubviews];
+}
+
+-(void)layoutSubviews
+{
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.quitButton.mas_top);
+    }];
+    
+    [self.quitButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).with.offset(10);
+        make.right.equalTo(self.view).with.offset(-10);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-10);
+        make.height.mas_offset(48);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,227 +61,139 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-   
-        //return 3;
-    if ([WOTSingtleton shared].isuserLogin) {
-        return 2;
-    }else
-    {
-        return 1;
-    }
+
+    return 2;
 
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    switch (section) {
-//        case 0:
-//            return 4;
-//            break;
-//        case 1:
-//            return 3;
-//            break;
-//        case 2:
-//            return 1;
-//            break;
-//        default:
-//            break;
-//    }
-        switch (section) {
-            case 0:
-                return 1;
-                break;
-            case 1:
-                return 1;
-                break;
-            
-        }
+    switch (section) {
+        case 0:
+            return 4;
+            break;
+        case 1:
+            return 3;
+            break;
+        default:
+            break;
+    }
     return 0;
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    switch (indexPath.section) {
-        case 0:
-            return 60;
-            break;
-        case 1:
-            return 60;
-            break;
-        case 2:
-            if ([WOTSingtleton shared].isuserLogin) {
-                return 60;
-            } else {
-                return 0.01;
-            }
-            
-            break;
-        default:
-            break;
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            return 80;
+        }
     }
-    return  0;
+    
+    return 60;
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if ([WOTSingtleton shared].isuserLogin) {
-        if (section == 0){
-            return 0;
-        } else {
-            return  15;
-        }
-    } else {
-        if (section == 0 || section == 2) {
-            return 0;
-        }else {
-            return 15;
-        }
+    if (section == 0) {
+        return 0;
+    }else
+    {
+        return 20;
     }
-    
   
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [[UIView alloc] init];
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTSettingCell *settingcell = [tableView dequeueReusableCellWithIdentifier:@"settingCellID" forIndexPath:indexPath];
-    /*
-    if (indexPath.section == 0) {
-        
-        [settingcell.valueLabel setHidden:YES];
- 
-        NSArray *nameArray = [[NSArray alloc]initWithObjects:@"个人资料",@"通知设置",@"修改密码",@"设置手势密码",nil];
-        settingcell.loginOut.hidden = YES;
-        settingcell.nameLabel.text = nameArray[indexPath.row];
-         
-        
-        
-    } else if (indexPath.section == 1){
-        if (indexPath.row == 0) {
-            [settingcell.valueLabel setHidden:NO];
-            settingcell.valueLabel.text = @"010-8646-7632";
-        } else {
-            [settingcell.valueLabel setHidden:YES];
-        }
-        if (indexPath.row == [self.tableView numberOfRowsInSection:indexPath.section]-1) {
-            [settingcell.lineVIew setHidden:YES];
-        }
-         [settingcell.loginOut setHidden:YES];
-        NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"联系我们",@"关于众创空间",@"分享APP",nil];
-        settingcell.nameLabel.text = nameArray1[indexPath.row];
-     
-    }else {
-        if ([WOTSingtleton shared].isuserLogin) {
-            [settingcell.valueLabel setHidden:YES];
-            [settingcell.nameLabel setHidden:YES];
-            [settingcell.nextImage setHidden:YES];
-            [settingcell.loginOut setHidden:NO];
-            [settingcell.lineVIew setHidden:YES];
-        } else {
-            [settingcell.valueLabel setHidden:YES];
-            [settingcell.nameLabel setHidden:YES];
-            [settingcell.nextImage setHidden:YES];
-            [settingcell.loginOut setHidden:YES];
-            [settingcell.lineVIew setHidden:YES];
-        }
+    static NSString *cellIdentifier = @"cellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-    */
     
     if (indexPath.section == 0) {
-        
         if (indexPath.row == 0) {
-            [settingcell.valueLabel setHidden:NO];
-            settingcell.valueLabel.text = @"010-8646-7632";
-        } else {
-            [settingcell.valueLabel setHidden:YES];
-        }
-        if (indexPath.row == [self.tableView numberOfRowsInSection:indexPath.section]-1) {
-            [settingcell.lineVIew setHidden:YES];
-        }
-        [settingcell.loginOut setHidden:YES];
-        // NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"联系我们",@"关于众创空间",@"分享APP",nil];
-        NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"联系我们",nil];
-        
-        //settingcell.nameLabel.text = nameArray1[indexPath.row];
-        settingcell.nameLabel.text = nameArray1[0];
-        
-        
-        
-    } else if (indexPath.section == 1){
-        if ([WOTSingtleton shared].isuserLogin) {
-            [settingcell.valueLabel setHidden:YES];
-            [settingcell.nameLabel setHidden:YES];
-            [settingcell.nextImage setHidden:YES];
-            [settingcell.loginOut setHidden:NO];
-            [settingcell.lineVIew setHidden:YES];
-        } else {
-            [settingcell.valueLabel setHidden:YES];
-            [settingcell.nameLabel setHidden:YES];
-            [settingcell.nextImage setHidden:YES];
-            [settingcell.loginOut setHidden:YES];
-            [settingcell.lineVIew setHidden:YES];
-        }
-    }else {
-        
-    }
-    return settingcell;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-        
-    if (indexPath.section == 1) {
-        if ([WOTSingtleton shared].isuserLogin) {
-            [[WOTConfigThemeUitls shared] showRemindingAlert:self message:@"确定退出当前帐号?" okBlock:^{
-                [WOTSingtleton shared].isuserLogin = NO;
-                [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
-                [[WOTUserSingleton shareUser] deletePlistFile];
-                [self.navigationController popViewControllerAnimated:YES];
-                
-            } cancel:^{
-                
-            }];
-        }
-        
-        
-    } else if (indexPath.section == 0){
-        
-        switch (indexPath.row) {
-            case 0:
+            if (self.selectedPhotos.count > 0) {
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:self.selectedPhotos[0]];
+                imageView.size = CGSizeMake(80, 80);
+                imageView.layer.cornerRadius=imageView.frame.size.width/2;
+                imageView.clipsToBounds=YES;
+                cell.accessoryView = imageView;
+            }else
             {
-                 [self makePhoneToSpace];
-            }
-//                if ([WOTSingtleton shared].isuserLogin) {
-//                    [self pushVCByVCName:@"WOTPersionalInformationID" storyboard:@"My"];
-//                } else {
-//                   [[WOTConfigThemeUitls shared] showLoginVC:self];
-//                }
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
+                imageView.size = CGSizeMake(80, 80);
+                imageView.layer.cornerRadius=imageView.frame.size.width/2;
+                imageView.clipsToBounds=YES;
                 
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            default:
-                break;
+                cell.accessoryView = imageView;
+            }
+            
+        }
+        NSArray *nameArray = [[NSArray alloc]initWithObjects:@"头像",@"姓名",@"性别",@"邮箱",nil];
+        cell.textLabel.text = nameArray[indexPath.row];
+        
+    } else if (indexPath.section == 1){
+        if (indexPath.row == 2) {
+            cell.detailTextLabel.text = @"010-8646-7632";
+        }
+        NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"积分",@"关于APP",@"联系我们",nil];
+        cell.textLabel.text = nameArray1[indexPath.row];
+     
+    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle =UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+        
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            [self pushTZImagePickerController];
+        }
+    }
+    
+    if (indexPath.section == 1) {
+        
+        if (indexPath.row == 1) {
+            SKAboutViewController *aboutVC = [[SKAboutViewController alloc] init];
+            [self.navigationController pushViewController:aboutVC animated:YES];
         }
         
-    }  else {
-        switch (indexPath.row) {
-            case 0:
-                //[self makePhoneToSpace];
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            default:
-                break;
+        if (indexPath.row == 2) {
+            [self makePhoneToSpace];
+        }
+    }
+    
+}
+
+#pragma mark - TZImagePickerController
+- (void)pushTZImagePickerController {
+    
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:4 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
+    
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        
+    }];
+    
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
+}
+- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
+    _selectedPhotos = [NSMutableArray arrayWithArray:photos];
+    [self viewDidLayoutSubviews];
+    [self.tableView reloadData];
+    if (iOS8Later) {
+        for (PHAsset *phAsset in assets) {
+            NSLog(@"location:%@",phAsset.location);
         }
     }
 }
@@ -280,7 +213,51 @@
     
 }
 
+#pragma mark - 退出方法
+-(void)quitButtonMethod
+{
+    [[WOTConfigThemeUitls shared] showRemindingAlert:self message:@"确定退出当前帐号?" okBlock:^{
+        [WOTSingtleton shared].isuserLogin = NO;
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
+        [[WOTUserSingleton shareUser] deletePlistFile];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } cancel:^{
+        
+    }];
+}
 
+-(UITableView *)tableView
+{
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+    }
+    return _tableView;
+}
+
+
+-(UIButton *)quitButton
+{
+    if (_quitButton == nil) {
+        _quitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_quitButton addTarget:self action:@selector(quitButtonMethod) forControlEvents:UIControlEventTouchDown];
+        [_quitButton setTitle:@"退出" forState:UIControlStateNormal];
+        _quitButton.backgroundColor = [UIColor colorWithHexString:@"ff7f3d"];
+        _quitButton.layer.cornerRadius = 5.f;
+        _quitButton.layer.borderWidth = 1.f;
+        _quitButton.layer.borderColor =[UIColor colorWithHexString:@"ff7f3d"].CGColor;
+    }
+    return _quitButton;
+}
+-(NSMutableArray *)selectedPhotos
+{
+    if (_selectedPhotos == nil) {
+        _selectedPhotos = [[NSMutableArray alloc] init];
+    }
+    return _selectedPhotos;
+}
 /*
 #pragma mark - Navigation
 
