@@ -491,5 +491,6 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)deleteReplyRecorWithRecordId:(NSNumber *)recordId response:(response)response;
 
+//+(void)gift bag
 
 @end

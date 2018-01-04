@@ -14,6 +14,7 @@
 #import "CardView.h"
 @interface WOTMainVC : UIViewController
 @property (weak, nonatomic) IBOutlet SDCycleScrollView *autoScrollView;
+@property (weak, nonatomic) IBOutlet UIView *spaceView;
 
 @property (weak, nonatomic) IBOutlet WOTShortcutMenuView *ballView;
 
