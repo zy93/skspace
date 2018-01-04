@@ -11,7 +11,7 @@ pod 'AMapSearch' #搜索功能
 pod 'AMapLocation'
 pod 'ZLPhotoBrowser'
 pod 'IQKeyboardManager'
-
+ pod 'TZImagePickerController'
 target 'WOTWorkSpace' do
 
 

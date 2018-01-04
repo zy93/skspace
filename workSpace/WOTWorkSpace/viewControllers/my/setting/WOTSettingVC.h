@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WOTTableViewBaseVC.h"
-@interface WOTSettingVC : WOTTableViewBaseVC
+@interface WOTSettingVC : UIViewController
 
 
 @end

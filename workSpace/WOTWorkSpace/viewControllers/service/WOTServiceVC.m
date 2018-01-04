@@ -18,7 +18,7 @@
 #import "WOTH5VC.h"
 #import "MJRefresh.h"
 #import "SKRepairsViewController.h"
-
+#import "SKDemandViewController.h"
 
 #define getService @"WOTGETServiceCell"
 #define serviceScroll @"serviceScroll"
@@ -71,14 +71,13 @@
 {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.translucent = NO;
-    self.navigationController.navigationBarHidden = YES;
-  
+    self.navigationController.navigationBarHidden = YES;  
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
+    //self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)configNav{
@@ -221,11 +220,14 @@
     if ([serviceName isEqualToString:@"问题报修"]) {
         
         SKRepairsViewController *repairsVC = [[SKRepairsViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:repairsVC animated:YES];
     }
     
     if ([serviceName isEqualToString:@"发布需求"]) {
-        NSLog(@"发布需求");
+        SKDemandViewController *demandVC = [[SKDemandViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:demandVC animated:YES];
     }
     
 //    else {

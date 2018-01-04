@@ -40,7 +40,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlm-Cg-Xxw" userLabel="workspace">
-                                        <rect key="frame" x="0.0" y="410" width="375" height="290"/>
+                                        <rect key="frame" x="0.0" y="410" width="375" height="250"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JTL-1P-dlz">
                                                 <rect key="frame" x="10" y="15" width="3" height="20"/>
@@ -50,8 +50,8 @@
                                                     <constraint firstAttribute="height" constant="20" id="u19-d9-TBL"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tmB-rj-951" customClass="SDCycleScrollView">
-                                                <rect key="frame" x="0.0" y="46" width="375" height="234"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tmB-rj-951">
+                                                <rect key="frame" x="0.0" y="46" width="375" height="194"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="众创空间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oxi-H8-9rX">
@@ -92,13 +92,13 @@
                                             <constraint firstItem="tmB-rj-951" firstAttribute="leading" secondItem="xlm-Cg-Xxw" secondAttribute="leading" id="dq5-9g-N5p"/>
                                             <constraint firstAttribute="bottom" secondItem="tmB-rj-951" secondAttribute="bottom" constant="10" id="eMt-fF-qE8"/>
                                             <constraint firstItem="JTL-1P-dlz" firstAttribute="top" secondItem="xlm-Cg-Xxw" secondAttribute="top" constant="15" id="elz-W5-J9t"/>
-                                            <constraint firstAttribute="height" constant="290" id="gBR-Jj-NIa"/>
+                                            <constraint firstAttribute="height" constant="250" id="gBR-Jj-NIa"/>
                                             <constraint firstItem="42I-HG-I7K" firstAttribute="top" secondItem="xlm-Cg-Xxw" secondAttribute="top" id="ksj-uv-zVL"/>
                                             <constraint firstItem="12n-A8-Ju6" firstAttribute="leading" secondItem="9Xs-A0-OOY" secondAttribute="trailing" constant="5" id="x4M-wW-qts"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7nj-Nx-AkA">
-                                        <rect key="frame" x="0.0" y="710" width="375" height="140"/>
+                                        <rect key="frame" x="0.0" y="670" width="375" height="140"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68Y-GB-uLK">
                                                 <rect key="frame" x="10" y="15" width="3" height="20"/>
@@ -154,7 +154,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heX-LE-hiG">
-                                        <rect key="frame" x="0.0" y="860" width="375" height="280"/>
+                                        <rect key="frame" x="0.0" y="820" width="375" height="280"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxa-k9-KBE">
                                                 <rect key="frame" x="10" y="15" width="3" height="20"/>
@@ -240,7 +240,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="asL-0x-wIO">
-                                        <rect key="frame" x="0.0" y="1150" width="375" height="280"/>
+                                        <rect key="frame" x="0.0" y="1110" width="375" height="280"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Fk-r9-LOu">
                                                 <rect key="frame" x="10" y="16" width="3" height="20"/>
@@ -374,7 +374,7 @@
                         <outlet property="newsIV" destination="ujs-Ej-V8Z" id="rk2-dC-6f7"/>
                         <outlet property="newsNameLab" destination="g6c-tj-dT2" id="puR-qW-qLp"/>
                         <outlet property="scrollVIew" destination="6Ga-9d-eZb" id="eyj-TW-Wt7"/>
-                        <outlet property="spaceView" destination="tmB-rj-951" id="cPr-dY-SMK"/>
+                        <outlet property="spaceView" destination="tmB-rj-951" id="zLt-Tg-BYr"/>
                         <outlet property="workspaceView" destination="xlm-Cg-Xxw" id="xWC-Gq-Vdc"/>
                     </connections>
                 </viewController>

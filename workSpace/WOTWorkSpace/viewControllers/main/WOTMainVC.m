@@ -35,7 +35,7 @@
 
 //空间
 //@property (weak, nonatomic) IBOutlet CardView *spaceView;
-@property (weak, nonatomic) IBOutlet SDCycleScrollView *spaceView;
+//@property (weak, nonatomic) IBOutlet SDCycleScrollView *spaceView;
 
 //企业
 @property (weak, nonatomic) IBOutlet WOTEnterpriseScrollView *enterpriseScrollView;
@@ -157,7 +157,8 @@ int a = 0;
     } loadVIews:^{
         dispatch_async(dispatch_get_main_queue(), ^{
            // [self.spaceView reloadData];
-            [self loadAutoScrollView];
+            //[self loadAutoScrollView];
+            [self setupUI];
         });
     }];
     [self getEnterpriseListDataFromWeb:^{
@@ -259,9 +260,9 @@ int a = 0;
     //pageDotColor
     //self.autoScrollView.placeholderImage = [UIImage imageNamed:@"placeholder"];
     
-    self.spaceView.imageURLStringsGroup = _spaceImageUrlStrings;
-    self.spaceView.delegate = self;
-    self.spaceView.titlesGroup = _spaceTitleArray;
+//    self.spaceView.imageURLStringsGroup = _spaceImageUrlStrings;
+//    self.spaceView.delegate = self;
+//    self.spaceView.titlesGroup = _spaceTitleArray;
     //self.spaceView.pageDotColor = [[UIColor alloc] initWithRed:13.0/255.0f green:13.0/255.0f blue:13.0/255.0f alpha:0.2];
     //self.spaceView.onlyDisplayText = YES;
 }
@@ -390,74 +391,69 @@ int a = 0;
 }
 
 
-////page view UI
-//- (void)setupUI {
-//    if (!_pageFlowView) {
-//        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-20)];
-//        _pageFlowView.delegate = self;
-//        _pageFlowView.dataSource = self;
-//        _pageFlowView.minimumPageAlpha = 0.1;
-//        _pageFlowView.isCarousel = NO;
-//        _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-//        _pageFlowView.isOpenAutoScroll = YES;
-//        
-//        //初始化pageControl
-//        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 32, SCREEN_WIDTH, 8)];
-//        _pageFlowView.pageControl = pageControl;
-//        [_pageFlowView addSubview:pageControl];
-//    }
-//   
-//    [self.spaceView addSubview:_pageFlowView];
-//    
-//    [_pageFlowView reloadData];
-//    
-//}
+//page view UI
+- (void)setupUI {
+    if (!_pageFlowView) {
+        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-10)];
+        _pageFlowView.delegate = self;
+        _pageFlowView.dataSource = self;
+        _pageFlowView.minimumPageAlpha = 0.1;
+        _pageFlowView.isCarousel = YES;
+        _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
+        _pageFlowView.isOpenAutoScroll = YES;
+        
+        //初始化pageControl
+        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 10, SCREEN_WIDTH, 8)];
+        _pageFlowView.pageControl = pageControl;
+        [_pageFlowView addSubview:pageControl];
+    }
+   
+    [self.spaceView addSubview:_pageFlowView];
+    
+    [_pageFlowView reloadData];
+    
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-//#pragma mark - NewPagedFlowView Delegate
-//- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
-//    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
-//}
-//- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
-//    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
-//    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-//    [self.navigationController pushViewController:detailvc animated:YES];
-//}
-//
-//#pragma mark  NewPagedFlowView Datasource
-//- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
-//    return self.bannerData.count;
-//}
-//
-//- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
-//    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
-//    if (!bannerView) {
-//        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 9 / 16)];
-//        bannerView.tag = index;
-//        bannerView.layer.cornerRadius = 4;
-//        bannerView.layer.masksToBounds = YES;
-//    }
-//    //从网络加载图片用
-//    //NSLog(@"网络图片地址：%@",[self.spaceData[index] objectForKey:@"spacePicture"]);
-//    NSLog(@"----%@",self.spaceData[index].spacePicture);
-//
-//      [bannerView.mainImageView sd_setImageWithURL:[[NSString stringWithFormat:@"%@%@",HTTPBaseURL,self.spaceData[index].spacePicture] ToUrl]placeholderImage:[UIImage imageNamed:@"spacedefault"]];
-//
-//    if ([self.spaceData[index].spacePicture separatedWithString:@","].count!=0) {
-//        [bannerView.mainImageView sd_setImageWithURL:[[self.spaceData[index].spacePicture separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"spacedefault"]];
-//
-//        NSLog(@"图片地址：%@",[NSString stringWithFormat:@"%@%@",HTTPBaseURL,[self.spaceData[index].spacePicture separatedWithString:@","][0]]);
-//    }
-//    return bannerView;
-//}
-//
-//- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
-//    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
-//}
+#pragma mark - NewPagedFlowView Delegate
+- (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
+    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
+}
+- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
+    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+    [self.navigationController pushViewController:detailvc animated:YES];
+}
+
+#pragma mark  NewPagedFlowView Datasource
+- (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
+    return self.spaceImageUrlStrings.count;
+}
+
+- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
+    if (!bannerView) {
+        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 9 / 16)];
+        bannerView.tag = index;
+        bannerView.layer.cornerRadius = 4;
+        bannerView.layer.masksToBounds = YES;
+    }
+    //从网络加载图片用
+    //NSLog(@"网络图片地址：%@",[self.spaceData[index] objectForKey:@"spacePicture"]);
+    NSLog(@"----%@",self.spaceImageUrlStrings[index]);
+    NSURL *imageUrl = [NSURL URLWithString:self.spaceImageUrlStrings[index]];
+    
+      [bannerView.mainImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+    return bannerView;
+}
+
+- (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
+    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
+}
 
 
 #pragma mark - shortcut delegate

@@ -9,6 +9,8 @@
 #import "SKGiftBagInfoViewController.h"
 #import "Masonry.h"
 #import "UIColor+ColorChange.h"
+#import "WOTUserSingleton.h"
+#import "WOTWXPayModel.h"
 
 @interface SKGiftBagInfoViewController ()
 @property (nonatomic,strong)UIScrollView *giftBagScrollView;
@@ -30,6 +32,10 @@
 @property (nonatomic,strong)UILabel *paymentLabel;
 @property (nonatomic,strong)UILabel *moneyNumLabel;
 @property (nonatomic,strong)UIButton *payButton;
+@property (nonatomic,assign)NSNumber *paySumNumber;
+@property (nonatomic,assign)NSNumber *payNumber;
+@property (nonatomic,strong)NSString *commodityDescribeStr;
+@property (nonatomic,assign)NSInteger price;
 
 @end
 
@@ -37,7 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.giftBagScrollView];
     
     [self.giftBagScrollView addSubview:self.contentView];
@@ -61,7 +67,7 @@
     [self.bottomView addSubview:self.payButton];
     
     [self layoutSubviews];
-    
+    [self loadData];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -84,7 +90,8 @@
     }];
     
     [self.giftBagImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.giftBagScrollView).with.offset(64);
+        //make.top.equalTo(self.giftBagScrollView).with.offset(64);
+        make.top.equalTo(self.giftBagScrollView);
         make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(10);
         make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-10);
         make.height.mas_offset(200);
@@ -168,6 +175,71 @@
         make.width.mas_offset(100);
     }];
     
+}
+
+#pragma mark - 加载数据
+-(void)loadData
+{
+    if ([self.giftBagNameStr isEqualToString:@"GiftBag1"]) {
+        //CGFloat price = 0.01f;
+        //self.paySumNumber = [NSDecimalNumber numberWithDouble:0.01];
+        self.price = 0.01;
+        self.payNumber = @1;
+//        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+//        f.numberStyle = NSNumberFormatterDecimalStyle;
+//        self.paySumNumber = [f numberFromString:@"0.01"];
+        //self.paySumNumber = @888;
+        //self.payNumber = @88800;
+        self.commodityDescribeStr = @"礼包1";
+    }
+    if ([self.giftBagNameStr isEqualToString:@"GiftBag2"]) {
+        self.paySumNumber = @888;
+        self.payNumber = @88800;
+        self.commodityDescribeStr = @"礼包2";
+    }
+    if ([self.giftBagNameStr isEqualToString:@"GiftBag3"]) {
+        self.paySumNumber = @888;
+        self.payNumber = @88800;
+        self.commodityDescribeStr = @"礼包3";
+    }
+}
+
+#pragma mark - 礼包支付接口
+-(void)payButtonMethod
+{
+    //先判断是否登录
+    if (![WOTUserSingleton shareUser].userInfo.userId) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"未登录" message:@"请先登录用户" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"跳转到");
+            [[WOTConfigThemeUitls shared] showLoginVC:self];
+        }];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"facilitator":@"1006",
+                                 @"carrieroperator":@"1006",
+                                 @"body":self.commodityDescribeStr,
+                                 @"total_fee":self.payNumber,
+                                 @"trade_type":@"APP",
+                                 @"commodityKind":self.commodityDescribeStr,
+                                 @"productNum":@1,
+                                 @"money":@(0.01),
+                                 @"payType":@1,
+                                 @"payObject":[WOTUserSingleton shareUser].userInfo.userName
+                                 };
+    //__weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            WOTWXPayModel_msg *model = (WOTWXPayModel_msg*)bean;
+             [WOTHTTPNetwork wxPayWithParameter:model.msg];
+        });
+    }];
 }
 
 -(UIScrollView *)giftBagScrollView
@@ -338,6 +410,7 @@
         _payButton.layer.cornerRadius = 5.f;
         _payButton.layer.borderWidth = 1.f;
         _payButton.layer.borderColor = [UIColor colorWithHexString:@"ff5906"].CGColor;
+        [_payButton addTarget:self action:@selector(payButtonMethod) forControlEvents:UIControlEventTouchDown];
     }
     return _payButton;
 }
@@ -351,11 +424,6 @@
     return _bottomLineView;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 -(UIView *)contentView
 {
     if (_contentView == nil) {
@@ -364,6 +432,9 @@
     return _contentView;
 }
 
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 @end
