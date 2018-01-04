@@ -444,16 +444,10 @@ int a = 0;
     }
     //从网络加载图片用
     //NSLog(@"网络图片地址：%@",[self.spaceData[index] objectForKey:@"spacePicture"]);
-    NSLog(@"----%@",self.spaceData[index].spacePicture);
+    NSLog(@"----%@",self.spaceImageUrlStrings[index]);
     NSURL *imageUrl = [NSURL URLWithString:self.spaceImageUrlStrings[index]];
     
       [bannerView.mainImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"spacedefault"]];
-
-//    if ([self.spaceData[index].spacePicture separatedWithString:@","].count!=0) {
-//        [bannerView.mainImageView sd_setImageWithURL:[[self.spaceData[index].spacePicture separatedWithString:@","][0] ToUrl] placeholderImage:[UIImage imageNamed:@"spacedefault"]];
-//
-//        NSLog(@"图片地址：%@",[NSString stringWithFormat:@"%@%@",HTTPBaseURL,[self.spaceData[index].spacePicture separatedWithString:@","][0]]);
-//    }
     return bannerView;
 }
 

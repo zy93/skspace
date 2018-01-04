@@ -186,6 +186,7 @@
 		C5E565DB1FF246C600534546 /* SKGiftBagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565DA1FF246C600534546 /* SKGiftBagViewController.m */; };
 		C5E565DE1FF2474700534546 /* SKGiftBagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565DD1FF2474700534546 /* SKGiftBagTableViewCell.m */; };
 		C5E565E11FF2486D00534546 /* SKGiftBagInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565E01FF2486D00534546 /* SKGiftBagInfoViewController.m */; };
+		C5FA65471FFDFCF800675A6A /* TZTestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FA65451FFDFCF800675A6A /* TZTestCell.m */; };
 		C7901EC51F789CF500692F02 /* JudgmentTime.m in Sources */ = {isa = PBXBuildFile; fileRef = C7901EC31F789CF400692F02 /* JudgmentTime.m */; };
 		C79C2D3A1F7E36870052DF23 /* WOTBookStationReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C79C2D391F7E36870052DF23 /* WOTBookStationReservationsModel.m */; };
 		C7B4DD2C1F7A793C00009011 /* JXPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4DD291F7A793C00009011 /* JXPopoverView.m */; };
@@ -749,6 +750,8 @@
 		C5E565DD1FF2474700534546 /* SKGiftBagTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKGiftBagTableViewCell.m; sourceTree = "<group>"; };
 		C5E565DF1FF2486D00534546 /* SKGiftBagInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKGiftBagInfoViewController.h; sourceTree = "<group>"; };
 		C5E565E01FF2486D00534546 /* SKGiftBagInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKGiftBagInfoViewController.m; sourceTree = "<group>"; };
+		C5FA65451FFDFCF800675A6A /* TZTestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZTestCell.m; sourceTree = "<group>"; };
+		C5FA65461FFDFCF800675A6A /* TZTestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZTestCell.h; sourceTree = "<group>"; };
 		C7901EC31F789CF400692F02 /* JudgmentTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JudgmentTime.m; sourceTree = "<group>"; };
 		C7901EC41F789CF400692F02 /* JudgmentTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JudgmentTime.h; sourceTree = "<group>"; };
 		C79C2D381F7E36870052DF23 /* WOTBookStationReservationsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTBookStationReservationsModel.h; sourceTree = "<group>"; };
@@ -1745,6 +1748,18 @@
 			path = CommentModel;
 			sourceTree = "<group>";
 		};
+		C5FA65441FFDFCB900675A6A /* Repairs */ = {
+			isa = PBXGroup;
+			children = (
+				C59C892E1FF5EB7400C358A1 /* SKRepairsViewController.h */,
+				C59C892F1FF5EB7400C358A1 /* SKRepairsViewController.m */,
+				C5FA65461FFDFCF800675A6A /* TZTestCell.h */,
+				C5FA65451FFDFCF800675A6A /* TZTestCell.m */,
+			);
+			name = Repairs;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		C7B4DD251F7A793C00009011 /* JXPopoverView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2363,8 +2378,7 @@
 				C5E565DD1FF2474700534546 /* SKGiftBagTableViewCell.m */,
 				C5E565DF1FF2486D00534546 /* SKGiftBagInfoViewController.h */,
 				C5E565E01FF2486D00534546 /* SKGiftBagInfoViewController.m */,
-				C59C892E1FF5EB7400C358A1 /* SKRepairsViewController.h */,
-				C59C892F1FF5EB7400C358A1 /* SKRepairsViewController.m */,
+				C5FA65441FFDFCB900675A6A /* Repairs */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -3132,6 +3146,7 @@
 				"${PODS_ROOT}/AMap2DMap/MAMapKit.framework/AMap.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
 				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@2x.png",
 				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@3x.png",
 				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_original_circle.png",
@@ -3558,6 +3573,7 @@
 				E8190DA81F0F69660000B07C /* WOTFeedBackLIstCell.m in Sources */,
 				2A99FB671F258A4000869732 /* WOTVisitorsModel.m in Sources */,
 				E8605CD71F1356BF005C09F4 /* UISearchBar+JCSearchBarPlaceholder.m in Sources */,
+				C5FA65471FFDFCF800675A6A /* TZTestCell.m in Sources */,
 				E8747AE21F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.m in Sources */,
 				C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */,
 				E86245711F3D4F4900CF0D9D /* NSURLRequest+SRWebSocket.m in Sources */,

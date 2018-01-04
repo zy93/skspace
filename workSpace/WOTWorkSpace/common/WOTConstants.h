@@ -67,8 +67,8 @@
 #define UIColor_green_37 UIColorFromRGB(0x37c922)
 #define UIColor_black_b3 UIColorFromRGB(0xb3b3b3)
 
-//#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
-#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
+#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
+//#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
 //#define HTTPBaseURL @"http://192.168.34.80:8080"//石宇驰
 
 //集团的appid

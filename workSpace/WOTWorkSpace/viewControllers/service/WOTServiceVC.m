@@ -71,14 +71,13 @@
 {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.translucent = NO;
-    self.navigationController.navigationBarHidden = YES;
-  
+    self.navigationController.navigationBarHidden = YES;  
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
+    //self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)configNav{
@@ -221,6 +220,7 @@
     if ([serviceName isEqualToString:@"问题报修"]) {
         
         SKRepairsViewController *repairsVC = [[SKRepairsViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:repairsVC animated:YES];
     }
     
