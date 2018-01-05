@@ -38,8 +38,8 @@
     self.registerBtn.layer.cornerRadius = 8;
     self.registerBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     self.registerBtn.layer.borderWidth = 1.f;
-   
-    [_showPasswordBtn setImage:[UIImage imageNamed:@"eye_close_icon"] forState:UIControlStateNormal];
+    self.navigationItem.title = @"登录";
+    [_showPasswordBtn setImage:[UIImage imageNamed:@"eye_close_icon"] forState:UIControlStateNormal] ;
 }
 
 - (void)didReceiveMemoryWarning {

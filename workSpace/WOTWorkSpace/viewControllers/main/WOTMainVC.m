@@ -28,6 +28,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "WOTEnterpriseScrollView.h"
 #import "SKGiftBagViewController.h"
+#import "WOTVisitorsAppointmentVC.h"
 
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
@@ -347,6 +348,12 @@ int a = 0;
     if ([stationvc isKindOfClass:[WOTEnterpriseLIstVC class]]) {
         [((WOTEnterpriseLIstVC *)stationvc) getEnterpriseListDataFromWeb:^{
         }];
+    }
+    else if ([stationvc isKindOfClass:[WOTVisitorsAppointmentVC class]]) {
+        if (![WOTSingtleton shared].isuserLogin) {
+            [[WOTConfigThemeUitls shared] showLoginVC:self];
+            return;
+        }
     }
 
     [self.navigationController pushViewController:stationvc animated:YES];

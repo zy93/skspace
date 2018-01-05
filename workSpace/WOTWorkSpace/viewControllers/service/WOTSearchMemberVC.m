@@ -11,7 +11,7 @@
 #import "WOTBaseDefaultStyleCell.h"
 #import "WOTLoginModel.h"
 
-@interface WOTSearchMemberVC () <UITableViewDelegate, UITableViewDataSource>
+@interface WOTSearchMemberVC () <UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property (weak, nonatomic) IBOutlet UIButton *btn;
@@ -35,6 +35,7 @@
     UIImage* searchBarBg = [self GetImageWithColor:[UIColor clearColor] andHeight:32.0f];
     [self.searchBar setBackgroundColor:[UIColor clearColor]];
     [self.searchBar setBackgroundImage:searchBarBg];
+    self.searchBar.delegate = self;
     UITextField *textField = [self.searchBar valueForKey:@"_searchField"];
     [textField.layer setCornerRadius:2.f];
     [textField setBackgroundColor:UICOLOR_GRAY_DD];
@@ -94,6 +95,14 @@
     }];
 }
 
+
+#pragma mark - search delegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (!strIsEmpty(searchText)) {
+        [self createRequest];
+    }
+}
 
 
 #pragma mark - table delegate
