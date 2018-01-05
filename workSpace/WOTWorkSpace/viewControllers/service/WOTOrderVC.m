@@ -77,6 +77,9 @@
 @property (nonatomic, strong) NSString *total_fee;        //总金额
 @property (nonatomic, strong) NSString *spbill_create_ip; //终端IP
 @property (nonatomic, strong) NSString *trade_type;       //交易类型
+@property (nonatomic, assign) NSNumber *bookSationTime;
+@property (nonatomic, assign) NSNumber *meetingTime;
+@property (nonatomic, strong) NSNumber *userId;
 
 @end
 
@@ -96,6 +99,7 @@
     [self configNav];
     [self loadData];
     [self loadCost];
+    [self requestQuerySingularMan];
     
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ||
         [WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
@@ -237,6 +241,23 @@
         return;
     }
     
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+        NSInteger bookstationInter = [self.bookSationTime integerValue];
+        if (!( bookstationInter> 0)) {
+            [MBProgressHUDUtil showMessage:@"该用户下没有工位时间，请充值" toView:self.view];
+            return;
+        }
+    }
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+        NSString *differenceStr = [NSString dateTimeDifferenceWithStartTime:self.starTime endTime:self.endTime];
+        NSInteger difference = [differenceStr integerValue];
+        NSInteger meetInteger = [self.meetingTime integerValue];
+        if (difference > meetInteger) {
+            [MBProgressHUDUtil showMessage:@"该用户下会议室时间剩余不足，请充值" toView:self.view];
+            return;
+        }
+    }
     self.dealMode = @"微信支付";
     self.payType = @(1);
     self.payObject= @"1";
@@ -641,21 +662,37 @@
     __weak typeof(self) weakSelf = self;
     //会议室先预定，然后支付。
     NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
+//    [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
+//                                      conferenceId:self.meetingModel.conferenceId
+//                                         startTime:arr.firstObject
+//                                           endTime:arr.lastObject
+//                                         spaceName:self.spaceModel.spaceName
+//                                            userId:[WOTUserSingleton shareUser].userInfo.userId
+//                                       meetingName:self.meetingModel.conferenceName
+//                                          response:^(id bean, NSError *error) {
+//                                              WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
+//                                              if ([model.code isEqualToString:@"200"]) {
+//                                                  [weakSelf commitOrder];
+//                                              }
+//                                              else {
+//                                                  [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
+//                                              }
+//    }];
     [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
-                                      conferenceId:self.meetingModel.conferenceId
-                                         startTime:arr.firstObject
+                                      conferenceId:self.meetingModel.conferenceId startTime:arr.firstObject
                                            endTime:arr.lastObject
                                          spaceName:self.spaceModel.spaceName
                                        meetingName:self.meetingModel.conferenceName
+                                            userId:[WOTUserSingleton shareUser].userInfo.userId
                                           response:^(id bean, NSError *error) {
-                                              WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
-                                              if ([model.code isEqualToString:@"200"]) {
-                                                  [weakSelf commitOrder];
-                                              }
-                                              else {
-                                                  [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
-                                              }
-    }];
+                                            WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
+                                            if ([model.code isEqualToString:@"200"]) {
+                                                [weakSelf commitOrder];
+                                            }
+                                            else {
+                                                [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
+                                            }
+                                          }];
 }
 #pragma mark - 验证工位
 -(BOOL)verifyBookStation
@@ -752,6 +789,26 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateView];
         });
+    }];
+}
+
+#pragma mark - 查询个人信息
+-(void)requestQuerySingularMan
+{
+    if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
+        [MBProgressHUDUtil showMessage:@"请先登录再进行其他操作" toView:self.view];
+        return;
+    }
+    [WOTHTTPNetwork querySingularManInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+        WOTLoginModel_msg *model_msg = (WOTLoginModel_msg *)bean;
+        WOTLoginModel *model = model_msg.msg;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            self.bookSationTime = model.workHours;
+            self.meetingTime = model.meetingHours;
+            self.userId = model.userId;
+        } else {
+            [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
+        }
     }];
 }
 

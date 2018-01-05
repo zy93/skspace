@@ -454,7 +454,7 @@ int a = 0;
     NSLog(@"----%@",self.spaceImageUrlStrings[index]);
     NSURL *imageUrl = [NSURL URLWithString:self.spaceImageUrlStrings[index]];
     
-      [bannerView.mainImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+    [bannerView.mainImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"spacedefault"]];
     return bannerView;
 }
 

@@ -10,6 +10,7 @@
 #import "StationOrderInfoViewController.h"
 #import "Masonry.h"
 #import "UIColor+ColorChange.h"
+#import "WOTSingtleton.h"
 
 @interface StationOrderInfoViewController ()
 @property (nonatomic, strong)UIScrollView *bookStationScrollView;
@@ -196,6 +197,12 @@
     [self.bookStationScrollView addSubview:self.attentionInfoLabel];
     
     self.bottomView = [UIView new];
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
+        self.bottomView.hidden = NO;
+    } else {
+        self.bottomView.hidden = YES;
+    }
     [self.view addSubview:self.bottomView];
     
     self.actuallyPaidLabel = [[UILabel alloc] init];
