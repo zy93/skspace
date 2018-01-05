@@ -1188,7 +1188,7 @@
         <!--ActivitiesL IstVC-->
         <scene sceneID="eft-aS-1qH">
             <objects>
-                <viewController storyboardIdentifier="WOTActivitiesLIstVCID" hidesBottomBarWhenPushed="YES" id="ajt-h4-zut" customClass="WOTActivitiesLIstVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WOTActivitiesLIstVC" hidesBottomBarWhenPushed="YES" id="ajt-h4-zut" customClass="WOTActivitiesLIstVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hHy-QW-5L2"/>
                         <viewControllerLayoutGuide type="bottom" id="GAM-Ps-tG3"/>

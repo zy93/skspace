@@ -184,7 +184,6 @@ typedef void(^response)(id bean,NSError *error);
 /**
  *获取首页页面轮播图资源数据
  */
-
 +(void)getHomeSliderSouceInfo:(response)response;
 
 /**

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WOTSpaceModel.h"
 
 @interface WOTSelectWorkspaceListVC : UIViewController//1
 @property (nonatomic, copy) void(^selectSpaceBlock)(WOTSpaceModel *model);

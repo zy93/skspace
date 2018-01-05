@@ -55,17 +55,17 @@
 {
     //self.backgroundColor = UIColorFromRGB(0x8fc5f3);
     self.backgroundColor = [UIColor whiteColor];
-    sbNameList = @[@"Service",@"Service",@"Service",@"Service",@"Service",
+    sbNameList = @[@"Service",@"Service",@"Service",@"Service",@"",
                    @"spaceMain",@"spaceMain",@"spaceMain",];
     
     vcNameList = @[@"WOTReservationsMeetingVC",
                    @"WOTVisitorsAppointmentVC",
                    @"WOTBookStationVCID",
                    @"WOTReservationsMeetingVC",
-                   @"WOTOpenLockScanVCID",
+                   @"SKGiftBagViewController",
                    @"WOTEnterpriseLIstVCID",
                    @"WOTInformationListVC",
-                   @"WOTActivitiesLIstVCID"];
+                   @"WOTActivitiesLIstVC"];
     
     
     titleList = @[@"预定场地", @"访客",@"订工位",@"订会议室", @"礼包", @"友邻", @"资讯", @"活动"];
@@ -124,7 +124,7 @@
 
 -(void)clickButton:(UIButton*)sender
 {
-    if ([_delegate respondsToSelector:@selector(pushToVCWithStoryBoardName:vcName:)]) {
+    if ([_delegate respondsToSelector:@selector(shortcutMenu:pushToVCWithStoryBoardName:vcName:)]) {
         
         if (sender.tag == 0) {
             [WOTSingtleton shared].orderType = ORDER_TYPE_SITE;
@@ -136,7 +136,7 @@
             [WOTSingtleton shared].orderType = ORDER_TYPE_MEETING;
         }
         
-        [_delegate pushToVCWithStoryBoardName:sbNameList[sender.tag] vcName:vcNameList[sender.tag]];
+        [_delegate shortcutMenu:self pushToVCWithStoryBoardName:sbNameList[sender.tag] vcName:vcNameList[sender.tag]];
     }
 }
 

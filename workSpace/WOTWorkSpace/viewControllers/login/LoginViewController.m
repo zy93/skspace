@@ -44,7 +44,8 @@
     self.logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_ylg"]];
     self.logoImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:self.logoImageView];
-    
+    self.navigationItem.title = @"登录";
+
     self.userTelView = [UIView new];
     self.userTelView.backgroundColor = [UIColor colorWithHexString:@"#f9f9f9"];
     self.userTelView.layer.cornerRadius = 5.f;

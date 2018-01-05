@@ -22,7 +22,7 @@
 #import "WOTSearchMemberVC.h"
 #import "WOTVisitorsResultVC.h"
 
-@interface WOTVisitorsAppointmentVC ()<UIScrollViewDelegate, WOTVisitTypeCellDelegate, WOTPickerViewDelegate, WOTPickerViewDataSource>
+@interface WOTVisitorsAppointmentVC ()<UIScrollViewDelegate, WOTPickerViewDelegate, WOTPickerViewDataSource>
 {
     UIImage *headImage;
     CGFloat topViewHeight;
@@ -101,11 +101,19 @@
     [self addShadowWith:self.accessReasonBGView];
     [self addShadowWith:self.accessNumberBGView];
     [self addShadowWith:self.accessDateBGView];
+    
+    self.genderValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
+    self.communityValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
+    self.accessTypeValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
+    self.accessTargetValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
+    self.accessDateValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
+    
+
     self.contentBGView.layer.cornerRadius =radius;
     self.accessNumberText.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     self.telText.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    self.contentBGView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
-    self.topView.backgroundColor = UICOLOR_MAIN_ORANGE;
+    self.contentBGView.backgroundColor = UICOLOR_GRAY_F1;
+//    self.topView.backgroundColor = UICOLOR_MAIN_ORANGE;
     topViewHeight = self.topViewHeightConstraints.constant;
     self.commitBtn.layer.cornerRadius = 5.f;
     temporarilyText = [[UITextField alloc]init];
@@ -114,6 +122,17 @@
     
     [self setupView];
 }
+
+- (NSArray *)getRGBWithColor:(UIColor *)color
+{
+    CGFloat red = 0.0;
+    CGFloat green = 0.0;
+    CGFloat blue = 0.0;
+    CGFloat alpha = 0.0;
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
+    return @[@(red), @(green), @(blue), @(alpha)];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -179,6 +198,7 @@
             if (weakSelf.isValidTime) {
                 weakSelf.visitTime = [NSString stringWithFormat:@"%02d/%02d/%02d ",(int)year, (int)month, (int)day];
                 weakSelf.accessDateValueLab.text = weakSelf.visitTime;
+                weakSelf.accessDateValueLab.textColor = UICOLOR_BLACK;
                 weakSelf.datepickerview.hidden  = YES;
             }else
             {
@@ -195,14 +215,14 @@
 
 -(void)addShadowWith:(UIView *)view
 {
-    view.backgroundColor = UICOLOR_BLACK;
+    view.backgroundColor = UICOLOR_GRAY_E1;
     view.layer.borderWidth = 1.f;
-    view.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    view.layer.borderColor = UICOLOR_GRAY_CC.CGColor;
     view.layer.cornerRadius =5.f;
     view.layer.shadowColor = UICOLOR_BLACK.CGColor;//shadowColor阴影颜色
-    view.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-    view.layer.shadowRadius = 3;//阴影半径，默认3
-    view.layer.shadowOpacity = 1.f;//阴影透明度，默认0
+    view.layer.shadowOffset = CGSizeMake(0,3);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    view.layer.shadowRadius = 3.f;//阴影半径，默认3
+    view.layer.shadowOpacity = .5f;//阴影透明度，默认0
 }
 
 
@@ -244,6 +264,8 @@
     self.pickerView.selectBlock = ^(BOOL status, NSInteger row) {
         if (status) {
             weakSelf.genderValueLab.text = weakSelf.pickerData[row];
+            weakSelf.genderValueLab.textColor = UICOLOR_BLACK;
+
         }
     };
     [temporarilyText becomeFirstResponder];
@@ -259,7 +281,8 @@
         weakSelf.spaceId = model.spaceId;
         weakSelf.spaceName = model.spaceName;
         weakSelf.communityValueLab.text = weakSelf.spaceName;
-        
+        weakSelf.communityValueLab.textColor = UICOLOR_BLACK;
+
     };
     [self.navigationController pushViewController:vc animated:YES];
     
@@ -273,6 +296,8 @@
         if (status) {
             weakSelf.accessTypeValueLab.text = weakSelf.pickerData[row];
             weakSelf.accessType = @(row);
+            weakSelf.accessTypeValueLab.textColor = UICOLOR_BLACK;
+
         }
     };
     [temporarilyText becomeFirstResponder];
@@ -290,7 +315,8 @@
     WOTSearchMemberVC *vc = (WOTSearchMemberVC*)[[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTSearchMemberVC"];
     vc.spaceId = self.spaceId;
     vc.selectMemberBlock = ^(WOTLoginModel *model) {
-        self.accessTargetValueLab.text = model.userName;
+        weakSelf.accessTargetValueLab.text = model.userName;
+        weakSelf.accessTargetValueLab.textColor = UICOLOR_BLACK;
         weakSelf.userModel = model;
     };
     [self.navigationController pushViewController:vc animated:YES];
@@ -421,9 +447,13 @@
     NSLog(@"-----%@",self.pickerData[row]);
     if (isSelectSex) {
         self.genderValueLab.text = self.pickerData[row];
+        self.genderValueLab.textColor = UICOLOR_BLACK;
+
     }
     else {
         self.accessTypeValueLab.text = self.pickerData[row];
+        self.accessTypeValueLab.textColor = UICOLOR_BLACK;
+
     }
 }
 

@@ -321,14 +321,14 @@
             _imageTitles = [[NSMutableArray alloc]init];
             _imageUrlStrings = [[NSMutableArray alloc]init];
             _sliderUrlStrings = [[NSMutableArray alloc]init];
-            for (WOTSliderModel *slider in dd.msg) {
-                [_imageUrlStrings addObject:[NSString stringWithFormat:@"%@%@",HTTPBaseURL,slider.image]];
-                [_imageTitles addObject:slider.headline];
-                if ([slider.url hasPrefix:@"http"] == NO) {
-                    [_sliderUrlStrings addObject:[NSString stringWithFormat:@"%@%@",@"http://",slider.url]];
-                }
-            }
-            complete();
+//            for (WOTSliderModel *slider in dd.msg) {
+//                [_imageUrlStrings addObject:[NSString stringWithFormat:@"%@%@",HTTPBaseURL,slider.image]];
+//                [_imageTitles addObject:slider.headline];
+//                if ([slider.url hasPrefix:@"http"] == NO) {
+//                    [_sliderUrlStrings addObject:[NSString stringWithFormat:@"%@%@",@"http://",slider.url]];
+//                }
+//            }
+//            complete();
             
         }
     }];

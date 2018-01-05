@@ -12,6 +12,7 @@
 #import "WOTRegisterServiceProvidersCell.h"
 #import "WOTSubmitRegisterServiceCell.h"
 #import "WOTPhotosBaseUtils.h"
+#import "WOTSpaceModel.h"
 @interface WOTRegisterServiceProvidersVC () <UITableViewDataSource, UITableViewDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 {
     NSMutableArray *tableList;

@@ -10,15 +10,24 @@
 
 @implementation WOTSliderModel
 
-+(JSONKeyMapper*)keyMapper
++(BOOL)propertyIsOptional:(NSString *)propertyName
 {
-    return [[JSONKeyMapper alloc] initWithDictionary:@{
-                                                       @"id": @"ID",
-                                                       }];
+    return YES;
+}
+@end
+
+
+@implementation WOTSliderModel_list
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
 }
 @end
 
 @implementation WOTSliderModel_msg
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 
 @end
