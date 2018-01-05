@@ -109,8 +109,11 @@
 #pragma mark - 请求关注人列表
 -(void)requestFocusList
 {
-    
-    [WOTHTTPNetwork queryFocusOnPeopleWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId     response:^(id bean, NSError *error) {
+    if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
+        [MBProgressHUDUtil showMessage:@"请先登录再查看" toView:self.view];
+        return;
+    }
+    [WOTHTTPNetwork queryFocusOnPeopleWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId  response:^(id bean, NSError *error) {
         SKFocusListModel *baseModel = (SKFocusListModel *)bean;
         if ([baseModel.code isEqualToString:@"200"]) {
             self.foucusListArray = baseModel.msg;

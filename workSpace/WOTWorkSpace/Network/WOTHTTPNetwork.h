@@ -331,6 +331,7 @@ typedef void(^response)(id bean,NSError *error);
  @param confid 会议室id
  @param startTime 预约开始时间
  @param endTime 结束时间
+ @param userId 用户id
  @param response 回调
  */
 //+(void)meetingReservationsWithSpaceId:(NSNumber *)spaceid conferenceId:(NSNumber *)confid startTime:(NSString *)startTime endTime:(NSString *)endTime response:(response)response;
@@ -340,6 +341,7 @@ typedef void(^response)(id bean,NSError *error);
                               endTime:(NSString *)endTime
                             spaceName:(NSString *)spaceName
                           meetingName:(NSString *) meetingName
+                               userId:(NSNumber *)userId
                              response:(response)response;
 //TODO: 工位
 
@@ -522,6 +524,13 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)deleteReplyRecorWithRecordId:(NSNumber *)recordId response:(response)response;
 
-//+(void)gift bag
+
+/**
+ 查询单个用户信息
+
+ @param userId 用户id
+ @param response 结果回调
+ */
++(void)querySingularManInfoWithUserId:(NSNumber *)userId response:(response)response;
 
 @end

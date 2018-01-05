@@ -54,6 +54,7 @@
 //判断电话格式
 + (BOOL)valiMobile:(NSString*)mobile;
 
-
+//获取两个时间相差多少分钟
++ (NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
 
 @end

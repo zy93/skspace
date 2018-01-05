@@ -726,6 +726,7 @@
                               endTime:(NSString *)endTime
                             spaceName:(NSString *)spaceName
                           meetingName:(NSString *)meetingName
+                               userId:(NSNumber *)userId
                              response:(response)response
 {
     
@@ -737,6 +738,7 @@
                           @"endTime":endTime,
                           @"spaceName":spaceName,
                           @"company":meetingName,
+                          @"userId":userId,
                           @"appId":YLGTEST_APPID
                           };
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
@@ -835,11 +837,6 @@
         
     } response:response];
 }
-
-
-
-
-
 
 
 +(void)getDemandsWithUserId:(NSNumber *)userId response:(response)response{
@@ -1073,6 +1070,17 @@
                                  };
     [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model13 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
+}
+
++(void)querySingularManInfoWithUserId:(NSNumber *)userId response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/User/findById",HTTPBaseURL];
+    NSDictionary *parameters = @{@"userId":userId
+                                 };
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        WOTLoginModel_msg *model13 = [[WOTLoginModel_msg alloc] initWithDictionary:responseobj error:nil];
         return model13;
     } response:response];
 }

@@ -40,6 +40,8 @@
 @property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, assign) NSNumber *userType;
+@property (nonatomic, assign) NSNumber *meetingHours;
+@property (nonatomic, assign) NSNumber *workHours;
 
 @end
 
