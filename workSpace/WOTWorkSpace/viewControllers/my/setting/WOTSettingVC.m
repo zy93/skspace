@@ -12,8 +12,10 @@
 #import "UIColor+ColorChange.h"
 #import "SKAboutViewController.h"
 #import "TZImagePickerController.h"
+#import "TZImageManager.h"
 #import <Photos/Photos.h>
-@interface WOTSettingVC ()<UITableViewDelegate,UITableViewDataSource,TZImagePickerControllerDelegate>
+#import "SKUpdateInfoViewController.h"
+@interface WOTSettingVC ()<UITableViewDelegate,UITableViewDataSource,TZImagePickerControllerDelegate,UIImagePickerControllerDelegate>
 
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UIButton *quitButton;
@@ -158,7 +160,67 @@
         
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            [self pushTZImagePickerController];
+//            [self pushTZImagePickerController];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                  
+                                                                                     message:nil
+                                                  
+                                                                              preferredStyle:UIAlertControllerStyleActionSheet];
+            
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                           
+                                                                 handler:^(UIAlertAction * action) {}];
+           
+            UIAlertAction* fromPhotoAction = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                 [self pushTZImagePickerController];
+            
+            }];
+            
+            UIAlertAction* fromCameraAction = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault  handler:^(UIAlertAction * action) {
+                if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+                    
+                {
+                    
+                    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+                    
+                    imagePicker.delegate = self;
+                    
+                    imagePicker.allowsEditing = YES;
+                    
+                    //  imagePicker.allowsEditing = NO;
+                    
+                    imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                    
+                    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    
+                    [self presentViewController:imagePicker animated:YES completion:nil];
+                    
+                }
+                
+            }];
+            
+            [alertController addAction:cancelAction];
+            
+            [alertController addAction:fromCameraAction];
+            
+            [alertController addAction:fromPhotoAction];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        
+        if (indexPath.row == 1) {
+            SKUpdateInfoViewController *updateVC = [[SKUpdateInfoViewController alloc] init];
+            updateVC.navigationStr = @"修改姓名";
+            updateVC.placeholderStr = @"请输入修改的姓名";
+            [self.navigationController pushViewController:updateVC animated:YES];
+        }
+        
+        if (indexPath.row == 3) {
+            SKUpdateInfoViewController *updateVC = [[SKUpdateInfoViewController alloc] init];
+            updateVC.navigationStr = @"修改邮箱";
+            updateVC.placeholderStr = @"请输入修改的邮箱";
+            [self.navigationController pushViewController:updateVC animated:YES];
         }
     }
     
@@ -176,10 +238,11 @@
     
 }
 
+
 #pragma mark - TZImagePickerController
 - (void)pushTZImagePickerController {
     
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:4 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
     
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         
@@ -187,6 +250,7 @@
     
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
+
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     _selectedPhotos = [NSMutableArray arrayWithArray:photos];
     [self viewDidLayoutSubviews];
@@ -198,6 +262,20 @@
     }
 }
 
+
+#pragma mark -UIImagePickerController
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary*)info{
+    
+    //  UIImage * image =info[UIImagePickerControllerOriginalImage];
+    
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    
+    [self.selectedPhotos addObject:image];
+    [self.tableView reloadData];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
 
 -(void)pushVCByVCName:(NSString *)vcname storyboard:(NSString *)storyboardName{
     UIViewController *vc = [[UIStoryboard storyboardWithName:storyboardName bundle:nil] instantiateViewControllerWithIdentifier:vcname];
