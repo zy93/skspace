@@ -11,15 +11,35 @@
 @end
 
 @interface WOTSliderModel : JSONModel
-@property(nonatomic,strong)NSString *date;
-@property(nonatomic,strong)NSString *headline;
-@property(nonatomic,strong)NSNumber *id;
-@property(nonatomic,strong)NSString *image;
-@property(nonatomic,strong)NSString *url;
+
+@property(nonatomic,strong)NSString *addTime;
+@property(nonatomic,strong)NSString *coverPicture ;
+@property(nonatomic,strong)NSString *expirationTime ;
+@property(nonatomic,strong)NSNumber *priority ;
+@property(nonatomic,strong)NSNumber *proclamationId ;
+@property(nonatomic,strong)NSString *proclamationTitle ;
+@property(nonatomic,strong)NSNumber *proclamationType;
+@property(nonatomic,strong)NSString *spaceId;
+@property(nonatomic,strong)NSString *spaceList;
+@property(nonatomic,strong)NSString *webpageUrl ;
 
 @end
+
+@interface WOTSliderModel_list:JSONModel
+@property (nonatomic, strong) NSNumber * bottomPageNo;
+@property (nonatomic, strong) NSNumber * nextPageNo;
+@property (nonatomic, strong) NSNumber * pageNo;
+@property (nonatomic, strong) NSNumber * pageSize;
+@property (nonatomic, strong) NSNumber * previousPageNo;
+@property (nonatomic, strong) NSNumber * topPageNo;
+@property (nonatomic, strong) NSNumber * totalPages;
+@property (nonatomic, strong) NSNumber * totalRecords;
+@property(nonatomic,strong)NSArray <WOTSliderModel> *list;
+@end
+
+
 @interface WOTSliderModel_msg : JSONModel
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSString *result;
-@property(nonatomic,strong)NSArray<WOTSliderModel> *msg;
+@property(nonatomic,strong)WOTSliderModel_list *msg;
 @end

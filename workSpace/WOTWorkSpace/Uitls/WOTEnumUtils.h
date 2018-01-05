@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WOTEnums.h"
 
 @interface WOTEnumUtils : NSObject
 -(WOT3DBallVCType)Wot3DballVCtypeenumToString:(NSString *)ballTitle;

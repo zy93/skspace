@@ -493,8 +493,10 @@
 }
 
 +(void)getHomeSliderSouceInfo:(response)response{
-    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Slider/findByHome"];
-    [self doRequestWithParameters:nil useUrl:sliderurl complete:^JSONModel *(id responseobj) {
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Proclamation/find"];
+    NSDictionary *dic = @{@"pageNo":@1,
+                          @"pageSize":@1000};
+    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTSliderModel_msg *model = [[WOTSliderModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];

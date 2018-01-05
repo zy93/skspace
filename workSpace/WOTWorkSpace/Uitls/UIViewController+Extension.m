@@ -28,7 +28,7 @@
     UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, 30.0)];
     [bgView setBackgroundColor:[UIColor clearColor]];
     UISearchBar *searchview = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, bgView.frame.size.width-130, 30.0)];
-    self.block = block;
+    self.block = block;  //此处崩溃请检查目标VC里是否有这两个block定义。
     self.clearBlock = clearBlock;
     [searchview changeLeftPlaceholder:searchTitle];
     [searchview setBarTintColor:[UIColor grayColor]];

@@ -190,7 +190,7 @@
             
             searchcell.searchBarBlock = ^(NSString *searchText){
                 [MBProgressHUDUtil showLoadingWithMessage:@"" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
-                    [_dataSource removeAllObjects];
+//                    [_dataSource removeAllObjects];
                     [self getDataSourceFromWebFWithCity:searchText complete:^{
                         [hud setHidden:YES];
                         
@@ -206,7 +206,7 @@
                 
                 //MARK:选择顶部城市筛选  修改数据源  修改sectionview的选中城市
                 
-                [_dataSource removeAllObjects];
+//                [_dataSource removeAllObjects];
                 
                 NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
                 [_tableVIew reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -256,7 +256,7 @@
      * @param 选择的城市的index， 在系统单利中索引即可
      */
     //TODO:根据城市进行筛选空间列表
-    [_dataSource removeAllObjects];
+//    [_dataSource removeAllObjects];
     [self selectSpaceWithCity:index othersBlock:^{
         [self.tableVIew reloadData];
     }];

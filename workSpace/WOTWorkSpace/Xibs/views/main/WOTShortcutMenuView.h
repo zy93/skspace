@@ -8,17 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class WOTShortcutMenuView;
 @protocol WOTShortcutMenuViewDelegate <NSObject>
-
--(void)pushToVCWithStoryBoardName:(NSString *)sbName vcName:(NSString *)vcName;
+-(void)shortcutMenu:(WOTShortcutMenuView*)menu pushToVCWithStoryBoardName:(NSString *)sbName vcName:(NSString *)vcName;
 
 @end
 
-
-
 @interface WOTShortcutMenuView : UIView
-
-
 @property (nonatomic, strong) id <WOTShortcutMenuViewDelegate> delegate;
 
 @end

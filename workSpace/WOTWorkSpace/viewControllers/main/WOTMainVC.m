@@ -17,18 +17,21 @@
 #import "WOTActivitiesLIstVC.h"
 #import "WOTInformationListVC.h"
 #import "WOTBookStationVC.h"
-#import "WOTEnumUtils.h"
 #import "WOTTEnterpriseListCell.h"
 #import "WOTEnterpriseModel.h"
 #import "WOTSliderModel.h"
 #import "WOTLocationManager.h"
-#import "MJRefresh.h"
 #import "WOTCardViewItem.h"
 #import "WOTRefreshControlUitls.h"
 #import "UIImageView+AFNetworking.h"
 #import "WOTEnterpriseScrollView.h"
 #import "SKGiftBagViewController.h"
 #import "WOTVisitorsAppointmentVC.h"
+#import "SDCycleScrollView.h"
+#import "ZYQSphereView.h"
+#import "WOTSpaceModel.h"
+#import "WOTShortcutMenuView.h"
+#import "CardView.h"
 
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
@@ -36,7 +39,16 @@
 
 //空间
 //@property (weak, nonatomic) IBOutlet CardView *spaceView;
-//@property (weak, nonatomic) IBOutlet SDCycleScrollView *spaceView;
+@property (weak, nonatomic) IBOutlet SDCycleScrollView *autoScrollView;
+@property (weak, nonatomic) IBOutlet UIView *spaceView;
+
+@property (weak, nonatomic) IBOutlet WOTShortcutMenuView *ballView;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollVIew;
+@property (weak, nonatomic) IBOutlet UIView *activityView;
+@property (weak, nonatomic) IBOutlet UIView *informationView;
+@property (weak, nonatomic) IBOutlet UIView *workspaceView;
+@property (weak, nonatomic) IBOutlet UIView *enterpriseView;
 
 //企业
 @property (weak, nonatomic) IBOutlet WOTEnterpriseScrollView *enterpriseScrollView;
@@ -50,14 +62,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *newsNameLab;
 @property (weak, nonatomic) IBOutlet UILabel *newsDateLab;
 
-@property (nonatomic,strong) NSMutableArray *imageUrlStrings;
-@property (nonatomic,strong) NSMutableArray *spaceImageUrlStrings;
-@property (nonatomic,strong) NSMutableArray *spaceTitleArray;
 
-
-
-@property (nonatomic,strong) NSArray *bannerData;  //轮播图list 类型未确定
-@property (nonatomic,strong) NSArray <WOTActivityModel*> *activityData; //活动list
+@property (nonatomic,strong) NSArray <WOTSliderModel*>   *bannerData;   //轮播图list
+@property (nonatomic,strong) NSArray <WOTActivityModel*> *activityData;//活动list
 @property (nonatomic,strong) NSArray <WOTSpaceModel *>   *spaceData;  //空间list
 @property (nonatomic,strong) NSArray <WOTNewsModel  *>   *newsData; //资讯list
 @property (nonatomic,  copy) NSString *cityName;
@@ -68,26 +75,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //    [self load3DBallView];
-    self.spaceImageUrlStrings = [[NSMutableArray alloc] init];
-    self.spaceTitleArray = [[NSMutableArray alloc] init];
-    [self loadAutoScrollView];
-    [self configScrollView];
     self.ballView.delegate = self;
-//    self.spaceView.delegate   = self;
-//    self.spaceView.dataSource = self;
-//    self.spaceView.maxItems   = 3;
-//    self.spaceView.scaleRatio = 0.05;
-//    [self.spaceView registerXibFile:@"WOTCardViewItem" forItemReuseIdentifier:@"WOTCardViewItem"];
-
-//    self.cardViewHeightConstraint.constant = CARD_ITEM_H + 100;
-    
-    
+    [self configScrollView];
     [self getAllData];
     [self AddRefreshHeader];
      // Do any additional setup after loading the view.
     
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -101,56 +95,31 @@
     [self.tabBarController.tabBar setHidden:NO];
 }
 
+int a = 0;
+-(void)viewDidAppear:(BOOL)animated{
+    //必须在页面出现以后，重新设置scrollview 的contengsize
+    if (a++<=0) {
+        [self loadLocationSpace];
+    }
+    [super viewDidAppear:animated];
+    self.scrollVIew.contentSize = CGSizeMake(self.view.frame.size.width,self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70);
+}
+
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     
 }
-int a = 0;
 
--(void)viewDidAppear:(BOOL)animated{
-    //必须在页面出现以后，重新设置scrollview 的contengsize
-    if (a++<=0) {
-        [self loadLocation];
-    }
-    [super viewDidAppear:animated];
-//    NSLog(@"高度：%f",self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70);
-    self.scrollVIew.contentSize = CGSizeMake(self.view.frame.size.width,self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70);
+-(void)configScrollView{
+    self.scrollVIew.delegate = self;
+    self.scrollVIew.showsHorizontalScrollIndicator = NO;
+    self.scrollVIew.showsVerticalScrollIndicator = NO;
+    self.scrollVIew.backgroundColor = UICOLOR_MAIN_BACKGROUND;
 }
-
-#pragma mark - setup view
 
 #pragma mark - 加载所有的数据
 -(void)getAllData{
-    
-//    dispatch_queue_t queue = dispatch_queue_create("com.workspacek.gcd.group", DISPATCH_QUEUE_CONCURRENT);
-//    dispatch_group_t group = dispatch_group_create();
-//
-//    dispatch_group_enter(group);
-//    [self getEnterpriseListDataFromWeb:^{
-//        
-//    }];
-//    dispatch_group_leave(group);
-//    dispatch_group_enter(group);
-//    [self getActivityDataFromWeb:^{
-//        
-//    }];
-//    dispatch_group_leave(group);
-//    dispatch_group_enter(group);
-//    [self getInfoDataFromWeb:^{
-//        
-//    }];
-//    dispatch_group_leave(group);
-//    dispatch_group_enter(group);
-//    [self getSliderDataSource:^{
-//        [self loadAutoScrollView];
-//        
-//    }];
-//    dispatch_group_leave(group);
-//    dispatch_group_enter(group);
-//    [self loadSpaceView];
-//    dispatch_group_leave(group);
-    
     [self getBannerDataSource:^{
         [self loadAutoScrollView];
     }];
@@ -159,7 +128,7 @@ int a = 0;
         dispatch_async(dispatch_get_main_queue(), ^{
            // [self.spaceView reloadData];
             //[self loadAutoScrollView];
-            [self setupUI];
+            [self loadSpaceView];
         });
     }];
     [self getEnterpriseListDataFromWeb:^{
@@ -174,15 +143,53 @@ int a = 0;
     
 }
 
--(void)configScrollView{
-    self.scrollVIew.delegate = self;
-    self.scrollVIew.showsHorizontalScrollIndicator = NO;
-    self.scrollVIew.showsVerticalScrollIndicator = NO;
-    self.scrollVIew.backgroundColor = UICOLOR_MAIN_BACKGROUND;
+
+#pragma mark - load View
+-(void)loadAutoScrollView{
+    
+    NSMutableArray *titleArr = [[NSMutableArray alloc] init];
+    NSMutableArray *imageArr = [[NSMutableArray alloc] init];
+    
+    for (WOTSliderModel *model in self.bannerData) {
+        [titleArr addObject:model.proclamationTitle];
+        [imageArr addObject:[NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,model.coverPicture]];
+    }
+    
+    self.autoScrollView.imageURLStringsGroup = imageArr;
+    self.autoScrollView.delegate = self;
+    self.autoScrollView.titlesGroup = titleArr;
+    self.autoScrollView.pageDotColor = UICOLOR_GRAY_66;
+    self.autoScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
+    self.autoScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;  //设置图片填充格式
+//    self.autoScrollView.currentPageDotColor = [UIColor yellowColor]; // 自定义分页控件小圆标颜色
+//    self.autoScrollView.currentPageDotColor = [UIColor blueColor];//dong pageDotColor
+//    self.autoScrollView.placeholderImage = [UIImage imageNamed:@"placeholder"];
 }
 
-#pragma mark -- 获取最近空间
--(void)loadLocation
+- (void)loadSpaceView {
+    if (!_pageFlowView) {
+        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-10)];
+        _pageFlowView.delegate = self;
+        _pageFlowView.dataSource = self;
+        _pageFlowView.minimumPageAlpha = 0.1;
+        _pageFlowView.isCarousel = YES;
+        _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
+        _pageFlowView.isOpenAutoScroll = YES;
+        
+        //初始化pageControl
+        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 10, SCREEN_WIDTH, 8)];
+        _pageFlowView.pageControl = pageControl;
+        [_pageFlowView addSubview:pageControl];
+    }
+    
+    [self.spaceView addSubview:_pageFlowView];
+    
+    [_pageFlowView reloadData];
+    
+}
+
+
+-(void)loadLocationSpace
 {
     [[WOTLocationManager shareLocation] getLocationWithBlock:^(CGFloat lat, CGFloat lon,NSString* cityName) {
         [WOTSingtleton shared].cityName = cityName;//得到所在城市
@@ -193,6 +200,65 @@ int a = 0;
         }];
     }];
     
+}
+
+//MARK:点击显示新页面
+#pragma mark - action
+- (IBAction)showWorkSpaceVC:(id)sender {
+    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTWorkSpaceListVC"];
+}
+
+
+- (IBAction)showActivitiesVC:(id)sender {
+    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTActivitiesLIstVC"];
+}
+- (IBAction)showInformationLIstVC:(id)sender {
+    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTInformationListVC"];
+}
+- (IBAction)showEnterpriseListVC:(id)sender {
+    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTEnterpriseLIstVCID"];
+}
+//跳转活动详情页
+- (IBAction)showActivityDetail:(id)sender {
+    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+    WOTActivityModel *model = self.activityData.firstObject;
+    detailvc.url = [model.htmlLocation stringToResourcesUrl];
+    [self.navigationController pushViewController:detailvc animated:YES];
+}
+//跳转新闻详情页
+- (IBAction)showInfoDetail:(id)sender {
+    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+    WOTNewsModel *model = self.newsData.firstObject;
+    detailvc.url = [model.htmlLocation stringToResourcesUrl];
+    [self.navigationController pushViewController:detailvc animated:YES];
+}
+
+#pragma mark - 页面跳转、该页面内请尽量都用此方法
+-(void)pushToViewControllerWithStoryBoardName:(NSString * _Nullable)sbName viewControllerName:(NSString *)vcName
+{
+    
+    UIViewController *vc = nil;
+    if (strIsEmpty(sbName)) {
+        vc = [[NSClassFromString(vcName) alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+    }
+    else {
+       vc = [[UIStoryboard storyboardWithName:sbName bundle:nil] instantiateViewControllerWithIdentifier:vcName];
+    }
+    if ([vc isKindOfClass:[WOTVisitorsAppointmentVC class]]) {
+        if (![WOTSingtleton shared].isuserLogin) {
+            [[WOTConfigThemeUitls shared] showLoginVC:self];
+            return;
+        }
+    } else if ([vc isKindOfClass:[WOTActivitiesLIstVC class]]) {
+        [(WOTActivitiesLIstVC*)vc setDataSource:self.activityData];
+    }
+    else if ([vc isKindOfClass:[WOTWorkSpaceListVC class]]) {
+        [(WOTWorkSpaceListVC *)vc setDataSource:self.spaceData];
+
+    }
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -243,34 +309,7 @@ int a = 0;
     [_sphereView timerStart];
     
 }
-*/
-
-#pragma mark - 加载滚动视图
--(void)loadAutoScrollView{
-    
-
-    self.autoScrollView.imageURLStringsGroup = _imageUrlStrings;
-//    self.autoScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
-    
-//    self.autoScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;  //设置图片填充格式
-    self.autoScrollView.delegate = self;
-    //self.autoScrollView.titlesGroup = _imageTitles;
-    //self.autoScrollView.currentPageDotColor = [UIColor yellowColor]; // 自定义分页控件小圆标颜色
-    self.autoScrollView.pageDotColor = [[UIColor alloc] initWithRed:13.0/255.0f green:13.0/255.0f blue:13.0/255.0f alpha:0.2];
-    //self.autoScrollView.currentPageDotColor = [UIColor blueColor];//dong
-    //pageDotColor
-    //self.autoScrollView.placeholderImage = [UIImage imageNamed:@"placeholder"];
-    
-//    self.spaceView.imageURLStringsGroup = _spaceImageUrlStrings;
-//    self.spaceView.delegate = self;
-//    self.spaceView.titlesGroup = _spaceTitleArray;
-    //self.spaceView.pageDotColor = [[UIColor alloc] initWithRed:13.0/255.0f green:13.0/255.0f blue:13.0/255.0f alpha:0.2];
-    //self.spaceView.onlyDisplayText = YES;
-}
-
-
-/*
-
+ 
 //3D球点击事件
 -(void)subVClick:(UIButton*)sender{
     
@@ -319,7 +358,7 @@ int a = 0;
             break;
         case 5:
             //活动
-             [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTActivitiesLIstVCID"];
+             [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTActivitiesLIstVC"];
             break;
         case 6:
          
@@ -342,22 +381,6 @@ int a = 0;
 }
 */
 
--(void)pushToViewControllerWithStoryBoardName:(NSString *)sbName viewControllerName:(NSString *)vcName
-{
-    UIViewController *stationvc = [[UIStoryboard storyboardWithName:sbName bundle:nil] instantiateViewControllerWithIdentifier:vcName];
-    if ([stationvc isKindOfClass:[WOTEnterpriseLIstVC class]]) {
-        [((WOTEnterpriseLIstVC *)stationvc) getEnterpriseListDataFromWeb:^{
-        }];
-    }
-    else if ([stationvc isKindOfClass:[WOTVisitorsAppointmentVC class]]) {
-        if (![WOTSingtleton shared].isuserLogin) {
-            [[WOTConfigThemeUitls shared] showLoginVC:self];
-            return;
-        }
-    }
-
-    [self.navigationController pushViewController:stationvc animated:YES];
-}
 
 #pragma mark -- Refresh method
 /**
@@ -397,36 +420,12 @@ int a = 0;
     
 }
 
-
-//page view UI
-- (void)setupUI {
-    if (!_pageFlowView) {
-        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-10)];
-        _pageFlowView.delegate = self;
-        _pageFlowView.dataSource = self;
-        _pageFlowView.minimumPageAlpha = 0.1;
-        _pageFlowView.isCarousel = YES;
-        _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-        _pageFlowView.isOpenAutoScroll = YES;
-        
-        //初始化pageControl
-        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 10, SCREEN_WIDTH, 8)];
-        _pageFlowView.pageControl = pageControl;
-        [_pageFlowView addSubview:pageControl];
-    }
-   
-    [self.spaceView addSubview:_pageFlowView];
-    
-    [_pageFlowView reloadData];
-    
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-#pragma mark - NewPagedFlowView Delegate
+#pragma mark - NewPagedFlowView Delegate & Datasource
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
     return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
 }
@@ -436,9 +435,8 @@ int a = 0;
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 
-#pragma mark  NewPagedFlowView Datasource
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
-    return self.spaceImageUrlStrings.count;
+    return self.spaceData.count>5?5:self.spaceData.count;
 }
 
 - (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
@@ -449,12 +447,8 @@ int a = 0;
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
     }
-    //从网络加载图片用
-    //NSLog(@"网络图片地址：%@",[self.spaceData[index] objectForKey:@"spacePicture"]);
-    NSLog(@"----%@",self.spaceImageUrlStrings[index]);
-    NSURL *imageUrl = [NSURL URLWithString:self.spaceImageUrlStrings[index]];
-    
-    [bannerView.mainImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"spacedefault"]];
+    //从网络加载图片用    
+    [bannerView.mainImageView sd_setImageWithURL:[self.spaceData[index].spacePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
     return bannerView;
 }
 
@@ -464,63 +458,11 @@ int a = 0;
 
 
 #pragma mark - shortcut delegate
--(void)pushToVCWithStoryBoardName:(NSString *)sbName vcName:(NSString *)vcName
+-(void)shortcutMenu:(WOTShortcutMenuView *)menu pushToVCWithStoryBoardName:(NSString *)sbName vcName:(NSString *)vcName
 {
-    if ([vcName isEqualToString:@"WOTOpenLockScanVCID"]) {
-        SKGiftBagViewController * giftBagVC = [[SKGiftBagViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:giftBagVC animated:YES];
-        return;
-    }
-    
     [self pushToViewControllerWithStoryBoardName:sbName viewControllerName:vcName];
 }
 
-//MARK:点击显示新页面
-- (IBAction)showWorkSpaceVC:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"spaceMain" bundle:nil];
-    WOTWorkSpaceListVC *spacevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTWorkSpaceListVC"];
-    [spacevc setDataSource:self.spaceData];
-    [self.navigationController pushViewController:spacevc animated:YES];
-}
-
-
-- (IBAction)showActivitiesVC:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"spaceMain" bundle:nil];
-    WOTActivitiesLIstVC  *acvc = [storyboard instantiateViewControllerWithIdentifier:@"WOTActivitiesLIstVCID"];
-    [acvc setDataSource:self.activityData];
-    [self.navigationController pushViewController:acvc animated:YES];
-    
-    
-}
-- (IBAction)showInformationLIstVC:(id)sender {
-    
-    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTInformationListVC"];
-    
-}
-- (IBAction)showEnterpriseListVC:(id)sender {
-
-    WOTEnterpriseLIstVC *enterprisevc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTEnterpriseLIstVCID"];
-    [self.navigationController pushViewController:enterprisevc animated:YES];
-}
-//跳转活动详情页
-- (IBAction)showActivityDetail:(id)sender {
-    
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    
-    WOTActivityModel *model = self.activityData.firstObject;
-    detailvc.url = [model.htmlLocation stringToResourcesUrl];
-    [self.navigationController pushViewController:detailvc animated:YES];
-    
-    
-}
-//跳转新闻详情页
-- (IBAction)showInfoDetail:(id)sender {
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    WOTNewsModel *model = self.newsData.firstObject;
-    detailvc.url = [model.htmlLocation stringToResourcesUrl];
-    [self.navigationController pushViewController:detailvc animated:YES];
-}
 
 //#pragma mark - Card Delegate & DataSource  空间卡片
 //-(NSInteger)numberOfItemsInCardView:(CardView *)cardView
@@ -550,18 +492,15 @@ int a = 0;
 //    NSLog(@"卡片%ld被选中", (long)index);
 //}
 
-//MARK:SDCycleScrollView   Delegate  点击轮播图显示详情
+#pragma mark - SDCycleScrollView Delegate  点击轮播图显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
 //    detailvc.url = _sliderUrlStrings[index];
     [self.navigationController pushViewController:detailvc animated:YES];
-    
-    NSLog(@"%@+%ld",cycleScrollView.titlesGroup[index],index);
 }
 
-#pragma mark -  tableView datasource delegate
-
+#pragma mark -  Network
 
 -(void)getEnterpriseListDataFromWeb:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
@@ -577,30 +516,19 @@ int a = 0;
     }];
 }
 -(void)getBannerDataSource:(void(^)())complete{
-//    [WOTHTTPNetwork getHomeSliderSouceInfo:^(id bean, NSError *error) {
-//        if (error) {
-//            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
-//        }
-//        if (bean) {
-//
-//            WOTSliderModel_msg *dd = (WOTSliderModel_msg *)bean;
-//            _imageTitles = [[NSMutableArray alloc]init];
-//            _imageUrlStrings = [[NSMutableArray alloc]init];
-//            _sliderUrlStrings = [[NSMutableArray alloc]init];
-//            for (WOTSliderModel *slider in dd.msg) {
-//                [_imageUrlStrings addObject:[NSString stringWithFormat:@"%@%@",HTTPBaseURL,slider.image]];
-//                [_imageTitles addObject:slider.headline];
-//                if ([slider.url hasPrefix:@"http"] == NO) {
-//                    [_sliderUrlStrings addObject:[NSString stringWithFormat:@"%@%@",@"http://",slider.url]];
-//                }
-//
-//            }
-//            complete();
-//
-//        }
-//    }];
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getHomeSliderSouceInfo:^(id bean, NSError *error) {
+        WOTSliderModel_msg *model = bean;
+        if ([model.code isEqualToString:@"200"]) {
+            weakSelf.bannerData = model.msg.list;
+            complete();
+        }
+        else {
+            
+        }
+    }];
 }
-#pragma mark - 网络获取空间数据
+
 -(void)getDataSourceFromWebFWithCity:( NSString * __nullable )city complete:(void(^)())complete loadVIews:(void(^)())loadViews{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getSapaceWithPage:@1 pageSize:@5 response:^(id bean, NSError *error) {
@@ -612,14 +540,6 @@ int a = 0;
                     weakSelf.spaceData = [model.msg.list subarrayWithRange:NSMakeRange(0, 4)];
             } else {
                     weakSelf.spaceData = model.msg.list ;
-            }
-            for (WOTSpaceModel *spaceModel in model.msg.list) {
-                NSLog(@"地址：%@",spaceModel.spacePicture);
-                NSArray *array = [spaceModel.spacePicture componentsSeparatedByString:@","];
-                [_spaceImageUrlStrings addObject:[NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,array.firstObject]];
-                [_spaceTitleArray addObject:spaceModel.spaceName];
-                
-                
             }
             loadViews();
         }
