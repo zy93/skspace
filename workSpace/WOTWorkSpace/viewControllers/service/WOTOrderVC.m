@@ -270,7 +270,7 @@
             };
             self.spaceId = self.spaceModel.spaceId;
             self.commodityNum = self.spaceModel.spaceId;
-            self.commodityKind = @"0";
+            self.commodityKind = @"工位";
             self.productNum = @(1);
             self.starTime = self.reservationStationStartDate;
             self.endTime =  self.reservationStationEndDate;
@@ -300,7 +300,7 @@
             }
             self.spaceId = self.meetingModel.spaceId;
             self.commodityNum = self.meetingModel.conferenceId;
-            self.commodityKind = [WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ?  @"1": @"2";
+            self.commodityKind = [WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ?  @"会议室": @"场地";
             self.productNum = @(1);
             NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
             self.starTime = arr.firstObject;
@@ -770,6 +770,9 @@
         }
         SKBookStationNumberModel *bookStation = bean;
         weakSelf.stationTotalNumber = [bookStation.msg objectForKey:@"residueStationNum"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.table reloadData];
+        });
         NSLog(@"可预订工位数量：%@",weakSelf.stationTotalNumber);
     }];
 }
