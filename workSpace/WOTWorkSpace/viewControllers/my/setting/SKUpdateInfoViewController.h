@@ -11,6 +11,6 @@
 @interface SKUpdateInfoViewController : UIViewController
 
 @property(nonatomic,strong)NSString *navigationStr;
-
+@property(nonatomic,strong)NSString *placeholderStr;
 
 @end

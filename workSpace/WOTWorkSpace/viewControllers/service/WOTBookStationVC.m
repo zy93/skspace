@@ -244,7 +244,7 @@
         //NSLog(@"测试：%@",model);
         //待开发
         bookcell.spaceName.text =model.spaceName;// @"方圆大厦-众创空间";
-        [bookcell.spaceImage sd_setImageWithURL:[model.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+        [bookcell.spaceImage sd_setImageWithURL:[model.spacePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
         bookcell.stationNum.text  = [NSString stringWithFormat:@"地址：%@",model.spaceSite]; //@"23个工位可以预定";
         bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",model.onlineLocationPrice];//@"¥123元／天";
         bookcell.delegate = self;

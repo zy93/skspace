@@ -436,7 +436,7 @@
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_BOOKSTATION:
             {
-                [cell.infoImg  sd_setImageWithURL:[_spaceModel.spacePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+                [cell.infoImg  sd_setImageWithURL:[_spaceModel.spacePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _spaceModel.spaceName;
                 cell.dailyRentLabel.text = [NSString stringWithFormat:@"剩余工位：%ld",self.stationTotalNumber.integerValue];
             }
@@ -444,7 +444,7 @@
             case ORDER_TYPE_SITE:
             case ORDER_TYPE_MEETING:
             {
-                [cell.infoImg  sd_setImageWithURL:[_meetingModel.conferencePicture ToUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+                [cell.infoImg  sd_setImageWithURL:[_meetingModel.conferencePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _meetingModel.conferenceName;
                 cell.dailyRentLabel.text = _meetingModel.location;
             }
