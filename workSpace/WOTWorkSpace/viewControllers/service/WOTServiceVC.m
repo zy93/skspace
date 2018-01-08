@@ -185,24 +185,28 @@
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetHeight(self.autoScrollView.frame)+ self.tableHeight.constant);
 }
 
-#pragma mark  - action
--(void)pushVCByVCName:(NSString *)vcName
+#pragma mark - 页面跳转、该页面内请尽量都用此方法
+-(void)pushToViewControllerWithStoryBoardName:(NSString * _Nullable)sbName viewControllerName:(NSString *)vcName
 {
-    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:vcName];
+    UIViewController *vc = nil;
+    if (strIsEmpty(sbName)) {
+        vc = [[NSClassFromString(vcName) alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+    }
+    else {
+        vc = [[UIStoryboard storyboardWithName:sbName bundle:nil] instantiateViewControllerWithIdentifier:vcName];
+    }
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 #pragma mark - SDCycleScroll delgate
 /** 点击图片回调 */
 //MARK:SDCycleScrollView   Delegate  点击轮播图显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
-    
-    
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     detailvc.url = _sliderUrlStrings[index];
     [self.navigationController pushViewController:detailvc animated:YES];
-    
     NSLog(@"%@+%ld",cycleScrollView.titlesGroup[index],index);
 }
 
@@ -210,24 +214,16 @@
 -(void)optionService:(NSString *)serviceName
 {
     if ([serviceName isEqualToString:@"意见反馈"]) {
-        [self pushVCByVCName:@"WOTFeedbackVC"];
-    }
-    
-    if ([serviceName isEqualToString:@"客户预约"]) {
+        [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTFeedbackVC"];
+
+    } else if ([serviceName isEqualToString:@"客户预约"]) {
         NSLog(@"客户预约");
-    }
-    
-    if ([serviceName isEqualToString:@"问题报修"]) {
-        
-        SKRepairsViewController *repairsVC = [[SKRepairsViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:repairsVC animated:YES];
-    }
-    
-    if ([serviceName isEqualToString:@"发布需求"]) {
-        SKDemandViewController *demandVC = [[SKDemandViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:demandVC animated:YES];
+        [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTVisitorsAppointmentVC"];
+
+    } else if ([serviceName isEqualToString:@"问题报修"]) {
+        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKRepairsViewController"];
+    } else if ([serviceName isEqualToString:@"发布需求"]) {
+        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController"];
     }
     
 //    else {

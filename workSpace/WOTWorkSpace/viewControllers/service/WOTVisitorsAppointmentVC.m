@@ -139,6 +139,7 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self configNav];

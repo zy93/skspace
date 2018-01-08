@@ -7,12 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOTEnterpriseModel.h"
-#import "UIViewController+Extension.h"
-@interface WOTEnterpriseLIstVC : UIViewController
-@property(nonatomic,strong)NSArray<WOTEnterpriseModel *> *dataSource;
-@property (nonatomic, strong) searchBlock block; //该属性需要与VC中定义相同。
-@property (nonatomic, strong) clearSearchBlock clearBlock; //该属性需要与VC中定义相同。
--(void)getEnterpriseListDataFromWeb:(void(^)())complete;
-
+#import "WOTTableViewBaseVC.h"
+@interface WOTEnterpriseLIstVC : WOTTableViewBaseVC
 @end

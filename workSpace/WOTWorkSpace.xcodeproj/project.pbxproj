@@ -106,6 +106,8 @@
 		2AB8A4AE1FF4F99C008897CB /* WOTEnterpriseIntroduceNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AB8A4AC1FF4F99C008897CB /* WOTEnterpriseIntroduceNameCell.xib */; };
 		2AB8A4B21FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB8A4B01FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.m */; };
 		2AB8A4B31FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AB8A4B11FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.xib */; };
+		2AB90BCA1FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB90BC81FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.m */; };
+		2AB90BCB1FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AB90BC91FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.xib */; };
 		2AD2BE191F26DC4F00D4C3BC /* WOTBusinessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD2BE181F26DC4F00D4C3BC /* WOTBusinessModel.m */; };
 		2AD2BE201F2711BD00D4C3BC /* WOTCurtainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD2BE1E1F2711BD00D4C3BC /* WOTCurtainCell.m */; };
 		2AD2BE211F2711BD00D4C3BC /* WOTCurtainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AD2BE1F1F2711BD00D4C3BC /* WOTCurtainCell.xib */; };
@@ -599,6 +601,9 @@
 		2AB8A4AF1FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTEnterpriseIntroduceMessageCell.h; sourceTree = "<group>"; };
 		2AB8A4B01FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTEnterpriseIntroduceMessageCell.m; sourceTree = "<group>"; };
 		2AB8A4B11FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTEnterpriseIntroduceMessageCell.xib; sourceTree = "<group>"; };
+		2AB90BC71FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTEnterpriseListSytle2Cell.h; sourceTree = "<group>"; };
+		2AB90BC81FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTEnterpriseListSytle2Cell.m; sourceTree = "<group>"; };
+		2AB90BC91FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTEnterpriseListSytle2Cell.xib; sourceTree = "<group>"; };
 		2AD2BE171F26DC4F00D4C3BC /* WOTBusinessModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTBusinessModel.h; sourceTree = "<group>"; };
 		2AD2BE181F26DC4F00D4C3BC /* WOTBusinessModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTBusinessModel.m; sourceTree = "<group>"; };
 		2AD2BE1D1F2711BD00D4C3BC /* WOTCurtainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTCurtainCell.h; sourceTree = "<group>"; };
@@ -1853,6 +1858,9 @@
 				E8190D2B1F0F69660000B07C /* WOTTEnterpriseListCell.h */,
 				E8190D2C1F0F69660000B07C /* WOTTEnterpriseListCell.m */,
 				E8190D2D1F0F69660000B07C /* WOTTEnterpriseListCell.xib */,
+				2AB90BC71FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.h */,
+				2AB90BC81FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.m */,
+				2AB90BC91FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.xib */,
 				E8190D2E1F0F69660000B07C /* WOTworkSpaceCommonCell.h */,
 				E8190D2F1F0F69660000B07C /* WOTworkSpaceCommonCell.m */,
 				E8190D301F0F69660000B07C /* WOTworkSpaceCommonCell.xib */,
@@ -3107,6 +3115,7 @@
 				E85032E31F0B5EDE00E79257 /* Socialcontact.storyboard in Resources */,
 				2A4214701F146A700010B003 /* share_qq@2x.png in Resources */,
 				2AB8A4A61FF4BE06008897CB /* WOTEnterCell.xib in Resources */,
+				2AB90BCB1FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.xib in Resources */,
 				E8190D9D1F0F69660000B07C /* WOTSpaceDetailTeamCollectionCell.xib in Resources */,
 				2A42146F1F146A700010B003 /* share_pengyouquan_select@3x.png in Resources */,
 				2AD2BE211F2711BD00D4C3BC /* WOTCurtainCell.xib in Resources */,
@@ -3361,6 +3370,7 @@
 				C595C9781FE1126E0083430A /* SKFocusCirclesViewController.m in Sources */,
 				C55A29891FD6DFD9001E0DB7 /* RegisterViewController.m in Sources */,
 				E8190DAA1F0F69660000B07C /* WOTMyActivitiesCell.m in Sources */,
+				2AB90BCA1FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.m in Sources */,
 				2A69A84A1FE2282C00C0862A /* WOTEnterpriseScrollView.m in Sources */,
 				C5E565DB1FF246C600534546 /* SKGiftBagViewController.m in Sources */,
 				E8A2001A1F1C8266003C8A86 /* WOTSliderModel.m in Sources */,
