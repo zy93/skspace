@@ -40,7 +40,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGo-0d-bQt" customClass="WOTButton">
-                                                            <rect key="frame" x="90.5" y="15" width="70" height="77.5"/>
+                                                            <rect key="frame" x="90.5" y="15" width="69.5" height="77.5"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="问题报修" image="lssue_repair">
@@ -51,7 +51,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-ye-4yK" customClass="WOTButton">
-                                                            <rect key="frame" x="160.5" y="15" width="70" height="77.5"/>
+                                                            <rect key="frame" x="160" y="15" width="70" height="77.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -63,7 +63,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88Q-nM-hD2" customClass="WOTButton">
-                                                            <rect key="frame" x="230.5" y="15" width="69.5" height="77.5"/>
+                                                            <rect key="frame" x="230" y="15" width="70" height="77.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -1786,11 +1786,10 @@
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97647058823529409" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="tjg-Hj-P0q" firstAttribute="top" secondItem="UyF-zr-fuY" secondAttribute="bottom" id="F4R-Nh-fL8"/>
-                            <constraint firstItem="tLz-qm-EmT" firstAttribute="top" secondItem="YgR-V8-7UB" secondAttribute="bottom" constant="10" id="FQk-fl-aYz"/>
+                            <constraint firstItem="tLz-qm-EmT" firstAttribute="top" secondItem="YgR-V8-7UB" secondAttribute="bottom" constant="10" id="FLo-tc-366"/>
                             <constraint firstAttribute="trailing" secondItem="UyF-zr-fuY" secondAttribute="trailing" id="FTA-PZ-rFx"/>
                             <constraint firstItem="tjg-Hj-P0q" firstAttribute="leading" secondItem="OHa-Pr-qdr" secondAttribute="leading" id="NDb-HS-nTt"/>
                             <constraint firstItem="V5V-5v-05N" firstAttribute="leading" secondItem="OHa-Pr-qdr" secondAttribute="leading" constant="20" id="T4u-kY-LlU"/>
-                            <constraint firstItem="uus-hu-hfA" firstAttribute="top" secondItem="V5V-5v-05N" secondAttribute="bottom" constant="20" id="Tmq-rZ-Ioc"/>
                             <constraint firstItem="UyF-zr-fuY" firstAttribute="top" secondItem="tLz-qm-EmT" secondAttribute="bottom" id="b25-6C-Fw8"/>
                             <constraint firstAttribute="trailing" secondItem="V5V-5v-05N" secondAttribute="trailing" constant="20" id="btD-cC-re5"/>
                             <constraint firstAttribute="trailing" secondItem="tLz-qm-EmT" secondAttribute="trailing" id="ckt-rQ-n51"/>
@@ -1803,6 +1802,7 @@
                             <constraint firstItem="Ild-3n-JJ7" firstAttribute="top" secondItem="tjg-Hj-P0q" secondAttribute="bottom" constant="19" id="mz9-lv-l2C"/>
                             <constraint firstAttribute="trailing" secondItem="tjg-Hj-P0q" secondAttribute="trailing" id="nNl-U7-yvP"/>
                             <constraint firstAttribute="trailing" secondItem="tjg-Hj-P0q" secondAttribute="trailing" id="oE7-VC-1yK"/>
+                            <constraint firstItem="uus-hu-hfA" firstAttribute="top" secondItem="V5V-5v-05N" secondAttribute="bottom" constant="20" id="wqK-8B-XBW"/>
                         </constraints>
                     </view>
                     <connections>

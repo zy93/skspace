@@ -49,6 +49,13 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
 }
 
@@ -77,7 +84,7 @@
 
 - (IBAction)submitFeedbackInfo:(id)sender {
     
-    if ([_textView.text isEqualToString:@""]){
+    if (strIsEmpty(_textView.text)){
         [MBProgressHUDUtil showMessage:UnInputFeedbackContentReminding toView:self.view ];
     } else{
 //        [[WOTUserSingleton shareUser]setValues];

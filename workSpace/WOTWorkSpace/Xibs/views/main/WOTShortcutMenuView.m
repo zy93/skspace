@@ -56,14 +56,14 @@
     //self.backgroundColor = UIColorFromRGB(0x8fc5f3);
     self.backgroundColor = [UIColor whiteColor];
     sbNameList = @[@"Service",@"Service",@"Service",@"Service",@"",
-                   @"spaceMain",@"spaceMain",@"spaceMain",];
+                   @"",@"spaceMain",@"spaceMain",];
     
     vcNameList = @[@"WOTReservationsMeetingVC",
                    @"WOTVisitorsAppointmentVC",
                    @"WOTBookStationVCID",
                    @"WOTReservationsMeetingVC",
                    @"SKGiftBagViewController",
-                   @"WOTEnterpriseLIstVCID",
+                   @"WOTEnterpriseLIstVC",
                    @"WOTInformationListVC",
                    @"WOTActivitiesLIstVC"];
     

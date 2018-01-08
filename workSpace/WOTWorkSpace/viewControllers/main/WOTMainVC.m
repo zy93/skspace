@@ -208,7 +208,6 @@ int a = 0;
     [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTWorkSpaceListVC"];
 }
 
-
 - (IBAction)showActivitiesVC:(id)sender {
     [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTActivitiesLIstVC"];
 }
@@ -216,7 +215,7 @@ int a = 0;
     [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTInformationListVC"];
 }
 - (IBAction)showEnterpriseListVC:(id)sender {
-    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTEnterpriseLIstVCID"];
+    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTEnterpriseLIstVC"];
 }
 //跳转活动详情页
 - (IBAction)showActivityDetail:(id)sender {
