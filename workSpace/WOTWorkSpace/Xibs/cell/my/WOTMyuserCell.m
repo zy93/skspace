@@ -8,6 +8,7 @@
 
 #import "WOTMyuserCell.h"
 #import "UIView+Extension.h"
+#import "WOTSingtleton.h"
 @implementation WOTMyuserCell
 
 - (void)awakeFromNib {
@@ -31,10 +32,15 @@
     // Configure the view for the selected state
 }
 - (IBAction)goToSettingVC:(id)sender {
+     if ([WOTSingtleton shared].isuserLogin) {
+         if (_mycelldelegate) {
+             [_mycelldelegate showSettingVC];
+         }
+     }else
+     {
+         [MBProgressHUDUtil showMessage:@"请先登录！" toView:self.superview];
+     }
     
-    if (_mycelldelegate) {
-        [_mycelldelegate showSettingVC];
-    }
 }
 
 

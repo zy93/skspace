@@ -1090,11 +1090,40 @@
 +(void)updateUserInfoWithParameters:(NSDictionary *)parameters photosArray:(NSArray *)photosArray response:(response)response
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/User/addUserInfo",HTTPBaseURL];
-//    NSDictionary *parameters = @{@"userId":userId
-//                                 };
     [self doFileRequestWithParameters:parameters useUrl:url image:photosArray complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
         return model;
+    } response:response];
+}
+
++(void)submitRepairsWithUserId:(NSNumber *)userId repairsType:(NSString *)type repairsInfo:(NSString *)info repairsAddress:(NSString *)address alias:(NSString *)alias photosArray:(NSArray *)photosArray response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/MaintainInfo/addMaintainInfo",HTTPBaseURL];
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"type":type,
+                                 @"info":info,
+                                 @"address":address,
+                                 @"alias":alias
+                                 };
+    [self doFileRequestWithParameters:parameters useUrl:url image:photosArray complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)issueDemandWithUserId:(NSNumber *)userId userName:(NSString *)userName spaceId:(NSNumber *)spaceId userTel:(NSString *)userTel demandType:(NSString *)demandType demandContent:(NSString *)demandContent response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Demand/addDemand",HTTPBaseURL];
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"userName":userName,
+                                 @"spaceId":spaceId,
+                                 @"tel":userTel,
+                                 @"demandType":demandType,
+                                 @"demandContent":demandContent
+                                 };
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model13 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model13;
     } response:response];
 }
 

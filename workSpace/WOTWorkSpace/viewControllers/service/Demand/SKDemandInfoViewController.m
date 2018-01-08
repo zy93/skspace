@@ -127,7 +127,40 @@
 #pragma mark - 提交方法
 -(void)demandSubMitButtonMethod
 {
+    if (![WOTSingtleton shared].isuserLogin) {
+        [MBProgressHUDUtil showMessage:@"请先登录后再提交！" toView:self.view];
+        return;
+    }
     
+    if (strIsEmpty(self.demandInfoTextView.text) || [self.demandInfoTextView.text isEqualToString:@"*请填写您的服务需求"]) {
+        [MBProgressHUDUtil showMessage:@"请填写需求内容后再提交！" toView:self.view];
+        return;
+    }
+
+
+    [WOTHTTPNetwork issueDemandWithUserId:[WOTUserSingleton shareUser].userInfo.userId
+                                 userName:[WOTUserSingleton shareUser].userInfo.userName
+                                  spaceId:[WOTUserSingleton shareUser].userInfo.spaceId
+                                  userTel:[WOTUserSingleton shareUser].userInfo.tel
+                               demandType:self.typeInfoLabel.text
+                            demandContent:self.demandInfoTextView.text
+                                 response:^(id bean, NSError *error) {
+                                     WOTBaseModel *model = (WOTBaseModel *)bean;
+                                     if ([model.code isEqualToString:@"200"]) {
+                                         [MBProgressHUDUtil showLoadingWithMessage:@"提交成功" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+                                             [hud hide:YES afterDelay:1.f complete:^{
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     [self.navigationController popToRootViewControllerAnimated:YES];
+                                                 });
+                                                 
+                                             }];
+                                         }];
+                                     }
+                                     else
+                                     {
+                                         [MBProgressHUDUtil showMessage:@"提交失败！" toView:self.view];
+                                     }
+                                 }];
 }
 
 #pragma mark - 选择支持类型

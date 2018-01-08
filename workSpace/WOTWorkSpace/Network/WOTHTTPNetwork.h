@@ -542,4 +542,32 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)updateUserInfoWithParameters:(NSDictionary *)parameters photosArray:(NSArray *)photosArray response:(response)response;
 
+
+/**
+ 问题报修
+
+ @param userId 用户id
+ @param type 报修类型
+ @param info 报修信息
+ @param address 报修地址
+ @param alias 别名
+ @param photosArray 图片数组
+ @param response 结果回调
+ */
++(void)submitRepairsWithUserId:(NSNumber *)userId repairsType:(NSString *)type repairsInfo:(NSString *)info repairsAddress:(NSString *)address alias:(NSString *)alias photosArray:(NSArray *)photosArray response:(response)response;
+
+
+/**
+ 发布需求
+
+ @param userId 用户id
+ @param userName 用户名
+ @param spaceId 用户所在的空间id
+ @param userTel 用户电话
+ @param demandType 需求类型
+ @param demandContent 需求内容
+ @param response 结果回调
+ */
++(void)issueDemandWithUserId:(NSNumber *)userId userName:(NSString *)userName spaceId:(NSNumber *)spaceId userTel:(NSString *)userTel demandType:(NSString *)demandType demandContent:(NSString *)demandContent response:(response)response;
+
 @end

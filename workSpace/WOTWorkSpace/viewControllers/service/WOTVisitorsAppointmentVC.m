@@ -107,7 +107,7 @@
     self.accessTypeValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
     self.accessTargetValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
     self.accessDateValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
-    
+    self.topView.backgroundColor = UICOLOR_MAIN_PINK;
 
     self.contentBGView.layer.cornerRadius =radius;
     self.accessNumberText.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -166,12 +166,6 @@
     UIGraphicsEndImageContext();
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.clipsToBounds = YES;
-    
-//    //解决布局空白问题
-//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-//    if (is7Version) {
-//        self.edgesForExtendedLayout=UIRectEdgeNone;
-//    }
 }
 
 -(void)clearNav {

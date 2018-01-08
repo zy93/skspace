@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *memberLabel;
 @property (weak, nonatomic) IBOutlet UIView *headView;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *topButton;
+
 
 @property(nonatomic,strong)id<WOTOMyCellDelegate> mycelldelegate;
 @end

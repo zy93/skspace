@@ -14,6 +14,7 @@
 @property(nonatomic,strong)UIView *topView;
 @property(nonatomic,strong)UITextField *importTextField;
 @property(nonatomic,strong)NSDictionary *parametersDictionary;
+@property(nonatomic,strong)NSMutableArray *selectedPhotos;
 @end
 
 @implementation SKUpdateInfoViewController
@@ -51,12 +52,39 @@
 
 #pragma mark - 保存方法
 - (void)saveInfo {
+    if (strIsEmpty(self.importTextField.text)) {
+        [MBProgressHUDUtil showMessage:@"请填写信息后再保存" toView:self.view];
+        return;
+    }
     if ([self.navigationStr isEqualToString:@"修改姓名"]) {
-        
+        self.parametersDictionary = @{@"userId":@2,
+                                      @"userName":self.importTextField.text};
     }else
     {
-        
+        if (![NSString isValidateEmail:self.importTextField.text]) {
+            [MBProgressHUDUtil showMessage:@"邮箱格式不正确！" toView:self.view];
+            return;
+        }
+        self.parametersDictionary = @{@"userId":@2,
+                                      @"email":self.importTextField.text};
     }
+    
+    [WOTHTTPNetwork updateUserInfoWithParameters:self.parametersDictionary photosArray:self.selectedPhotos response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showLoadingWithMessage:@"修改成功" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+                [hud hide:YES afterDelay:1.f complete:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.navigationController popViewControllerAnimated:YES];
+                    });
+                    
+                }];
+            }];
+        }else {
+            [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
+        }
+        
+    }];
     
 }
 

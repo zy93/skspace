@@ -50,6 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.selectedPhotos = [[NSMutableArray alloc] init];
     self.navigationItem.title = @"问题报修";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.lineView1];
@@ -308,6 +309,46 @@
 #pragma mark - 提交方法
 -(void)subMitButtonMethod
 {
+    if (![WOTSingtleton shared].isuserLogin) {
+        [MBProgressHUDUtil showMessage:@"请先登录后再提交！" toView:self.view];
+        return;
+    }
+    
+    if (strIsEmpty(self.describeTextView.text) || [self.describeTextView.text isEqualToString:@"请输入文字描述"]) {
+        [MBProgressHUDUtil showMessage:@"请填写报修描述！" toView:self.view];
+        return;
+    }
+    if (strIsEmpty(self.repairsAddressTextField.text)) {
+        [MBProgressHUDUtil showMessage:@"请填写报修地址！" toView:self.view];
+        return;
+    }
+    [MBProgressHUDUtil showLoadingWithMessage:@"提交中" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+        [WOTHTTPNetwork submitRepairsWithUserId:[WOTUserSingleton shareUser].userInfo.userId
+                                    repairsType:self.repairsTypeStr
+                                    repairsInfo:self.describeTextView.text
+                                 repairsAddress:self.repairsAddressTextField.text
+                                          alias:[WOTUserSingleton shareUser].userInfo.alias
+                                    photosArray:self.selectedPhotos
+                                       response:^(id bean, NSError *error) {
+                                           WOTBaseModel *model = (WOTBaseModel *)bean;
+                                           if ([model.code isEqualToString:@"200"]) {
+                                               [hud hide:YES];
+                                               [MBProgressHUDUtil showLoadingWithMessage:@"提交成功" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+                                                   [hud hide:YES afterDelay:1.f complete:^{
+                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                           [self.navigationController popToRootViewControllerAnimated:YES];
+                                                       });
+                                                       
+                                                   }];
+                                               }];
+                                           }
+                                           else
+                                           {
+                                               [hud hide:YES];
+                                               [MBProgressHUDUtil showMessage:@"提交失败！" toView:self.view];
+                                           }
+                                       }];
+    }];
     
 }
 
