@@ -1087,4 +1087,15 @@
     } response:response];
 }
 
++(void)updateUserInfoWithParameters:(NSDictionary *)parameters photosArray:(NSArray *)photosArray response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/User/addUserInfo",HTTPBaseURL];
+//    NSDictionary *parameters = @{@"userId":userId
+//                                 };
+    [self doFileRequestWithParameters:parameters useUrl:url image:photosArray complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
 @end

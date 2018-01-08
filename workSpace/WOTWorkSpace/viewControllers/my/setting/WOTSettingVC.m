@@ -19,7 +19,9 @@
 
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UIButton *quitButton;
-@property (nonatomic, strong) NSMutableArray *selectedPhotos;
+@property(nonatomic,strong)NSMutableArray *selectedPhotos;
+//@property(nonatomic,strong)NSString *headImageUrl;
+@property(nonatomic,strong)WOTLoginModel *userInfoModel;
 @end
 
 @implementation WOTSettingVC
@@ -64,6 +66,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
+    [self querySingularManInfo];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -123,27 +126,29 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            if (self.selectedPhotos.count > 0) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:self.selectedPhotos[0]];
+                UIImageView *imageView = [[UIImageView alloc] init];
+                [imageView sd_setImageWithURL:[self.userInfoModel.headPortrait ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
                 imageView.size = CGSizeMake(80, 80);
                 imageView.layer.cornerRadius=imageView.frame.size.width/2;
                 imageView.clipsToBounds=YES;
                 cell.accessoryView = imageView;
-            }else
-            {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
-                imageView.size = CGSizeMake(80, 80);
-                imageView.layer.cornerRadius=imageView.frame.size.width/2;
-                imageView.clipsToBounds=YES;
-                
-                cell.accessoryView = imageView;
-            }
-            
+        }
+        if (indexPath.row == 1) {
+            cell.detailTextLabel.text = self.userInfoModel.userName;
+        }
+        if (indexPath.row == 2) {
+            cell.detailTextLabel.text = self.userInfoModel.sex;
+        }
+        if (indexPath.row == 3) {
+            cell.detailTextLabel.text = self.userInfoModel.email;
         }
         NSArray *nameArray = [[NSArray alloc]initWithObjects:@"头像",@"姓名",@"性别",@"邮箱",nil];
         cell.textLabel.text = nameArray[indexPath.row];
         
     } else if (indexPath.section == 1){
+        if (indexPath.row == 0) {
+            cell.detailTextLabel.text = @"0";
+        }
         if (indexPath.row == 2) {
             cell.detailTextLabel.text = @"010-8646-7632";
         }
@@ -254,7 +259,8 @@
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     _selectedPhotos = [NSMutableArray arrayWithArray:photos];
     [self viewDidLayoutSubviews];
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
+    [self updateUserInfo];
     if (iOS8Later) {
         for (PHAsset *phAsset in assets) {
             NSLog(@"location:%@",phAsset.location);
@@ -271,8 +277,8 @@
     UIImage *image = info[UIImagePickerControllerEditedImage];
     
     [self.selectedPhotos addObject:image];
-    [self.tableView reloadData];
-    
+    //[self.tableView reloadData];
+    [self updateUserInfo];
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
@@ -301,6 +307,42 @@
         [self.navigationController popViewControllerAnimated:YES];
         
     } cancel:^{
+        
+    }];
+}
+
+#pragma mark - 请求个人信息
+-(void)querySingularManInfo
+{
+    if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
+        [MBProgressHUDUtil showMessage:@"请先登录再进行其他操作" toView:self.view];
+        return;
+    }
+    [WOTHTTPNetwork querySingularManInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+        WOTLoginModel_msg *model_msg = (WOTLoginModel_msg *)bean;
+        WOTLoginModel *model = model_msg.msg;
+        if ([model_msg.code isEqualToString:@"200"]) {
+//                self.headImageUrl = model.headPortrait;
+            self.userInfoModel = model;
+            [self.tableView reloadData];
+        } else {
+            [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
+        }
+    }];
+}
+
+#pragma mark - 修改资料
+-(void)updateUserInfo
+{
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId};
+    [WOTHTTPNetwork updateUserInfoWithParameters:parameters photosArray:self.selectedPhotos response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showMessage:@"修改成功！" toView:self.view];
+            [self querySingularManInfo];
+        }else {
+            [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
+        }
         
     }];
 }
@@ -336,14 +378,6 @@
     }
     return _selectedPhotos;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

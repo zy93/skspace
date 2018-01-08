@@ -532,4 +532,14 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)querySingularManInfoWithUserId:(NSNumber *)userId response:(response)response;
 
+
+/**
+ 修改用户资料
+
+ @param parameters 需要修改的参数
+ @param photosArray 头像图片
+ @param response 结果回调
+ */
++(void)updateUserInfoWithParameters:(NSDictionary *)parameters photosArray:(NSArray *)photosArray response:(response)response;
+
 @end

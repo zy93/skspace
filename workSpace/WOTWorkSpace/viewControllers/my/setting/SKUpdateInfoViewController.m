@@ -13,6 +13,7 @@
 
 @property(nonatomic,strong)UIView *topView;
 @property(nonatomic,strong)UITextField *importTextField;
+@property(nonatomic,strong)NSDictionary *parametersDictionary;
 @end
 
 @implementation SKUpdateInfoViewController
@@ -50,7 +51,13 @@
 
 #pragma mark - 保存方法
 - (void)saveInfo {
-    NSLog(@"onClickedOKbtn");
+    if ([self.navigationStr isEqualToString:@"修改姓名"]) {
+        
+    }else
+    {
+        
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
