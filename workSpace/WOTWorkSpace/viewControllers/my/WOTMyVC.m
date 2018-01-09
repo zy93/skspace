@@ -136,6 +136,7 @@
         WOTMyuserCell *mycell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyuserCellID" forIndexPath:indexPath];
 
         if ([WOTSingtleton shared].isuserLogin) {
+            mycell.topButton.hidden = YES;
             [mycell.loginButton setHidden:YES];
             [mycell.memberLabel setHidden:NO];
             [mycell.userName setHidden:NO];
@@ -150,6 +151,7 @@
             }
         }else
         {
+            mycell.topButton.hidden = NO;
             [mycell.topButton addTarget:self action:@selector(showLoginView) forControlEvents:UIControlEventTouchDown];
             [mycell.loginButton setHidden:NO];
             [mycell.memberLabel setHidden:NO];

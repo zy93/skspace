@@ -132,7 +132,7 @@
         if (indexPath.row == 0) {
                 UIImageView *imageView = [[UIImageView alloc] init];
                 [imageView sd_setImageWithURL:[self.userInfoModel.headPortrait ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
-                imageView.size = CGSizeMake(80, 80);
+                imageView.size = CGSizeMake(60, 60);
                 imageView.layer.cornerRadius=imageView.frame.size.width/2;
                 imageView.clipsToBounds=YES;
                 cell.accessoryView = imageView;

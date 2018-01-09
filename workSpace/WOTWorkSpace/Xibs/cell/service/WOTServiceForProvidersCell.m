@@ -55,8 +55,6 @@
     
 }
 
-- (IBAction)joinBtn:(id)sender {
-}
 
 
 @end

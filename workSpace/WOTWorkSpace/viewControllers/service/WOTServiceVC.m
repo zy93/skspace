@@ -262,11 +262,10 @@
         if (cell == nil) {
             cell = [[WOTServiceForProvidersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTServiceForProvidersCell"];
         }
+        [cell.joinButton addTarget:self action:@selector(joinButtonMethod) forControlEvents:UIControlEventTouchDown];
         [cell setData:5]; 
         return cell;
     }
-    
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -286,6 +285,12 @@
             complete();
         }
     }];
+}
+
+#pragma mark - 申请入驻
+-(void)joinButtonMethod
+{
+    [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"WOTRegisterServiceProvidersVC"];
 }
 
 /*

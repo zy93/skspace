@@ -317,8 +317,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     NSLog(@"行高：%f",TableHeader + kLocationToBottom + ym.replyHeight + ym.showImageHeight  + kDistance + (ym.islessLimit?0:30) + (unfold?ym.shuoshuoHeight:ym.unFoldShuoHeight) + kReplyBtnDistance + ym.favourHeight + (ym.favourHeight == 0?0:kReply_FavourDistance)+20);
     return TableHeader + kLocationToBottom + ym.replyHeight + ym.showImageHeight  + kDistance + (ym.islessLimit?0:30) + (unfold?ym.shuoshuoHeight:ym.unFoldShuoHeight) + kReplyBtnDistance + ym.favourHeight + (ym.favourHeight == 0?0:kReply_FavourDistance)+20;
 }
-#pragma mark - 按钮动画
 
+#pragma mark - 按钮动画
 - (void)replyAction:(YMButton *)sender{
     
     CGRect rectInTableView = [mainTable rectForRowAtIndexPath:sender.appendIndexPath];

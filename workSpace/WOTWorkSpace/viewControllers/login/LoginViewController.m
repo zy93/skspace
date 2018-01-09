@@ -248,7 +248,6 @@
             }
             
         }
-        //else{
         if (error) {
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
         }

@@ -75,7 +75,8 @@
 -(NSURL *)ToResourcesUrl
 {
     NSString *base = [NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,self];
-    return [NSURL URLWithString:base];
+    //return [NSURL URLWithString:base];
+    return [NSURL URLWithString:[base stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
 }
 
 -(NSString *)stringToResourcesUrl
