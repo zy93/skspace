@@ -93,7 +93,7 @@ static NSString *kY = @"curveY";
 - (void)configShapeLayer
 {
     _shapeLayer = [CAShapeLayer layer];
-    _shapeLayer.fillColor = UICOLOR_MAIN_ORANGE.CGColor;
+    _shapeLayer.fillColor = UICOLOR_MAIN_PINK.CGColor;
     [self.layer addSublayer:_shapeLayer];
 }
 

@@ -612,7 +612,7 @@
                           @"targetId":targetId,
                           @"peopleNum":peopleNum,
                           @"appointmentVisitTime":time,
-                          @"infoState":@"0",
+                          @"infoState":@"等待答复",
                           @"targetAlias":targetAlias
                         };
     NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/addVisitorOrUpdate"];

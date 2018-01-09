@@ -107,7 +107,6 @@
     self.accessTypeValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
     self.accessTargetValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
     self.accessDateValueLab.textColor = UICOLOR_MAIN_TEXT_PLACEHOLDER;
-    
 
     self.contentBGView.layer.cornerRadius =radius;
     self.accessNumberText.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -166,19 +165,12 @@
     UIGraphicsEndImageContext();
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.clipsToBounds = YES;
-    
-//    //解决布局空白问题
-//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-//    if (is7Version) {
-//        self.edgesForExtendedLayout=UIRectEdgeNone;
-//    }
 }
 
 -(void)clearNav {
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.clipsToBounds = NO;
-
 }
 
 
@@ -220,7 +212,7 @@
     view.layer.borderWidth = 1.f;
     view.layer.borderColor = UICOLOR_GRAY_CC.CGColor;
     view.layer.cornerRadius =5.f;
-    view.layer.shadowColor = UICOLOR_BLACK.CGColor;//shadowColor阴影颜色
+    view.layer.shadowColor = UICOLOR_GRAY_99.CGColor;//shadowColor阴影颜色
     view.layer.shadowOffset = CGSizeMake(0,3);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
     view.layer.shadowRadius = 3.f;//阴影半径，默认3
     view.layer.shadowOpacity = .5f;//阴影透明度，默认0
@@ -343,18 +335,26 @@
     if (strIsEmpty(visitorName)) {
         [MBProgressHUDUtil showMessage:@"请输入访客姓名" toView:self.view];
         return;
+    }else if (strIsEmpty(sex) || [sex isEqualToString:@"请选择"]) {
+        [MBProgressHUDUtil showMessage:@"请选择性别" toView:self.view];
+        return;
+        
     }else if (strIsEmpty(tel)) {
         [MBProgressHUDUtil showMessage:@"请输入访客电话" toView:self.view];
         return;
         
     }else if (spaceId.integerValue<=0) {
         if (![NSString valiMobile:tel]) {
-            [MBProgressHUDUtil showMessage:@"电话格式不正确！" toView:self.view];
+            [MBProgressHUDUtil showMessage:@"电话格式不正确" toView:self.view];
             return;
         }
         [MBProgressHUDUtil showMessage:@"请选择访问社区" toView:self.view];
         return;
-    }else if (strIsEmpty(userName)) {
+    }else if (!type) {
+        [MBProgressHUDUtil showMessage:@"请选择访问类型" toView:self.view];
+        return;
+        
+    }else if (strIsEmpty(userName) || [userName isEqualToString:@"请选择"]) {
         [MBProgressHUDUtil showMessage:@"请选择访问对象" toView:self.view];
         return;
     }else if (strIsEmpty(visitorInfo)) {

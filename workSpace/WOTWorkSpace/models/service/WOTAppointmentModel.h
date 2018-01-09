@@ -15,7 +15,7 @@
 
 @interface WOTAppointmentModel : JSONModel
 
-@property(nonatomic,strong)NSNumber *accessType;
+@property(nonatomic,strong)NSString *accessType;
 @property(nonatomic,strong)NSString *appointmentTime;
 @property(nonatomic,strong)NSString *appointmentVisitTime ;
 @property(nonatomic,strong)NSString *infoState;

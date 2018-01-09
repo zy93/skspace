@@ -90,9 +90,10 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.translucent = NO;
-    [self.navigationController.navigationBar setHidden:YES];
+    //不要使用点语法，否则会设置失败。。。
     [self.tabBarController.tabBar setHidden:NO];
+    [self.tabBarController.tabBar setTranslucent:NO];
+    [self.navigationController.navigationBar setHidden:YES];
 }
 
 int a = 0;
@@ -215,7 +216,7 @@ int a = 0;
     [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTInformationListVC"];
 }
 - (IBAction)showEnterpriseListVC:(id)sender {
-    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTEnterpriseLIstVC"];
+    [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"WOTEnterpriseLIstVC"];
 }
 //跳转活动详情页
 - (IBAction)showActivityDetail:(id)sender {
