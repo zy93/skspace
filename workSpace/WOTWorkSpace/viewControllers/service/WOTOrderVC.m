@@ -452,8 +452,6 @@
             default:
                 break;
         }
-            
-        
         return cell;
     }
     else if ([cellType isEqualToString:selectDateCell]) {
@@ -471,7 +469,6 @@
                 [cell.dateNameLab setText:@"结束日期："];
             }
         }
-        
         return cell;
     }
     else if ([cellType isEqualToString:selectTimeCell]) {

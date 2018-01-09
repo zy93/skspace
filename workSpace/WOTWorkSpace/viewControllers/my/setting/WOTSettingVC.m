@@ -15,11 +15,17 @@
 #import "TZImageManager.h"
 #import <Photos/Photos.h>
 #import "SKUpdateInfoViewController.h"
-@interface WOTSettingVC ()<UITableViewDelegate,UITableViewDataSource,TZImagePickerControllerDelegate,UIImagePickerControllerDelegate>
+#import "WOTPickerView.h"
+
+@interface WOTSettingVC ()<UITableViewDelegate,UITableViewDataSource,TZImagePickerControllerDelegate,UIImagePickerControllerDelegate,WOTPickerViewDelegate,WOTPickerViewDataSource>
 
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UIButton *quitButton;
-@property (nonatomic, strong) NSMutableArray *selectedPhotos;
+@property(nonatomic,strong)NSMutableArray *selectedPhotos;
+//@property(nonatomic,strong)NSString *headImageUrl;
+@property(nonatomic,strong)WOTLoginModel *userInfoModel;
+@property (nonatomic, strong) WOTPickerView *pickerView;
+@property (nonatomic, strong) NSArray *pickerData;
 @end
 
 @implementation WOTSettingVC
@@ -31,10 +37,10 @@
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.quitButton];
     //解决布局空白问题
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
+//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
+//    if (is7Version) {
+//        self.edgesForExtendedLayout=UIRectEdgeNone;
+//    }
     [self layoutSubviews];
 }
 
@@ -64,6 +70,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
+    [self querySingularManInfo];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -123,27 +130,29 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            if (self.selectedPhotos.count > 0) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:self.selectedPhotos[0]];
+                UIImageView *imageView = [[UIImageView alloc] init];
+                [imageView sd_setImageWithURL:[self.userInfoModel.headPortrait ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
                 imageView.size = CGSizeMake(80, 80);
                 imageView.layer.cornerRadius=imageView.frame.size.width/2;
                 imageView.clipsToBounds=YES;
                 cell.accessoryView = imageView;
-            }else
-            {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
-                imageView.size = CGSizeMake(80, 80);
-                imageView.layer.cornerRadius=imageView.frame.size.width/2;
-                imageView.clipsToBounds=YES;
-                
-                cell.accessoryView = imageView;
-            }
-            
+        }
+        if (indexPath.row == 1) {
+            cell.detailTextLabel.text = self.userInfoModel.userName;
+        }
+        if (indexPath.row == 2) {
+            cell.detailTextLabel.text = self.userInfoModel.sex;
+        }
+        if (indexPath.row == 3) {
+            cell.detailTextLabel.text = self.userInfoModel.email;
         }
         NSArray *nameArray = [[NSArray alloc]initWithObjects:@"头像",@"姓名",@"性别",@"邮箱",nil];
         cell.textLabel.text = nameArray[indexPath.row];
         
     } else if (indexPath.section == 1){
+        if (indexPath.row == 0) {
+            cell.detailTextLabel.text = [self.userInfoModel.integral stringValue];
+        }
         if (indexPath.row == 2) {
             cell.detailTextLabel.text = @"010-8646-7632";
         }
@@ -162,49 +171,27 @@
         if (indexPath.row == 0) {
 //            [self pushTZImagePickerController];
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
-                                                  
-                                                                                     message:nil
-                                                  
-                                                                              preferredStyle:UIAlertControllerStyleActionSheet];
-            
-            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
-                                           
-                                                                 handler:^(UIAlertAction * action) {}];
-           
+                     message:nil
+                 preferredStyle:UIAlertControllerStyleActionSheet];
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel                                                            handler:^(UIAlertAction * action) {}];
             UIAlertAction* fromPhotoAction = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                  [self pushTZImagePickerController];
-            
             }];
-            
             UIAlertAction* fromCameraAction = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault  handler:^(UIAlertAction * action) {
                 if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-                    
                 {
-                    
                     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-                    
                     imagePicker.delegate = self;
-                    
                     imagePicker.allowsEditing = YES;
-                    
                     //  imagePicker.allowsEditing = NO;
-                    
                     imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-                    
                     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                    
                     [self presentViewController:imagePicker animated:YES completion:nil];
-                    
                 }
-                
             }];
-            
             [alertController addAction:cancelAction];
-            
             [alertController addAction:fromCameraAction];
-            
             [alertController addAction:fromPhotoAction];
-            
             [self presentViewController:alertController animated:YES completion:nil];
             
         }
@@ -214,6 +201,23 @@
             updateVC.navigationStr = @"修改姓名";
             updateVC.placeholderStr = @"请输入修改的姓名";
             [self.navigationController pushViewController:updateVC animated:YES];
+        }
+        
+        if (indexPath.row == 2) {
+            self.pickerData = @[@"男", @"女"];
+           // isSelectSex = YES;
+            [self.pickerView reloadData];
+            __weak typeof(self) weakSelf = self;
+            self.pickerView.selectBlock = ^(BOOL status, NSInteger row) {
+                if (status) {
+//                    NSLog(@"选择了");
+                    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                                 @"sex":weakSelf.pickerData[row]
+                                                 };
+                    [weakSelf updateUserInfoWithParameters:parameters];
+                }
+            };
+            [self.pickerView popPickerView];
         }
         
         if (indexPath.row == 3) {
@@ -237,6 +241,35 @@
     }
     
 }
+#pragma mark - picker delegate
+-(NSInteger)numberOfComponentsInPickerView:(WOTPickerView *)pickerView
+{
+    return 1;
+}
+-(NSInteger)pickerView:(WOTPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.pickerData.count;
+}
+
+-(NSString *)pickerView:(WOTPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return self.pickerData[row];
+}
+
+-(void)pickerView:(WOTPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSLog(@"-----%@",self.pickerData[row]);
+//    if (isSelectSex) {
+//        self.genderValueLab.text = self.pickerData[row];
+//        self.genderValueLab.textColor = UICOLOR_BLACK;
+//        
+//    }
+//    else {
+//        self.accessTypeValueLab.text = self.pickerData[row];
+//        self.accessTypeValueLab.textColor = UICOLOR_BLACK;
+//        
+//    }
+}
 
 
 #pragma mark - TZImagePickerController
@@ -254,7 +287,9 @@
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     _selectedPhotos = [NSMutableArray arrayWithArray:photos];
     [self viewDidLayoutSubviews];
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId};
+    [self updateUserInfoWithParameters:parameters];
     if (iOS8Later) {
         for (PHAsset *phAsset in assets) {
             NSLog(@"location:%@",phAsset.location);
@@ -271,8 +306,9 @@
     UIImage *image = info[UIImagePickerControllerEditedImage];
     
     [self.selectedPhotos addObject:image];
-    [self.tableView reloadData];
-    
+    //[self.tableView reloadData];
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId};
+    [self updateUserInfoWithParameters:parameters];
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
@@ -298,9 +334,45 @@
         [WOTSingtleton shared].isuserLogin = NO;
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
         [[WOTUserSingleton shareUser] deletePlistFile];
+        [WOTUserSingleton destroyInstance];
         [self.navigationController popViewControllerAnimated:YES];
         
     } cancel:^{
+        
+    }];
+}
+
+#pragma mark - 请求个人信息
+-(void)querySingularManInfo
+{
+    if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
+        [MBProgressHUDUtil showMessage:@"请先登录再进行其他操作" toView:self.view];
+        return;
+    }
+    [WOTHTTPNetwork querySingularManInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+        WOTLoginModel_msg *model_msg = (WOTLoginModel_msg *)bean;
+        WOTLoginModel *model = model_msg.msg;
+        if ([model_msg.code isEqualToString:@"200"]) {
+//                self.headImageUrl = model.headPortrait;
+            self.userInfoModel = model;
+            [self.tableView reloadData];
+        } else {
+            [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
+        }
+    }];
+}
+
+#pragma mark - 修改资料
+-(void)updateUserInfoWithParameters:(NSDictionary *)parameters
+{
+    [WOTHTTPNetwork updateUserInfoWithParameters:parameters photosArray:self.selectedPhotos response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showMessage:@"修改成功！" toView:self.view];
+            [self querySingularManInfo];
+        }else {
+            [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
+        }
         
     }];
 }
@@ -329,6 +401,7 @@
     }
     return _quitButton;
 }
+
 -(NSMutableArray *)selectedPhotos
 {
     if (_selectedPhotos == nil) {
@@ -336,14 +409,22 @@
     }
     return _selectedPhotos;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(WOTPickerView *)pickerView
+{
+    if (!_pickerView) {
+        _pickerView = [[WOTPickerView alloc] init];
+        _pickerView.dataSource = self;
+        _pickerView.delegate = self;
+      //  [_pickerView.pickerV clearSpearatorLine];
+//        _pickerView.pickerV.layer.cornerRadius = 5.f;
+//        _pickerView.pickerV.layer.borderWidth = 1.f;
+//        _pickerView.pickerV.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        [self.view addSubview:_pickerView];
+//        [_pickerView popPickerView];
+    }
+    return  _pickerView;
 }
-*/
+
 
 @end

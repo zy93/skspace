@@ -8,7 +8,8 @@
 
 #import "WOTUserSingleton.h"
 #import <objc/runtime.h>
-
+static WOTUserSingleton *shareUser;
+static dispatch_once_t token;
 @implementation WOTUserSingleton
 
 -(id)initSingleton{
@@ -20,8 +21,7 @@
 
 
 +(instancetype)shareUser{
-    static WOTUserSingleton *shareUser;
-    static dispatch_once_t token;
+    
     dispatch_once(&token, ^{
         shareUser = [[self alloc] initSingleton];
     });
@@ -29,6 +29,11 @@
     return shareUser;
 }
 
++ (void)destroyInstance {
+    
+    shareUser=nil;
+    token=0l;
+}
 -(void)setValues{
     NSDictionary *dic = [self readUserInfoFromPlist];
     NSError *error;

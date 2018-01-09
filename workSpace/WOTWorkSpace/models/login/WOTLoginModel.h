@@ -42,6 +42,7 @@
 @property (nonatomic, assign) NSNumber *userType;
 @property (nonatomic, assign) NSNumber *meetingHours;
 @property (nonatomic, assign) NSNumber *workHours;
+@property (nonatomic, assign) NSNumber *integral;
 
 @end
 

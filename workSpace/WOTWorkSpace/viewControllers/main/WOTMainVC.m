@@ -236,7 +236,6 @@ int a = 0;
 #pragma mark - 页面跳转、该页面内请尽量都用此方法
 -(void)pushToViewControllerWithStoryBoardName:(NSString * _Nullable)sbName viewControllerName:(NSString *)vcName
 {
-    
     UIViewController *vc = nil;
     if (strIsEmpty(sbName)) {
         vc = [[NSClassFromString(vcName) alloc] init];

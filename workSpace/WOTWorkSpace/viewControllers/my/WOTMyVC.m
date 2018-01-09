@@ -134,11 +134,12 @@
     
     if (indexPath.section == 0) {
         WOTMyuserCell *mycell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyuserCellID" forIndexPath:indexPath];
-        [mycell.loginButton addTarget:self action:@selector(showLoginView) forControlEvents:UIControlEventTouchDown];
+
         if ([WOTSingtleton shared].isuserLogin) {
             [mycell.loginButton setHidden:YES];
             [mycell.memberLabel setHidden:NO];
             [mycell.userName setHidden:NO];
+           
             NSString *numberString = [[WOTUserSingleton shareUser].userInfo.tel stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
             mycell.userName.text = numberString;
             if ([[WOTUserSingleton shareUser].userInfo.userType isEqualToNumber:@0]) {
@@ -147,18 +148,16 @@
             {
                 mycell.memberLabel.text = @"会员用户";
             }
-            
         }else
         {
+            [mycell.topButton addTarget:self action:@selector(showLoginView) forControlEvents:UIControlEventTouchDown];
             [mycell.loginButton setHidden:NO];
             [mycell.memberLabel setHidden:NO];
             mycell.memberLabel.text = @"登录后可进行更多操作";
             [mycell.userName setHidden:YES];
         }
-        
-       
-       
-        [mycell.headerImage sd_setImageWithURL:[[WOTUserSingleton shareUser].userInfo.headPortrait ToUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
+        NSLog(@"头像地址%@",[WOTUserSingleton shareUser].userInfo.headPortrait);
+        [mycell.headerImage sd_setImageWithURL:[[WOTUserSingleton shareUser].userInfo.headPortrait ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
         mycell.mycelldelegate = self;
         commoncell = mycell;
     } else if (indexPath.section == 1){
@@ -182,7 +181,6 @@
     if ([WOTSingtleton shared].isuserLogin) {
         switch (indexPath.section) {
             case 0:
-                //enter to mymainvc
                 break;
             case 1:
                 break;
@@ -211,6 +209,9 @@
                 break;
         }
     } else {
+        if (indexPath.section == 0) {
+            return;
+        }
         [[WOTConfigThemeUitls shared] showLoginVC:self];
         
     }
@@ -307,5 +308,17 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    
+    if ([touch.view isKindOfClass:[UIButton class]]){
+        
+        return NO;
+        
+    }
+    
+    return YES;
+    
+}
 
 @end

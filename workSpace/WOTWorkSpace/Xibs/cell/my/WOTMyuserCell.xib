@@ -54,18 +54,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hks-Y5-3f3" userLabel="topButton">
+                                <rect key="frame" x="0.0" y="0.0" width="384" height="110"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="R5H-Ba-aCZ" firstAttribute="leading" secondItem="eB9-Kk-Iwx" secondAttribute="trailing" constant="10" id="4xa-XU-T4i"/>
                             <constraint firstItem="Ch5-ah-PPX" firstAttribute="bottom" secondItem="eB9-Kk-Iwx" secondAttribute="bottom" id="BhM-Xo-u7x"/>
                             <constraint firstItem="R5H-Ba-aCZ" firstAttribute="top" secondItem="DFz-Ku-k2G" secondAttribute="top" id="CRC-HI-fuT"/>
+                            <constraint firstItem="hks-Y5-3f3" firstAttribute="leading" secondItem="EHL-hV-utI" secondAttribute="leading" id="Egn-cB-lTV"/>
+                            <constraint firstItem="hks-Y5-3f3" firstAttribute="width" secondItem="EHL-hV-utI" secondAttribute="width" id="ND5-TD-JYF"/>
                             <constraint firstItem="DFz-Ku-k2G" firstAttribute="leading" secondItem="eB9-Kk-Iwx" secondAttribute="trailing" constant="10" id="Que-oM-EMx"/>
                             <constraint firstAttribute="height" constant="110" id="Re4-3V-L6R"/>
+                            <constraint firstItem="hks-Y5-3f3" firstAttribute="top" secondItem="EHL-hV-utI" secondAttribute="top" id="b4e-3y-DWr"/>
                             <constraint firstItem="eB9-Kk-Iwx" firstAttribute="centerY" secondItem="EHL-hV-utI" secondAttribute="centerY" id="hKJ-vq-IhS"/>
                             <constraint firstItem="Ch5-ah-PPX" firstAttribute="leading" secondItem="eB9-Kk-Iwx" secondAttribute="trailing" constant="10" id="juo-tR-3gR"/>
                             <constraint firstItem="eB9-Kk-Iwx" firstAttribute="leading" secondItem="EHL-hV-utI" secondAttribute="leading" constant="10" id="qj4-Ri-aAh"/>
                             <constraint firstItem="DFz-Ku-k2G" firstAttribute="centerY" secondItem="eB9-Kk-Iwx" secondAttribute="centerY" id="ra4-mZ-FHN"/>
+                            <constraint firstItem="hks-Y5-3f3" firstAttribute="height" secondItem="EHL-hV-utI" secondAttribute="height" id="uBM-5l-BuA"/>
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1k-Rh-2hu">
@@ -98,6 +105,7 @@
                 <outlet property="headerImage" destination="eB9-Kk-Iwx" id="NCy-C5-PZo"/>
                 <outlet property="loginButton" destination="DFz-Ku-k2G" id="wHm-AH-Jcz"/>
                 <outlet property="memberLabel" destination="Ch5-ah-PPX" id="ozl-ET-4aU"/>
+                <outlet property="topButton" destination="hks-Y5-3f3" id="jeO-ap-cdp"/>
                 <outlet property="userName" destination="R5H-Ba-aCZ" id="oNJ-yU-kYe"/>
             </connections>
             <point key="canvasLocation" x="-62" y="38"/>
