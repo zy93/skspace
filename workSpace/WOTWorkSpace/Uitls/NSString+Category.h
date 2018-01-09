@@ -59,4 +59,5 @@
 //判断邮箱格式
 +(BOOL)isValidateEmail:(NSString *)email;
 
+
 @end

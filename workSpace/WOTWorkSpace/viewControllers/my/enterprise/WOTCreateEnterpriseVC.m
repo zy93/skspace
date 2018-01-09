@@ -197,15 +197,10 @@
     }
 }
 
-
-
 //textfield delegate
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     return [textField resignFirstResponder];
 }
-
-
 
 //-(void)setViewHidden{
 //    [_connectvc.view setHidden:YES];
@@ -220,33 +215,21 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 // 拍照完成回调
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0)
-
 {
-    
     if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)
-        
     {
-        
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-        
     }
     _enterpriseLogo = image;
     [self.tableView reloadData];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 //进入拍摄页面点击取消按钮
-
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-
 {
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 

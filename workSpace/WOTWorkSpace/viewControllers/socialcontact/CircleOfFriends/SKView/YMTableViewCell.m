@@ -131,7 +131,7 @@
     tempDate = ymData;
 #pragma mark -  //头像 昵称 简介
     //_userHeaderImage.image = [UIImage imageNamed:tempDate.messageBody.posterImgstr];
-   [ _userHeaderImage sd_setImageWithURL:[NSURL URLWithString:tempDate.messageBody.posterImgstr] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    [_userHeaderImage sd_setImageWithURL:[tempDate.messageBody.posterImgstr ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
     _userNameLbl.text = tempDate.messageBody.posterName;
     _userIntroLbl.text = tempDate.messageBody.posterIntro;
     _addTimeLabel.text = [self cutOutString:tempDate.messageBody.friendTime];

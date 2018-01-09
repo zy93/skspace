@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
+    //[self.navigationController.navigationItem setHidesBackButton:YES];
     [self configNavi];
     //解决布局空白问题
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
@@ -68,6 +69,10 @@
 
 #pragma mark - action
 -(void)rightItemAction{
+    if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
+        [MBProgressHUDUtil showMessage:@"请先登录!" toView:self.view];
+        return;
+    }
     WOTPublishSocialTrendsVC *publishvc = [[UIStoryboard storyboardWithName:@"Socialcontact" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"WOTPublishSocialTrendsVCID"];
     [self.navigationController pushViewController:publishvc animated:YES];
 }

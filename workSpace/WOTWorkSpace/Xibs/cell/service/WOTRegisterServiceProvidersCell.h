@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface WOTRegisterServiceProvidersCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *titleLab;
-@property (weak, nonatomic) IBOutlet UITextField *contentText;
-@property (weak, nonatomic) IBOutlet UIImageView *iconImg;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeight;
+
+
+@property(nonatomic,strong)UILabel *titleLabel;
+@property(nonatomic,strong)UITextField *contentTextField;
+@property(nonatomic,strong)UIImageView *iconImg;
+
 
 @end

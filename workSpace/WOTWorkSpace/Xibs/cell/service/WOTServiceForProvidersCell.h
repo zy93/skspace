@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *providersScrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowIV;
 
+@property (weak, nonatomic) IBOutlet UIButton *joinButton;
+
 -(void)setData:(NSInteger)da;
 
 @end

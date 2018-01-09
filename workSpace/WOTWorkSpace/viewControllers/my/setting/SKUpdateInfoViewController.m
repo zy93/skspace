@@ -57,7 +57,7 @@
         return;
     }
     if ([self.navigationStr isEqualToString:@"修改姓名"]) {
-        self.parametersDictionary = @{@"userId":@2,
+        self.parametersDictionary = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                       @"userName":self.importTextField.text};
     }else
     {
@@ -65,7 +65,7 @@
             [MBProgressHUDUtil showMessage:@"邮箱格式不正确！" toView:self.view];
             return;
         }
-        self.parametersDictionary = @{@"userId":@2,
+        self.parametersDictionary = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                       @"email":self.importTextField.text};
     }
     

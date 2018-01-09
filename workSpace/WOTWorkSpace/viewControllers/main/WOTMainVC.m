@@ -152,7 +152,10 @@ int a = 0;
     
     for (WOTSliderModel *model in self.bannerData) {
         [titleArr addObject:model.proclamationTitle];
-        [imageArr addObject:[NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,model.coverPicture]];
+//        NSLog(@"图片地址：%@",[NSString convertUnicode:model.coverPicture]);
+//        NSString *imageUrl = [NSString convertUnicode:model.coverPicture];
+        NSLog(@"图片地址url：%@",[model.coverPicture ToResourcesUrl]);
+        [imageArr addObject:[model.coverPicture ToResourcesUrl]];
     }
     
     self.autoScrollView.imageURLStringsGroup = imageArr;
@@ -164,6 +167,7 @@ int a = 0;
 //    self.autoScrollView.currentPageDotColor = [UIColor yellowColor]; // 自定义分页控件小圆标颜色
 //    self.autoScrollView.currentPageDotColor = [UIColor blueColor];//dong pageDotColor
 //    self.autoScrollView.placeholderImage = [UIImage imageNamed:@"placeholder"];
+    
 }
 
 - (void)loadSpaceView {
@@ -253,12 +257,9 @@ int a = 0;
     }
     else if ([vc isKindOfClass:[WOTWorkSpaceListVC class]]) {
         [(WOTWorkSpaceListVC *)vc setDataSource:self.spaceData];
-
     }
-    
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 /*
 -(void)load3DBallView{
@@ -499,7 +500,6 @@ int a = 0;
 }
 
 #pragma mark -  Network
-
 -(void)getEnterpriseListDataFromWeb:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getEnterprisesWithSpaceId:[[NSNumber alloc]initWithInt:69] response:^(id bean, NSError *error) {
@@ -513,6 +513,7 @@ int a = 0;
         }
     }];
 }
+
 -(void)getBannerDataSource:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getHomeSliderSouceInfo:^(id bean, NSError *error) {

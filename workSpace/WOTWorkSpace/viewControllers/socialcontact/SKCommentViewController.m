@@ -110,6 +110,10 @@
 
 -(void)requestCommentData
 {
+    if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
+        [MBProgressHUDUtil showMessage:@"请先登录再查看" toView:self.view];
+        return;
+    }
     if (self.commentList.count > 0) {
         [self.commentList removeAllObjects];
     }
