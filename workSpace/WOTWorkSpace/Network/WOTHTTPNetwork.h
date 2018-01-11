@@ -35,9 +35,10 @@ typedef void(^response)(id bean,NSError *error);
  @param tel  手机号注册
  @param pass 用户密码
  @param alias       用户设备alias
+ @param invitationCode 邀请码
  @param response    回调数据到上层
  */
-+(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass alias:(NSString *)alias response:(response)response;
++(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode response:(response)response;
 
 /**
  * 修改密码接口

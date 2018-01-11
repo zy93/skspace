@@ -20,6 +20,8 @@
 @property (nonatomic, strong) NSString *birthDate;
 @property (nonatomic, strong) NSString *companyId;    //公司id，员工身份
 @property (nonatomic, strong) NSString *companyIdAdmin; //公司id，管理员身份
+@property (nonatomic, strong) NSString *meInvitationCode; //我的邀请码
+@property (nonatomic, strong) NSString *byInvitationCode; //被邀请码，注册传
 @property (nonatomic, strong) NSString *companyName;
 @property (nonatomic, strong) NSString *constellation;
 @property (nonatomic, strong) NSString *email;

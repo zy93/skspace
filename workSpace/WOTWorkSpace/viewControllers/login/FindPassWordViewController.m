@@ -251,7 +251,7 @@
     }
     
     [WOTHTTPNetwork userRegisterWitVerifyCode:self.findVCodeText.text tel:self.findTelTextField.text password:self.findPWText.text
-                                     alias:[NSString stringWithFormat:@"%@C",self.findTelTextField.text] response:^(id bean, NSError *error) {
+                                     alias:[NSString stringWithFormat:@"%@C",self.findTelTextField.text] invitationCode:nil  response:^(id bean, NSError *error) {
         WOTRegisterModel *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"修改成功" toView:self.view];
