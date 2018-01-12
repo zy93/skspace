@@ -25,7 +25,6 @@
 @property(nonatomic,strong)NSArray  <WOTServiceCategoryModel> *classifySubclass;
 @end
 
-
 @interface WOTServiceCategoryModel_msg : JSONModel
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSString *result;

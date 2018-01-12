@@ -10,14 +10,7 @@
 
 @interface WOTServiceProvidersView()
 
-@property (nonatomic, strong) UIView *topBgView;
-@property (nonatomic, strong) UIImageView *iconIV;
-@property (nonatomic, strong) UILabel *titleLab;
-@property (nonatomic, strong) UILabel *subtitleLab;
-@property (nonatomic, strong) UILabel *projectNameLab;
-
 @end
-
 
 @implementation WOTServiceProvidersView
 
@@ -45,45 +38,59 @@
         [self.topBgView addSubview:self.titleLab];
         
         self.subtitleLab = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.iconIV.frame)+15, CGRectGetMaxY(self.titleLab.frame)+7, 4*13.f, 18)];
-        [self.subtitleLab setText:@"物联网"];
+        [self.subtitleLab setText:@"物联网"];//经营范围
         [self.subtitleLab setFont:[UIFont systemFontOfSize:12.f]];
         [self.subtitleLab setTextAlignment:NSTextAlignmentCenter];
         [self.subtitleLab.layer setCornerRadius:5.f];
         [self.subtitleLab setBackgroundColor:[UIColor whiteColor]];
         [self.topBgView addSubview:self.subtitleLab];
         
-        self.projectNameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.topBgView.frame)+15, 120, 18)];
-        [self.projectNameLab setText:@"服务项目"];
-        [self.projectNameLab setTextColor:UICOLOR_MAIN_BACKGROUND];
+        self.projectNameLab = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.topBgView.frame), 120, 18)];//+15
+        [self.projectNameLab setText:@"服务项目"];//类别
+        [self.projectNameLab setTextColor:UICOLOR_GRAY_99];
         [self addSubview:self.projectNameLab];
         
-        UILabel *la = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.projectNameLab.frame), CGRectGetMaxY(self.projectNameLab.frame)+13, 5*17, 25)];
-        [la setTextAlignment:NSTextAlignmentCenter];
-        [la setTextColor:UICOLOR_MAIN_BACKGROUND];
-        [la.layer setCornerRadius:25/2];
-        [la.layer setBorderColor:UICOLOR_MAIN_BACKGROUND.CGColor];
-        [la.layer setBorderWidth:1.f];
-        [la setFont:[UIFont systemFontOfSize:13.f]];
-        [la setText:@"代理记账"];
-        [self addSubview:la];
+        
     }
     return self;
 }
 
-
-
-
-
-
-
-
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+-(void)setData:(SKFacilitatorInfoModel *)facilitatorInfoModel
+{
+    CGFloat labelWith = 0;
+    CGFloat labelHeight = 0;
+    NSArray  *array = [facilitatorInfoModel.facilitatorType componentsSeparatedByString:@","];
+    for (int i = 0; i<array.count; i++) {
+        if (i == 3) {
+            UILabel *la = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.projectNameLab.frame), CGRectGetMaxY(self.projectNameLab.frame)+13+labelHeight+5, 5*17, 25)];
+            [la setTextAlignment:NSTextAlignmentCenter];
+            [la setTextColor:UICOLOR_GRAY_66];
+            [la.layer setCornerRadius:25/2];
+            [la.layer setBorderColor:UICOLOR_GRAY_66.CGColor];
+            [la.layer setBorderWidth:1.f];
+            [la setFont:[UIFont systemFontOfSize:13.f]];
+            [la setText:array[i]];
+            labelWith = la.frame.size.width;
+            labelHeight = la.frame.size.height;
+            [self addSubview:la];
+        }else
+        {
+            UILabel *la = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.projectNameLab.frame)+(labelWith +10)*i, CGRectGetMaxY(self.projectNameLab.frame)+13, 5*17, 25)];
+            [la setTextAlignment:NSTextAlignmentCenter];
+            [la setTextColor:UICOLOR_GRAY_66];
+            [la.layer setCornerRadius:25/2];
+            [la.layer setBorderColor:UICOLOR_GRAY_66.CGColor];
+            [la.layer setBorderWidth:1.f];
+            [la setFont:[UIFont systemFontOfSize:13.f]];
+            [la setText:array[i]];
+            labelWith = la.frame.size.width;
+            labelHeight = la.frame.size.height;
+            [self addSubview:la];
+        }
+        
+    }
+   
 }
-*/
+
 
 @end

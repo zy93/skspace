@@ -45,7 +45,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.giftBagScrollView];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(InfoNotificationAction:) name:@"buttonLoseResponse" object:nil];
     [self.giftBagScrollView addSubview:self.contentView];
     
     [self.giftBagScrollView addSubview:self.giftBagImageView];
@@ -183,23 +183,21 @@
     if ([self.giftBagNameStr isEqualToString:@"GiftBag1"]) {
         //CGFloat price = 0.01f;
         //self.paySumNumber = [NSDecimalNumber numberWithDouble:0.01];
-        self.price = 0.01;
-        self.payNumber = @1;
-//        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-//        f.numberStyle = NSNumberFormatterDecimalStyle;
-//        self.paySumNumber = [f numberFromString:@"0.01"];
-        //self.paySumNumber = @888;
-        //self.payNumber = @88800;
+//        self.price = 0.01;
+//        self.payNumber = @1;
+
+        self.paySumNumber = @888;
+        self.payNumber = @88800;
         self.commodityDescribeStr = @"礼包1";
     }
     if ([self.giftBagNameStr isEqualToString:@"GiftBag2"]) {
-        self.paySumNumber = @888;
-        self.payNumber = @88800;
+        self.paySumNumber = @1688;
+        self.payNumber = @168800;
         self.commodityDescribeStr = @"礼包2";
     }
     if ([self.giftBagNameStr isEqualToString:@"GiftBag3"]) {
-        self.paySumNumber = @888;
-        self.payNumber = @88800;
+        self.paySumNumber = @2999;
+        self.payNumber = @299900;
         self.commodityDescribeStr = @"礼包3";
     }
 }
@@ -225,21 +223,35 @@
                                  @"facilitator":@"1006",
                                  @"carrieroperator":@"1006",
                                  @"body":self.commodityDescribeStr,
-                                 @"total_fee":self.payNumber,
+                                 @"total_fee":self.payNumber,//self.payNumber
                                  @"trade_type":@"APP",
                                  @"commodityKind":self.commodityDescribeStr,
                                  @"productNum":@1,
-                                 @"money":@(0.01),
+                                 @"money":self.paySumNumber,//self.paySumNumber
                                  @"payType":@1,
                                  @"payObject":[WOTUserSingleton shareUser].userInfo.userName
                                  };
     //__weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){
         dispatch_async(dispatch_get_main_queue(), ^{
-            WOTWXPayModel_msg *model = (WOTWXPayModel_msg*)bean;
-             [WOTHTTPNetwork wxPayWithParameter:model.msg];
+            WOTWXPayModel_msg *model = (WOTWXPayModel_msg *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                WOTWXPayModel_msg *model = (WOTWXPayModel_msg*)bean;
+                [WOTHTTPNetwork wxPayWithParameter:model.msg];
+            }else
+            {
+                [MBProgressHUDUtil showMessage:@"支付失败！" toView:self.view];
+                return ;
+            }
+            
         });
     }];
+}
+
+#pragma mark - 实现通知方法
+- (void)InfoNotificationAction:(NSNotification *)notification{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    NSLog(@"---接收到通知---");
 }
 
 -(UIScrollView *)giftBagScrollView
@@ -361,7 +373,7 @@
         _explainLabel.preferredMaxLayoutWidth = (self.view.frame.size.width -10.0 * 2);
         [_explainLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
         _explainLabel.numberOfLines =0;
-        NSString *explainLabelStr = @"企业工位代金券使用说明：\n\n1. 使用范围：优客工场全国任意社区；\n\n2. 限制条件：此工位代金券仅限订购优客工场中的开放工位；\n\n3. 有效期：每次购买礼包时，所获得的代金券有效期均为从使用礼包后起3个月内；\n\n4. 使用方法：通过优客工场web网站，app预定工位时，结算流程中选择“企业支付”，并选择有该代金券的企业账户，选中代金券，即可抵扣现金使用；\n\n5. 使用说明：工位预订单次消费不限代金券使用数量，直至订单金额抵扣为0元，如代金券抵扣金额超过实际金额，扣除的整张代金券不予找零；\n\n6. 过期说明：代金券超过有效截止日期之后，将无法使用，并不予返赠，请优先使用即将过期的代金券。";
+        NSString *explainLabelStr = @"企业工位代金券使用说明：\n\n1. 使用范围：尚科社区全国任意社区；\n\n2. 限制条件：此工位代金券仅限订购优客工场中的开放工位；\n\n3. 有效期：每次购买礼包时，所获得的代金券有效期均为从使用礼包后起3个月内；\n\n4. 使用方法：通过优客工场web网站，app预定工位时，结算流程中选择“企业支付”，并选择有该代金券的企业账户，选中代金券，即可抵扣现金使用；\n\n5. 使用说明：工位预订单次消费不限代金券使用数量，直至订单金额抵扣为0元，如代金券抵扣金额超过实际金额，扣除的整张代金券不予找零；\n\n6. 过期说明：代金券超过有效截止日期之后，将无法使用，并不予返赠，请优先使用即将过期的代金券。";
         _explainLabel.text = explainLabelStr;
     }
     return _explainLabel;
@@ -430,6 +442,11 @@
         _contentView = [[UIView alloc] init];
     }
     return _contentView;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"buttonLoseResponse" object:self];
 }
 
 - (void)didReceiveMemoryWarning {

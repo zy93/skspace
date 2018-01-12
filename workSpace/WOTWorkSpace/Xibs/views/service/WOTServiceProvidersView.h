@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "WOTServiceCategoryModel.h"
-
+#import "SKFacilitatorModel.h"
 
 @interface WOTServiceProvidersView : UIView
 
+@property (nonatomic, strong) UIView *topBgView;
+@property (nonatomic, strong) UIImageView *iconIV;
+@property (nonatomic, strong) UILabel *titleLab;
+@property (nonatomic, strong) UILabel *subtitleLab;
+@property (nonatomic, strong) UILabel *projectNameLab;
 
-//-(void)setData:()
+-(void)setData:(SKFacilitatorInfoModel *)facilitatorInfoModel;
 
 
 @end

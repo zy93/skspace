@@ -14,6 +14,7 @@
 #import "WOTPhotosBaseUtils.h"
 #import "WOTSpaceModel.h"
 #import "Masonry.h"
+#import "WOTEnterpriseTypeVC.h"
 
 @interface WOTRegisterServiceProvidersVC () <UITableViewDataSource, UITableViewDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 {
@@ -28,6 +29,7 @@
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UIScrollView *scrollView;
 @property(nonatomic,strong)UIButton *applicationSubmitButton;
+@property(nonatomic,strong)NSString *serviceType;
 
 @end
 
@@ -98,29 +100,38 @@
 #pragma mark - action
 -(void)pushVCByVCName:(NSString *)vcName
 {
-    UIViewController *vc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:vcName];
-    if ([vcName isEqualToString:@"WOTServiceProvidersCategoryVC"]) {
-     WOTServiceProvidersCategoryVC *dd =   (WOTServiceProvidersCategoryVC *)vc;
-        dd.selectServiceBlock = ^(NSArray *selectedArray){
-            for (NSString *text in selectedArray) {
-                enterpriseTypeString = [NSString stringWithFormat:@"%@%@%@",enterpriseTypeString,text,@","];
-            }
-            tableInputDatadic[@"facilitatorType"] = enterpriseTypeString;
-            
-            [tableInputDatadic setValue:[[NSNumber alloc]initWithInt:0] forKey:@"facilitatorState"];
-           // [_table reloadData];
-        };
-    }
-    else if ([vcName isEqualToString:@"WOTSelectWorkspaceListVC"]){//1
-        __weak typeof(self) weakSelf = self;
-        WOTSelectWorkspaceListVC *lc = (WOTSelectWorkspaceListVC*)vc;//1
-        lc.selectSpaceBlock = ^(WOTSpaceModel *model){
-            weakSelf.spaceId = model.spaceId;
-            weakSelf.spaceName = model.spaceName;
-           // [weakSelf.table reloadData];
-        };
-    }
+//    UIViewController *vc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:vcName];
+//    [self.navigationController pushViewController:vc animated:YES];
+    __weak typeof(self) weakSelf = self;
+    WOTEnterpriseTypeVC *vc = [[UIStoryboard storyboardWithName:@"My" bundle:nil]instantiateViewControllerWithIdentifier:@"WOTEnterpriseTypeVCID"];
+    vc.gobackBlock = ^(NSString *type){
+        _serviceType = type;
+        tableInputDatadic[@"facilitatorType"] = type;
+        [weakSelf.tableView reloadData];
+    };
     [self.navigationController pushViewController:vc animated:YES];
+//    if ([vcName isEqualToString:@"WOTServiceProvidersCategoryVC"]) {
+//     WOTServiceProvidersCategoryVC *dd =   (WOTServiceProvidersCategoryVC *)vc;
+//        dd.selectServiceBlock = ^(NSArray *selectedArray){
+//            for (NSString *text in selectedArray) {
+//                enterpriseTypeString = [NSString stringWithFormat:@"%@%@%@",enterpriseTypeString,text,@","];
+//            }
+//            tableInputDatadic[@"facilitatorType"] = enterpriseTypeString;
+//
+//            [tableInputDatadic setValue:[[NSNumber alloc]initWithInt:0] forKey:@"facilitatorState"];
+//           // [_table reloadData];
+//        };
+//    }
+//    else if ([vcName isEqualToString:@"WOTSelectWorkspaceListVC"]){//1
+//        __weak typeof(self) weakSelf = self;
+//        WOTSelectWorkspaceListVC *lc = (WOTSelectWorkspaceListVC*)vc;//1
+//        lc.selectSpaceBlock = ^(WOTSpaceModel *model){
+//            weakSelf.spaceId = model.spaceId;
+//            weakSelf.spaceName = model.spaceName;
+//           // [weakSelf.table reloadData];
+//        };
+//    }
+    
 }
 
 #pragma mark - table delgate & data source
@@ -145,47 +156,50 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"WOTRegisterServiceProvidersCell";
+    static NSString *cellIdentifier = @"cellIdentifier";
     WOTRegisterServiceProvidersCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[WOTRegisterServiceProvidersCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+        cell = [[WOTRegisterServiceProvidersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     NSArray *arr = tableList[0];
     NSLog(@"标题：%@",arr[indexPath.section]);
-    //[cell.titleLabel.text setText:arr[indexPath.section]];
     cell.titleLabel.text = arr[indexPath.section];
-    [cell.contentTextField setPlaceholder:tableSubtitleList[indexPath.section]];
+    if (indexPath.section == 5) {
+        cell.contentTextField.text = self.serviceType;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else
+    {
+        [cell.contentTextField setPlaceholder:tableSubtitleList[indexPath.section]];
+    }
+    
     [cell.contentTextField setTag:indexPath.section];
     cell.contentTextField.delegate = self;
+    //[cell.contentTextField addTarget:self action:@selector(textfileMethod:) forControlEvents:UIControlEventTouchDown];
+    //[cell.contentTextField becomeFirstResponder];
     if (indexPath.section == 0) {
         cell.contentTextField.enabled = NO;
         [cell.contentTextField setHidden:YES];
         [cell.iconImg setHidden:NO];
         cell.iconImg.image = enterpriseLogo?enterpriseLogo:[UIImage imageNamed:@"camera_icon"];
-       
-//        cell.imageWidth.constant = enterpriseLogo?45:25;
-//        cell.imageHeight.constant = enterpriseLogo?45:20;
-    }
-    else if (indexPath.section==5 || indexPath.section == 6) {
+    }else if (indexPath.section == 5)
+    {
         cell.contentTextField.enabled = NO;
-        if (indexPath.section == 5) {
-            cell.contentTextField.text = enterpriseTypeString;
-        }
-        else if (self.spaceName) {
-            cell.contentTextField.text = self.spaceName;
-        }
         [cell.contentTextField setHidden:NO];
         [cell.iconImg setHidden:YES];
-    }
-    else
+    }else
     {
         cell.contentTextField.enabled = YES;
         [cell.contentTextField setHidden:NO];
         [cell.iconImg setHidden:YES];
     }
-    return cell;
+   return cell;
+    
 }
 
+-(void)textfileMethod:(UITextField *)textField
+{
+    [textField becomeFirstResponder];
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -199,12 +213,16 @@
         }
         else if (indexPath.section==5)
         {
-           // [self pushVCByVCName:@"WOTEnterpriseTypeVC"];
+            [self pushVCByVCName:@"WOTEnterpriseTypeVC"];
+        }else
+        {
+            NSLog(@"测试%@",tableInputDatadic);
         }
-        else if (indexPath.section == 6) {
-            [self pushVCByVCName:@"WOTSelectWorkspaceListVC"];//1
-        }
-        NSLog(@"测试%@",tableInputDatadic);
+    NSLog(@"测试%@",tableInputDatadic);
+//        else if (indexPath.section == 6) {
+//            [self pushVCByVCName:@"WOTSelectWorkspaceListVC"];//1
+//        }
+       // NSLog(@"测试%@",tableInputDatadic);
     
  //   }
 }
@@ -257,7 +275,6 @@
     
 }
 
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
    
     return [textField resignFirstResponder];
@@ -273,7 +290,7 @@
              tableInputDatadic[@"businessScope"] = textField.text;
                 break;
         case 3:
-            tableInputDatadic[@"contatcts"] = textField.text;
+            tableInputDatadic[@"contacts"] = textField.text;
                 break;
         case 4:
             tableInputDatadic[@"tel"] = textField.text;
@@ -305,17 +322,26 @@
     }
     BOOL isFirName = tableInputDatadic[@"firmName"] == nil;
     BOOL isBusinessScope = tableInputDatadic[@"businessScope"] == nil;
-    BOOL isContatcts =tableInputDatadic[@"contatcts"] == nil;
+    BOOL isContatcts =tableInputDatadic[@"contacts"] == nil;
     BOOL isTel =tableInputDatadic[@"tel"] == nil;
     BOOL isFacilitatorType = tableInputDatadic[@"facilitatorType"] == nil;
-    BOOL isFacilitatorState = tableInputDatadic[@"facilitatorState"] == nil;
-    if (isFirName || isBusinessScope ||isContatcts ||isTel || isFacilitatorType|| isFacilitatorState) {
+    if (isFirName || isBusinessScope ||isContatcts ||isTel || isFacilitatorType) {
         [MBProgressHUDUtil showMessage:@"请将信息填写完整后再提交" toView:self.view];
         return;
     }
+    if (![NSString valiMobile:tableInputDatadic[@"tel"]]) {
+        [MBProgressHUDUtil showMessage:@"电话格式不正确！" toView:self.view];
+        return;
+    }
+    
+//    if (strIsEmpty(self.serviceType)) {
+//        [MBProgressHUDUtil showMessage:@"请选择服务商类别" toView:self.view];
+//        return;
+//    }
+    tableInputDatadic[@"facilitatorState"] = @"待审核";
     [self registerService:[WOTUserSingleton shareUser].userInfo.userId              firmName:tableInputDatadic[@"firmName"]
             businessScope:tableInputDatadic[@"businessScope"]
-                contatcts:tableInputDatadic[@"contatcts"]
+                contatcts:tableInputDatadic[@"contacts"]
                       tel:tableInputDatadic[@"tel"]
           facilitatorType:tableInputDatadic[@"facilitatorType"]
          facilitatorState:tableInputDatadic[@"facilitatorState"]
@@ -326,7 +352,7 @@
 -(void)registerService:(NSNumber *)userId
               firmName:(NSString *)firmName
          businessScope:(NSString *)businessScope
-             contatcts:(NSString *)contatcts
+             contatcts:(NSString *)contacts
                    tel:(NSString *)tel
        facilitatorType:(NSString *)facilitatorType
       facilitatorState:(NSNumber *)facilitatorState
@@ -337,7 +363,7 @@
     //[[WOTUserSingleton shareUser]setValues];
     [MBProgressHUDUtil showLoadingWithMessage:@"" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
         
-    [WOTHTTPNetwork registerServiceBusiness:userId firmName:firmName businessScope:businessScope contatcts:contatcts tel:tel facilitatorType:facilitatorType facilitatorState:facilitatorState firmLogo:aa response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork registerServiceBusiness:userId firmName:firmName businessScope:businessScope contatcts:contacts tel:tel facilitatorType:facilitatorType facilitatorState:facilitatorState firmLogo:aa response:^(id bean, NSError *error) {
        
         [hud setHidden: YES];
         if (bean) {
@@ -364,6 +390,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableHeaderView = view;
+        _tableView.userInteractionEnabled = YES;
         _tableView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
         _tableView.separatorStyle = UITableViewCellEditingStyleNone;
     }

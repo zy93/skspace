@@ -406,7 +406,7 @@
 
 -(void)updateView
 {
-    [self.orderNumInfoLabel setText:self.model.out_trade_no];
+    [self.orderNumInfoLabel setText:self.model.orderNum];
     [self.bookSiteInfoLabel setText:self.meetingModel.location];
     [self.startTimeInfoLabel setText:[self.dic[@"starTime"] substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
     [self.endTimeInfoLabel   setText:[self.dic[@"endTime"] substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];

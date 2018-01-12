@@ -21,38 +21,50 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+   
     // 自定义TabBar
     CLTabBar *tabBar = [[CLTabBar alloc] init];
     HCScanQRViewController *vc = [[HCScanQRViewController alloc] init];
     vc.transitioningDelegate = self;
     tabBar.composeButtonClick = ^{
         NSLog(@"点击按钮,弹出菜单");
+//         [self getQRcodeInfo];
 //        CLComposeView *composeView = [[CLComposeView alloc] init];
 //        [composeView showWithController:self];
-        WOTOpenDoorView *view = [[WOTOpenDoorView alloc] init];
-        [view showWithController:self];
-        view.btnClick = ^(NSString *str) {
-            
-            
-            CATransition *animation = [CATransition animation];
-            animation.duration = 0.5;
-            animation.timingFunction = UIViewAnimationCurveEaseInOut;
-            animation.type = @"oglFlip";
-            //animation.type = kCATransitionPush;
-            animation.subtype = kCATransitionFromRight;
-            [vc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-//            [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-            [self.view.window.layer addAnimation:animation forKey:nil];
-            [self presentViewController:vc animated:NO completion:^{
+        [WOTHTTPNetwork getQRcodeInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+            WOTBaseModel *model = (WOTBaseModel *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+               // weakSelf.QRcodeStr = model.msg;
+                [WOTSingtleton shared].QRcodeStr = model.msg;
+                WOTOpenDoorView *view = [[WOTOpenDoorView alloc] init];
                 
-            }];
-            [vc successfulGetQRCodeInfo:^(NSString *QRCodeInfo) {
-                NSLog(@"QR Info : %@", QRCodeInfo);
-                [vc dismissViewControllerAnimated:YES completion:nil];
-            }];
-            
-        };
+                [view showWithController:self];
+                view.btnClick = ^(NSString *str) {
+                    CATransition *animation = [CATransition animation];
+                    animation.duration = 0.5;
+                    animation.timingFunction = UIViewAnimationCurveEaseInOut;
+                    animation.type = @"oglFlip";
+                    //animation.type = kCATransitionPush;
+                    animation.subtype = kCATransitionFromRight;
+                    [vc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+                    //            [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+                    [self.view.window.layer addAnimation:animation forKey:nil];
+                    [self presentViewController:vc animated:NO completion:^{
+                        
+                    }];
+                    [vc successfulGetQRCodeInfo:^(NSString *QRCodeInfo) {
+                        NSLog(@"QR Info : %@", QRCodeInfo);
+                        [vc dismissViewControllerAnimated:YES completion:nil];
+                    }];
+                    
+                };
+            }
+            else
+            {
+                [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
+                return ;
+            }
+        }];
     };
     
     [self setValue:tabBar forKey:@"tabBar"];
@@ -103,6 +115,12 @@
 
 }
 
+#pragma mark - 获取二维码信息
+-(void)getQRcodeInfo
+{
+    __weak __typeof(self)weakSelf = self;
+    
+}
 
 /*
 #pragma mark - Navigation

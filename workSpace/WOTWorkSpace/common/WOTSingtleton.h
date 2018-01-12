@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, BUTTON_TYPE) {
 @property(nonatomic,strong)NSArray *ballImage;
 @property(nonatomic,assign)bool isuserLogin;
 @property(nonatomic,copy)NSString *cityName;
+@property(nonatomic,copy)NSString *QRcodeStr;
 
 //会议室页面跳转记录，因涉及页面较多，在此记录当前操作。
 @property (nonatomic, assign) ORDER_TYPE orderType;

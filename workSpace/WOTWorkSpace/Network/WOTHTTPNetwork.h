@@ -93,7 +93,7 @@ typedef void(^response)(id bean,NSError *error);
  通过空间id获取所有工位
 
  @param spaceId spaceId
- @param response
+ @param response 结果回调
  */
 +(void)getBookStationWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
@@ -101,7 +101,7 @@ typedef void(^response)(id bean,NSError *error);
  通过空间id获取工位数量
  
  @param spaceId spaceId
- @param response
+ @param response 结果回调
  */
 +(void)getBookStationNumberWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
@@ -342,6 +342,26 @@ typedef void(^response)(id bean,NSError *error);
                           meetingName:(NSString *) meetingName
                                userId:(NSNumber *)userId
                              response:(response)response;
+
+
+/**
+ 预定场地
+
+ @param spaceid 空间id
+ @param confid 会议室id
+ @param startTime 预约开始时间
+ @param endTime 结束时间
+ @param userId 用户id
+ @param response 回调
+ */
++(void)siteReservationsWithSpaceId:(NSNumber *)spaceid
+                         conferenceId:(NSNumber *)confid
+                            startTime:(NSString *)startTime
+                              endTime:(NSString *)endTime
+                            spaceName:(NSString *)spaceName
+                          meetingName:(NSString *) meetingName
+                               userId:(NSNumber *)userId
+                             response:(response)response;
 //TODO: 工位
 
 /**
@@ -383,8 +403,6 @@ typedef void(^response)(id bean,NSError *error);
  @param response 回调数据到上层
  */
 +(void)postRepairApplyWithUserId:(NSNumber *)userId type:(NSString *)type info:(NSString *)info appointmentTime:(NSString *)appointmentTime address:(NSString *)address file:(NSArray<UIImage *> *)file alias:(NSString *)alias  response:(response)response;
-
-
 
 
 
@@ -554,7 +572,7 @@ typedef void(^response)(id bean,NSError *error);
  @param photosArray 图片数组
  @param response 结果回调
  */
-+(void)submitRepairsWithUserId:(NSNumber *)userId repairsType:(NSString *)type repairsInfo:(NSString *)info repairsAddress:(NSString *)address alias:(NSString *)alias photosArray:(NSArray *)photosArray response:(response)response;
++(void)submitRepairsWithUserId:(NSNumber *)userId userTel:(NSString *)phone userName:(NSString *)userName  spaceId:(NSNumber *)spaceId repairsType:(NSString *)type repairsInfo:(NSString *)info repairsAddress:(NSString *)address alias:(NSString *)alias photosArray:(NSArray *)photosArray response:(response)response;
 
 
 /**
@@ -569,5 +587,22 @@ typedef void(^response)(id bean,NSError *error);
  @param response 结果回调
  */
 +(void)issueDemandWithUserId:(NSNumber *)userId userName:(NSString *)userName spaceId:(NSNumber *)spaceId userTel:(NSString *)userTel demandType:(NSString *)demandType demandContent:(NSString *)demandContent response:(response)response;
+
+/**
+ 获取二维码信息
+
+ @param userId 用户id
+ @param response 结果回调
+ */
++(void)getQRcodeInfoWithUserId:(NSNumber *)userId  response:(response)response;
+
+
+/**
+ 获取服务界面banner 数据
+
+ @param response 结果回调
+ */
++(void)getServiceBannerData:(response)response;
+
 
 @end

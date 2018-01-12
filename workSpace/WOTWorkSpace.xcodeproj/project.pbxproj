@@ -184,6 +184,7 @@
 		C5A125B61FE242660058AA0C /* SKCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125B51FE242660058AA0C /* SKCommentViewController.m */; };
 		C5A125BA1FE242CD0058AA0C /* SKCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125B81FE242CD0058AA0C /* SKCommentTableViewCell.m */; };
 		C5A125BB1FE242CD0058AA0C /* SKCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A125B91FE242CD0058AA0C /* SKCommentTableViewCell.xib */; };
+		C5A2D7052007750B003F1574 /* SKFacilitatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */; };
 		C5A836B11FFF5744002E4CE1 /* SKUpdateInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A836B01FFF5744002E4CE1 /* SKUpdateInfoViewController.m */; };
 		C5E565DB1FF246C600534546 /* SKGiftBagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565DA1FF246C600534546 /* SKGiftBagViewController.m */; };
 		C5E565DE1FF2474700534546 /* SKGiftBagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565DD1FF2474700534546 /* SKGiftBagTableViewCell.m */; };
@@ -751,6 +752,8 @@
 		C5A125B71FE242CD0058AA0C /* SKCommentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCommentTableViewCell.h; sourceTree = "<group>"; };
 		C5A125B81FE242CD0058AA0C /* SKCommentTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCommentTableViewCell.m; sourceTree = "<group>"; };
 		C5A125B91FE242CD0058AA0C /* SKCommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKCommentTableViewCell.xib; sourceTree = "<group>"; };
+		C5A2D7032007750B003F1574 /* SKFacilitatorModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKFacilitatorModel.h; sourceTree = "<group>"; };
+		C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKFacilitatorModel.m; sourceTree = "<group>"; };
 		C5A836AF1FFF5744002E4CE1 /* SKUpdateInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKUpdateInfoViewController.h; sourceTree = "<group>"; };
 		C5A836B01FFF5744002E4CE1 /* SKUpdateInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKUpdateInfoViewController.m; sourceTree = "<group>"; };
 		C5E565D91FF246C600534546 /* SKGiftBagViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKGiftBagViewController.h; sourceTree = "<group>"; };
@@ -1617,6 +1620,8 @@
 				E86245851F3D893900CF0D9D /* WOTWXPayModel.m */,
 				E8774BB61F41710F00168033 /* WOTOrderModel.h */,
 				E8774BB71F41710F00168033 /* WOTOrderModel.m */,
+				C5A2D7032007750B003F1574 /* SKFacilitatorModel.h */,
+				C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -3351,6 +3356,7 @@
 				2AB8A4B21FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.m in Sources */,
 				E86245731F3D4F4900CF0D9D /* SRSecurityPolicy.m in Sources */,
 				C59D56E31FDA2C6D001870B2 /* NSArray+NSArray_ILExtension.m in Sources */,
+				C5A2D7052007750B003F1574 /* SKFacilitatorModel.m in Sources */,
 				C56684DE1FD6AC0000DC5782 /* SKBookStationNumberModel.m in Sources */,
 				C55A29871FD6DFD9001E0DB7 /* LoginViewController.m in Sources */,
 				E8190DBA1F0F69660000B07C /* WOTPersionalInformationTagCell.m in Sources */,

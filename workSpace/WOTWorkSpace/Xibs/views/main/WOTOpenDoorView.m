@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIButton *btn;
 @property (nonatomic, strong) UILabel *lab2;
 
+
 @end
 
 
@@ -50,8 +51,8 @@
     self.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     
     
-    NSString *str = @"人傻是打发斯蒂芬人傻是打发斯蒂芬人傻是打发斯蒂芬人傻是打发斯蒂芬人傻是打发斯蒂芬";
-    UIImage *im = [HCCreateQRCode createQRCodeWithString:str ViewController:nil];
+    NSString *str =[WOTSingtleton shared].QRcodeStr;
+    UIImage *im = [HCCreateQRCode createQRCodeWithString:[WOTSingtleton shared].QRcodeStr ViewController:nil];
     [self.QRIV setImage:im];
     
     //加阴影
@@ -150,7 +151,8 @@
 -(UIImageView *)bgIV
 {
     if (!_bgIV) {
-        _bgIV = [[UIImageView alloc] initWithImage:[[UIImage getScreenSnap] blur]];
+        _bgIV = [[UIImageView alloc] init];
+        //_bgIV = [[UIImageView alloc] initWithImage:[[UIImage getScreenSnap] blur]];
     }
     return _bgIV;
 }

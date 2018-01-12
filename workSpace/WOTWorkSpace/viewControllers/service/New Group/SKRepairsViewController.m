@@ -249,7 +249,7 @@
 #pragma mark - TZImagePickerController
 - (void)pushTZImagePickerController {
     
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:4 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:3 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
     
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         
@@ -324,6 +324,9 @@
     }
     [MBProgressHUDUtil showLoadingWithMessage:@"提交中" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
         [WOTHTTPNetwork submitRepairsWithUserId:[WOTUserSingleton shareUser].userInfo.userId
+                                        userTel:[WOTUserSingleton shareUser].userInfo.tel
+                                       userName:[WOTUserSingleton shareUser].userInfo.userName
+                                        spaceId:[WOTUserSingleton shareUser].userInfo.spaceId
                                     repairsType:self.repairsTypeStr
                                     repairsInfo:self.describeTextView.text
                                  repairsAddress:self.repairsAddressTextField.text

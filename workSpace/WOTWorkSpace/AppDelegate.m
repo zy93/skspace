@@ -193,12 +193,8 @@
                 //                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
                 
-                //                NSNotification *notification = [NSNotification notificationWithName:ORDER_PAY_NOTIFICATION object:@"success"];
-                //                [[NSNotificationCenter defaultCenter] postNotification:notification];
-                //                NSNotification *rechargeNoti = [NSNotification notificationWithName:RECHARGE_PAY_NOTIFICATION object:@"recharge_success"];
-                //                [[NSNotificationCenter defaultCenter] postNotification:rechargeNoti];
-                //
-                
+                NSNotification *notification = [NSNotification notificationWithName:@"GiftBagPayNotification" object:@"success"];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
                 break;
             }
                 

@@ -9,9 +9,15 @@
 #import "WOTWXPayModel.h"
 
 @implementation WOTWXPayModel
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 @end
 
 @implementation WOTWXPayModel_msg
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 @end

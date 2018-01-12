@@ -163,7 +163,7 @@ int a = 0;
     self.autoScrollView.titlesGroup = titleArr;
     self.autoScrollView.pageDotColor = UICOLOR_GRAY_66;
     self.autoScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
-    self.autoScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;  //设置图片填充格式
+    self.autoScrollView.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;  //设置图片填充格式
 //    self.autoScrollView.currentPageDotColor = [UIColor yellowColor]; // 自定义分页控件小圆标颜色
 //    self.autoScrollView.currentPageDotColor = [UIColor blueColor];//dong pageDotColor
 //    self.autoScrollView.placeholderImage = [UIImage imageNamed:@"placeholder"];
@@ -514,6 +514,7 @@ int a = 0;
     }];
 }
 
+
 -(void)getBannerDataSource:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getHomeSliderSouceInfo:^(id bean, NSError *error) {
@@ -523,7 +524,6 @@ int a = 0;
             complete();
         }
         else {
-            
         }
     }];
 }

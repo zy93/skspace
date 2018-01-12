@@ -7,6 +7,7 @@
 //
 
 #import "WOTServiceForProvidersCell.h"
+#import "SKFacilitatorModel.h"
 
 #define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 50)
 #define providersViewHeight ([[UIScreen mainScreen] bounds].size.width/350 * 180)
@@ -34,24 +35,26 @@
     // Configure the view for the selected state
 }
 
--(void)setData:(NSInteger)da
+-(void)setData:(NSArray <SKFacilitatorInfoModel*>*)facilitatorArray
 {
-    
     NSArray *arr= self.providersScrollView.subviews;
     for (UIView *vi in arr ) {
         [vi removeFromSuperview];
     }
     
-    for (int i = 0; i<da; i++) {
-        
+    for (int i = 0; i<facilitatorArray.count; i++) {
         WOTServiceProvidersView *view = [[WOTServiceProvidersView alloc] initWithFrame:CGRectMake(i==0? providersStartX: i*providersViewWidth + ((i)*(providersViewGap)) + providersStartX, 0, providersViewWidth, providersViewHeight)];
         view.clipsToBounds = YES;
+        SKFacilitatorInfoModel *infoModel = facilitatorArray[i];
+        NSURL *image = [infoModel.firmLogo ToResourcesUrl];
+        [view.iconIV sd_setImageWithURL:[infoModel.firmLogo ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
+        view.titleLab.text = infoModel.firmName;
+        [view setData:infoModel];
+        view.subtitleLab.text = infoModel.businessScope;
         [self.providersScrollView addSubview:view];
     }
-    
     NSLog(@"---------HH:%f",CGRectGetHeight(self.providersScrollView.frame));
-    
-    self.providersScrollView.contentSize = CGSizeMake(da*providersViewWidth+ (da*(providersViewGap)) + providersStartX, self.providersScrollView.frame.size.height);
+    self.providersScrollView.contentSize = CGSizeMake(facilitatorArray.count*providersViewWidth+ (facilitatorArray.count*(providersViewGap)) + providersStartX, self.providersScrollView.frame.size.height);
     
 }
 
