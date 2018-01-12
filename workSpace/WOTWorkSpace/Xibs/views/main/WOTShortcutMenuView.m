@@ -68,7 +68,7 @@
                    @"WOTActivitiesLIstVC"];
     
     
-    titleList = @[@"预定场地", @"访客",@"订工位",@"订会议室", @"礼包", @"友邻", @"资讯", @"活动"];
+    titleList = @[@"预定场地", @"访客预约",@"预定工位",@"订会议室", @"礼包", @"友邻", @"资讯", @"活动"];
     imageNameList = @[@"shortcut_site_icon",
                       @"shortcut_visitors_icon",
                       @"shortcut_station_icon",

@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WOTEnterpriseScrollView : UIScrollView
+@class WOTEnterpriseScrollView;
 
+@protocol WOTEnterpriseScrollViewDelegate <NSObject>
+-(void)enterpriseScroll:(WOTEnterpriseScrollView *)scroll didSelectWithIndex:(NSInteger)index;
+@end
+
+
+@interface WOTEnterpriseScrollView : UIScrollView
+@property (nonatomic, strong) id <WOTEnterpriseScrollViewDelegate> mDelegate;
 -(void)setData:(NSArray *)data;
+
 
 @end

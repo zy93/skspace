@@ -28,10 +28,24 @@
     for (int i = 0; i<data.count; i++) {
         WOTEnterpriseModel *model = data[i];
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake((i*enterpriseIVWidth)+( (i+1)*enterpriseIVSpaceGap), 0, enterpriseIVWidth, self.frame.size.height)];
-        [iv setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",HTTPBaseURL,model.companyPicture]] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
+        [iv setImageWithURL:[model.companyPicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = i;
+        [btn addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [btn setFrame:iv.frame];
+        
         [self addSubview:iv];
+        [self addSubview:btn];
     }
     self.contentSize = CGSizeMake(enterpriseIVWidth*data.count+(enterpriseIVSpaceGap*(data.count+1)), self.frame.size.height);
+}
+
+-(void)selectBtn:(UIButton *)sender
+{
+    if ([_mDelegate respondsToSelector:@selector(enterpriseScroll:didSelectWithIndex:)]) {
+        [_mDelegate enterpriseScroll:self didSelectWithIndex:sender.tag];
+    }
 }
 
 /*

@@ -32,8 +32,9 @@
 #import "WOTSpaceModel.h"
 #import "WOTShortcutMenuView.h"
 #import "CardView.h"
+#import "WOTEnterpriseIntroduceVC.h"
 
-@interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate>
+@interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
 
@@ -62,12 +63,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *newsNameLab;
 @property (weak, nonatomic) IBOutlet UILabel *newsDateLab;
 
-
+@property (nonatomic,strong) NSArray <WOTEnterpriseModel *>*enterpriseData;//企业list
 @property (nonatomic,strong) NSArray <WOTSliderModel*>   *bannerData;   //轮播图list
 @property (nonatomic,strong) NSArray <WOTActivityModel*> *activityData;//活动list
 @property (nonatomic,strong) NSArray <WOTSpaceModel *>   *spaceData;  //空间list
 @property (nonatomic,strong) NSArray <WOTNewsModel  *>   *newsData; //资讯list
 @property (nonatomic,  copy) NSString *cityName;
+@property (nonatomic, strong) WOTEnterpriseModel *enterpriseModel;
 @end
 
 @implementation WOTMainVC
@@ -76,6 +78,7 @@
     [super viewDidLoad];
     //    [self load3DBallView];
     self.ballView.delegate = self;
+    self.enterpriseScrollView.mDelegate = self;
     [self configScrollView];
     [self getAllData];
     [self AddRefreshHeader];
@@ -258,6 +261,10 @@ int a = 0;
     }
     else if ([vc isKindOfClass:[WOTWorkSpaceListVC class]]) {
         [(WOTWorkSpaceListVC *)vc setDataSource:self.spaceData];
+    }
+    else if ([vc isKindOfClass:[WOTEnterpriseIntroduceVC class]]) {
+        ((WOTEnterpriseIntroduceVC*)vc).model = self.enterpriseModel;
+        ((WOTEnterpriseIntroduceVC*)vc).vcType = INTRODUCE_VC_TYPE_Enterprise;
     }
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -492,6 +499,13 @@ int a = 0;
 //    NSLog(@"卡片%ld被选中", (long)index);
 //}
 
+#pragma mark - enterprise scrollview delegate
+-(void)enterpriseScroll:(WOTEnterpriseScrollView *)scroll didSelectWithIndex:(NSInteger)index
+{
+    self.enterpriseModel = self.enterpriseData[index];
+    [self pushToViewControllerWithStoryBoardName:nil viewControllerName:@"WOTEnterpriseIntroduceVC"];
+}
+
 #pragma mark - SDCycleScrollView Delegate  点击轮播图显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
@@ -507,6 +521,7 @@ int a = 0;
         complete();
         if (bean) {
             WOTEnterpriseModel_msg *dd = (WOTEnterpriseModel_msg *)bean;
+            weakSelf.enterpriseData = dd.msg.list;
             [weakSelf.enterpriseScrollView setData:dd.msg.list];
         }
         if (error) {
