@@ -69,6 +69,7 @@
 @property(nonatomic,strong)NSString* softwareCopyright ;
 @property(nonatomic,strong)NSString* softwareEnterprise ;
 @property(nonatomic,assign)NSNumber* spaceId;
+@property(nonatomic,strong)NSString* spaceName;
 @property(nonatomic,strong)NSString* tatepayerNum ;
 @property(nonatomic,strong)NSString* tel ;
 @property(nonatomic,strong)NSString* typeEnterprise ;
