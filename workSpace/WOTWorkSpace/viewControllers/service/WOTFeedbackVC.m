@@ -56,7 +56,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.navigationController.navigationBar setHidden:NO];
 }
 
 -(void)configNav{
@@ -84,35 +83,35 @@
 
 - (IBAction)submitFeedbackInfo:(id)sender {
     
-    if (strIsEmpty(_textView.text)){
-        [MBProgressHUDUtil showMessage:UnInputFeedbackContentReminding toView:self.view ];
-    } else{
-//        [[WOTUserSingleton shareUser]setValues];
-        
-        [WOTHTTPNetwork feedBackWithSapceName:self.spaceName spaceId:self.spaceId contentText:self.textView.text tel:self.phoneText.text response:^(id bean, NSError *error) {
-            if (error) {
-                [MBProgressHUDUtil showMessage:@"提交失败，请稍后再试!" toView:self.view];
+    if (strIsEmpty(_textView.text)) {
+        [MBProgressHUDUtil showMessage:@"请输入内容！" toView:self.view];
+        return;
+    }
+    if (strIsEmpty(self.spaceName)) {
+        [MBProgressHUDUtil showMessage:@"请选择空间！" toView:self.view];
+        return;
+    }
+    
+    [WOTHTTPNetwork feedBackWithSapceName:self.spaceName spaceId:self.spaceId contentText:self.textView.text tel:self.phoneText.text response:^(id bean, NSError *error) {
+        if (error) {
+            [MBProgressHUDUtil showMessage:@"提交失败，请稍后再试!" toView:self.view];
+        }
+        else {
+            WOTBaseModel *model = (WOTBaseModel *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                [MBProgressHUD showMessage:@"提交成功,感谢您的宝贵意见！" toView:self.view hide:YES afterDelay:0.8f complete:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.navigationController popViewControllerAnimated:YES];
+                    });
+                }];
+
             }
             else {
-                WOTBaseModel *model = (WOTBaseModel *)bean;
-                if ([model.code isEqualToString:@"200"]) {
-                    [MBProgressHUD showMessage:@"提交成功,感谢您的宝贵意见！" toView:self.view hide:YES afterDelay:0.8f complete:^{
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.navigationController popViewControllerAnimated:YES];
-                        });
-                    }];
+                [MBProgressHUDUtil showMessage:@"提交失败，请稍后再试!" toView:self.view];
 
-                }
-                else {
-                    [MBProgressHUDUtil showMessage:@"提交失败，请稍后再试!" toView:self.view];
-
-                }
             }
-        }];
-    }
-        
- 
-  
+        }
+    }];
 }
 
 

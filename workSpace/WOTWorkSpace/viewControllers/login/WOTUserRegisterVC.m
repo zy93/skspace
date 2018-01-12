@@ -154,17 +154,17 @@
     else {
         {
             
-            [WOTHTTPNetwork userRegisterWitVerifyCode:self.verificationCodeText.text tel:self.phoneText.text password:self.passwordText.text alias:[NSString stringWithFormat:@"%@C",self.phoneText.text] response:^(id bean, NSError *error) {
-                WOTRegisterModel *model = bean;
-                if ([model.code isEqualToString:@"200"]) {
-                    [MBProgressHUDUtil showMessage:@"注册成功" toView:self.view];
-                    //跳转登陆界面
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-                else {
-                    [MBProgressHUDUtil showMessage:model.result toView:self.view];
-                }
-            }];
+//            [WOTHTTPNetwork userRegisterWitVerifyCode:self.verificationCodeText.text tel:self.phoneText.text password:self.passwordText.text alias:[NSString stringWithFormat:@"%@C",self.phoneText.text] response:^(id bean, NSError *error) {
+//                WOTRegisterModel *model = bean;
+//                if ([model.code isEqualToString:@"200"]) {
+//                    [MBProgressHUDUtil showMessage:@"注册成功" toView:self.view];
+//                    //跳转登陆界面
+//                    [self.navigationController popViewControllerAnimated:YES];
+//                }
+//                else {
+//                    [MBProgressHUDUtil showMessage:model.result toView:self.view];
+//                }
+//            }];
             
         }
     }

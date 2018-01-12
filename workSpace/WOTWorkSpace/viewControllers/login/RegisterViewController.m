@@ -34,6 +34,11 @@
 
 @property (nonatomic, strong)UIView *registerLineView3;
 
+@property (nonatomic, strong)UIView *registerLineView4;
+
+@property (nonatomic, strong)UIImageView *invitationCodeIV;
+@property (nonatomic, strong)UITextField *invitationCodeText;
+
 @property (nonatomic, strong)UIImageView *registerVCodeImageView;
 @property (nonatomic, strong)UITextField *registerVCodeText;
 
@@ -51,9 +56,10 @@
     self.registerLogoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_ylg"]];
     self.registerLogoView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:self.registerLogoView];
+    self.navigationItem.title = @"注册";
     
     self.registerView = [UIView new];
-    self.registerView.backgroundColor = [UIColor colorWithHexString:@"#f9f9f9"];
+    self.registerView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.registerView.layer.cornerRadius = 5.f;
     [self.view addSubview:self.registerView];
     
@@ -66,7 +72,7 @@
     [self.registerView addSubview:self.registerTelTextField];
     
     self.registerLineView1 = [UIView new];
-    self.registerLineView1.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+    self.registerLineView1.backgroundColor = UICOLOR_MAIN_LINE;
     [self.registerView addSubview:self.registerLineView1];
     
     self.registerPWImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwdicon"]];
@@ -79,7 +85,7 @@
     [self.registerView addSubview:self.registerPWText];
     
     self.registerLineView2 = [UIView new];
-    self.registerLineView2.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+    self.registerLineView2.backgroundColor = UICOLOR_MAIN_LINE;
     [self.registerView addSubview:self.registerLineView2];
     
     self.registerAgainPWImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwdicon"]];
@@ -92,7 +98,7 @@
     [self.registerView addSubview:self.registerAgainPWText];
     
     self.registerLineView3 = [UIView new];
-    self.registerLineView3.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+    self.registerLineView3.backgroundColor = UICOLOR_MAIN_LINE;
     [self.registerView addSubview:self.registerLineView3];
     
     self.registerVCodeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vcCode"]];
@@ -103,18 +109,31 @@
     self.registerVCodeText.placeholder = @"请输入验证码";
     [self.registerView addSubview:self.registerVCodeText];
     
+    self.registerLineView4 = [UIView new];
+    self.registerLineView4.backgroundColor = UICOLOR_MAIN_LINE;
+    [self.registerView addSubview:self.registerLineView4];
+    
+    self.invitationCodeIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"invitation_code"]];
+    self.invitationCodeIV.contentMode = UIViewContentModeScaleAspectFit;
+    [self.registerView addSubview:self.invitationCodeIV];
+    
+    self.invitationCodeText = [[UITextField alloc] init];
+    self.invitationCodeText.placeholder = @"邀请码(选填)";
+    [self.registerView addSubview:self.invitationCodeText];
+    
+    
     self.registerGetVCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.registerGetVCodeButton.layer.cornerRadius = 5.f;
     self.registerGetVCodeButton.layer.borderWidth = 1.f;
-    self.registerGetVCodeButton.layer.borderColor = [UIColor colorWithHexString:@"#ff7d3d"].CGColor;
+    self.registerGetVCodeButton.layer.borderColor = UICOLOR_MAIN_ORANGE.CGColor;
     [self.registerGetVCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
     [self.registerGetVCodeButton addTarget:self action:@selector(getRegisterVerificationCode:) forControlEvents:UIControlEventTouchDown];
     self.registerGetVCodeButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    [self.registerGetVCodeButton setTitleColor:[UIColor colorWithHexString:@"#ff7d3d"] forState:UIControlStateNormal];
-    self.registerButton.titleLabel.textColor = [UIColor colorWithHexString:@"#ff7d3d"];
+    [self.registerGetVCodeButton setTitleColor:UICOLOR_MAIN_ORANGE forState:UIControlStateNormal];
+    self.registerButton.titleLabel.textColor = UICOLOR_MAIN_ORANGE;
     self.registerButton.layer.cornerRadius = 5.f;
     self.registerButton.layer.borderWidth = 1.f;
-    self.registerButton.layer.borderColor = [UIColor colorWithHexString:@"#ff7d3d"].CGColor;
+    self.registerButton.layer.borderColor = UICOLOR_MAIN_ORANGE.CGColor;
     [self.registerView addSubview:self.registerGetVCodeButton];
     
     self.registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -122,8 +141,8 @@
     [self.registerButton addTarget:self action:@selector(registerButtonMethod) forControlEvents:UIControlEventTouchDown];
     self.registerButton.layer.cornerRadius = 5.f;
     self.registerButton.layer.borderWidth = 1.f;
-    self.registerButton.layer.borderColor = [UIColor colorWithHexString:@"#ff7d3d"].CGColor;
-    [self.registerButton setBackgroundColor:[UIColor colorWithHexString:@"#ff7d3d"]];
+    self.registerButton.layer.borderColor = UICOLOR_MAIN_ORANGE.CGColor;
+    [self.registerButton setBackgroundColor:UICOLOR_MAIN_ORANGE];
     [self.view addSubview:self.registerButton];
 }
 
@@ -137,10 +156,10 @@
     }];
     
     [self.registerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.registerLogoView.mas_bottom).with.offset(50);
+        make.top.equalTo(self.registerLogoView.mas_bottom).with.offset(40);
         make.left.equalTo(self.view.mas_left).with.offset(30);
         make.right.equalTo(self.view.mas_right).with.offset(-30);
-        make.height.mas_equalTo(200);
+        make.height.mas_equalTo(250);
     }];
     
     [self.registerTelImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -224,10 +243,30 @@
         make.right.equalTo(self.registerView);
     }];
     
+    [self.registerLineView4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.registerAgainPWText.mas_bottom).with.offset(10);
+        make.left.equalTo(self.registerView).with.offset(20);
+        make.right.equalTo(self.registerView).with.offset(-20);
+        make.height.mas_offset(1);
+    }];
+    
+    [self.invitationCodeIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.registerView).with.offset(10);
+        make.top.equalTo(self.registerLineView4).with.offset(15);
+        make.width.mas_equalTo(42);
+        make.height.mas_equalTo(21);
+    }];
+    
+    [self.invitationCodeText mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.invitationCodeIV);
+        make.left.equalTo(self.registerAgainPWImageView.mas_right);
+        make.right.equalTo(self.registerView);
+    }];
+    
     [self.registerButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.registerView.mas_bottom).with.offset(10);
-        make.right.equalTo(self.view).with.offset(-40);
-        make.left.equalTo(self.view).with.offset(40);
+        make.top.equalTo(self.registerView.mas_bottom).with.offset(20);
+        make.right.equalTo(self.view).with.offset(-30);
+        make.left.equalTo(self.view).with.offset(30);
         make.height.mas_equalTo(48);
     }];
 }
@@ -258,16 +297,16 @@
 #pragma mark - 注册按钮
 -(void)registerButtonMethod
 {
-    BOOL isTel = [self.registerTelTextField.text isEqualToString:@""] || self.registerTelTextField.text == NULL;
-    BOOL isVerifyCode = [self.registerVCodeText.text isEqualToString:@""] || self.registerVCodeText.text == NULL;
-    BOOL isPassWord = [self.registerPWText.text isEqualToString:@""] || self.registerPWText.text == NULL;
-    BOOL isAgainPassWord = [self.registerAgainPWText.text isEqualToString:@""] || self.registerAgainPWText.text == NULL;
+    BOOL isTel = strIsEmpty(self.registerTelTextField.text);
+    BOOL isPassWord = strIsEmpty(self.registerPWText.text);
+    BOOL isVerifyCode = strIsEmpty(self.registerVCodeText.text);
+    BOOL isAgainPassWord = strIsEmpty(self.registerAgainPWText.text);
     if (isTel || isVerifyCode || isPassWord || isAgainPassWord) {
         [MBProgressHUDUtil showMessage:@"请输入完整信息！" toView:self.view];
         return;
     }
     
-    [WOTHTTPNetwork userRegisterWitVerifyCode:self.registerVCodeText.text tel:self.registerTelTextField.text password:self.registerPWText.text alias:[NSString stringWithFormat:@"%@C",self.registerTelTextField.text] response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork userRegisterWitVerifyCode:self.registerVCodeText.text tel:self.registerTelTextField.text password:self.registerPWText.text alias:[NSString stringWithFormat:@"%@C",self.registerTelTextField.text] invitationCode:self.invitationCodeText.text  response:^(id bean, NSError *error) {
         WOTRegisterModel *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"注册成功" toView:self.view];

@@ -220,13 +220,16 @@
     } response:response];
 }
 
-+(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass alias:(NSString *)alias response:(response)response
++(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode response:(response)response
 {
-    NSDictionary *dic = @{@"tel":tel,
+    NSMutableDictionary *dic = [@{@"tel":tel,
                           @"verifyNum": code,
                           @"password":[WOTUitls md5HexDigestByString:pass],
                           @"alias":alias
-                          };
+                          } mutableCopy];
+    if (!strIsEmpty(invitationCode)) {
+        [dic setValue:@"byInvitationCode " forKey:invitationCode];
+    }
     NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/register"];
     
     [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
@@ -622,7 +625,7 @@
                           @"targetId":targetId,
                           @"peopleNum":peopleNum,
                           @"appointmentVisitTime":time,
-                          @"infoState":@"0",
+                          @"infoState":@"等待答复",
                           @"targetAlias":targetAlias
                         };
     NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/addVisitorOrUpdate"];

@@ -72,25 +72,17 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.tabBarController.tabBar.translucent = NO;
-    self.navigationController.navigationBarHidden = YES;  
+    //不要使用点语法，否则会设置失败。。。
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.tabBarController.tabBar setTranslucent:NO];
+    [self.navigationController.navigationBar setHidden:YES];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //self.navigationController.navigationBarHidden = NO;
 }
-
--(void)configNav{
-    self.navigationItem.title = @"服务";
-    //解决布局空白问题
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
-}
-
 
 #pragma mark -- Refresh method
 /**
@@ -98,7 +90,7 @@
  */
 - (void)AddRefreshHeader
 {
-    __weak UITableView *pTableView = _table;
+    __weak UIScrollView *pTableView = self.scrollView;
     ///添加刷新事件
     pTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
     pTableView.mj_header.automaticallyChangeAlpha = YES;

@@ -48,10 +48,11 @@
 #pragma mark - cell delegate
 -(void)cellAgree:(WOTMyAppointmentCell *)cell sender:(UIButton *)sender
 {
-    [WOTHTTPNetwork disposeAppointmentWithVisitorId:cell.model.visitorId result:@"2" response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork disposeAppointmentWithVisitorId:cell.model.visitorId result:@"预约成功" response:^(id bean, NSError *error) {
         WOTVisitorsModel *model = bean;
         if ([model.code isEqualToString:@"200"]) {
-            [MBProgressHUDUtil showMessage:@"操作成功" toView:self.view];
+            [MBProgressHUDUtil showMessage:@"已同意对方的预约" toView:self.view];
+            [self createRequest];
         }
         else {
             [MBProgressHUDUtil showMessage:@"操作失败" toView:self.view];
@@ -61,10 +62,11 @@
 
 -(void)cellreject:(WOTMyAppointmentCell *)cell sender:(UIButton *)sender
 {
-    [WOTHTTPNetwork disposeAppointmentWithVisitorId:cell.model.visitorId result:@"1" response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork disposeAppointmentWithVisitorId:cell.model.visitorId result:@"预约失败" response:^(id bean, NSError *error) {
         WOTVisitorsModel *model = bean;
         if ([model.code isEqualToString:@"200"]) {
-            [MBProgressHUDUtil showMessage:@"操作成功" toView:self.view];
+            [MBProgressHUDUtil showMessage:@"已拒绝对方的预约" toView:self.view];
+            [self createRequest];
         }
         else {
             [MBProgressHUDUtil showMessage:@"操作失败" toView:self.view];
@@ -85,7 +87,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     WOTAppointmentModel *model = self.tableList[indexPath.row];
     if ([model.targetId isEqual:[WOTUserSingleton shareUser].userInfo.userId] &&
-        [model.infoState isEqualToString:@"0"]) {
+        [model.infoState isEqualToString:@"等待答复"]) {
         return 210;
     }
     return 170;
@@ -104,18 +106,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTMyAppointmentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyAppointmentCell" forIndexPath:indexPath];
     WOTAppointmentModel *model = self.tableList[indexPath.row];
-    cell.titleLab.text = @"预约访问";
     cell.delegate = self;
-    cell.stateLab.text = model.infoState.integerValue == 0? @"等待答复" : model.infoState.integerValue == 1? @"预约失败" : @"预约成功";
-    cell.firstLab.text = [NSString stringWithFormat:@"访问对象：%@",model.targetName];
-    cell.secondLab.text = [NSString stringWithFormat:@"预约时间：%@",model.visitTime];
+    cell.titleLab.text = @"预约访问";
+    cell.stateLab.text = model.infoState;
+    cell.secondLab.text = [NSString stringWithFormat:@"预约时间：%@", [model.appointmentVisitTime substringToIndex:11]];
     cell.threeLab.text = [NSString stringWithFormat:@"预约地点：%@",model.spaceName];
-    if ([model.targetId isEqual:[WOTUserSingleton shareUser].userInfo.userId] &&
-        [model.infoState isEqualToString:@"0"]) {
-        cell.cellType = APPOINTMENT_CELL_TYPE_BUTTON;
+    if ([model.targetId isEqual:[WOTUserSingleton shareUser].userInfo.userId]
+        ) {
+        if ([model.infoState isEqualToString:@"等待答复"]) {
+            cell.cellType = APPOINTMENT_CELL_TYPE_BUTTON;
+        }
+        else {
+            cell.cellType = APPOINTMENT_CELL_TYPE_DEFAULT;
+        }
+        cell.firstLab.text = [NSString stringWithFormat:@"来访对象：%@",model.visitorName];
     }
     else {
         cell.cellType = APPOINTMENT_CELL_TYPE_DEFAULT;
+        cell.firstLab.text = [NSString stringWithFormat:@"访问对象：%@",model.targetName];
+       
     }
     cell.model = model;
     
