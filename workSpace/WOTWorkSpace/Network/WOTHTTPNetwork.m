@@ -38,6 +38,7 @@
 #import "QueryCommentModel.h"
 #import "SKFocusListModel.h"
 #import "WOTApplyJoinEnterpriseModel.h"
+#import "SKFacilitatorModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -547,12 +548,19 @@
 +(void)registerServiceBusiness:(NSNumber *)userId firmName:(NSString *)firmName businessScope:(NSString *)businessScope contatcts:(NSString *)contatcts tel:(NSString *)tel facilitatorType:(NSString *)facilitatorType facilitatorState:(NSNumber *)facilitatorState firmLogo:(NSArray<UIImage *> *)firmLogo     response:(response)response{
     
     
-    NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/FacilitatorInfo/addInfo"];
-    NSMutableDictionary * parameters = [[NSMutableDictionary alloc]initWithObjectsAndKeys:userId,@"userId",firmName,@"firmName",businessScope,@"businessScope",contatcts,@"contatcts",tel,@"tel",facilitatorType,@"facilitatorType",nil];
-    if (facilitatorState) {
-        [parameters setValue:facilitatorState forKey:@"facilitatorState"];
-
-    }
+    NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Facilitator/addFacilitator"];
+//    NSMutableDictionary * parameters = [[NSMutableDictionary alloc]initWithObjectsAndKeys:userId,@"userId",
+//                                        firmName,@"firmName",
+//                                        businessScope,@"businessScope",
+//                                        contatcts,@"contacts",
+//                                        tel,@"tel",
+//                                        facilitatorType,@"facilitatorType"
+//                                        ,nil];
+    NSDictionary *parameters = @{@"firmName":firmName,@"businessScope":businessScope,@"contacts":contatcts,@"tel":tel,@"facilitatorType":facilitatorType,@"facilitatorState":facilitatorState};
+//    if (facilitatorState) {
+//        [parameters setValue:facilitatorState forKey:@"facilitatorState"];
+//
+//    }
     
     
     [self doFileRequestWithParameters:parameters useUrl:registerurl image:firmLogo complete:^JSONModel *(id responseobj) {
@@ -575,11 +583,13 @@
 
 +(void)getServiceProviders:(response)response
 {
-    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/"];
-    
-    [self doRequestWithParameters:nil useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Facilitator/find"];
+    NSDictionary *parameters = @{@"facilitatorState":@"已通过",
+                                 @"pageNo":@(1),
+                                 @"pageSize":@(1000),};
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
         
-        WOTServiceCategoryModel_msg *model = [[WOTServiceCategoryModel_msg alloc]initWithDictionary:responseobj error:nil];
+        SKFacilitatorModel *model = [[SKFacilitatorModel alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
 }
@@ -752,6 +762,32 @@
     } response:response];
 }
 
++(void)siteReservationsWithSpaceId:(NSNumber *)spaceid
+                      conferenceId:(NSNumber *)confid
+                         startTime:(NSString *)startTime
+                           endTime:(NSString *)endTime
+                         spaceName:(NSString *)spaceName
+                       meetingName:(NSString *) meetingName
+                            userId:(NSNumber *)userId
+                          response:(response)response
+{
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conferencedetails/subscribyTime1"];
+    NSDictionary *dic = @{
+                          @"spaceId":spaceid,
+                          @"conferenceId":confid,
+                          @"startTime":startTime,
+                          @"endTime":endTime,
+                          @"spaceName":spaceName,
+                          @"company":meetingName,
+                          @"userId":userId,
+                          @"appId":YLGTEST_APPID
+                          };
+    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
+        WOTReservationsResponseModel_msg *model = [[WOTReservationsResponseModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
 
 +(void)feedBackWithSapceName:(NSString *)spaceName
                      spaceId:(NSNumber *)spaceId
@@ -894,7 +930,6 @@
     payRequest.timeStamp = [payModel.timeStamp intValue];//时间戳，防重发
     payRequest.sign = payModel.sign;//商家根据微信开放平台文档对数据做的签名
     [WXApi sendReq:payRequest];
-    
 }
 
 #pragma mark - 社交
@@ -1099,14 +1134,17 @@
     } response:response];
 }
 
-+(void)submitRepairsWithUserId:(NSNumber *)userId repairsType:(NSString *)type repairsInfo:(NSString *)info repairsAddress:(NSString *)address alias:(NSString *)alias photosArray:(NSArray *)photosArray response:(response)response
++(void)submitRepairsWithUserId:(NSNumber *)userId userTel:(NSString *)phone userName:(NSString *)userName  spaceId:(NSNumber *)spaceId repairsType:(NSString *)type repairsInfo:(NSString *)info repairsAddress:(NSString *)address alias:(NSString *)alias photosArray:(NSArray *)photosArray response:(response)response
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/MaintainInfo/addMaintainInfo",HTTPBaseURL];
     NSDictionary *parameters = @{@"userId":userId,
                                  @"type":type,
                                  @"info":info,
                                  @"address":address,
-                                 @"alias":alias
+                                 @"alias":alias,
+                                 @"spaceId":spaceId,
+                                 @"phone":phone,
+                                 @"userName":userName
                                  };
     [self doFileRequestWithParameters:parameters useUrl:url image:photosArray complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
@@ -1127,6 +1165,28 @@
     [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model13 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
         return model13;
+    } response:response];
+}
+
++(void)getQRcodeInfoWithUserId:(NSNumber *)userId  response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Make/addOwnerQrCode",HTTPBaseURL];
+    NSDictionary *parameters = @{@"userId":userId
+                                 };
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model13 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
+}
+
++(void)getServiceBannerData:(response)response
+{
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/FacilitatorProclamation/find"];
+    NSDictionary *dic = @{@"pageNo":@1,
+                          @"pageSize":@1000};
+    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
+        WOTSliderModel_msg *model = [[WOTSliderModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
     } response:response];
 }
 

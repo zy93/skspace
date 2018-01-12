@@ -11,5 +11,7 @@
 @interface WOTOpenDoorView : UIView
 @property(nonatomic, strong) void (^btnClick)(NSString *str);
 
+@property (nonatomic, strong) NSString *QRcodeInfoStr;
+
 - (void)showWithController:(UIViewController *)fromController;
 @end

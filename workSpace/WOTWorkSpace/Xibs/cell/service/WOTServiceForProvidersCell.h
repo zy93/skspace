@@ -15,6 +15,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *joinButton;
 
--(void)setData:(NSInteger)da;
+-(void)setData:(NSArray *)facilitatorData;
 
 @end

@@ -28,7 +28,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"YYYY/MM/dd hh:mm:ss"];
+    [formatter setDateFormat:@"YYYY/MM/dd HH:mm:ss"];
     NSString *DateTime = [formatter stringFromDate:date];
     //    NSLog(@"%@============年-月-日  时：分：秒=====================",DateTime);
     return DateTime;

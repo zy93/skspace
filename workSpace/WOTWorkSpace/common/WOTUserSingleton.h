@@ -14,6 +14,7 @@
 //用户信息
 @property (nonatomic, strong) WOTLoginModel *userInfo;
 
+
 +(instancetype)shareUser;
 -(void)saveUserInfoToPlistWithModel:(WOTLoginModel *)model;
 -(void)deletePlistFile;

@@ -313,7 +313,13 @@
             self.body = @"场地/会议室预定";
             self.total_fee = @"1";// self.money.floatValue * 100;
             self.trade_type = @"APP";
-            [self reservationsMeeting];
+            if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+                [self reservationsMeeting];
+            }else
+            {
+                [self reservationsSite];
+            }
+            
 
         }
             break;
@@ -653,28 +659,34 @@
     }
 }
 
+-(void)reservationsSite
+{
+    __weak typeof(self) weakSelf = self;
+    //会议室先预定，然后支付。
+    NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
+    [WOTHTTPNetwork  siteReservationsWithSpaceId:self.spaceModel.spaceId
+                                      conferenceId:self.meetingModel.conferenceId startTime:arr.firstObject
+                                           endTime:arr.lastObject
+                                         spaceName:self.spaceModel.spaceName
+                                       meetingName:self.meetingModel.conferenceName
+                                            userId:[WOTUserSingleton shareUser].userInfo.userId
+                                          response:^(id bean, NSError *error) {
+                                              WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
+                                              if ([model.code isEqualToString:@"200"]) {
+                                                  [weakSelf commitOrder];
+                                              }
+                                              else {
+                                                  [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
+                                              }
+                                          }];
+}
+
 #pragma mark - 预定会议室
 -(void)reservationsMeeting
 {
     __weak typeof(self) weakSelf = self;
     //会议室先预定，然后支付。
     NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
-//    [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
-//                                      conferenceId:self.meetingModel.conferenceId
-//                                         startTime:arr.firstObject
-//                                           endTime:arr.lastObject
-//                                         spaceName:self.spaceModel.spaceName
-//                                            userId:[WOTUserSingleton shareUser].userInfo.userId
-//                                       meetingName:self.meetingModel.conferenceName
-//                                          response:^(id bean, NSError *error) {
-//                                              WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
-//                                              if ([model.code isEqualToString:@"200"]) {
-//                                                  [weakSelf commitOrder];
-//                                              }
-//                                              else {
-//                                                  [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
-//                                              }
-//    }];
     [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
                                       conferenceId:self.meetingModel.conferenceId startTime:arr.firstObject
                                            endTime:arr.lastObject
@@ -732,12 +744,20 @@
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){
         dispatch_async(dispatch_get_main_queue(), ^{
-            //
-            StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
-            vc.meetingModel = weakSelf.meetingModel;
-            vc.dic = parameters;
-            [vc setModel:((WOTWXPayModel_msg*)bean).msg];
-            [weakSelf.navigationController pushViewController:vc animated:YES];
+            WOTWXPayModel_msg *model_msg = (WOTWXPayModel_msg *)bean;
+            if ([model_msg.code isEqualToString:@"200"]) {
+                StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
+                vc.meetingModel = weakSelf.meetingModel;
+                vc.dic = parameters;
+                [vc setModel:((WOTWXPayModel_msg*)bean).msg];
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            }
+            else
+            {
+                [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+                return ;
+            }
+            
         });
     }];
 }

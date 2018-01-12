@@ -22,6 +22,7 @@
 @property(nonatomic,strong)NSString *result_code;
 @property(nonatomic,strong)NSString *device_info;
 @property(nonatomic,strong)NSString *trade_type;
+@property(nonatomic,strong)NSString *orderNum;
 @end
 
 @interface WOTWXPayModel_msg : JSONModel

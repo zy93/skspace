@@ -153,7 +153,7 @@
 //选择了某个cell
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.selectedArray.count<=4) {
+    if (self.selectedArray.count<4) {
         if ([self.selectedArray containsObject:indexPath]) {
             [self.selectedArray removeObject:indexPath];
         }else
@@ -176,14 +176,15 @@
 
 -(void)rightItemAction{
     //TODO:保存选择的企业类型；
-   NSString *string = @"";
+   //NSString *string = @"";
+    NSMutableArray *typeNameArray = [[NSMutableArray alloc] init];
     for (NSIndexPath *indexpath in _selectedArray) {
-        string = [NSString stringWithFormat:@"%@%@,",string,_typeName[indexpath.section][indexpath.row]];
-        
+        NSString *typeStr = [NSString stringWithFormat:@"%@",_typeName[indexpath.section][indexpath.row]];
+       [typeNameArray addObject:typeStr];
     }
  
     if (_gobackBlock) {
-        self.gobackBlock(string);
+        self.gobackBlock([typeNameArray componentsJoinedByString:@","]);
     }
 //    NSLog(@"---选择企业---%@",string);
     [self.navigationController popViewControllerAnimated:YES];

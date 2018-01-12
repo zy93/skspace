@@ -30,7 +30,7 @@
         <!--Enterprise TypeVC-->
         <scene sceneID="cxA-Dg-lcy">
             <objects>
-                <viewController storyboardIdentifier="WOTEnterpriseTypeVCID" id="xgM-5F-And" customClass="WOTEnterpriseTypeVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WOTEnterpriseTypeVCID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xgM-5F-And" customClass="WOTEnterpriseTypeVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0gd-4W-xL2"/>
                         <viewControllerLayoutGuide type="bottom" id="tnm-37-q8k"/>

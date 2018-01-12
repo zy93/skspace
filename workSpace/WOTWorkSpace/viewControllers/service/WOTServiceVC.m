@@ -19,6 +19,7 @@
 #import "MJRefresh.h"
 #import "SKRepairsViewController.h"
 #import "SKDemandViewController.h"
+#import "SKFacilitatorModel.h"
 
 #define getService @"WOTGETServiceCell"
 #define serviceScroll @"serviceScroll"
@@ -28,7 +29,6 @@
 {
     NSMutableArray *tableList;
     NSMutableArray *tableIconList;
-
 }
 //@property(nonatomic,strong)WOTRefreshControlUitls *refreshControl;
 @property (weak, nonatomic) IBOutlet SDCycleScrollView *autoScrollView;
@@ -39,6 +39,8 @@
 @property (nonatomic,strong) NSMutableArray *imageUrlStrings;
 @property (nonatomic,strong) NSMutableArray *imageTitles;
 @property (nonatomic,strong) NSMutableArray *sliderUrlStrings;
+@property (nonatomic,strong) NSArray <WOTSliderModel*> *bannerData;
+@property (nonatomic,strong) NSArray <SKFacilitatorInfoModel*> *facilitatorData;
 
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollviewHeight;
 
@@ -49,9 +51,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadAutoScrollView];
+    [self loadData];
+    [self configNav];
     [self addData];
     [self AddRefreshHeader];
+    //[self StartRefresh];
+ 
+//废弃
+//   _refreshControl = [[WOTRefreshControlUitls alloc]initWithScroll:self.table];
+//    [_refreshControl addTarget:self action:@selector(downLoadRefresh) forControlEvents:UIControlEventAllEvents];
+    
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,8 +82,12 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
 }
 
+-(void)configNav{
+    self.navigationItem.title = @"服务";
+}
 #pragma mark -- Refresh method
 /**
  *  添加下拉刷新事件
@@ -138,20 +152,39 @@
 
 -(void)loadData
 {
-    [self getSliderDataSource:^{
-        [self loadAutoScrollView];
-        [self StopRefresh];
+    [self getNannerData:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadAutoScrollView];
+        });
     }];
+    [self getFacilitatorData:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.table reloadData];
+        });
+    }];
+//    [self getSliderDataSource:^{
+//        [self loadAutoScrollView];
+//
+//    }];
 }
 
 #pragma mark - setup View
 -(void)loadAutoScrollView{
  
     
+//
+    for (WOTSliderModel *model in self.bannerData) {
+        [_imageTitles addObject:model.proclamationTitle];
+        //        NSLog(@"图片地址：%@",[NSString convertUnicode:model.coverPicture]);
+        //        NSString *imageUrl = [NSString convertUnicode:model.coverPicture];
+        NSLog(@"图片地址url：%@",[model.coverPicture ToResourcesUrl]);
+        [_imageUrlStrings addObject:[model.coverPicture ToResourcesUrl]];
+    }
+
     self.autoScrollView.imageURLStringsGroup = _imageUrlStrings;
 //    self.autoScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     self.autoScrollView.delegate = self;
-    //self.autoScrollView.titlesGroup = _imageTitles;
+    self.autoScrollView.titlesGroup = _imageTitles;
     //self.autoScrollView.currentPageDotColor = [UIColor yellowColor]; // 自定义分页控件小圆标颜色
     //self.autoScrollView.currentPageDotColor = [UIColor blueColor];//dong
     //self.autoScrollView.placeholderImage = [UIImage imageNamed:@"placeholder"];
@@ -263,7 +296,7 @@
             cell = [[WOTServiceForProvidersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTServiceForProvidersCell"];
         }
         [cell.joinButton addTarget:self action:@selector(joinButtonMethod) forControlEvents:UIControlEventTouchDown];
-        [cell setData:5]; 
+        [cell setData:self.facilitatorData];
         return cell;
     }
 }
@@ -273,34 +306,63 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(void)getSliderDataSource:(void(^)())complete{
-    
-    [WOTHTTPNetwork getServeSliderSouceInfo:^(id bean, NSError *error) {
-        if (bean) {
-            WOTSliderModel_msg *dd = (WOTSliderModel_msg *)bean;
-            NSLog(@"ok%@",dd);
-            _imageTitles = [[NSMutableArray alloc]init];
-            _imageUrlStrings = [[NSMutableArray alloc]init];
-            _sliderUrlStrings = [[NSMutableArray alloc]init];
-            complete();
-        }
-    }];
-}
-
 #pragma mark - 申请入驻
 -(void)joinButtonMethod
 {
     [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"WOTRegisterServiceProvidersVC"];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - 获取服务banner数据
+-(void)getNannerData:(void(^)())complete{
+    _imageTitles = [[NSMutableArray alloc] init];
+    _imageUrlStrings = [[NSMutableArray alloc] init];
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getServiceBannerData:^(id bean, NSError *error) {
+        WOTSliderModel_msg *model = bean;
+        if ([model.code isEqualToString:@"200"]) {
+            weakSelf.bannerData = model.msg.list;
+            complete();
+        }
+        else {
+            _imageUrlStrings = [[NSMutableArray alloc]initWithArray:@[
+                                                                      @"https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a4b3d7085dee3d6d2293d48b252b5910/0e2442a7d933c89524cd5cd4d51373f0830200ea.jpg",
+                                                                      @"https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a41eb338dd33c895a62bcb3bb72e47c2/5fdf8db1cb134954a2192ccb524e9258d1094a1e.jpg",
+                                                                      @"http://c.hiphotos.baidu.com/image/w%3D400/sign=c2318ff84334970a4773112fa5c8d1c0/b7fd5266d0160924c1fae5ccd60735fae7cd340d.jpg"
+                                                                      ]];
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+            // 图片配文字
+            _imageTitles = [[NSMutableArray alloc]initWithArray:            @[@"物联港科技",
+                                                                              @"物联港科技",
+                                                                              @"物联港科技"
+                                                                              ]];
+            complete();
+        }
+    }];
 }
-*/
+    
+#pragma mark - 获取服务商列表
+-(void)getFacilitatorData:(void(^)())complete{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getServiceProviders:^(id bean, NSError *error) {
+        SKFacilitatorModel *model = (SKFacilitatorModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            weakSelf.facilitatorData = model.msg.list;
+            complete();
+            
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"获取服务商失败！" toView:self.view];
+            return ;
+        }
+    }];
+}
+
+-(NSArray<SKFacilitatorInfoModel*>*)facilitatorData
+{
+    if (_facilitatorData == nil) {
+        _facilitatorData = [[NSArray alloc] init];
+    }
+    return _facilitatorData;
+}
 
 @end
