@@ -82,8 +82,12 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
 }
 
+-(void)configNav{
+    self.navigationItem.title = @"服务";
+}
 #pragma mark -- Refresh method
 /**
  *  添加下拉刷新事件
