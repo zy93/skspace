@@ -10,4 +10,6 @@
 
 @interface SKFocusListViewController : UIViewController
 
+-(void)updateFocusListData;
+
 @end

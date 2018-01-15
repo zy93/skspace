@@ -226,6 +226,10 @@
         return;
     }
     
+    if (![NSString valiMobile:self.userTelField.text]) {
+        [MBProgressHUDUtil showMessage:@"电话格式不正确！" toView:self.view];
+        return;
+    }
     [WOTHTTPNetwork userLoginWithTelOrEmail:self.userTelField.text password:self.verificationCodeField.text alias:[NSString stringWithFormat:@"%@C",self.userTelField.text] response:^(id bean,NSError *error) {
         NSLog(@"");
         if (bean) {

@@ -220,11 +220,12 @@
     } response:response];
 }
 
-+(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode response:(response)response
++(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel userName:(NSString *)userName password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode response:(response)response
 {
     NSMutableDictionary *dic = [@{@"tel":tel,
                           @"verifyNum": code,
                           @"password":[WOTUitls md5HexDigestByString:pass],
+                          @"userName":userName,
                           @"alias":alias
                           } mutableCopy];
     if (!strIsEmpty(invitationCode)) {
@@ -243,7 +244,7 @@
     NSDictionary *dic = @{@"tel":tel,
                           @"verifyNum": code,
                           @"password":[WOTUitls md5HexDigestByString:pass]};
-    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/register"];
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/changePassword_sendVerify"];
     
     [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
         WOTRegisterModel *model = [[WOTRegisterModel alloc] initWithDictionary:responseobj error:nil];
@@ -549,13 +550,7 @@
     
     
     NSString *registerurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Facilitator/addFacilitator"];
-//    NSMutableDictionary * parameters = [[NSMutableDictionary alloc]initWithObjectsAndKeys:userId,@"userId",
-//                                        firmName,@"firmName",
-//                                        businessScope,@"businessScope",
-//                                        contatcts,@"contacts",
-//                                        tel,@"tel",
-//                                        facilitatorType,@"facilitatorType"
-//                                        ,nil];
+
     NSDictionary *parameters = @{@"firmName":firmName,@"businessScope":businessScope,@"contacts":contatcts,@"tel":tel,@"facilitatorType":facilitatorType,@"facilitatorState":facilitatorState};
 //    if (facilitatorState) {
 //        [parameters setValue:facilitatorState forKey:@"facilitatorState"];
@@ -634,7 +629,6 @@
         WOTVisitorsModel *model = [[WOTVisitorsModel alloc] initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
-    
 }
 
 +(void)getMyAppointmentResponse:(response)response

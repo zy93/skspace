@@ -85,7 +85,6 @@
                 _selectedTabIndex = [childTitles indexOfObject:childTitle];
             }
         }
-        
         //更新部分数据
         _childControllers = childControllers;
         _childTitles = childTitles;
@@ -142,7 +141,8 @@
         //body layout
         self.bodyView.frame = CGRectMake(0, _tabSize.height, WIDTH(self), HEIGHT(self)-_tabSize.height);
         self.bodyView.contentOffset = CGPointMake(self.frame.size.width*_selectedTabIndex, 0);
-        self.bodyView.contentSize = CGSizeMake(WIDTH(self)*_numberOfTabItems, 0);
+        //self.bodyView.contentSize = CGSizeMake(WIDTH(self)*_numberOfTabItems, 0);
+        self.bodyView.contentSize = CGSizeMake(WIDTH(self), 0);
         [self reviseTabContentOffsetBySelectedIndex:NO];
         
         for(NSInteger i = 0; i < _numberOfTabItems; i++) {
@@ -244,6 +244,10 @@
  @param index 需要展示的child的索引
  */
 - (void)layoutChildViewWithIndex:(NSInteger)index {
+    for(UIView *view in [self.bodyView subviews])
+    {
+        [view removeFromSuperview];
+    }
     if(index >= 0 && index < _childControllers.count) {
         UIViewController *childController = _childControllers[index];
         if(childController.view.superview != self.bodyView) {

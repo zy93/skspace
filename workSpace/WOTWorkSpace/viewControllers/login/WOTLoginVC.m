@@ -146,6 +146,7 @@
     [self hiddleKeyboard];
     return YES;
 }
+
 -(void)hiddleKeyboard{
     [_passwordText resignFirstResponder];
     [_accountText resignFirstResponder];

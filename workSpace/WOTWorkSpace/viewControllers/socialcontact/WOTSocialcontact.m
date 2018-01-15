@@ -16,7 +16,7 @@
 #import "SKCommentViewController.h"
 #import "SKFocusListViewController.h"
 
-@interface WOTSocialcontact ()<XXPageTabViewDelegate>
+@interface WOTSocialcontact ()<XXPageTabViewDelegate,UINavigationControllerDelegate>
 
 @end
 
@@ -64,6 +64,8 @@
 }
 -(void)configNavi{
     self.navigationItem.title = @"社交";
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.rightBarButtonItem.customView.hidden=YES;
     [self configNaviRightItemWithImage:[UIImage imageNamed:@"publishSocial"]];
 }
 
@@ -95,7 +97,6 @@
     
     return self.childViewControllers;
 }
-
 
 
 @end

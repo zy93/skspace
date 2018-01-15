@@ -83,6 +83,7 @@
     
     
     textViewBackgroundView = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    NSLog(@"%f",size.height);
     textViewBackgroundView.borderStyle = UITextBorderStyleRoundedRect;
 	textViewBackgroundView.autoresizingMask = UIViewAutoresizingNone;
     textViewBackgroundView.userInteractionEnabled = NO;
@@ -111,15 +112,17 @@
     
 	sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [sendButton setTitle:@"发表" forState:0];
+    [sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [sendButton setBackgroundImage:[[UIImage imageNamed:@"button_send_comment.png"] stretchableImageWithLeftCapWidth:3 topCapHeight:22] forState:UIControlStateNormal];
 	sendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
     [sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     sendButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-    [sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+   // [sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self addSubview:sendButton];
     [self sendSubviewToBack:inputBackgroundView];
 
-    self.backgroundColor = [UIColor colorWithRed:(0xD9 / 255.0) green:(0xDC / 255.0) blue:(0xE0 / 255.0) alpha:1.0];
+//    self.backgroundColor = [UIColor colorWithRed:(0xD9 / 255.0) green:(0xDC / 255.0) blue:(0xE0 / 255.0) alpha:1.0];
+    self.backgroundColor = [UIColor whiteColor];
     [self showCommentView];
  }
 
@@ -135,7 +138,7 @@
     
     
     self.backgroundColor = [UIColor whiteColor];
-  
+    //self.backgroundColor = [UIColor redColor];
 
     textView.frame = CGRectMake(5, textView.frame.origin.y, screenWidth - 10 - 65, textView.frame.size.height);
     CGRect f = textView.frame;
@@ -196,7 +199,8 @@
     if (self)
     {
         tapView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, screenHeight)];
-        tapView.backgroundColor = [UIColor blackColor];
+        //tapView.backgroundColor = [UIColor blackColor];
+        tapView.backgroundColor = [UIColor clearColor];
         tapView.userInteractionEnabled = YES;
         [bgView addSubview:tapView];
        
@@ -404,6 +408,7 @@ static inline UIViewAnimationOptions animationOptionsWithCurve(UIViewAnimationCu
    
     if ([textView.text isEqualToString:@""]) {
         //NSLog(@"无内容");
+        [MBProgressHUDUtil showMessage:@"信息不能为空！" toView:self];
         return;
     }
     [_delegate YMReplyInputWithReply:textView.text appendTag:_replyTag];

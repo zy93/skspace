@@ -19,7 +19,7 @@
 @interface SKFocusListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property(nonatomic,strong)UITableView *focusListTableView;
-@property(nonatomic,strong)NSArray <SKFocusListModel_msg *>*foucusListArray;
+@property(nonatomic,strong)NSMutableArray <SKFocusListModel_msg *>*foucusListArray;
 
 @end
 
@@ -27,8 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self requestFocusList];
-    self.foucusListArray = [[NSArray alloc] init];
+    self.foucusListArray = [[NSMutableArray alloc] init];
     self.focusListTableView = [[UITableView alloc] init];
     self.focusListTableView.delegate = self;
     self.focusListTableView.dataSource = self;
@@ -39,6 +38,13 @@
     self.focusListTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     [self.focusListTableView.mj_header beginRefreshing];
     [self.view addSubview:self.focusListTableView];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self requestFocusList];
     
 }
 
@@ -77,7 +83,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     SKFocusCirclesViewController *circlesVC = [[SKFocusCirclesViewController alloc]init];
+    circlesVC.hidesBottomBarWhenPushed = YES;
     circlesVC.userIdNum = self.foucusListArray[indexPath.row].userId;
     [self.navigationController pushViewController:circlesVC animated:YES];
 }
@@ -85,23 +93,39 @@
 #pragma mark - 取消关注
 -(void)cancleFocus:(YMButton *)button
 {
-    NSIndexPath *indexPath = button.appendIndexPath;
-    NSNumber *focusId = self.foucusListArray[indexPath.row].focusId;
-    [WOTHTTPNetwork deleteFocusWithFocusId:focusId response:^(id bean, NSError *error) {
-        WOTBaseModel *baseModel = (WOTBaseModel *)bean;
-        if ([baseModel.code isEqualToString:@"200"]) {
-            [MBProgressHUDUtil showMessage:@"取消成功！" toView:self.view];
-            [self requestFocusList];
-        } else {
-            [MBProgressHUDUtil showMessage:@"取消失败！" toView:self.view];
-        }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"是否取消关注！"
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert ];
+    
+    //添加取消到UIAlertController中
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:cancelAction];
+    
+    //添加确定到UIAlertController中
+    UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSIndexPath *indexPath = button.appendIndexPath;
+        NSNumber *focusId = self.foucusListArray[indexPath.row].focusId;
+        [WOTHTTPNetwork deleteFocusWithFocusId:focusId response:^(id bean, NSError *error) {
+            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+            if ([baseModel.code isEqualToString:@"200"]) {
+                [MBProgressHUD showMessage:@"取消成功！" toView:self.view hide:YES afterDelay:0.8f complete:^{
+                    [self requestFocusList];
+                }];
+            } else {
+                [MBProgressHUDUtil showMessage:@"取消失败！" toView:self.view];
+            }
+        }];
     }];
+    [alertController addAction:OKAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    
 }
 
 -(void)loadNewData
 {
     [self requestFocusList];
-    [self.focusListTableView reloadData];
     [self.focusListTableView.mj_header endRefreshing];
 }
 
@@ -116,10 +140,26 @@
     [WOTHTTPNetwork queryFocusOnPeopleWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId  response:^(id bean, NSError *error) {
         SKFocusListModel *baseModel = (SKFocusListModel *)bean;
         if ([baseModel.code isEqualToString:@"200"]) {
-            self.foucusListArray = baseModel.msg;
-            [self.focusListTableView reloadData];
+            self.foucusListArray = [[NSMutableArray alloc] initWithArray:baseModel.msg];
+            dispatch_async(dispatch_get_main_queue(), ^{
+               [self.focusListTableView reloadData];
+            });
         } else {
-            
+            if ([baseModel.code isEqualToString:@"202"]) {
+                if (_foucusListArray.count>0) {
+                    [self.foucusListArray removeAllObjects];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.focusListTableView reloadData];
+                    [MBProgressHUDUtil showMessage:@"还未关注其他人！" toView:self.view];
+                });
+                return ;
+            }
+            else
+            {
+                [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
+                return ;
+            }
         }
     }];
 }
@@ -137,6 +177,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UPDATEFocusListNOTIFICATION" object:self];
 }
 
 

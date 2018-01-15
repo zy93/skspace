@@ -156,7 +156,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     mainTable.delegate = self;
     mainTable.dataSource = self;
     mainTable.estimatedRowHeight = 0;
-
     [self.view addSubview:mainTable];
     
 }
@@ -240,11 +239,24 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             [self StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
-
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self configData];
-                [self loadTextData];
-            });
+            if ([model.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self configData];
+                    [self loadTextData];
+                    [mainTable reloadData];
+                });
+            }
+            else
+            {
+                if ([model.code isEqualToString:@"202"]) {
+                    [MBProgressHUDUtil showMessage:@"没有数据！" toView:self.view];
+                    return ;
+                }else
+                {
+                    [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
+                    return ;
+                }
+            }
         }];
     } else {
         [MBProgressHUDUtil showMessage:@"请先登录后再查看！" toView:self.view];
@@ -420,10 +432,11 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         return;
     }
     replyView = [[YMReplyInputView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, screenWidth,44) andAboveView:self.view];
+    NSLog(@"测试高度：%f",self.view.frame.size.height);
     replyView.delegate = self;
     replyView.replyTag = _selectedIndexPath.row;
+    //[self.view addSubview:replyView];
     [self.view addSubview:replyView];
-    
 }
 
 
@@ -447,10 +460,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 - (void)showImageViewWithImageViews:(NSArray *)imageViews byClickWhich:(NSInteger)clickTag{
     //[UIScreen mainScreen ].applicationFrame
     [self.tabBarController.tabBar setHidden:YES];
-    UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
+    //UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
+    UIView *maskview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     maskview.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:maskview];
-    YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews];
+    //[self.view addSubview:maskview];
+    [[UIApplication sharedApplication].keyWindow addSubview:maskview];
+    YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:maskview.bounds byClick:clickTag appendArray:imageViews];
     ymImageV.delegate = self;
     [ymImageV show:maskview didFinish:^(){
         [UIView animateWithDuration:0.5f animations:^{
@@ -460,7 +475,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             [ymImageV removeFromSuperview];
             [maskview removeFromSuperview];
         }];
-        
+
     }];
     
 }
@@ -550,7 +565,11 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         addReply.replyName = [WOTUserSingleton shareUser].userInfo.userName;
         addReply.replyInfo = replyText;
     }
-    
+    NSLog(@"评论信息：%@",addReply.replyInfo);
+    if (strIsEmpty(addReply.replyInfo)) {
+        [MBProgressHUDUtil showMessage:@"请填写评论信息！" toView:self.view];
+        return;
+    }
     [WOTHTTPNetwork addReplyWithFriendId:addReply.friendId
                                byReplyid:addReply.byReplyid
                              byReplyname:addReply.byReplyname replyId:addReply.replyId
@@ -656,6 +675,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 {
     //NSLog(@"打开评论");
     SKSingleCirclesViewController *singleVC = [[SKSingleCirclesViewController alloc]init];
+    singleVC.hidesBottomBarWhenPushed = YES;
     singleVC.friendId = ymD.messageBody.friendId;
     [self.navigationController pushViewController:singleVC animated:YES];
     
