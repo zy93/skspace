@@ -70,7 +70,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
-    return 2;
+    return 3;
 
 }
 
@@ -80,7 +80,10 @@
             return 4;
             break;
         case 1:
-            return 3;
+            return 4;
+            break;
+        case 2:
+            return 2;
             break;
         default:
             break;
@@ -102,17 +105,27 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 0;
+        return 0.001;
     }else
     {
-        return 20;
+        return 10;
     }
   
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return section == 2?20:0.001;
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [[UIView alloc] init];
+    return nil;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return nil;
 }
 
 
@@ -122,7 +135,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
-    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle =UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
                 UIImageView *imageView = [[UIImageView alloc] init];
@@ -145,18 +159,41 @@
         cell.textLabel.text = nameArray[indexPath.row];
         
     } else if (indexPath.section == 1){
+        cell.accessoryType = UITableViewCellAccessoryNone;
         if (indexPath.row == 0) {
+            //分钟制转小时制
+            long hours = self.userInfoModel.workHours.integerValue/60;
+            long minute= self.userInfoModel.workHours.integerValue%60;
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%01ld分钟",hours==0?@"":[NSString stringWithFormat:@"%02ld小时",hours],minute];
+        }
+        else if (indexPath.row == 1) {
+            //分钟制转小时制
+            long hours = self.userInfoModel.meetingHours.integerValue/60;
+            long minute= self.userInfoModel.meetingHours.integerValue%60;
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%01ld分钟",hours==0?@"":[NSString stringWithFormat:@"%02ld小时",hours],minute];
+        }
+        else if (indexPath.row == 2) {
             cell.detailTextLabel.text = [self.userInfoModel.integral stringValue];
         }
-        if (indexPath.row == 2) {
+        else {
+            cell.detailTextLabel.text = self.userInfoModel.meInvitationCode;
+        }
+        NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"剩余工位时间",@"剩余会议室时间",@"积分",@"我的邀请码",nil];
+        cell.textLabel.text = nameArray1[indexPath.row];
+        
+    } else if (indexPath.section == 2){
+        cell.accessoryView = nil;
+        if (indexPath.row == 1) {
             cell.detailTextLabel.text = @"010-8646-7632";
         }
-        NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"积分",@"关于APP",@"联系我们",nil];
+        else {
+            cell.detailTextLabel.text = nil;
+        }
+        NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"关于APP",@"联系我们",nil];
         cell.textLabel.text = nameArray1[indexPath.row];
      
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle =UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -221,15 +258,30 @@
             [self.navigationController pushViewController:updateVC animated:YES];
         }
     }
-    
-    if (indexPath.section == 1) {
+    else if (indexPath.section == 1) {
+        if (indexPath.row == 3) {
+            //复制邀请码到粘贴板
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"邀请用户注册使用"
+                                                                                     message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel                                                            handler:^(UIAlertAction * action) {}];
+            UIAlertAction* copyAction = [UIAlertAction actionWithTitle:@"复制邀请码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                UIPasteboard*pasteboard = [UIPasteboard generalPasteboard];
+                pasteboard.string=self.userInfoModel.meInvitationCode;
+            }];
+            
+            [alertController addAction:cancelAction];
+            [alertController addAction:copyAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    }
+    else if (indexPath.section == 2) {
         
-        if (indexPath.row == 1) {
+        if (indexPath.row == 0) {
             SKAboutViewController *aboutVC = [[SKAboutViewController alloc] init];
             [self.navigationController pushViewController:aboutVC animated:YES];
         }
         
-        if (indexPath.row == 2) {
+        if (indexPath.row == 1) {
             [self makePhoneToSpace];
         }
     }

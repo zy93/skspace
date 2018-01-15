@@ -10,6 +10,8 @@
 #import "WOTEnterpriseListSytle2Cell.h"
 #import "WOTSingtleton.h"
 #import "WOTEnterpriseModel.h"
+#import "NSString+Category.h"
+#import "WOTEnterpriseIntroduceVC.h"
 
 @interface WOTEnterpriseLIstVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -25,6 +27,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTEnterpriseListSytle2Cell" bundle:nil] forCellReuseIdentifier:@"WOTEnterpriseListSytle2Cell"];
     self.tableView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     [self createRequest];
+    self.navigationItem.title = @"友邻企业";
     // Do any additional setup after loading the view.
 }
 
@@ -69,16 +72,57 @@
     return  0.01;
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return nil;
+}
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTEnterpriseListSytle2Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTEnterpriseListSytle2Cell"];
+    WOTEnterpriseModel *model = self.tableList[indexPath.row];
+    [cell.iconIV setImageWithURL:[model.companyPicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
+    cell.titleLab.text = model.companyName;
+    cell.locationLab.text = model.spaceName;
+    [cell.locationIV setImage:[UIImage imageNamed:@"location_enterprise"]];
+    cell.model = model;
+    NSArray *arr = [model.companyType componentsSeparatedByString:@","];
+    CGFloat a = 20;
+    if (arr) {
+        if (arr.count==1) {
+            cell.subtitleLab1.text = arr.firstObject;
+            cell.subtitleLab1Constraint.constant = [((NSString *)arr.firstObject) widthWithFont:[UIFont systemFontOfSize:15]]+a;
+            cell.subtitleLab2.hidden = YES;
+            cell.subtitleLab3.hidden = YES;
+        }
+        else if (arr.count==2) {
+            cell.subtitleLab1.text = arr.firstObject;
+            cell.subtitleLab2.text = arr.lastObject;
+            cell.subtitleLab1Constraint.constant = [((NSString *)arr.firstObject) widthWithFont:[UIFont systemFontOfSize:15]]+ a;
+            cell.subtitleLab2Constraint.constant = [((NSString *)arr.lastObject) widthWithFont:[UIFont systemFontOfSize:15]]+a;
+            cell.subtitleLab3.hidden = YES;
+
+        }
+        else if (arr.count >=3) {
+            cell.subtitleLab1.text = arr.firstObject;
+            cell.subtitleLab2.text = arr[1];
+            cell.subtitleLab3.text = arr.lastObject;
+            cell.subtitleLab1Constraint.constant = [((NSString *)arr.firstObject) widthWithFont:[UIFont systemFontOfSize:15]]+a;
+            cell.subtitleLab2Constraint.constant = [((NSString *)arr[1]) widthWithFont:[UIFont systemFontOfSize:15]]+a;
+            cell.subtitleLab3Constraint.constant = [((NSString *)arr.lastObject) widthWithFont:[UIFont systemFontOfSize:15]]+a;
+
+        }
+    }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+    vc.model = self.tableList[indexPath.row];
+    vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
+    [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 
 /*
