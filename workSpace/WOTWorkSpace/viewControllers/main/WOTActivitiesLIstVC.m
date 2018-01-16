@@ -57,7 +57,7 @@ bool ismenu1 =  NO;
 
 -(void)configNav{
     [self configNaviBackItem];
-    self.navigationItem.title = @"我的活动";
+    self.navigationItem.title = @"热门活动";
 }
 
 

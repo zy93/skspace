@@ -369,7 +369,7 @@ typedef void(^response)(id bean,NSError *error);
 /**
  获取空间工位信息
 
- @param spaceid 空间id
+ @param spaceId 空间id
  @param response 回调
  */
 +(void)bookStationReservationsWithSpaceId:(NSNumber *)spaceId
@@ -416,8 +416,28 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)generateOrderWithParam:(NSDictionary *)param response:(response)response;
 
-+(void)wxPayWithParameter:(WOTWXPayModel *)payModel;
+/**
+ 查询会议室订单
+ @param response 响应回调
+ */
++(void)getUserMeetingOrderResponse:(response)response;
+/**
+ 查询工位订单
+ @param response 响应回调
+ */
++(void)getUserWorkStationOrderResponse:(response)response;
+/**
+ 查询场地订单
+ @param response 响应回调
+ */
++(void)getUserSiteOrderResponse:(response)response;
+#pragma mark - 支付接口
 
+/**
+ 微信支付
+ @param payModel 响应回调
+ */
++(void)wxPayWithParameter:(WOTWXPayModel *)payModel;
 
 #pragma mark - 社交
 

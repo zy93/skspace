@@ -234,8 +234,7 @@
     if ([serviceName isEqualToString:@"意见反馈"]) {
         [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTFeedbackVC"];
 
-    } else if ([serviceName isEqualToString:@"客户预约"]) {
-        NSLog(@"客户预约");
+    } else if ([serviceName isEqualToString:@"访客预约"]) {
         [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTVisitorsAppointmentVC"];
 
     } else if ([serviceName isEqualToString:@"问题报修"]) {

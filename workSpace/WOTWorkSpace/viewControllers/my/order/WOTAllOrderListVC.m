@@ -19,37 +19,37 @@
     [super viewDidLoad];
     [self configNavi];
     // Do any additional setup after loading the view.
+    self.pageTabView.selectedTabIndex = self.page;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self.navigationController.navigationBar setHidden:NO];
     self.navigationController.navigationBar.translucent = NO;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     self.navigationController.navigationBar.translucent = YES;
 }
 -(NSArray *)createTitles{
-    return [[NSArray alloc]initWithObjects:@"工位订单",@"会议室订单", nil];
+    return [[NSArray alloc]initWithObjects:@"工位订单",@"会议室订单",@"场地订单", nil];
 }
 -(NSArray<__kindof UIViewController *> *)createViewControllers{
     WOTOrderLIstBaseVC *vc1 = [[WOTOrderLIstBaseVC alloc]init];
-    
     vc1.orderlisttype = WOTPageMenuVCTypeStation;
-    
     WOTOrderLIstBaseVC *vc2 = [[WOTOrderLIstBaseVC alloc]init];
-    
     vc2.orderlisttype = WOTPageMenuVCTypeMetting;
-    
+    WOTOrderLIstBaseVC *vc3 = [[WOTOrderLIstBaseVC alloc]init];
+    vc3.orderlisttype = WOTPageMenuVCTypeSite;
     
     [self addChildViewController:vc1];
     [self addChildViewController:vc2];
-
-    
+    [self addChildViewController:vc3];
     return self.childViewControllers;
 }
 
@@ -59,10 +59,6 @@
     [self configNaviBackItem];
     self.navigationItem.title = @"我的订单";
     [self configNaviRightItemWithImage:[UIImage imageNamed:@"search_icon"]];
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
 }
 
 

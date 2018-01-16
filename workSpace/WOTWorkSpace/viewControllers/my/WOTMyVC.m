@@ -31,11 +31,11 @@
     [super viewDidLoad];
 //    [self.tableView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    //解决布局空白问题
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
+//    //解决布局空白问题
+//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
+//    if (is7Version) {
+//        self.edgesForExtendedLayout=UIRectEdgeNone;
+//    }
     
     [self.tableView registerClass:[WOTMycommonCell class] forCellReuseIdentifier:@"mycommonCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderCell" bundle:nil] forCellReuseIdentifier:@"myorderCellID"];
@@ -68,7 +68,7 @@
     }];
 }
 
-
+#pragma mark - table delegate 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 3;
@@ -222,35 +222,33 @@
 }
 
 
-/**订单celldelegate*/
+
+#pragma mark - cell delegate
 -(void)showAllOrderList{
     if ([WOTSingtleton shared].isuserLogin) {
         WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
- // [[WOTAllOrderListVC alloc]init];
+        station_ordervc.page = 0;
         [self.navigationController pushViewController:station_ordervc animated:YES];
     } else {
         [[WOTConfigThemeUitls shared] showLoginVC:self];
     }
-    
-    
 }
 
 -(void)showStationOrderList{
     if ([WOTSingtleton shared].isuserLogin) {
-        WOTOrderLIstVC *station_ordervc = [[WOTOrderLIstVC alloc]init];
-        station_ordervc.vctype = WOTPageMenuVCTypeStation;
+        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
+        station_ordervc.page = 0;
         [self.navigationController pushViewController:station_ordervc animated:YES];
     } else {
         [[WOTConfigThemeUitls shared] showLoginVC:self];
     }
-    
 }
 
 -(void)showSiteOrderList
 {
     if ([WOTSingtleton shared].isuserLogin) {
-        WOTOrderLIstVC *station_ordervc = [[WOTOrderLIstVC alloc]init];
-        station_ordervc.vctype = WOTPageMenuVCTypeSite;
+        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
+        station_ordervc.page = 2;
         [self.navigationController pushViewController:station_ordervc animated:YES];
     } else {
         [[WOTConfigThemeUitls shared] showLoginVC:self];
@@ -259,16 +257,12 @@
 
 -(void)showMettingRoomOrderList{
     if ([WOTSingtleton shared].isuserLogin) {
-//        WOTReservationsMeetingVC *mettingroom_ordervc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTReservationsMeetingVC"];
-//        [self.navigationController pushViewController:mettingroom_ordervc animated:YES];
-        WOTOrderLIstVC *station_ordervc = [[WOTOrderLIstVC alloc]init];
-        station_ordervc.vctype = WOTPageMenuVCTypeMetting;
+        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
+        station_ordervc.page = 1;
         [self.navigationController pushViewController:station_ordervc animated:YES];
-        
     } else {
         [[WOTConfigThemeUitls shared] showLoginVC:self];
     }
-
 }
 
 -(void)showSettingVC{
@@ -299,15 +293,11 @@
 
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    
     if ([touch.view isKindOfClass:[UIButton class]]){
-        
         return NO;
-        
     }
     
     return YES;
-    
 }
 
 @end

@@ -35,7 +35,6 @@
 #import "WOTMyVC.h"
 #import "WOTBaseNavigationController.h"
 #import "WOTSettingVC.h"
-#import "WOTOrderLIstVC.h"
 #import "WOTOrderLIstBaseVC.h"
 #import "WOTAllOrderListVC.h"
 #import "WOTSearchVC.h"
