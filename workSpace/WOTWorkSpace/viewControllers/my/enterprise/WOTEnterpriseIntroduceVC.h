@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WOTTableViewBaseVC.h"
 #import "WOTEnterpriseModel.h"
+#import "SKFacilitatorModel.h"
 
 typedef NS_ENUM(NSInteger, INTRODUCE_VC_TYPE) {
     INTRODUCE_VC_TYPE_Enterprise = 0, //企业
@@ -17,6 +18,7 @@ typedef NS_ENUM(NSInteger, INTRODUCE_VC_TYPE) {
 
 @interface WOTEnterpriseIntroduceVC : WOTTableViewBaseVC
 @property (nonatomic, strong) WOTEnterpriseModel *model;
+@property (nonatomic, strong) SKFacilitatorInfoModel *facilitatorModel;
 @property (nonatomic, assign) INTRODUCE_VC_TYPE  vcType;
 
 @end

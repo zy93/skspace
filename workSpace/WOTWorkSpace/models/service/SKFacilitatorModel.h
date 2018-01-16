@@ -14,7 +14,7 @@
 
 @interface SKFacilitatorInfoModel : JSONModel
 
-@property(nonatomic,strong)NSNumber * facilitatorId;
+@property(nonatomic,strong)NSNumber *facilitatorId;
 @property(nonatomic,strong)NSString *businessScope;
 @property(nonatomic,strong)NSString *city;
 @property(nonatomic,strong)NSString *contacts;

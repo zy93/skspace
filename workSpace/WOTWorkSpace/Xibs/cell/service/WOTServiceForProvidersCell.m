@@ -50,14 +50,26 @@
         [view.iconIV sd_setImageWithURL:[infoModel.firmLogo ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
         view.titleLab.text = infoModel.firmName;
         [view setData:infoModel];
+        view.tag = i;
         view.subtitleLab.text = infoModel.businessScope;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewClick:)];
+        [view addGestureRecognizer:tap];
         [self.providersScrollView addSubview:view];
     }
     NSLog(@"---------HH:%f",CGRectGetHeight(self.providersScrollView.frame));
     self.providersScrollView.contentSize = CGSizeMake(facilitatorArray.count*providersViewWidth+ (facilitatorArray.count*(providersViewGap)) + providersStartX, self.providersScrollView.frame.size.height);
     
 }
-
+-(void)scrollViewClick:(UITapGestureRecognizer*)tap
+{
+    //取到点击手势视图的tag值
+    NSInteger tapTag= [[tap view] tag];
+    if (tap) {
+        //self.imageBlock(tapTag);
+         self.imageBlock(tapTag);
+    }
+    //NSLog(@"%ld",tapTag);
+}
 
 
 @end

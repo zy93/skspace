@@ -15,8 +15,16 @@
 @interface WOTEnterpriseIntroduceVC () <WOTEnterpriseIntroduceNameCellDelegate>
 {
 }
-@property (nonatomic, strong) NSArray *tableList;
-@property (nonatomic, strong) NSArray *iconList;
+@property(nonatomic, strong) NSArray *tableList;
+@property(nonatomic, strong) NSArray *iconList;
+@property(nonatomic, strong) NSString *contact;
+@property(nonatomic, strong) NSString *tel;
+@property(nonatomic, strong) NSString *email;
+@property(nonatomic, strong) NSNumber *employeeNumber;
+@property(nonatomic, strong) NSString *enterpriseState;
+@property(nonatomic, strong) NSString *enterpriseIntroduce;
+@property(nonatomic, strong) NSString *companyName;
+@property(nonatomic, strong) NSString *companyPicture;
 
 @end
 
@@ -26,6 +34,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"企业介绍";
+    if (self.vcType == INTRODUCE_VC_TYPE_Enterprise) {
+        self.contact = self.model.contacts;
+        self.tel = self.model.tel;
+        self.email = self.model.mailbox;
+        self.employeeNumber = self.model.employeesNum;
+        self.enterpriseIntroduce = self.model.companyProfile;
+        self.companyName = self.model.companyName;
+        self.companyPicture = self.model.companyPicture;
+    }else
+    {
+        self.contact = self.facilitatorModel.contacts;
+        self.tel = self.facilitatorModel.tel;
+        self.enterpriseIntroduce= @"暂未填写";
+        self.companyName = self.facilitatorModel.firmName;
+        self.companyPicture = self.facilitatorModel.firmLogo;
+
+    }
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
     [imageView setImage:[UIImage imageNamed:@"Yosemite02"]];
     self.tableView.tableHeaderView =  imageView;
@@ -72,7 +97,7 @@
     }
     else if (indexPath.section == 3) {
         
-        return ([self.model.companyProfile heightWithFont:[UIFont systemFontOfSize:17.f] maxWidth:SCREEN_WIDTH-80] +8+8);
+        return ([self.enterpriseIntroduce heightWithFont:[UIFont systemFontOfSize:17.f] maxWidth:SCREEN_WIDTH-80] +8+8);
     }
     return 40;
 }
@@ -106,10 +131,10 @@
 {
     if (indexPath.section==0) {
         WOTEnterpriseIntroduceNameCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTEnterpriseIntroduceNameCell"];
-        NSURL *ur = [self.model.companyPicture ToResourcesUrl];
+        NSURL *ur = [self.companyPicture ToResourcesUrl];
         UIImage *im = [UIImage imageNamed:@"placeholder_comm"];
         [cell.logoIV setImageWithURL:ur placeholderImage:im];
-        cell.titleLab.text = self.model.companyName;
+        cell.titleLab.text = self.companyName;
         cell.subtitleLab.text = self.model.internetEnterprises;
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -123,6 +148,9 @@
             else {
                 cell.applyJoinBtn.hidden = NO;
             }
+        }else
+        {
+            cell.applyJoinBtn.hidden = YES;
         }
         return cell;
     }
@@ -136,26 +164,24 @@
             
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         if ([arr[indexPath.row] isEqualToString:@"联系人"]) {
-            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.contacts?self.model.contacts:@"暂未填写"]];
+            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.contact?self.contact:@"暂未填写"]];
         }
         else if ([arr[indexPath.row] isEqualToString:@"联系电话"]) {
-            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.tel?self.model.tel:@"暂未填写"]];
+            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.tel?self.tel:@"暂未填写"]];
         }
         else if ([arr[indexPath.row] isEqualToString:@"邮箱"]) {
-            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.mailbox?self.model.mailbox:@"暂未填写"]];
-            
+            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.email?self.email:@"暂未填写"]];
         }
         else if ([arr[indexPath.row] isEqualToString:@"员工人数"]) {
-            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.employeesNum?self.model.employeesNum:@"暂未填写"]];
-            
+            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.employeeNumber?self.employeeNumber:@"暂未填写"]];
         }
         else if ([arr[indexPath.row] isEqualToString:@"企业状态"]) {
             [cell.titleLab setText:[NSString stringWithFormat:@"%@:正常营业",arr[indexPath.row]]];
-            
         }
         else if ([arr[indexPath.row] isEqualToString:@"企业介绍"]) {
-            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.model.companyProfile?self.model.companyProfile:@"暂未填写"]];
+            [cell.titleLab setText:[NSString stringWithFormat:@"%@:%@",arr[indexPath.row],self.enterpriseIntroduce?self.enterpriseIntroduce:@"暂未填写"]];
         }
         
          return cell;
