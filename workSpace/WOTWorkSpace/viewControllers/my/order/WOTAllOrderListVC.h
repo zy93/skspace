@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "WOTPageMenuParentVC.h"
 @interface WOTAllOrderListVC :WOTPageMenuParentVC
-
+@property (nonatomic, assign) NSInteger page;
 @end

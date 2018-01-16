@@ -39,6 +39,8 @@
 #import "SKFocusListModel.h"
 #import "WOTApplyJoinEnterpriseModel.h"
 #import "SKFacilitatorModel.h"
+#import "WOTMeetingHistoryModel.h"
+#import "WOTWorkStationHistoryModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -907,13 +909,54 @@
     } response:response];
 }
 
-#pragma mark - 确认订单
+#pragma mark - 订单
 +(void)generateOrderWithParam:(NSDictionary *)param response:(response)response
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/wxAddOrder",HTTPBaseURL];
     
     [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
         WOTWXPayModel_msg *model = [[WOTWXPayModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
++(void)getUserMeetingOrderResponse:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Conferencedetails/find",HTTPBaseURL];
+    NSDictionary *param = @{@"pageNo":@(1),
+                            @"pageSize":@(1000),
+                            @"userId":[WOTUserSingleton shareUser].userInfo.userId
+                            };
+    [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
+        WOTMeetingHistoryModel_msg *model = [[WOTMeetingHistoryModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
++(void)getUserWorkStationOrderResponse:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/find",HTTPBaseURL];
+    NSDictionary *param = @{@"pageNo":@(1),
+                            @"pageSize":@(1000),
+                            @"commodityKind":@"工位",
+                            @"userId":[WOTUserSingleton shareUser].userInfo.userId
+                            };
+    [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
+        WOTWorkStationHistoryModel_msg *model = [[WOTWorkStationHistoryModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
++(void)getUserSiteOrderResponse:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/find",HTTPBaseURL];
+    NSDictionary *param = @{@"pageNo":@(1),
+                            @"pageSize":@(1000),
+                            @"commodityKind":@"场地",
+                            @"userId":[WOTUserSingleton shareUser].userInfo.userId
+                            };
+    [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
+        WOTWorkStationHistoryModel_msg *model = [[WOTWorkStationHistoryModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  model;
     } response:response];
 }

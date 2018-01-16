@@ -460,7 +460,7 @@ int a = 0;
 }
 
 - (void)didScrollToPage:(NSInteger)pageNumber inFlowView:(NewPagedFlowView *)flowView {
-    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
+//    NSLog(@"ViewController 滚动到了第%ld页",pageNumber);
 }
 
 

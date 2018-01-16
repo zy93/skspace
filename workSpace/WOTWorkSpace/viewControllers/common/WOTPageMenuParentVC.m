@@ -25,23 +25,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-   
     [self setpageMenu];
-   
-    
-    // Do any additional setup after loading the view.
-  
 }
 
 
 - (UIViewController *)makeVC {
     UIViewController *basevc = [[UIViewController alloc]init];
-    //解决布局空白问题
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
+//    //解决布局空白问题
+//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
+//    if (is7Version) {
+//        self.edgesForExtendedLayout=UIRectEdgeNone;
+//    }
     
     return basevc;
 }

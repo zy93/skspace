@@ -168,7 +168,7 @@
     _tabBackgroundColor = [UIColor whiteColor];
     _bodyBackgroundColor = [UIColor whiteColor];
     _unSelectedColor = UICOLOR_MAIN_BLACK;
-    _selectedColor = UICOLOR_GRAY_66;
+    _selectedColor = UICOLOR_MAIN_ORANGE;
     _isNeedRefreshLayout = YES;
     _isChangeByClick = NO;
     _bodyBounces = YES;

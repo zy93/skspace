@@ -12,6 +12,6 @@
 @interface WOTOrderLIstBaseVC : WOTTableViewBaseVC
 
 @property(nonatomic,strong)NSArray *datasource;
-@property(assign)WOTPageMenuVCType orderlisttype;
+@property(nonatomic,assign)WOTPageMenuVCType orderlisttype;
 
 @end

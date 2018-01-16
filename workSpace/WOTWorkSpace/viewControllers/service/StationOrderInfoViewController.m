@@ -408,6 +408,7 @@
 {
     [self.orderNumInfoLabel setText:self.model.orderNum];
     [self.bookSiteInfoLabel setText:self.meetingModel.location];
+    [self.bookSiteLabel setText:self.meetingModel.conferenceName];
     [self.startTimeInfoLabel setText:[self.dic[@"starTime"] substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
     [self.endTimeInfoLabel   setText:[self.dic[@"endTime"] substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
     [self.bookNumInfoLabel   setText:@"1"];

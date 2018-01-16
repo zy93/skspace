@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WOTMeetingHistoryModel.h"
+
 
 @interface WOTOrderCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *placeLabel;
@@ -18,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *moneyValue;
 
+@property (nonatomic, strong) WOTMeetingHistoryModel *model;
 
 
 @end

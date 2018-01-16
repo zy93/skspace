@@ -729,6 +729,7 @@
                                  @"total_fee":self.total_fee,
                                  @"trade_type":self.trade_type,
                                  @"spaceId":self.spaceId,
+                                 @"spaceName":self.spaceModel.spaceName,
                                  @"commodityNum":self.commodityNum,
                                  @"commodityKind":self.commodityKind,
                                  @"productNum":self.productNum,
