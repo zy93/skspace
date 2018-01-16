@@ -334,10 +334,6 @@
         return;
     }
     
-//    if (strIsEmpty(self.serviceType)) {
-//        [MBProgressHUDUtil showMessage:@"请选择服务商类别" toView:self.view];
-//        return;
-//    }
     tableInputDatadic[@"facilitatorState"] = @"待审核";
     [self registerService:[WOTUserSingleton shareUser].userInfo.userId              firmName:tableInputDatadic[@"firmName"]
             businessScope:tableInputDatadic[@"businessScope"]
@@ -361,22 +357,22 @@
     NSArray<UIImage *> *aa = @[firmLogo];
     
     //[[WOTUserSingleton shareUser]setValues];
-    [MBProgressHUDUtil showLoadingWithMessage:@"" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+    [MBProgressHUDUtil showLoadingWithMessage:@"提交中" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
         
-    [WOTHTTPNetwork registerServiceBusiness:userId firmName:firmName businessScope:businessScope contatcts:contacts tel:tel facilitatorType:facilitatorType facilitatorState:facilitatorState firmLogo:aa response:^(id bean, NSError *error) {
-       
-        [hud setHidden: YES];
-        if (bean) {
-            [MBProgressHUDUtil showMessage:SubmitReminding toView:self.view];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popViewControllerAnimated:YES];
-            });
-        }
-        if (error) {
-            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
-        }
-       
-    }];
+        [WOTHTTPNetwork registerServiceBusiness:userId firmName:firmName businessScope:businessScope contatcts:contacts tel:tel facilitatorType:facilitatorType facilitatorState:facilitatorState firmLogo:aa response:^(id bean, NSError *error) {
+           
+            [hud setHidden: YES];
+            if (bean) {
+                [MBProgressHUDUtil showMessage:SubmitReminding toView:self.view];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            }
+            if (error) {
+                [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
+            }
+           
+        }];
     }];
 }
 

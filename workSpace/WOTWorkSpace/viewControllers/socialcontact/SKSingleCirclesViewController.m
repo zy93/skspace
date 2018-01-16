@@ -73,6 +73,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIScrollView *scView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.view = scView;
     //[_tableView registerNib:[UINib nibWithNibName:@"WOTSocialContactCell" bundle:nil] forCellReuseIdentifier:@"WOTSocialContactCellID"];
     //[self AddRefreshHeader];
     // Do any additional setup after loading the view.

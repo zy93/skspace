@@ -28,9 +28,10 @@
     vc.transitioningDelegate = self;
     tabBar.composeButtonClick = ^{
         NSLog(@"点击按钮,弹出菜单");
-//         [self getQRcodeInfo];
-//        CLComposeView *composeView = [[CLComposeView alloc] init];
-//        [composeView showWithController:self];
+        if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
+            [MBProgressHUDUtil showMessage:@"请先登录!" toView:self.view];
+            return;
+        }
         [WOTHTTPNetwork getQRcodeInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
             WOTBaseModel *model = (WOTBaseModel *)bean;
             if ([model.code isEqualToString:@"200"]) {
@@ -61,6 +62,10 @@
             }
             else
             {
+                if ([model.code isEqualToString:@"202"]) {
+                    [MBProgressHUDUtil showMessage:@"请先进行访客预约！" toView:self.view];
+                    return ;
+                }
                 [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
                 return ;
             }

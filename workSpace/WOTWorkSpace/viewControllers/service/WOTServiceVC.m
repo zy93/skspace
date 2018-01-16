@@ -241,10 +241,6 @@
     } else if ([serviceName isEqualToString:@"发布需求"]) {
         [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController"];
     }
-    
-//    else {
-//        [self pushVCByVCName:@"WOTGETServiceViewController"];
-//    }
 }
 
 #pragma mark - Table delegate & dataSource

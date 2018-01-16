@@ -36,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.navigationItem.title = @"忘记密码";
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.findView = [UIView new];
@@ -250,18 +251,26 @@
         return;
     }
     
-    [WOTHTTPNetwork userRegisterWitVerifyCode:self.findVCodeText.text tel:self.findTelTextField.text password:self.findPWText.text
-                                     alias:[NSString stringWithFormat:@"%@C",self.findTelTextField.text] invitationCode:nil  response:^(id bean, NSError *error) {
-        WOTRegisterModel *model = bean;
-        if ([model.code isEqualToString:@"200"]) {
-            [MBProgressHUDUtil showMessage:@"修改成功" toView:self.view];
-            //跳转登陆界面
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        else {
-            [MBProgressHUDUtil showMessage:model.result toView:self.view];
-        }
-    }];
+    if (![self.findPWText.text isEqualToString:self.findAgainPWText.text]) {
+        [MBProgressHUDUtil showMessage:@"两次密码输入不同！" toView:self.view];
+        return;
+    }
+    
+    [WOTHTTPNetwork updatePassWordWithVerifyCode:self.findVCodeText.text
+                                             tel:self.findTelTextField.text
+                                        password:self.findPWText.text
+                                        response:^(id bean, NSError *error) {
+                                            WOTRegisterModel *model = bean;
+                                            if ([model.code isEqualToString:@"200"]) {
+                                                //跳转登陆界面
+                                                [MBProgressHUD showMessage:@"修改成功" toView:self.view hide:YES afterDelay:0.8f complete:^{
+                                                    [self.navigationController popViewControllerAnimated:YES];
+                                                }];
+                                            }
+                                            else {
+                                                [MBProgressHUDUtil showMessage:model.result toView:self.view];
+                                            }
+                                        }];
 }
 
 -(void)openCountdown:(UIButton *)button

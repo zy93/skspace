@@ -279,10 +279,13 @@
         [MBProgressHUDUtil showMessage:@"请输入手机号！" toView:self.view];
         return;
     }
+    if (![NSString valiMobile:self.registerTelTextField.text]) {
+        [MBProgressHUDUtil showMessage:@"电话格式不正确！" toView:self.view];
+        return;
+    }
     [self openCountdown:button];
     
     [WOTHTTPNetwork userGetVerifyWitTel:self.registerTelTextField.text response:^(id bean, NSError *error) {
-        
         WOTGetVerifyModel *model = bean;
         if (model.code.intValue == 200) {
             [MBProgressHUDUtil showMessage:@"发送成功" toView:self.view];
@@ -291,7 +294,6 @@
             [MBProgressHUDUtil showMessage:model.result toView:self.view];
         }
     }];
-    
 }
 
 #pragma mark - 注册按钮
@@ -306,12 +308,20 @@
         return;
     }
     
-    [WOTHTTPNetwork userRegisterWitVerifyCode:self.registerVCodeText.text tel:self.registerTelTextField.text password:self.registerPWText.text alias:[NSString stringWithFormat:@"%@C",self.registerTelTextField.text] invitationCode:self.invitationCodeText.text  response:^(id bean, NSError *error) {
+    if (![self.registerPWText.text isEqualToString:self.registerAgainPWText.text]) {
+        [MBProgressHUDUtil showMessage:@"两次密码输入不同！" toView:self.view];
+        return;
+    }
+   
+    [WOTHTTPNetwork userRegisterWitVerifyCode:self.registerVCodeText.text tel:self.registerTelTextField.text userName:self.registerTelTextField.text  password:self.registerPWText.text alias:[NSString stringWithFormat:@"%@C",self.registerTelTextField.text] invitationCode:self.invitationCodeText.text  response:^(id bean, NSError *error) {
         WOTRegisterModel *model = bean;
         if ([model.code isEqualToString:@"200"]) {
-            [MBProgressHUDUtil showMessage:@"注册成功" toView:self.view];
+
             //跳转登陆界面
-            [self.navigationController popViewControllerAnimated:YES];
+            [MBProgressHUD showMessage:@"注册成功" toView:self.view hide:YES afterDelay:0.8f complete:^{
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+
         }
         else {
             [MBProgressHUDUtil showMessage:model.result toView:self.view];
@@ -321,16 +331,11 @@
 
 -(void)openCountdown:(UIButton *)button
 {
-    
     __block NSInteger time = 59; //倒计时时间
-    
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    
     dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
-    
     dispatch_source_set_event_handler(_timer, ^{
-        
         if(time <= 0){ //倒计时结束，关闭
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{

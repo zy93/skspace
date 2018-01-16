@@ -50,7 +50,7 @@
         make.top.equalTo(self.view);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
+        make.bottom.equalTo(self.view).with.offset(-48);
     }];
 }
 
@@ -87,6 +87,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SKSingleCirclesViewController *singleVC = [[SKSingleCirclesViewController alloc]init];
+    singleVC.hidesBottomBarWhenPushed = YES;
     singleVC.friendId = self.commentList[indexPath.row].ReplyRecord.friendId;
     [self.navigationController pushViewController:singleVC animated:YES];
 }
@@ -122,12 +123,18 @@
         if ([commentModel.code isEqualToString:@"200"]) {
             QueryCommentModel_msg *commentModel_msg = commentModel.msg;
             self.commentList = [[NSMutableArray alloc] initWithArray:commentModel_msg.list];
+            if (self.commentList.count == 0) {
+                [MBProgressHUDUtil showMessage:@"没有评论！" toView:self.view];
+                return ;
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.commentTableView reloadData];
             });
         }else
         {
-            [MBProgressHUDUtil showMessage:@"请求失败！" toView:self.view];
+            
+            [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
+            return ;
         }
     }];
 }

@@ -72,17 +72,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[_tableView registerNib:[UINib nibWithNibName:@"WOTSocialContactCell" bundle:nil] forCellReuseIdentifier:@"WOTSocialContactCellID"];
-    //[self AddRefreshHeader];
-    // Do any additional setup after loading the view.
-    //解决布局空白问题
-    //self.circleofFriendsList = [[NSMutableArray alloc] init];
-    //self.replyModelArray = [[NSMutableArray alloc] init];
-    
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
+    UIScrollView *scView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.view = scView;
     self.view.backgroundColor = [UIColor whiteColor];
     [self initTableview];
     
@@ -147,7 +138,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 - (void) initTableview{
     
-    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64-48)];
+    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44)];
     mainTable.backgroundColor = [UIColor clearColor];
     // mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
@@ -418,6 +409,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     replyView = [[YMReplyInputView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, screenWidth,44) andAboveView:self.view];
     replyView.delegate = self;
     replyView.replyTag = _selectedIndexPath.row;
+    NSLog(@"测试高度：%f",self.view.frame.size.height);
     [self.view addSubview:replyView];
     
 }
@@ -617,14 +609,15 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    //[self.tabBarController.tabBar setHidden:NO];
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
-    
-    
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //[self.tabBarController.tabBar setHidden:YES];
     [self createRequest];
 }
 

@@ -39,11 +39,6 @@
     
     [self.tableView registerClass:[WOTMycommonCell class] forCellReuseIdentifier:@"mycommonCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderCell" bundle:nil] forCellReuseIdentifier:@"myorderCellID"];
-//    if (![WOTSingtleton shared].isuserLogin) {
-//        LoginViewController *loginVC = [[LoginViewController alloc] init];
-//        [self.navigationController pushViewController:loginVC animated:YES];
-//    }
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,6 +52,7 @@
     [self.tabBarController.tabBar setHidden:NO];
      self.tabBarController.tabBar.translucent = NO;
     [self.navigationController.navigationBar setHidden:YES];
+    
     [self.tableView reloadData];
     
 }
@@ -295,15 +291,6 @@
    */
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     if ([touch.view isKindOfClass:[UIButton class]]){

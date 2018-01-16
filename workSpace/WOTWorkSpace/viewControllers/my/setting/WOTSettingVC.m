@@ -36,11 +36,6 @@
     self.navigationItem.title = @"设置";
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.quitButton];
-    //解决布局空白问题
-//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-//    if (is7Version) {
-//        self.edgesForExtendedLayout=UIRectEdgeNone;
-//    }
     [self layoutSubviews];
 }
 
@@ -206,7 +201,6 @@
         
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-//            [self pushTZImagePickerController];
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
                      message:nil
                  preferredStyle:UIAlertControllerStyleActionSheet];
@@ -406,6 +400,7 @@
         WOTLoginModel *model = model_msg.msg;
         if ([model_msg.code isEqualToString:@"200"]) {
 //                self.headImageUrl = model.headPortrait;
+            [[WOTUserSingleton shareUser] saveUserInfoToPlistWithModel:model];
             self.userInfoModel = model;
             [self.tableView reloadData];
         } else {
@@ -417,16 +412,22 @@
 #pragma mark - 修改资料
 -(void)updateUserInfoWithParameters:(NSDictionary *)parameters
 {
-    [WOTHTTPNetwork updateUserInfoWithParameters:parameters photosArray:self.selectedPhotos response:^(id bean, NSError *error) {
-        WOTBaseModel *model = (WOTBaseModel *)bean;
-        if ([model.code isEqualToString:@"200"]) {
-            [MBProgressHUDUtil showMessage:@"修改成功！" toView:self.view];
-            [self querySingularManInfo];
-        }else {
-            [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
-        }
-        
+    NSLog(@"资料：%@",parameters);
+    [MBProgressHUDUtil showLoadingWithMessage:@"提交中" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+        [WOTHTTPNetwork updateUserInfoWithParameters:parameters photosArray:self.selectedPhotos response:^(id bean, NSError *error) {
+            [hud setHidden:YES];
+            WOTBaseModel *model = (WOTBaseModel *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                [MBProgressHUDUtil showMessage:@"修改成功！" toView:self.view];
+                [self querySingularManInfo];
+            }else {
+                [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
+            }
+            
+        }];
     }];
+    
+    
 }
 
 -(UITableView *)tableView

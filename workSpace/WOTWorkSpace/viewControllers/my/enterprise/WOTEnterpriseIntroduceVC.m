@@ -124,7 +124,6 @@
                 cell.applyJoinBtn.hidden = NO;
             }
         }
-        
         return cell;
     }
     else {

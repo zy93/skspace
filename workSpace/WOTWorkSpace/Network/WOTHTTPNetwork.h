@@ -30,7 +30,7 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)userGetVerifyWitTel:(NSString *)tel response:(response)response;
 /**
- * 注册接口
+ * 注册接口 或 找回密码接口
  @param code 验证码
  @param tel  手机号注册
  @param pass 用户密码
@@ -38,7 +38,8 @@ typedef void(^response)(id bean,NSError *error);
  @param invitationCode 邀请码
  @param response    回调数据到上层
  */
-+(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode response:(response)response;
++(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel userName:(NSString *)userName password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode response:(response)response;
+
 
 /**
  * 修改密码接口
