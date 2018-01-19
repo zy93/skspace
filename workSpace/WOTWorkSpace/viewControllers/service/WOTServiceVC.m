@@ -20,6 +20,7 @@
 #import "SKRepairsViewController.h"
 #import "SKDemandViewController.h"
 #import "SKFacilitatorModel.h"
+#import "WOTEnterpriseIntroduceVC.h"
 
 #define getService @"WOTGETServiceCell"
 #define serviceScroll @"serviceScroll"
@@ -292,6 +293,11 @@
         }
         [cell.joinButton addTarget:self action:@selector(joinButtonMethod) forControlEvents:UIControlEventTouchDown];
         [cell setData:self.facilitatorData];
+        cell.imageBlock = ^(NSInteger tapTag){
+            NSLog(@"%ld",tapTag);
+            __weak typeof(self) weakSelf = self;
+            [weakSelf facilitatorInfoMethod:tapTag];
+        };
         return cell;
     }
 }
@@ -358,6 +364,16 @@
         _facilitatorData = [[NSArray alloc] init];
     }
     return _facilitatorData;
+}
+
+#pragma mark - 跳转到服务商详细信息界面
+-(void)facilitatorInfoMethod:(NSInteger)tapTag
+{
+    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+    vc.facilitatorModel = self.facilitatorData[tapTag];
+    vc.vcType = INTRODUCE_VC_TYPE_Providers;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

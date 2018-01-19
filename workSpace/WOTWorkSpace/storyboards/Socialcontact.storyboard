@@ -120,18 +120,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpV-ot-qrC">
                                 <rect key="frame" x="0.0" y="269" width="375" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="位置" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmQ-mf-e05">
-                                        <rect key="frame" x="20" y="16" width="33" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="优客工场-方圆大厦" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKT-wI-7Xk">
-                                        <rect key="frame" x="217" y="15.5" width="138" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxa-Mm-BWZ">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                         <connections>
@@ -141,13 +129,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="AKT-wI-7Xk" secondAttribute="trailing" constant="20" id="3Fc-HJ-09q"/>
-                                    <constraint firstItem="AKT-wI-7Xk" firstAttribute="centerY" secondItem="xpV-ot-qrC" secondAttribute="centerY" id="7xM-Wj-UDn"/>
                                     <constraint firstItem="rxa-Mm-BWZ" firstAttribute="leading" secondItem="xpV-ot-qrC" secondAttribute="leading" id="Ab7-gB-b7m"/>
-                                    <constraint firstItem="VmQ-mf-e05" firstAttribute="leading" secondItem="xpV-ot-qrC" secondAttribute="leading" constant="20" id="aaX-zr-WVi"/>
                                     <constraint firstAttribute="bottom" secondItem="rxa-Mm-BWZ" secondAttribute="bottom" id="fOb-YT-caQ"/>
                                     <constraint firstAttribute="height" constant="50" id="hmO-OK-wP9"/>
-                                    <constraint firstItem="VmQ-mf-e05" firstAttribute="centerY" secondItem="xpV-ot-qrC" secondAttribute="centerY" id="joP-qD-ejs"/>
                                     <constraint firstItem="rxa-Mm-BWZ" firstAttribute="top" secondItem="xpV-ot-qrC" secondAttribute="top" id="s99-fs-JqZ"/>
                                     <constraint firstAttribute="trailing" secondItem="rxa-Mm-BWZ" secondAttribute="trailing" id="t6q-BF-5du"/>
                                 </constraints>
@@ -169,7 +153,6 @@
                     <connections>
                         <outlet property="collectionSuperVIew" destination="wmt-9v-D9A" id="Gds-h5-VRn"/>
                         <outlet property="collectionView" destination="qYZ-CG-VfG" id="tc4-2f-YCF"/>
-                        <outlet property="locationLabel" destination="AKT-wI-7Xk" id="xj6-0l-LAP"/>
                         <outlet property="textView" destination="2h7-pd-4wK" id="xN3-7e-pcK"/>
                         <outlet property="viewHeight" destination="HRX-g7-YaS" id="V0Q-RO-QGe"/>
                     </connections>

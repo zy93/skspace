@@ -79,7 +79,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     //解决布局空白问题
     //self.circleofFriendsList = [[NSMutableArray alloc] init];
     //self.replyModelArray = [[NSMutableArray alloc] init];
-    
+    UIScrollView *scView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.view = scView;
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
     if (is7Version) {
         self.edgesForExtendedLayout=UIRectEdgeNone;
@@ -432,10 +433,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         return;
     }
     replyView = [[YMReplyInputView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, screenWidth,44) andAboveView:self.view];
-    NSLog(@"测试高度：%f",self.view.frame.size.height);
     replyView.delegate = self;
     replyView.replyTag = _selectedIndexPath.row;
-    //[self.view addSubview:replyView];
     [self.view addSubview:replyView];
 }
 
@@ -637,19 +636,19 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                     
                     [mainTable reloadData];
                 });
-               
             }
             else
             {
                 [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
+                _replyIndex = -1;
             }
         }];
        
         
     }else{
-        
+        _replyIndex = -1;
     }
-    //_replyIndex = -1;
+    
 }
 
 -(void)updateDeleteComment

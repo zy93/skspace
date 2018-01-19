@@ -11,16 +11,17 @@
 #import "Masonry.h"
 #import "UIColor+ColorChange.h"
 #import "WOTSingtleton.h"
+#import <AlipaySDK/AlipaySDK.h>
 
 @interface StationOrderInfoViewController ()
 @property (nonatomic, strong)UIScrollView *bookStationScrollView;
 @property (nonatomic, strong)UIView *contentView;
 
-@property (nonatomic, strong) UIView *orderNumView;
+@property (nonatomic, strong) UIView  *orderNumView;
 @property (nonatomic, strong) UILabel *orderNumLabel;
 @property (nonatomic, strong) UILabel *orderNumInfoLabel;
 
-@property (nonatomic, strong) UIView *bookSiteView;
+@property (nonatomic, strong) UIView  *bookSiteView;
 @property (nonatomic, strong) UILabel *bookSiteLabel;
 @property (nonatomic, strong) UILabel *bookSiteInfoLabel;
 @property (nonatomic, strong) UILabel *startTimeLabel;
@@ -34,11 +35,11 @@
 @property (nonatomic, strong) UILabel *facilityLabel;
 @property (nonatomic, strong) UILabel *facilityInfoLabel;
 
-@property (nonatomic, strong) UIView *payTypeView;
+@property (nonatomic, strong) UIView  *payTypeView;
 @property (nonatomic, strong) UILabel *payTypeLabel;
 @property (nonatomic, strong) UILabel *payTypeInfoLabel;
 @property (nonatomic, strong) UILabel *sumLabel;
-@property (nonatomic, strong) UILabel *sumInfoLabel;
+@property (nonatomic, strong) UILabel *durationLabel;
 @property (nonatomic, strong) UILabel *orderTimeLabel;
 @property (nonatomic, strong) UILabel *orderTimeInfoLabel;
 
@@ -62,6 +63,7 @@
     [self.view addSubview:self.bookStationScrollView];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"确认订单";
+    self.navigationItem.leftBarButtonItem = [self customLeftBackButton];
     
     self.contentView = [UIView new];
     [self.bookStationScrollView addSubview:self.contentView];
@@ -169,12 +171,14 @@
     [self.payTypeView addSubview:self.payTypeInfoLabel];
     
     self.sumLabel = [[UILabel alloc] init];
-    self.sumLabel.text = @"总金额：";
+    self.sumLabel.text = @"订单时长：";
     [self.payTypeView addSubview:self.sumLabel];
     
-    self.sumInfoLabel = [[UILabel alloc] init];
-    self.sumInfoLabel.text = @"200元";
-    [self.payTypeView addSubview:self.sumInfoLabel];
+    self.durationLabel = [[UILabel alloc] init];
+    self.durationLabel.text = @"0";
+    [self.durationLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+    self.durationLabel.numberOfLines =0;
+    [self.payTypeView addSubview:self.durationLabel];
     
     self.orderTimeLabel = [[UILabel alloc] init];
     self.orderTimeLabel.text = @"下单时间：";
@@ -326,7 +330,8 @@
         make.top.equalTo(self.facilityView.mas_bottom).with.offset(25);
         make.left.equalTo(self.bookStationScrollView).with.offset(20);
         make.right.equalTo(self.bookStationScrollView).with.offset(-20);
-        make.height.mas_equalTo(100);
+        make.bottom.equalTo(self.orderTimeLabel.mas_bottom).with.offset(10);
+        //make.height.mas_equalTo(100);
     }];
     
     [self.payTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -344,13 +349,14 @@
         make.left.equalTo(self.payTypeView.mas_left).with.offset(5);
     }];
     
-    [self.sumInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.durationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.sumLabel.mas_top);
         make.left.equalTo(self.payTypeInfoLabel.mas_left);
+        make.right.equalTo(self.payTypeView).with.offset(-10);
     }];
     
     [self.orderTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.sumLabel.mas_bottom).with.offset(10);
+        make.top.equalTo(self.durationLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self.payTypeView.mas_left).with.offset(5);
     }];
     
@@ -406,17 +412,40 @@
 
 -(void)updateView
 {
-    [self.orderNumInfoLabel setText:self.model.orderNum];
-    [self.bookSiteInfoLabel setText:self.meetingModel.location];
-    [self.bookSiteLabel setText:self.meetingModel.conferenceName];
-    [self.startTimeInfoLabel setText:[self.dic[@"starTime"] substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
-    [self.endTimeInfoLabel   setText:[self.dic[@"endTime"] substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
-    [self.bookNumInfoLabel   setText:@"1"];
-    [self.facilityInfoLabel setText:strIsEmpty(self.meetingModel.facility)? @"无":self.meetingModel.facility];
-    [self.payTypeInfoLabel setText:((NSNumber *)self.dic[@"payType"]).intValue == 0? @"企业支付" : @"个人支付"];
-    [self.sumInfoLabel setText:[NSString stringWithFormat:@"￥%.2f",((NSNumber*)self.dic[@"money"]).doubleValue]];
+    [self.orderNumInfoLabel setText:self.orderNum];
+    [self.bookSiteInfoLabel setText:self.nameStr];
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+        [self.bookSiteLabel setText:@"空间名称："];
+    }
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
+        [self.bookSiteLabel setText:@"场地名称："];
+    }
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+        [self.bookSiteLabel setText:@"会议室名称："];
+    }
+    //[self.bookSiteLabel setText:self.meetingModel.conferenceName];
+    [self.startTimeInfoLabel setText:[self.startTime substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
+    [self.endTimeInfoLabel   setText:[self.self.endTime substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
+    [self.bookNumInfoLabel   setText:[self.productNum stringValue]];
+    [self.facilityInfoLabel setText:strIsEmpty(self.facilityStr)? @"无":self.facilityStr];
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
+        [self.payTypeInfoLabel setText:self.payType.intValue == 0? @"企业支付" : @"个人支付"];
+    }else
+    {
+        self.payTypeInfoLabel.text = @"礼包";
+    }
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+        [self.durationLabel setText:@"工位使用时长将根据用户进出工位刷卡时间扣除"];
+    }else
+    {
+        [self.durationLabel setText:self.durationTime];
+    }
+    
     [self.orderTimeInfoLabel setText:[NSDate getNewTime]];
-    [self.actuallyPaidMoneyLabel setText:[NSString stringWithFormat:@"￥%.2f",((NSNumber*)self.dic[@"money"]).doubleValue]];
+    [self.actuallyPaidMoneyLabel setText:[NSString stringWithFormat:@"￥%.2f",self.money.doubleValue]];
 }
 
 
@@ -424,9 +453,36 @@
 #pragma mark - 支付
 -(void)stationPayMethod
 {
-    if ([self.dic[@"dealMode"] isEqualToString:@"微信支付"]) {
+    if ([WOTSingtleton shared].payType == PAY_TYPE_WX) {
         [WOTHTTPNetwork wxPayWithParameter:self.model];
+    }else
+    {
+//        [AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic){
+//            NSLog(@"reslut ===>= %@",resultDic);}
+//         }];
+        [[AlipaySDK defaultService] payOrder:self.orderString fromScheme:AliPayAPPID callback:^(NSDictionary *resultDic) {
+            NSLog(@"reslut ===>= %@",resultDic);
+        }];
     }
+}
+
+#pragma mark - 自定义返回按钮图片
+-(UIBarButtonItem*)customLeftBackButton{
+    UIImage *image = [UIImage imageNamed:@"back"];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    [backButton setBackgroundImage:image
+                          forState:UIControlStateNormal];
+    [backButton addTarget:self
+                   action:@selector(backBarButtonItemAction)
+         forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    return backItem;
+}
+
+- (void)backBarButtonItemAction
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

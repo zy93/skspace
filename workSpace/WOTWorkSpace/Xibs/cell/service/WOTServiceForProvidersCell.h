@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WOTServiceProvidersView.h"
-
+typedef void(^ImageBlock)(NSInteger tap);
 @interface WOTServiceForProvidersCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIScrollView *providersScrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowIV;
-
 @property (weak, nonatomic) IBOutlet UIButton *joinButton;
-
+@property (nonatomic,copy)  ImageBlock imageBlock;
 -(void)setData:(NSArray *)facilitatorData;
 
 @end

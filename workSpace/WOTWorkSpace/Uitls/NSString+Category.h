@@ -56,6 +56,8 @@
 
 //获取两个时间相差多少分钟
 + (NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
+//获取两个时间相差多少小时多少分钟
++(NSString *)dateTimeDifferenceHoursWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
 //判断邮箱格式
 +(BOOL)isValidateEmail:(NSString *)email;
 

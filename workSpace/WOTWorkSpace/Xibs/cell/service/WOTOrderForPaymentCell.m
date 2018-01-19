@@ -8,6 +8,10 @@
 
 #import "WOTOrderForPaymentCell.h"
 
+@interface WOTOrderForPaymentCell()
+
+@end
+
 @implementation WOTOrderForPaymentCell
 
 - (void)awakeFromNib {
@@ -24,28 +28,24 @@
     // Configure the view for the selected state
 }
 
--(void)setAlipay:(BOOL)alipay
-{
-    _alipay = alipay;
-    if (_alipay) {
-        [self.iconImg setImage:[UIImage imageNamed:@"alipay_icon"]];
-        [self.titleLab setText:@"支付宝支付"];
-    }
-    else {
-        [self.iconImg setImage:[UIImage imageNamed:@"wechat_icon"]];
-        [self.titleLab setText:@"微信支付"];
+- (IBAction)choosePayWay:(UIButton *)sender {
+    if (sender.tag == 0) {
+        if ([self.delegate respondsToSelector:@selector(choosePayWay:)]) {
+            [self.delegate choosePayWay:@"支付宝"];
+        }
+        [self.alipayButton setImage:[UIImage imageNamed:@"select_blue"] forState:UIControlStateNormal];
+        [self.wxpayButton setImage:[UIImage imageNamed:@"unselect_white"] forState:UIControlStateNormal];
+        
+    }else
+    {
+        if ([self.delegate respondsToSelector:@selector(choosePayWay:)]) {
+            [self.delegate choosePayWay:@"微信"];
+        }
+        [self.alipayButton setImage:[UIImage imageNamed:@"unselect_white"] forState:UIControlStateNormal];
+        [self.wxpayButton setImage:[UIImage imageNamed:@"select_green"] forState:UIControlStateNormal];
     }
 }
 
--(void)setSelect:(BOOL)select
-{
-    _select = select;
-    if (_select) {
-        [self.selectImg setImage:[UIImage imageNamed:@"select_green"]];
-    }
-    else {
-        [self.selectImg setImage:[UIImage imageNamed:@"unselect_white"]];
-    }
-}
+
 
 @end

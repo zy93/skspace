@@ -23,6 +23,8 @@
 #import "SKBookStationNumberModel.h"
 #import "StationOrderInfoViewController.h"
 #import "UIColor+ColorChange.h"
+#import "SKAliPayModel.h"
+#import "SKOrderStringModel.h"
 
 #define infoCell @"infoCell"
 #define selectDateCell @"selectDateCell"
@@ -36,7 +38,7 @@
 #define uitableCell @"uitableCell"
 #define paymentCell @"paymentCell"
 
-@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate>
+@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate>
 {
     NSArray *tableList;
     NSArray *mettingReservationList; //会议室已预订时间数组
@@ -80,6 +82,8 @@
 @property (nonatomic, assign) NSNumber *bookSationTime;
 @property (nonatomic, assign) NSNumber *meetingTime;
 @property (nonatomic, strong) NSNumber *userId;
+@property (nonatomic, strong) NSString *payWayStr;
+@property (nonatomic, strong) NSNumber *conferenceDetailsId;//预定场地的id
 
 @end
 
@@ -250,8 +254,7 @@
     }
     
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
-        NSString *differenceStr = [NSString dateTimeDifferenceWithStartTime:self.starTime endTime:self.endTime];
-        NSInteger difference = [differenceStr integerValue];
+        NSInteger difference = (self.meetingEndTime-self.meetingBeginTime)*60;
         NSInteger meetInteger = [self.meetingTime integerValue];
         if (difference > meetInteger) {
             [MBProgressHUDUtil showMessage:@"该用户下会议室时间剩余不足，请充值" toView:self.view];
@@ -260,7 +263,7 @@
     }
     self.dealMode = @"微信支付";
     self.payType = @(1);
-    self.payObject= @"1";
+    self.payObject= [WOTUserSingleton shareUser].userInfo.userName;
     
     switch ([WOTSingtleton shared].orderType) {
         case ORDER_TYPE_BOOKSTATION:
@@ -282,8 +285,19 @@
             self.body = @"工位预定";
             self.total_fee = @"1";// self.money.floatValue * 100;
             self.trade_type = @"APP";
-            [self commitOrder];
-
+//            if ([WOTSingtleton shared].payType == PAY_TYPE_WX) {
+//                [self commitOrder];
+//            }else
+//            {
+//                [self commitAliOrder];
+//            }
+            if ([self.payWayStr isEqualToString:@"支付宝"]) {
+                [self commitAliOrder];
+            }else
+            {
+                [self commitOrder];
+            }
+            
         }
             break;
         case ORDER_TYPE_MEETING:
@@ -319,8 +333,6 @@
             {
                 [self reservationsSite];
             }
-            
-
         }
             break;
         default:
@@ -352,7 +364,6 @@
             self.meetingEndTime = time+0.5;
         }
     }
-    
     [cell.selectTimeScroll setBeginTime:self.meetingBeginTime endTime:self.meetingEndTime];
     [self imputedPriceAndLoadCost];
 }
@@ -410,7 +421,7 @@
         return 30;
     }
     else if ([cellType isEqualToString:paymentCell]) {
-        return 50;
+        return 97;
     }
     else // ([cellType isEqualToString:amountCell])
     {
@@ -421,9 +432,6 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-//    if (section==0) {
-//        return 15;
-//    }
     return 10;
 }
 
@@ -578,19 +586,8 @@
         if (cell == nil) {
             cell = [[WOTOrderForPaymentCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForPaymentCell"];
         }
-        if (indexPath.row == 1) {
-            cell.alipay = NO;
-        }
-        else {
-            cell.alipay = YES;
-        }
-        if (indexPath.row == paymentIndex.row) {
-            cell.select = YES;
-        }
-        else {
-            cell.select = YES;
-        }
-            
+        cell.delegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     else // ([cellType isEqualToString:amountCell])
@@ -629,6 +626,18 @@
 //    }
 }
 
+#pragma mark - WOTOrderForPaymentCellDelegate
+-(void)choosePayWay:(NSString *)payWayStr
+{
+    self.payWayStr = payWayStr;
+    if ([self.payWayStr isEqualToString:@"支付宝"]) {
+        [WOTSingtleton shared].payType = PAY_TYPE_ALI;
+    }else
+    {
+        [WOTSingtleton shared].payType = PAY_TYPE_WX;
+    }
+}
+
 #pragma mark - 计算价格
 -(void)imputedPriceAndLoadCost
 {
@@ -659,6 +668,7 @@
     }
 }
 
+#pragma mark - 预定场地
 -(void)reservationsSite
 {
     __weak typeof(self) weakSelf = self;
@@ -670,10 +680,17 @@
                                          spaceName:self.spaceModel.spaceName
                                        meetingName:self.meetingModel.conferenceName
                                             userId:[WOTUserSingleton shareUser].userInfo.userId
+                                              body:self.body
                                           response:^(id bean, NSError *error) {
                                               WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
                                               if ([model.code isEqualToString:@"200"]) {
-                                                  [weakSelf commitOrder];
+                                                  self.conferenceDetailsId = model.msg.conferenceDetailsId;
+                                                  if ([self.payWayStr isEqualToString:@"支付宝"]) {
+                                                      [weakSelf commitAliOrder];
+                                                  }else
+                                                  {
+                                                      [weakSelf commitOrder];
+                                                  }
                                               }
                                               else {
                                                   [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
@@ -696,7 +713,18 @@
                                           response:^(id bean, NSError *error) {
                                             WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
                                             if ([model.code isEqualToString:@"200"]) {
-                                                [weakSelf commitOrder];
+                                                self.conferenceDetailsId = model.msg.conferenceDetailsId;
+                                                StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
+                                                vc.orderNum = model.msg.orderNum;
+                                                vc.nameStr = self.meetingModel.conferenceName;
+                                                vc.startTime = model.msg.starTime;
+                                                vc.endTime = model.msg.endTime;
+                                                vc.productNum = self.productNum;
+                                                //vc.orderString = model.msg;
+                                                vc.payType = self.payType;
+                                                vc.money = self.money;
+                                                vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
+                                                [weakSelf.navigationController pushViewController:vc animated:YES];
                                             }
                                             else {
                                                 [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
@@ -718,6 +746,75 @@
     return YES;
 }
 
+#pragma mark - 支付宝订单接口
+-(void)commitAliOrder
+{
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                               @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                               @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                               @"spaceId":self.spaceId,
+                               @"commodityKind":self.commodityKind,
+                               @"productNum":self.productNum,
+                               @"money":@(self.costNumber),
+                               @"payType":self.payType,
+                               @"payObject":[WOTUserSingleton shareUser].userInfo.userName,
+                               @"body":self.body,
+                               @"starTime":self.starTime,
+                               @"endTime":self.endTime,
+                               @"spaceName":self.spaceModel.spaceName,
+                               @"conferenceDetailsId":self.conferenceDetailsId
+                               };
+    [WOTHTTPNetwork submitAlipayOrderWith:parameters response:^(id bean, NSError *error) {
+        SKAliPayModel_msg *model_msg = (SKAliPayModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            SKAliPayModel *model = model_msg.msg;
+            NSDictionary *parmDict = @{@"appid":AliPayAPPID,
+                                       @"body":model.body,
+                                       @"money":model.money,//model.money
+                                       @"orderNum":model.orderNum
+                                       };
+            [self getOrderString:parmDict orderParam:parameters];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+            return ;
+        }
+    }];
+}
+
+#pragma mark - 获取支付宝orderstring
+-(void)getOrderString:(NSDictionary *)param orderParam:(NSDictionary *)orderParam
+{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getOrderString:param response:^(id bean, NSError *error) {
+        SKOrderStringModel *model = (SKOrderStringModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
+            vc.orderNum = [param objectForKey:@"orderNum"];
+            if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+                vc.nameStr = self.spaceModel.spaceName;
+            }
+            else
+            {
+                vc.nameStr = self.meetingModel.conferenceName;
+            }
+            vc.startTime = [orderParam objectForKey:@"starTime"];
+            vc.endTime = [orderParam objectForKey:@"endTime"];
+            vc.productNum = self.productNum;
+            vc.orderString = model.msg;
+            vc.payType = self.payType;
+            vc.money = self.money;
+            vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+            return ;
+        }
+    }];
+}
+
+#pragma mark - 微信订单接口
 -(void)commitOrder{
     //是否选择了时间
     NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
@@ -741,6 +838,7 @@
                                  @"payObject":self.payObject,
                                  @"payMode":self.payMode,
                                  @"contractMode":self.contractMode,
+                                 @"conferenceDetailsId":self.conferenceDetailsId
                                  };
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){
@@ -748,9 +846,28 @@
             WOTWXPayModel_msg *model_msg = (WOTWXPayModel_msg *)bean;
             if ([model_msg.code isEqualToString:@"200"]) {
                 StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
-                vc.meetingModel = weakSelf.meetingModel;
-                vc.dic = parameters;
-                [vc setModel:((WOTWXPayModel_msg*)bean).msg];
+                if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+                    vc.orderNum = model_msg.msg.orderNum;
+                }else
+                {
+                    vc.orderNum = model_msg.msg.out_trade_no;
+                }
+                
+                if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+                    vc.nameStr = self.spaceModel.spaceName;
+                }
+                else
+                {
+                    vc.nameStr = self.meetingModel.conferenceName;
+                }
+                vc.model = model_msg.msg;
+                vc.startTime = self.starTime;
+                vc.endTime = self.endTime;
+                vc.productNum = self.productNum;
+                //vc.orderString = model.msg;
+                vc.payType = self.payType;
+                vc.money = self.money;
+                vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
                 [weakSelf.navigationController pushViewController:vc animated:YES];
             }
             else
@@ -831,6 +948,24 @@
             [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
         }
     }];
+}
+
+-(NSString *)payWayStr
+{
+    if (_payWayStr == nil) {
+        _payWayStr = @"支付宝";
+        [WOTSingtleton shared].payType = PAY_TYPE_ALI;
+    }
+    return _payWayStr;
+}
+
+-(NSNumber *)conferenceDetailsId
+{
+    if (_conferenceDetailsId == nil) {
+        _conferenceDetailsId = [[NSNumber alloc] init];
+        _conferenceDetailsId = @0;
+    }
+    return _conferenceDetailsId;
 }
 
 //-(void)request

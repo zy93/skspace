@@ -374,6 +374,7 @@ typedef void(^response)(id bean,NSError *error);
                             spaceName:(NSString *)spaceName
                           meetingName:(NSString *) meetingName
                                userId:(NSNumber *)userId
+                                 body:(NSString *)body
                              response:(response)response;
 //TODO: 工位
 
@@ -449,6 +450,24 @@ typedef void(^response)(id bean,NSError *error);
  @param payModel 响应回调
  */
 +(void)wxPayWithParameter:(WOTWXPayModel *)payModel;
+
+
+/**
+ 支付宝订单
+
+ @param parm 参数
+ @param response 结果回调
+ */
++(void)submitAlipayOrderWith:(NSDictionary *)parm response:(response)response;
+
+
+/**
+ 请求支付宝OrderString
+
+ @param parm 请求参数
+ @param response 结果回调
+ */
++(void)getOrderString:(NSDictionary *)parm response:(response)response;
 
 #pragma mark - 社交
 

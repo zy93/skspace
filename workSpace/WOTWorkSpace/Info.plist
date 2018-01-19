@@ -74,9 +74,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string></string>
+			<string>alipay</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>2017072707916012</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>

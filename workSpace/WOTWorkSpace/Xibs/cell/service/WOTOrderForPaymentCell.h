@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol WOTOrderForPaymentCellDelegate <NSObject>
+
+-(void)choosePayWay:(NSString *)payWayStr;
+
+@end
 
 @interface WOTOrderForPaymentCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *iconImg;
-@property (weak, nonatomic) IBOutlet UILabel *titleLab;
-@property (weak, nonatomic) IBOutlet UIImageView *selectImg;
 
-@property (nonatomic, assign, getter=isAlipay) BOOL alipay;
-@property (nonatomic, assign, getter=isSelected) BOOL select;
+@property (weak, nonatomic) IBOutlet UIButton *alipayButton;
+@property (weak, nonatomic) IBOutlet UIButton *wxpayButton;
+
+@property (nonatomic, weak) id <WOTOrderForPaymentCellDelegate> delegate;
+
 @end

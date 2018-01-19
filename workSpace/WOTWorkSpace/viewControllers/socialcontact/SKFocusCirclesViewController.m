@@ -24,6 +24,7 @@
 #import "WOTUserSingleton.h"
 #import "IQKeyboardManager.h"
 #import "SKAddReply.h"
+#import "SKSingleCirclesViewController.h"
 //#import "CircleofFriendsInfoModel.h"
 //#import "ReplyModel.h"
 
@@ -409,7 +410,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     replyView = [[YMReplyInputView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, screenWidth,44) andAboveView:self.view];
     replyView.delegate = self;
     replyView.replyTag = _selectedIndexPath.row;
-    NSLog(@"测试高度：%f",self.view.frame.size.height);
     [self.view addSubview:replyView];
     
 }
@@ -434,20 +434,20 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 #pragma mark - 图片点击事件回调
 - (void)showImageViewWithImageViews:(NSArray *)imageViews byClickWhich:(NSInteger)clickTag{
     
-    UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
+    //[UIScreen mainScreen ].applicationFrame
+    [self.tabBarController.tabBar setHidden:YES];
+    //UIView *maskview = [[UIView alloc] initWithFrame:self.view.bounds];
+    UIView *maskview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     maskview.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:maskview];
-    
-    YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:self.view.bounds byClick:clickTag appendArray:imageViews];
+    //[self.view addSubview:maskview];
+    [[UIApplication sharedApplication].keyWindow addSubview:maskview];
+    YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:maskview.bounds byClick:clickTag appendArray:imageViews];
+    ymImageV.delegate = self;
     [ymImageV show:maskview didFinish:^(){
-        
         [UIView animateWithDuration:0.5f animations:^{
-            
             ymImageV.alpha = 0.0f;
             maskview.alpha = 0.0f;
-            
         } completion:^(BOOL finished) {
-            
             [ymImageV removeFromSuperview];
             [maskview removeFromSuperview];
         }];
@@ -584,26 +584,51 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     
 }
 
+#pragma mark - 删除评论操作
 - (void)actionSheet:(WFActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        //delete
+    if (buttonIndex == 0) {        
         YMTextData *ymData = (YMTextData *)[_tableDataSource objectAtIndex:actionSheet.actionIndex];
         WFMessageBody *m = ymData.messageBody;
-        [m.posterReplies removeObjectAtIndex:_replyIndex];
-        ymData.messageBody = m;
-        [ymData.completionReplySource removeAllObjects];
-        [ymData.attributedDataReply removeAllObjects];
+        WFReplyBody *body  = m.posterReplies[_replyIndex];
+        [WOTHTTPNetwork deleteReplyRecorWithRecordId:body.recordId response:^(id bean, NSError *error) {
+            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+            if ([baseModel.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUDUtil showMessage:@"删除成功！" toView:self.view];
+                    [m.posterReplies removeObjectAtIndex:_replyIndex];
+                    ymData.messageBody = m;
+                    [ymData.completionReplySource removeAllObjects];
+                    [ymData.attributedDataReply removeAllObjects];
+                    
+                    
+                    ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
+                    [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
+                    
+                    [mainTable reloadData];
+                });
+                
+            }
+            else
+            {
+                [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
+            }
+        }];
         
-        
-        ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
-        [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
-        
-        [mainTable reloadData];
         
     }else{
         
     }
     _replyIndex = -1;
+}
+
+- (void)showCommentWith:(YMTextData *)ymD onCellRow:(NSInteger) cellStamp
+{
+    //NSLog(@"打开评论");
+    SKSingleCirclesViewController *singleVC = [[SKSingleCirclesViewController alloc]init];
+    singleVC.hidesBottomBarWhenPushed = YES;
+    singleVC.friendId = ymD.messageBody.friendId;
+    [self.navigationController pushViewController:singleVC animated:YES];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
