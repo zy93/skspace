@@ -42,6 +42,8 @@
 #import "WOTMeetingHistoryModel.h"
 #import "WOTWorkStationHistoryModel.h"
 #import "WOTCityModel.h"
+#import "SKAliPayModel.h"
+#import "SKOrderStringModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
