@@ -28,25 +28,12 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
         
         
         self.backgroundColor = UICOLOR_CLEAR;
-        
-        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(frame.origin.x,0, SCREEN_WIDTH,[WOTSingtleton shared].spaceCityArray.count/4*50+50) collectionViewLayout:layout];
-        _collectionView.backgroundColor = UICOLOR_WHITE;
-        _collectionView.dataSource = self;
-        _collectionView.delegate = self;
-        [self addSubview:_collectionView];
-        
-     
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hiddenView:) ];
         tapGestureRecognizer.cancelsTouchesInView = NO;
         [self addGestureRecognizer:tapGestureRecognizer];
-   
-    
-   
-        
     }
     return self;
 }
@@ -57,6 +44,16 @@
 }
 
 #pragma mark --懒加载
+-(void)setCityList:(NSArray *)cityList
+{
+    _cityList = cityList;
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(self.frame.origin.x,0, SCREEN_WIDTH,cityList.count/4*50+50) collectionViewLayout:layout];
+    _collectionView.backgroundColor = UICOLOR_WHITE;
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+    [self addSubview:_collectionView];
+}
 
 #pragma mark -CollectionView datasource
 //section
@@ -67,7 +64,7 @@
 //item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [WOTSingtleton shared].spaceCityArray.count;
+    return _cityList.count;
     
 }
 
@@ -79,7 +76,7 @@
     [collectionView registerNib:[UINib nibWithNibName:@"WOTSpaceCityCollectionCell" bundle:nil] forCellWithReuseIdentifier:CellIdentifier];
    WOTSpaceCityCollectionCell * collectionCell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    collectionCell.cityName.text = [[WOTSingtleton shared].spaceCityArray objectAtIndex:indexPath.row];
+    collectionCell.cityName.text = _cityList[indexPath.row];
    
         collectionCell.cityName.textColor = UICOLOR_MAIN_TEXT;
         [collectionCell.cityName setCorenerRadius:10 borderColor:UICOLOR_MAIN_TEXT];

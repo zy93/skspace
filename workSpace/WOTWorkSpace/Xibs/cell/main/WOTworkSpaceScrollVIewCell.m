@@ -40,7 +40,7 @@
 //item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [WOTSingtleton shared].spaceCityArray.count;
+    return _cityList.count;
     
 }
 

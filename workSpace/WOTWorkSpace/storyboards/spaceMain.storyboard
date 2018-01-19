@@ -433,57 +433,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTworkSpaceScrollVIewCellID" rowHeight="119" id="aCZ-5d-jmM" customClass="WOTworkSpaceScrollVIewCell">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="119"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aCZ-5d-jmM" id="ynG-1l-e6J">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="119"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v0e-Ug-Y03">
-                                                    <rect key="frame" x="0.0" y="109" width="375" height="10"/>
-                                                    <color key="backgroundColor" red="0.95295655727386475" green="0.95293593406677246" blue="0.95294010639190674" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="10" id="R05-7i-yL0"/>
-                                                    </constraints>
-                                                </view>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZhX-uQ-TWx">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="109"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="znC-A0-yc2">
-                                                        <size key="itemSize" width="50" height="50"/>
-                                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    </collectionViewFlowLayout>
-                                                    <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pq7-0h-WIg">
-                                                            <rect key="frame" x="0.0" y="29.5" width="50" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                            </view>
-                                                        </collectionViewCell>
-                                                    </cells>
-                                                </collectionView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="v0e-Ug-Y03" secondAttribute="trailing" id="FFs-51-O1i"/>
-                                                <constraint firstItem="ZhX-uQ-TWx" firstAttribute="top" secondItem="ynG-1l-e6J" secondAttribute="top" id="FHD-sP-EnH"/>
-                                                <constraint firstItem="ZhX-uQ-TWx" firstAttribute="leading" secondItem="ynG-1l-e6J" secondAttribute="leading" id="KBX-48-Ltx"/>
-                                                <constraint firstAttribute="trailing" secondItem="ZhX-uQ-TWx" secondAttribute="trailing" id="L0V-KU-M7s"/>
-                                                <constraint firstAttribute="bottom" secondItem="v0e-Ug-Y03" secondAttribute="bottom" id="M3n-M8-KoW"/>
-                                                <constraint firstItem="v0e-Ug-Y03" firstAttribute="top" secondItem="ZhX-uQ-TWx" secondAttribute="bottom" id="uOD-aO-80f"/>
-                                                <constraint firstItem="v0e-Ug-Y03" firstAttribute="leading" secondItem="ynG-1l-e6J" secondAttribute="leading" id="wEo-dK-eZK"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="collectionView" destination="ZhX-uQ-TWx" id="tz9-0a-YE4"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTworkSpacenearCellID" rowHeight="113" id="AqZ-Ku-8jp" customClass="WOTworkSpacenearCell">
-                                        <rect key="frame" x="0.0" y="147" width="375" height="113"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTNearbySapceCell" rowHeight="113" id="AqZ-Ku-8jp" customClass="WOTNearbySapceCell">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="113"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AqZ-Ku-8jp" id="Hvj-rs-KL6">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="113"/>
@@ -560,6 +511,10 @@
                                                 <constraint firstAttribute="bottom" secondItem="0ga-sa-nKp" secondAttribute="bottom" id="xgn-Mu-JKM"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="spaceNameLab" destination="Gev-3r-QiX" id="Mo9-0L-Tqc"/>
+                                            <outlet property="spaceSubtitleLab" destination="xJZ-eQ-tnK" id="5yX-dp-Ohs"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

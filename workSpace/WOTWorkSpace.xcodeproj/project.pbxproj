@@ -100,6 +100,7 @@
 		2AAA19862008B90D00786500 /* WOTMeetingHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA19852008B90D00786500 /* WOTMeetingHistoryModel.m */; };
 		2AAA19892008D00F00786500 /* WOTWorkStationHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA19882008D00F00786500 /* WOTWorkStationHistoryModel.m */; };
 		2AB255021F1C8E0E00FCE6E7 /* WOTSelectWorkspaceListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB255011F1C8E0E00FCE6E7 /* WOTSelectWorkspaceListVC.m */; };
+		2AB79D952010ABE600F7B57A /* WOTCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB79D942010ABE600F7B57A /* WOTCityModel.m */; };
 		2AB8A4A11FF4BC83008897CB /* WOTEnterEnterpriseNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB8A4A01FF4BC83008897CB /* WOTEnterEnterpriseNameVC.m */; };
 		2AB8A4A51FF4BE06008897CB /* WOTEnterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB8A4A31FF4BE06008897CB /* WOTEnterCell.m */; };
 		2AB8A4A61FF4BE06008897CB /* WOTEnterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AB8A4A41FF4BE06008897CB /* WOTEnterCell.xib */; };
@@ -216,7 +217,7 @@
 		E8190D9F1F0F69660000B07C /* WOTTEnterpriseListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8190D2D1F0F69660000B07C /* WOTTEnterpriseListCell.xib */; };
 		E8190DA01F0F69660000B07C /* WOTworkSpaceCommonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8190D2F1F0F69660000B07C /* WOTworkSpaceCommonCell.m */; };
 		E8190DA11F0F69660000B07C /* WOTworkSpaceCommonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8190D301F0F69660000B07C /* WOTworkSpaceCommonCell.xib */; };
-		E8190DA21F0F69660000B07C /* WOTworkSpacenearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8190D321F0F69660000B07C /* WOTworkSpacenearCell.m */; };
+		E8190DA21F0F69660000B07C /* WOTNearbySapceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8190D321F0F69660000B07C /* WOTNearbySapceCell.m */; };
 		E8190DA31F0F69660000B07C /* WOTworkSpaceScrollVIewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8190D341F0F69660000B07C /* WOTworkSpaceScrollVIewCell.m */; };
 		E8190DA41F0F69660000B07C /* WOTworkSpaceSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8190D361F0F69660000B07C /* WOTworkSpaceSearchCell.m */; };
 		E8190DA51F0F69660000B07C /* WOTworkSpaceSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8190D371F0F69660000B07C /* WOTworkSpaceSearchCell.xib */; };
@@ -594,6 +595,8 @@
 		2AAA19882008D00F00786500 /* WOTWorkStationHistoryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTWorkStationHistoryModel.m; sourceTree = "<group>"; };
 		2AB255001F1C8E0E00FCE6E7 /* WOTSelectWorkspaceListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTSelectWorkspaceListVC.h; sourceTree = "<group>"; };
 		2AB255011F1C8E0E00FCE6E7 /* WOTSelectWorkspaceListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTSelectWorkspaceListVC.m; sourceTree = "<group>"; };
+		2AB79D932010ABE600F7B57A /* WOTCityModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTCityModel.h; sourceTree = "<group>"; };
+		2AB79D942010ABE600F7B57A /* WOTCityModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTCityModel.m; sourceTree = "<group>"; };
 		2AB8A49F1FF4BC83008897CB /* WOTEnterEnterpriseNameVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTEnterEnterpriseNameVC.h; sourceTree = "<group>"; };
 		2AB8A4A01FF4BC83008897CB /* WOTEnterEnterpriseNameVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTEnterEnterpriseNameVC.m; sourceTree = "<group>"; };
 		2AB8A4A21FF4BE06008897CB /* WOTEnterCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTEnterCell.h; sourceTree = "<group>"; };
@@ -814,8 +817,8 @@
 		E8190D2E1F0F69660000B07C /* WOTworkSpaceCommonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTworkSpaceCommonCell.h; sourceTree = "<group>"; };
 		E8190D2F1F0F69660000B07C /* WOTworkSpaceCommonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTworkSpaceCommonCell.m; sourceTree = "<group>"; };
 		E8190D301F0F69660000B07C /* WOTworkSpaceCommonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WOTworkSpaceCommonCell.xib; sourceTree = "<group>"; };
-		E8190D311F0F69660000B07C /* WOTworkSpacenearCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTworkSpacenearCell.h; sourceTree = "<group>"; };
-		E8190D321F0F69660000B07C /* WOTworkSpacenearCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTworkSpacenearCell.m; sourceTree = "<group>"; };
+		E8190D311F0F69660000B07C /* WOTNearbySapceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTNearbySapceCell.h; sourceTree = "<group>"; };
+		E8190D321F0F69660000B07C /* WOTNearbySapceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTNearbySapceCell.m; sourceTree = "<group>"; };
 		E8190D331F0F69660000B07C /* WOTworkSpaceScrollVIewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTworkSpaceScrollVIewCell.h; sourceTree = "<group>"; };
 		E8190D341F0F69660000B07C /* WOTworkSpaceScrollVIewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTworkSpaceScrollVIewCell.m; sourceTree = "<group>"; };
 		E8190D351F0F69660000B07C /* WOTworkSpaceSearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTworkSpaceSearchCell.h; sourceTree = "<group>"; };
@@ -1872,8 +1875,8 @@
 				E8190D2E1F0F69660000B07C /* WOTworkSpaceCommonCell.h */,
 				E8190D2F1F0F69660000B07C /* WOTworkSpaceCommonCell.m */,
 				E8190D301F0F69660000B07C /* WOTworkSpaceCommonCell.xib */,
-				E8190D311F0F69660000B07C /* WOTworkSpacenearCell.h */,
-				E8190D321F0F69660000B07C /* WOTworkSpacenearCell.m */,
+				E8190D311F0F69660000B07C /* WOTNearbySapceCell.h */,
+				E8190D321F0F69660000B07C /* WOTNearbySapceCell.m */,
 				E8190D331F0F69660000B07C /* WOTworkSpaceScrollVIewCell.h */,
 				E8190D341F0F69660000B07C /* WOTworkSpaceScrollVIewCell.m */,
 				E8190D351F0F69660000B07C /* WOTworkSpaceSearchCell.h */,
@@ -2855,6 +2858,8 @@
 				E8A2000F1F1C8266003C8A86 /* WOTSliderModel.m */,
 				E8A200101F1C8266003C8A86 /* WOTSpaceModel.h */,
 				E8A200111F1C8266003C8A86 /* WOTSpaceModel.m */,
+				2AB79D932010ABE600F7B57A /* WOTCityModel.h */,
+				2AB79D942010ABE600F7B57A /* WOTCityModel.m */,
 			);
 			path = main;
 			sourceTree = "<group>";
@@ -3365,12 +3370,13 @@
 				C56684DE1FD6AC0000DC5782 /* SKBookStationNumberModel.m in Sources */,
 				C55A29871FD6DFD9001E0DB7 /* LoginViewController.m in Sources */,
 				E8190DBA1F0F69660000B07C /* WOTPersionalInformationTagCell.m in Sources */,
+				2AB79D952010ABE600F7B57A /* WOTCityModel.m in Sources */,
 				E869E83A1F1DBE4C00DBDBB9 /* WOTMyFeedBackModel.m in Sources */,
 				E8190D9B1F0F69660000B07C /* WOTSpaceDetailCell.m in Sources */,
 				C7901EC51F789CF500692F02 /* JudgmentTime.m in Sources */,
 				E8190DBC1F0F69660000B07C /* WOTSettingCell.m in Sources */,
 				2A022E591F1DBC36001AE9E9 /* NSDate+Uitls.m in Sources */,
-				E8190DA21F0F69660000B07C /* WOTworkSpacenearCell.m in Sources */,
+				E8190DA21F0F69660000B07C /* WOTNearbySapceCell.m in Sources */,
 				E8190DCF1F0F69660000B07C /* WOTCommonHeaderVIew.m in Sources */,
 				E8190DAF1F0F69660000B07C /* WOTMycommonCell.m in Sources */,
 				E84B5BD01F32E91200CC83E7 /* WOTMyAppointmentHistoryVC.m in Sources */,

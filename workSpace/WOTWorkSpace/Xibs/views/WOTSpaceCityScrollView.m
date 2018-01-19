@@ -20,6 +20,12 @@
 
 -(void)awakeFromNib{
     [super awakeFromNib];
+}
+
+
+#pragma mark --懒加载
+-(void)setCityList:(NSArray *)cityList
+{
     _collectionVIew.delegate = self;
     _collectionVIew.dataSource = self;
     self.contentView.backgroundColor = UICOLOR_WHITE;
@@ -27,19 +33,11 @@
     _moreImage.image = [UIImage imageNamed:@"mainmore_unselected"];
     [_moreBtn setSelected: NO];
     
-    _tileview = [[WOTCityTileView alloc]initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH,[WOTSingtleton shared].spaceCityArray.count/4*50+50)];
+    _cityList = cityList;
+    _tileview = [[WOTCityTileView alloc]initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH,cityList.count/4*50+50)];
     [self insertSubview:_tileview aboveSubview:self.moreBtn];
-    
-    
-    
-    [_tileview setHidden:YES];
-    
-    
-    
+//    [_tileview setHidden:YES];
 }
-
-
-#pragma mark --懒加载
 
 #pragma mark -CollectionView datasource
 //section
@@ -50,7 +48,7 @@
 //item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [WOTSingtleton shared].spaceCityArray.count;
+    return _cityList.count;
     
 }
 
@@ -62,7 +60,7 @@
       [_collectionVIew registerNib:[UINib nibWithNibName:@"WOTSpaceCityCollectionCell" bundle:nil] forCellWithReuseIdentifier:CellIdentifier];
     _collectionCell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
 
-    _collectionCell.cityName.text = [[WOTSingtleton shared].spaceCityArray objectAtIndex:indexPath.row];
+    _collectionCell.cityName.text = _cityList[indexPath.row];
     if (self.selectedindex == indexPath.row) {
         _collectionCell.cityName.textColor = RGBA(77.0, 139.0, 231.0, 1.0);
         [_collectionCell.cityName setCorenerRadius:10 borderColor:RGBA(77.0, 139.0, 231.0, 1.0)];
@@ -97,12 +95,9 @@
 //选择了某个cell
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    WOTSpaceCityCollectionCell *cell = (WOTSpaceCityCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-//    cell.cityName.textColor = RGBA(77.0, 139.0, 231.0, 1.0);
-//    [cell.cityName setCorenerRadius:10 borderColor:RGBA(77.0, 139.0, 231.0, 1.0)];
     self.selectedindex = indexPath.row;
-    if ([_delegate respondsToSelector:@selector(selectWithCity:)]) {
-        [_delegate selectWithCity:self.selectedindex];
+    if ([_delegate respondsToSelector:@selector(spaceCityScrollView:selectCity:)]) {
+        [_delegate spaceCityScrollView:self selectCity:_cityList[indexPath.row]];
     }
     [self.collectionVIew reloadData];
 }

@@ -11,5 +11,5 @@
 @interface WOTWorkSpaceListVC : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
-@property (strong,nonatomic)NSArray<WOTSpaceModel *> *dataSource;
+@property (strong,nonatomic)NSArray <WOTSpaceModel *> *dataSource;
 @end

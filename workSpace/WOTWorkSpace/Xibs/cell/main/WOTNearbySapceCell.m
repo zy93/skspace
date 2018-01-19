@@ -1,14 +1,14 @@
 //
-//  WOTworkSpacenearCell.m
+//  WOTNearbySapceCell.m
 //  WOTWorkSpace
 //
 //  Created by 张姝枫 on 2017/7/3.
 //  Copyright © 2017年 张姝枫. All rights reserved.
 //
 
-#import "WOTworkSpacenearCell.h"
+#import "WOTNearbySapceCell.h"
 
-@implementation WOTworkSpacenearCell
+@implementation WOTNearbySapceCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
