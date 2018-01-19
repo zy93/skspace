@@ -14,7 +14,17 @@
 
 
 @property (nonatomic, strong) WOTWXPayModel *model;
-@property (nonatomic, strong) WOTMeetingListModel *meetingModel;
-@property (nonatomic, strong) NSDictionary *dic;
+//@property (nonatomic, strong) WOTMeetingListModel *meetingModel;
+//@property (nonatomic, strong) NSDictionary *dic;
+@property (nonatomic, strong) NSString *orderString;
+@property (nonatomic, strong) NSString *orderNum;
+@property (nonatomic, strong) NSString *durationTime;
+@property (nonatomic, strong) NSString *nameStr;
+@property (nonatomic, strong) NSString *startTime;
+@property (nonatomic, strong) NSString *endTime;
+@property (nonatomic, strong) NSNumber *productNum;
+@property (nonatomic, strong) NSString *facilityStr;
+@property (nonatomic, strong) NSNumber *money;
+@property (nonatomic, strong) NSNumber *payType;
 
 @end

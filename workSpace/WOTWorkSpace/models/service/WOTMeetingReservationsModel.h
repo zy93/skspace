@@ -15,6 +15,33 @@
 
 @interface WOTReservationsResponseModel : JSONModel
 
+@property(nonatomic,strong)NSString *appId;
+@property(nonatomic,strong)NSString *body;
+@property(nonatomic,strong)NSString *commodityKind;
+@property(nonatomic,strong)NSString *commodityNumList;
+@property(nonatomic,strong)NSString *dealMode;
+@property(nonatomic,strong)NSString *deductionTimes;
+@property(nonatomic,strong)NSString *endTime;
+@property(nonatomic,strong)NSString *evaluate;
+@property(nonatomic,strong)NSString *finishTime;
+@property(nonatomic,strong)NSString *orderNum;
+@property(nonatomic,strong)NSString *orderState;
+@property(nonatomic,strong)NSString *orderTime;
+@property(nonatomic,strong)NSString *payObject;
+@property(nonatomic,strong)NSString *spaceName;
+@property(nonatomic,strong)NSString *starTime;
+@property(nonatomic,strong)NSString *userName;
+@property(nonatomic,strong)NSString *userTel;
+@property(nonatomic,strong)NSNumber *commodityNum;
+@property(nonatomic,strong)NSNumber *contractMode;
+@property(nonatomic,strong)NSNumber *deduction;
+@property(nonatomic,strong)NSNumber *money;
+@property(nonatomic,strong)NSNumber *payMode;
+@property(nonatomic,strong)NSNumber *payType;
+@property(nonatomic,strong)NSNumber *productNum;
+@property(nonatomic,strong)NSNumber *spaceId;
+@property(nonatomic,strong)NSNumber *userId;
+@property(nonatomic,strong)NSNumber *conferenceDetailsId;
 @end
 
 

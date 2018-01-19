@@ -41,6 +41,8 @@
 #import "SKFacilitatorModel.h"
 #import "WOTMeetingHistoryModel.h"
 #import "WOTWorkStationHistoryModel.h"
+#import "SKAliPayModel.h"
+#import "SKOrderStringModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -740,7 +742,6 @@
                                userId:(NSNumber *)userId
                              response:(response)response
 {
-    
     NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conferencedetails/subscribyTime"];
     NSDictionary *dic = @{
                           @"spaceId":spaceid,
@@ -749,8 +750,7 @@
                           @"endTime":endTime,
                           @"spaceName":spaceName,
                           @"company":meetingName,
-                          @"userId":userId,
-                          @"appId":YLGTEST_APPID
+                          @"userId":userId
                           };
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTReservationsResponseModel_msg *model = [[WOTReservationsResponseModel_msg alloc]initWithDictionary:responseobj error:nil];
@@ -765,6 +765,7 @@
                          spaceName:(NSString *)spaceName
                        meetingName:(NSString *) meetingName
                             userId:(NSNumber *)userId
+                              body:(NSString *)body
                           response:(response)response
 {
     NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conferencedetails/subscribyTime1"];
@@ -776,7 +777,7 @@
                           @"spaceName":spaceName,
                           @"company":meetingName,
                           @"userId":userId,
-                          @"appId":YLGTEST_APPID
+                          @"body":body
                           };
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTReservationsResponseModel_msg *model = [[WOTReservationsResponseModel_msg alloc]initWithDictionary:responseobj error:nil];
@@ -903,13 +904,35 @@
     } response:response];
 }
 
-#pragma mark - 订单
+#pragma mark - 微信订单
 +(void)generateOrderWithParam:(NSDictionary *)param response:(response)response
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/wxAddOrder",HTTPBaseURL];
     
     [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
         WOTWXPayModel_msg *model = [[WOTWXPayModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
+#pragma mark - 支付宝订单
++(void)submitAlipayOrderWith:(NSDictionary *)parm response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/zfbAddOrder",HTTPBaseURL];
+    
+    [WOTHTTPNetwork doRequestWithParameters:parm useUrl:url  complete:^JSONModel *(id responseobj) {
+        SKAliPayModel_msg *model = [[SKAliPayModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
+#pragma mark - 得到支付宝的OrderString
++(void)getOrderString:(NSDictionary *)parm response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Ali/produceOrderString",HTTPBaseURL];
+    
+    [WOTHTTPNetwork doRequestWithParameters:parm useUrl:url  complete:^JSONModel *(id responseobj) {
+        SKOrderStringModel *model = [[SKOrderStringModel alloc]initWithDictionary:responseobj error:nil];
         return  model;
     } response:response];
 }

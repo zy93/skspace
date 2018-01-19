@@ -2302,43 +2302,90 @@
                                             <outlet property="titleLab" destination="70N-HK-i6K" id="yqm-6a-yFM"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTOrderForPaymentCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="WOTOrderForPaymentCell" rowHeight="49" id="nVV-4d-A99" customClass="WOTOrderForPaymentCell">
-                                        <rect key="frame" x="0.0" y="791" width="375" height="49"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTOrderForPaymentCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="WOTOrderForPaymentCell" rowHeight="98" id="nVV-4d-A99" customClass="WOTOrderForPaymentCell">
+                                        <rect key="frame" x="0.0" y="791" width="375" height="98"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nVV-4d-A99" id="PMZ-Hh-Uc9">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="97.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera_icon" translatesAutoresizingMaskIntoConstraints="NO" id="sJM-aC-uMe">
-                                                    <rect key="frame" x="20" y="14.5" width="25" height="20"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alipay_icon" translatesAutoresizingMaskIntoConstraints="NO" id="sJM-aC-uMe" userLabel="alipayImageView">
+                                                    <rect key="frame" x="20" y="10" width="23" height="23"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付宝支付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efB-Dm-OcH">
-                                                    <rect key="frame" x="65" y="14" width="87" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付宝支付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efB-Dm-OcH" userLabel="alipayTitle">
+                                                    <rect key="frame" x="63" y="10.5" width="87" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="service" translatesAutoresizingMaskIntoConstraints="NO" id="Ean-Xe-aX3">
-                                                    <rect key="frame" x="335" y="15" width="20" height="19"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVD-AF-OQK" userLabel="alipayButton">
+                                                    <rect key="frame" x="340" y="10.5" width="15" height="22"/>
+                                                    <state key="normal" image="select_blue"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3C-OY-fa2">
+                                                    <rect key="frame" x="20" y="10" width="335" height="30"/>
+                                                    <connections>
+                                                        <action selector="choosePayWay:" destination="nVV-4d-A99" eventType="touchUpInside" id="vpq-n3-wfq"/>
+                                                    </connections>
+                                                </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F81-2n-FpQ" userLabel="lineView">
+                                                    <rect key="frame" x="10" y="48" width="365" height="1"/>
+                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="fHM-FA-UBt"/>
+                                                    </constraints>
+                                                </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_icon" translatesAutoresizingMaskIntoConstraints="NO" id="8dE-iv-cQq" userLabel="wxpayImageView">
+                                                    <rect key="frame" x="20" y="64" width="23" height="23"/>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信支付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exH-0W-s5B">
+                                                    <rect key="frame" x="63" y="64" width="69.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iv-jP-GDj" userLabel="wxpayButton">
+                                                    <rect key="frame" x="340" y="64.5" width="15" height="22"/>
+                                                    <state key="normal" image="unselect_white"/>
+                                                </button>
+                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNk-5u-3ri">
+                                                    <rect key="frame" x="20" y="64" width="335" height="30"/>
+                                                    <connections>
+                                                        <action selector="choosePayWay:" destination="nVV-4d-A99" eventType="touchUpInside" id="aLc-Sq-esd"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Ean-Xe-aX3" secondAttribute="trailing" constant="20" id="4po-DH-7E5"/>
-                                                <constraint firstItem="sJM-aC-uMe" firstAttribute="centerY" secondItem="PMZ-Hh-Uc9" secondAttribute="centerY" id="JRI-IK-krD"/>
-                                                <constraint firstItem="efB-Dm-OcH" firstAttribute="leading" secondItem="sJM-aC-uMe" secondAttribute="trailing" constant="20" id="RwK-t1-daG"/>
-                                                <constraint firstItem="efB-Dm-OcH" firstAttribute="centerY" secondItem="PMZ-Hh-Uc9" secondAttribute="centerY" id="VSh-SW-8Hk"/>
-                                                <constraint firstItem="sJM-aC-uMe" firstAttribute="leading" secondItem="PMZ-Hh-Uc9" secondAttribute="leading" constant="20" id="eAP-Wi-O25"/>
-                                                <constraint firstItem="Ean-Xe-aX3" firstAttribute="centerY" secondItem="PMZ-Hh-Uc9" secondAttribute="centerY" id="lvL-4e-4eB"/>
+                                                <constraint firstItem="E3C-OY-fa2" firstAttribute="top" secondItem="sJM-aC-uMe" secondAttribute="top" id="7wb-tk-AOr"/>
+                                                <constraint firstItem="sJM-aC-uMe" firstAttribute="bottom" secondItem="F81-2n-FpQ" secondAttribute="top" constant="-15" id="ErY-RN-mnS"/>
+                                                <constraint firstAttribute="trailing" secondItem="F81-2n-FpQ" secondAttribute="trailing" id="FTO-nZ-6Zp"/>
+                                                <constraint firstItem="F81-2n-FpQ" firstAttribute="centerY" secondItem="PMZ-Hh-Uc9" secondAttribute="centerY" id="Pge-6C-XdC"/>
+                                                <constraint firstItem="E3C-OY-fa2" firstAttribute="trailing" secondItem="FVD-AF-OQK" secondAttribute="trailing" id="TKv-jp-mtb"/>
+                                                <constraint firstItem="FVD-AF-OQK" firstAttribute="centerY" secondItem="sJM-aC-uMe" secondAttribute="centerY" id="XLj-dy-Gji"/>
+                                                <constraint firstItem="efB-Dm-OcH" firstAttribute="leading" secondItem="sJM-aC-uMe" secondAttribute="trailing" constant="20" id="ZfQ-sn-0e2"/>
+                                                <constraint firstItem="efB-Dm-OcH" firstAttribute="centerY" secondItem="sJM-aC-uMe" secondAttribute="centerY" id="a6m-mq-p8d"/>
+                                                <constraint firstItem="F81-2n-FpQ" firstAttribute="leading" secondItem="PMZ-Hh-Uc9" secondAttribute="leading" constant="10" id="ej9-IO-bDP"/>
+                                                <constraint firstItem="exH-0W-s5B" firstAttribute="leading" secondItem="efB-Dm-OcH" secondAttribute="leading" id="fAT-hj-DsE"/>
+                                                <constraint firstItem="8dE-iv-cQq" firstAttribute="top" secondItem="F81-2n-FpQ" secondAttribute="bottom" constant="15" id="gJQ-bZ-Opl"/>
+                                                <constraint firstItem="pNk-5u-3ri" firstAttribute="leading" secondItem="8dE-iv-cQq" secondAttribute="leading" id="iYc-kv-7ez"/>
+                                                <constraint firstItem="pNk-5u-3ri" firstAttribute="trailing" secondItem="0iv-jP-GDj" secondAttribute="trailing" id="ksN-ux-2P8"/>
+                                                <constraint firstItem="0iv-jP-GDj" firstAttribute="trailing" secondItem="FVD-AF-OQK" secondAttribute="trailing" id="ovV-V4-3pI"/>
+                                                <constraint firstItem="8dE-iv-cQq" firstAttribute="leading" secondItem="sJM-aC-uMe" secondAttribute="leading" id="sG7-xr-Xjd"/>
+                                                <constraint firstItem="0iv-jP-GDj" firstAttribute="centerY" secondItem="8dE-iv-cQq" secondAttribute="centerY" id="sbs-Ti-cO2"/>
+                                                <constraint firstItem="FVD-AF-OQK" firstAttribute="trailing" secondItem="PMZ-Hh-Uc9" secondAttribute="trailingMargin" constant="-5" id="tX2-5B-wMX"/>
+                                                <constraint firstItem="E3C-OY-fa2" firstAttribute="leading" secondItem="sJM-aC-uMe" secondAttribute="leading" id="tyA-PD-Eil"/>
+                                                <constraint firstItem="sJM-aC-uMe" firstAttribute="leading" secondItem="PMZ-Hh-Uc9" secondAttribute="leadingMargin" constant="5" id="xDE-F7-Ke2"/>
+                                                <constraint firstItem="pNk-5u-3ri" firstAttribute="top" secondItem="8dE-iv-cQq" secondAttribute="top" id="ynQ-hi-RRH"/>
+                                                <constraint firstItem="exH-0W-s5B" firstAttribute="top" secondItem="F81-2n-FpQ" secondAttribute="bottom" constant="15" id="zf5-z0-YxT"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="iconImg" destination="sJM-aC-uMe" id="w6i-JD-bfg"/>
-                                            <outlet property="selectImg" destination="Ean-Xe-aX3" id="TwP-D2-HeH"/>
-                                            <outlet property="titleLab" destination="efB-Dm-OcH" id="Rem-L8-1B5"/>
+                                            <outlet property="alipayButton" destination="FVD-AF-OQK" id="0Jq-o3-MMT"/>
+                                            <outlet property="wxpayButton" destination="0iv-jP-GDj" id="k0B-VO-1j9"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTOrderForAmountCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTOrderForAmountCell" rowHeight="52" id="efe-uY-dnY" customClass="WOTOrderForAmountCell">
-                                        <rect key="frame" x="0.0" y="840" width="375" height="52"/>
+                                        <rect key="frame" x="0.0" y="889" width="375" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="efe-uY-dnY" id="KiP-9v-s8x">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
@@ -2766,6 +2813,7 @@
     </scenes>
     <resources>
         <image name="NotInformation" width="139" height="134"/>
+        <image name="alipay_icon" width="23" height="23"/>
         <image name="arrows_down" width="12" height="12"/>
         <image name="backAcssory" width="7" height="13"/>
         <image name="bookStation" width="335" height="190"/>
@@ -3112,11 +3160,13 @@ AAAAAABBAAAAAAAAAAAAAAAAAAASNA
         <image name="lashlight" width="16" height="30"/>
         <image name="lssue_repair" width="56" height="56"/>
         <image name="release_requirements" width="56" height="56"/>
-        <image name="service" width="20" height="19"/>
+        <image name="select_blue" width="15" height="15"/>
         <image name="service_device" width="15" height="11"/>
         <image name="service_time" width="15" height="15"/>
+        <image name="unselect_white" width="15" height="15"/>
         <image name="visitors_appointment" width="56" height="56"/>
         <image name="visitors_heard" width="111" height="111"/>
         <image name="visitors_icon" width="19" height="21"/>
+        <image name="wechat_icon" width="23" height="23"/>
     </resources>
 </document>

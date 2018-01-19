@@ -409,7 +409,10 @@
 {
     NSLog(@"打开评论");
     //[_delegate changeFoldState:tempDate onCellRow:self.stamp];
-    [_delegate showCommentWith:tempDate onCellRow:self.stamp];
+    if ([_delegate respondsToSelector:@selector(showCommentWith:onCellRow:)]) {
+        [_delegate showCommentWith:tempDate onCellRow:self.stamp];
+    }
+    
 }
 
 

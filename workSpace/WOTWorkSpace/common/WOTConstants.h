@@ -55,8 +55,8 @@
 #define UICOLOR_GRAY_b4     UIColorFromRGB(0xf1f1f1) //灰色
 #define UICOLOR_MAIN_TEXT_PLACEHOLDER  RGBA(0,0,31,0.22) //输入框底纹颜色
 
-#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
-//#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
+//#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
+#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
 //#define HTTPBaseURL @"http://192.168.34.80:8080"//石宇驰
 
 //集团的appid
@@ -64,6 +64,8 @@
 #define YLGTEST_APPID @"c81e728d9d4c2f636f067f89cc14862c"//海航集团
 #define QTWORK_APPID  @"eccbc87e4b5ce2fe28308fd9f2a7baf3"//青藤办公
 
+//支付宝支付
+#define AliPayAPPID @"2017072707916012"
 
 //微信支付
 #define APPID @"wxa41b37164b2030d6"
@@ -72,8 +74,6 @@
 #define NOTIFY_URL [NSString stringWithFormat:@"%@/rmb/third_pay/weixin", HTTPBaseURL]
 #define PartnerId @"1288580901"
 #define Partner_Sign_Key @"sczJpiMw6V3YO1lPOSL9VsrueXwrIEiK"
-
-
 
 //NSUserDefault 
 #define LOGIN_STATE_USERDEFAULT @"islogin"

@@ -236,7 +236,7 @@
 //    int day = (int)value / (24 *3600);
     
     NSString *str;
-    str = [NSString stringWithFormat:@"耗时%d分",minute];
+    str = [NSString stringWithFormat:@"%d",minute];
 //    if (day != 0) {
 //
 //        str = [NSString stringWithFormat:@"耗时%d天%d小时%d分%d秒",day,house,minute,second];
@@ -254,6 +254,48 @@
 //        str = [NSString stringWithFormat:@"耗时%d秒",second];
 //
 //    }
+    
+    return str;
+    
+}
+
++(NSString *)dateTimeDifferenceHoursWithStartTime:(NSString *)startTime endTime:(NSString *)endTime{
+    
+    NSDateFormatter *date = [[NSDateFormatter alloc]init];
+    
+    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSDate *startD =[date dateFromString:startTime];
+    
+    NSDate *endD = [date dateFromString:endTime];
+    
+    NSTimeInterval start = [startD timeIntervalSince1970]*1;
+    
+    NSTimeInterval end = [endD timeIntervalSince1970]*1;
+    
+    NSTimeInterval value = end - start;
+    
+    
+    int day = ((int)value)/(3600*24);
+    
+    int house = ((int)value)%(3600*24)/3600;
+    
+    int minute = ((int)value)%(3600*24)%3600/60;
+    
+    NSString *str;
+    if (day != 0) {
+        
+        str = [NSString stringWithFormat:@"%d天%d小时%d分钟",day,house,minute];
+        
+    }else if (day==0 && house !=0) {
+        
+        str = [NSString stringWithFormat:@"%d小时%d分钟",house,minute];
+        
+    }else if (day==0 && house==0 && minute!=0) {
+        
+        str = [NSString stringWithFormat:@"%d分钟",minute];
+        
+    }
     
     return str;
     

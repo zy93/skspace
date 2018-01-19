@@ -10,6 +10,7 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "WOTWXApiManager.h"
+#import <AlipaySDK/AlipaySDK.h>
 //#import "LoginViewController.h"
 
 #define MAP_API_KEY @"47411f2c349b36c1fbdee073cd648149"
@@ -39,6 +40,8 @@
     [WXApi registerApp:APPID enableMTA:YES];
     return YES;
 }
+
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -136,36 +139,66 @@
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"958434094"  appSecret:@"c8126f4af61b6287bd2ce86a54360e7f" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
 }
 
-
-//支付宝支付
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options {
-    if ([url.host isEqualToString:@"safepay"]) {
-        //跳转支付宝钱包进行支付，处理支付结果
-       
-    }else{
-        
-        
-        [WXApi handleOpenURL:url delegate:[WOTWXApiManager sharedManager]];
-        
-    }
-    return YES;
-    
-    
-}
+//- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+//{
+//    if ([url.host isEqualToString:@"safepay"]) {
+//        // 支付跳转支付宝钱包进行支付，处理支付结果
+//        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//            NSLog(@"result = %@",resultDic);
+//        }];
+//        
+//        // 授权跳转支付宝钱包进行支付，处理支付结果
+//        [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
+//            NSLog(@"result = %@",resultDic);
+//            // 解析 auth code
+//            NSString *result = resultDic[@"result"];
+//            NSString *authCode = nil;
+//            if (result.length>0) {
+//                NSArray *resultArr = [result componentsSeparatedByString:@"&"];
+//                for (NSString *subResult in resultArr) {
+//                    if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
+//                        authCode = [subResult substringFromIndex:10];
+//                        break;
+//                    }
+//                }
+//            }
+//            NSLog(@"授权结果 authCode = %@", authCode?:@"");
+//        }];
+//        
+//        
+//    }
+//    return YES;
+//}
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    
+    NSString *strTitle = @"支付结果";
+    static NSString *strMsg;
     if ([url.host isEqualToString:@"safepay"]) {
         //跳转支付宝钱包进行支付，处理支付结果
-      
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+                strMsg = @"支付成功！";
+            }else
+            {
+                strMsg = @"支付失败！";
+            }
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }];
     }else{
         return [WXApi handleOpenURL:url delegate:[WOTWXApiManager sharedManager]];
     }
     return YES;
     
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"clickButtonAtIndex:%d",(int)buttonIndex);
+    NSNotification *notification = [NSNotification notificationWithName:@"buttonLoseResponse" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 

@@ -11,6 +11,9 @@
 #import "UIColor+ColorChange.h"
 #import "WOTUserSingleton.h"
 #import "WOTWXPayModel.h"
+#import "SKAliPayModel.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "SKOrderStringModel.h"
 
 @interface SKGiftBagInfoViewController ()
 @property (nonatomic,strong)UIScrollView *giftBagScrollView;
@@ -217,17 +220,44 @@
         return;
     }
     
+//    UIAlertController *alertController=[UIAlertController alertControllerWithTitle: nil message:message preferredStyle:UIAlertControllerStyleAlert];//创建界面
+    UIAlertController *alertController = [[UIAlertController alloc] init];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+
+    UIAlertAction *wxPayAction = [UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self wxPayMethod];
+    }];
+    
+    UIAlertAction *aliPayAction = [UIAlertAction actionWithTitle:@"支付宝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self aliPayMethod];
+    }];
+    //aliPayMethod
+    //最后将这些按钮都添加到界面上去，显示界面
+    [alertController addAction:aliPayAction];
+    [alertController addAction:wxPayAction];
+    [alertController addAction:cancelAction];
+    [self presentViewController: alertController animated:YES completion:nil];
+
+    
+    
+}
+
+#pragma mark - 微信支付接口
+-(void)wxPayMethod
+{
     NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
                                  @"facilitator":@"1006",
                                  @"carrieroperator":@"1006",
                                  @"body":self.commodityDescribeStr,
-                                 @"total_fee":self.payNumber,//self.payNumber
+                                 @"total_fee":@1,//self.payNumber
                                  @"trade_type":@"APP",
                                  @"commodityKind":self.commodityDescribeStr,
                                  @"productNum":@1,
-                                 @"money":self.paySumNumber,//self.paySumNumber
+                                 @"money":@0.01,//self.paySumNumber
                                  @"payType":@1,
                                  @"payObject":[WOTUserSingleton shareUser].userInfo.userName
                                  };
@@ -248,6 +278,53 @@
     }];
 }
 
+#pragma mark - 支付宝支付接口
+-(void)aliPayMethod
+{
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"commodityKind":self.commodityDescribeStr,
+                                 @"productNum":@1,
+                                 @"money":@0.01,//self.paySumNumber
+                                 @"payType":@1,
+                                 @"payObject":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"body":self.commodityDescribeStr
+                                 };
+    [WOTHTTPNetwork submitAlipayOrderWith:parameters response:^(id bean, NSError *error) {
+        SKAliPayModel_msg *model_msg = (SKAliPayModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            SKAliPayModel *model = model_msg.msg;
+            NSDictionary *parmDict = @{@"appid":AliPayAPPID,
+                                       @"body":model.body,
+                                       @"money":model.money,//model.money
+                                       @"orderNum":model.orderNum
+                                       };
+            [self getOrderString:parmDict orderParam:parameters];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+            return ;
+        }
+    }];
+}
+
+#pragma mark - 获取支付宝orderstring
+-(void)getOrderString:(NSDictionary *)param orderParam:(NSDictionary *)orderParam
+{
+    [WOTHTTPNetwork getOrderString:param response:^(id bean, NSError *error) {
+        SKOrderStringModel *model = (SKOrderStringModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [[AlipaySDK defaultService] payOrder:model.msg fromScheme:AliPayAPPID callback:^(NSDictionary *resultDic) {
+                NSLog(@"reslut ===>= %@",resultDic);
+            }];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+            return ;
+        }
+    }];
+}
 #pragma mark - 实现通知方法
 - (void)InfoNotificationAction:(NSNotification *)notification{
     [self.navigationController popToRootViewControllerAnimated:YES];

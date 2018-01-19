@@ -321,6 +321,8 @@
     _datepickerview.hidden  = NO;
 }
 
+
+#pragma mark - t比较
 - (IBAction)submit:(id)sender {
     NSString *visitorName = self.nameText.text;
     NSString *sex = self.genderValueLab.text;
@@ -344,10 +346,7 @@
         return;
         
     }else if (spaceId.integerValue<=0) {
-        if (![NSString valiMobile:tel]) {
-            [MBProgressHUDUtil showMessage:@"电话格式不正确" toView:self.view];
-            return;
-        }
+        
         [MBProgressHUDUtil showMessage:@"请选择访问社区" toView:self.view];
         return;
     }else if (!type) {
@@ -365,6 +364,10 @@
         return;
     }else if (strIsEmpty(tim)){
         [MBProgressHUDUtil showMessage:@"请选择到访日期" toView:self.view];
+        return;
+    }
+    if (![NSString valiMobile:tel]) {
+        [MBProgressHUDUtil showMessage:@"电话格式不正确" toView:self.view];
         return;
     }
     

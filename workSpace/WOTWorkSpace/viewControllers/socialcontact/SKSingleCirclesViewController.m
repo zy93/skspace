@@ -24,7 +24,7 @@
 #import "WOTUserSingleton.h"
 #import "IQKeyboardManager.h"
 #import "SKAddReply.h"
-#import "SKSingleCirclesViewController.h"
+//#import "SKSingleCirclesViewController.h"
 //#import "CircleofFriendsInfoModel.h"
 //#import "ReplyModel.h"
 
@@ -632,6 +632,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     [super viewWillDisappear:animated];
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
 }
+
 
 
 -(void)viewWillAppear:(BOOL)animated

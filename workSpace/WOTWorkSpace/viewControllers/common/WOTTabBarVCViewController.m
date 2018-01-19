@@ -38,7 +38,6 @@
                // weakSelf.QRcodeStr = model.msg;
                 [WOTSingtleton shared].QRcodeStr = model.msg;
                 WOTOpenDoorView *view = [[WOTOpenDoorView alloc] init];
-                
                 [view showWithController:self];
                 view.btnClick = ^(NSString *str) {
                     CATransition *animation = [CATransition animation];

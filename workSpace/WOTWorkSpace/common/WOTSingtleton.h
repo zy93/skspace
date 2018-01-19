@@ -18,6 +18,11 @@ typedef NS_ENUM(NSInteger, ORDER_TYPE) {
     ORDER_TYPE_SITE,
 };
 
+typedef NS_ENUM(NSInteger,PAY_TYPE){
+    PAY_TYPE_WX,
+    PAY_TYPE_ALI,
+};
+
 typedef NS_ENUM(NSInteger, BUTTON_TYPE) {
     BUTTON_TYPE_STARTTIME,
     BUTTON_TYPE_ENDTIME,
@@ -38,6 +43,8 @@ typedef NS_ENUM(NSInteger, BUTTON_TYPE) {
 @property (nonatomic, assign) ORDER_TYPE orderType;
 
 @property (nonatomic, assign) BUTTON_TYPE buttonType;
+
+@property (nonatomic, assign) PAY_TYPE payType;
 //距离最近的空间
 @property (nonatomic, strong) WOTLocationModel *nearbySpace;
 

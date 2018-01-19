@@ -10,6 +10,10 @@
 #import "WOTConstants.h"
 
 
+@interface  WOTBaseNavigationController ()
+
+@end
+
 @implementation WOTBaseNavigationController 
 
 
@@ -72,6 +76,7 @@
 {
     return  self.viewControllers.count >1? self.viewControllers[self.viewControllers.count-2]:nil;
 }
+
 
 /*
 #pragma mark - Navigation
