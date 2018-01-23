@@ -16,9 +16,11 @@
 @end
 
 @interface WOTCityTileView : UIView
-
+@property (nonatomic ,strong) NSArray *cityList;
 @property (nonatomic,copy)id <WOTCityTileViewDelegate>tiledelegate;
 
 -(WOTCityTileView *)initWithFrame:(CGRect)frame;
+
+
 
 @end

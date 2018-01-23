@@ -20,12 +20,12 @@
     return  instance;
 }
 
-- (NSMutableArray *)spaceCityArray {
-    if (_spaceCityArray == nil) {
-        _spaceCityArray = [NSMutableArray array];
-    }
-    return _spaceCityArray;
-}
+//- (NSMutableArray *)spaceCityArray {
+//    if (_spaceCityArray == nil) {
+//        _spaceCityArray = [NSMutableArray array];
+//    }
+//    return _spaceCityArray;
+//}
 -(NSArray *)ballTitle{
     if (_ballTitle ==  nil) {
         _ballTitle = @[@"资讯",@"友邻",@"订工位",@"订会议室",@"开门",@"活动",@"访客",@"礼包",@"意见反馈"];

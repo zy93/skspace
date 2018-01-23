@@ -10,6 +10,10 @@
 
 @interface WOTworkSpaceScrollVIewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
 @property (nonatomic,copy) void (^collectionImageViewBlock)(NSInteger index);
+
+@property (nonatomic, strong) NSArray *cityList;
+
+
+
 @end

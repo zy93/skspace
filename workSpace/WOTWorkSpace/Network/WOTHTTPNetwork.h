@@ -14,6 +14,8 @@
 typedef void(^response)(id bean,NSError *error);
 
 @interface WOTHTTPNetwork : NSObject
+
+#pragma mark - 用户
 /**
  * 登录接口
  @param telOrEmail  登录账号手机号或邮箱
@@ -51,6 +53,15 @@ typedef void(^response)(id bean,NSError *error);
 +(void)updatePassWordWithVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass response:(response)response;
 
 
+
+#pragma mark- 空间
+
+/**
+ 获取存在空间的城市列表
+
+ @param response 响应回调
+ */
++(void)getCityListResponse:(response)response;
 /**
  * 根据城市获取所有空间接口
  @param city  城市名称 传入城市名称根据城市筛选，不传查询全部

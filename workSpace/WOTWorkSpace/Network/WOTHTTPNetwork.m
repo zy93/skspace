@@ -41,6 +41,7 @@
 #import "SKFacilitatorModel.h"
 #import "WOTMeetingHistoryModel.h"
 #import "WOTWorkStationHistoryModel.h"
+#import "WOTCityModel.h"
 #import "SKAliPayModel.h"
 #import "SKOrderStringModel.h"
 
@@ -256,22 +257,30 @@
     } response:response];
 }
 
+#pragma mark - 空间
++(void)getCityListResponse:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findCityList"];
+
+    [self doRequestWithParameters:nil useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        WOTCityModel_msg * spacemodel = [[WOTCityModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  spacemodel;
+    } response:response];
+}
+
 +(void)getAllSpaceWithCity:(NSString *)city block:(response)response{
     
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/find"];
-    NSDictionary *parameters;
     //在原来的基础上添加集团id
-    if (city != nil) {
-        parameters = @{@"city":city,
-                       @"pageNo":@1,
-                       @"pageSize":@1000
-                       };//原来
+   NSMutableDictionary * parameters = [@{@"pageNo":@1,
+                                         @"pageSize":@1000} mutableCopy];
+    if (city) {
+        [parameters setValue:city forKey:@"city"];
     }
 
     [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
         WOTSpaceModel_msg * spacemodel = [[WOTSpaceModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  spacemodel;
-        
         
     } response:response];
 }
@@ -637,7 +646,7 @@
 +(void)getMyAppointmentResponse:(response)response
 {
     
-    NSString *applyurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/find"];
+    NSString *applyurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/findByUserId"];
     NSDictionary *parameters = @{
                                  @"pageNo":@(1),
                                  @"pageSize":@(1000),

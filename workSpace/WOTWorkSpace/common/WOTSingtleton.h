@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, BUTTON_TYPE) {
 
 @interface WOTSingtleton : NSObject
 +(instancetype)shared;
-@property(nonatomic,strong)NSMutableArray *spaceCityArray;
+//@property(nonatomic,strong)NSMutableArray *spaceCityArray;
 @property(nonatomic,strong)NSArray *ballTitle;
 @property(nonatomic,strong)NSArray *ballImage;
 @property(nonatomic,assign)bool isuserLogin;
