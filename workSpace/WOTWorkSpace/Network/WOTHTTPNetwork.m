@@ -647,7 +647,7 @@
 +(void)getMyAppointmentResponse:(response)response
 {
     
-    NSString *applyurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/find"];
+    NSString *applyurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Visitor/findByUserId"];
     NSDictionary *parameters = @{
                                  @"pageNo":@(1),
                                  @"pageSize":@(1000),
