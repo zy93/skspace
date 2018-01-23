@@ -337,10 +337,9 @@
 
 +(void)getSpaceWithLocation:(CGFloat)lat lon:(CGFloat)lon response:(response)response
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Space/findNearSpace"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Space/findNearSpace"];
     NSDictionary * parameters = @{@"lng":@(lon),
-                                  @"lat":@(lat),
-                                  @"appId":YLGTEST_APPID};
+                                  @"lat":@(lat)};
     
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
         
@@ -705,7 +704,8 @@
     NSDictionary *dic = @{@"spaceId":spaceid,
                           @"conferenceType":type,
                           @"pageNo":@(1),
-                          @"pageSize":@(100)
+                          @"pageSize":@(100),
+                          @"conferenceState":@(1)
                           };
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTMeetingListModel_msg *model = [[WOTMeetingListModel_msg alloc]initWithDictionary:responseobj error:nil];

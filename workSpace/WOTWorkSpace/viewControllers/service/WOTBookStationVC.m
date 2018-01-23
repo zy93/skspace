@@ -114,7 +114,7 @@
     if ([cityName isEqualToString:@""]) {
         self.notInformationImageView.hidden = NO;
         self.notBookStationInformationLabel.hidden = NO;
-        self.notBookStationInformationLabel.text = @"亲，暂时没有会议室哦！";
+        self.notBookStationInformationLabel.text = @"亲，没有选择城市哦！";
         [self.tableIView  reloadData];
         //return;
     }else
@@ -135,7 +135,7 @@
                 } else {
                     self.notInformationImageView.hidden = NO;
                     self.notBookStationInformationLabel.hidden = NO;
-                    self.notBookStationInformationLabel.text = @"亲，暂时没有会议室哦！";
+                    self.notBookStationInformationLabel.text = @"亲，没有选择城市哦！";
                     NSLog(@"没有数据");
                 }
                 //[self.table reloadData];
@@ -170,7 +170,7 @@
     }
 }
 
-
+#pragma mark - 请求城市列表
 -(void)createRequestCity
 {
 //    __weak typeof(self) weakSelf = self;
@@ -183,6 +183,7 @@
         [self createRequestCityList:list.msg.list];
     }];
 }
+
 
 -(void)createRequestCityList:(NSArray *)array
 {
@@ -244,7 +245,9 @@
         //NSLog(@"测试：%@",model);
         //待开发
         bookcell.spaceName.text =model.spaceName;// @"方圆大厦-众创空间";
-        [bookcell.spaceImage sd_setImageWithURL:[model.spacePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+        NSArray  *array = [model.spacePicture componentsSeparatedByString:@","];
+        NSString *imageUrl = [array firstObject];
+        [bookcell.spaceImage sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
         bookcell.stationNum.text  = [NSString stringWithFormat:@"地址：%@",model.spaceSite]; //@"23个工位可以预定";
         bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",model.onlineLocationPrice];//@"¥123元／天";
         bookcell.delegate = self;

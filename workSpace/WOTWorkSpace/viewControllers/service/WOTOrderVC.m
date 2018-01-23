@@ -38,7 +38,7 @@
 #define uitableCell @"uitableCell"
 #define paymentCell @"paymentCell"
 
-@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate>
+@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,UIGestureRecognizerDelegate>
 {
     NSArray *tableList;
     NSArray *mettingReservationList; //会议室已预订时间数组
@@ -94,6 +94,7 @@
     // Do any additional setup after loading the view.
 //    self.table.separatorStyle = UITableViewCellSelectionStyleNone;
    // NSNotification *LoseResponse = [NSNotification notificationWithName:@"buttonLoseResponse" object:nil];
+    
    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(backMainView:)
                                                 name:@"buttonLoseResponse" object:nil];
@@ -114,6 +115,7 @@
     }
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -159,22 +161,26 @@
         weakSelf.datepickerview.hidden = YES;
         NSString *selecTime = [NSString stringWithFormat:@"%04ld/%02ld/%02ld 00:00:00",year, month, day];
         weakSelf.isValidTime = [weakSelf.judgmentTime judgementTimeWithYear:year month:month day:day];
-        weakSelf.reservationDate = selecTime;
-        WOTOrderForSelectDateCell *cell = [weakSelf.table cellForRowAtIndexPath:weakSelf.selectCellIndex];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [cell.dateLab setText:[selecTime substringToIndex:10]];
-        });
+        
+        if (weakSelf.isValidTime) {
+            weakSelf.reservationDate = selecTime;
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
+            weakSelf.datepickerview.hidden  = NO;
+        }
         if ([WOTSingtleton shared].orderType != ORDER_TYPE_BOOKSTATION) {
             [weakSelf requestMeetingReservationsInfo];
         }else {
-            if (weakSelf.selectCellIndex.row == 1) {
-                weakSelf.reservationStationStartDate = selecTime;
-            }
-            else {
-                weakSelf.reservationStationEndDate = selecTime;
-            }
             if (weakSelf.isValidTime) {
                 weakSelf.datepickerview.hidden  = YES;
+                
+                if (weakSelf.selectCellIndex.row == 1) {
+                    weakSelf.reservationStationStartDate = selecTime;
+                }
+                else {
+                    weakSelf.reservationStationEndDate = selecTime;
+                }
                 [weakSelf Timedisplay:selecTime];
             }else
             {
@@ -274,7 +280,7 @@
             self.spaceId = self.spaceModel.spaceId;
             self.commodityNum = self.spaceModel.spaceId;
             self.commodityKind = @"工位";
-            self.productNum = @(1);
+            self.productNum = @(self.reservationStationNumber);
             self.starTime = self.reservationStationStartDate;
             self.endTime =  self.reservationStationEndDate;
             self.money = @(self.costNumber);
@@ -450,7 +456,9 @@
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_BOOKSTATION:
             {
-                [cell.infoImg  sd_setImageWithURL:[_spaceModel.spacePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+                NSArray  *array = [_spaceModel.spacePicture componentsSeparatedByString:@","];
+                NSString *imageUrl = [array firstObject];
+                [cell.infoImg  sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _spaceModel.spaceName;
                 cell.dailyRentLabel.text = [NSString stringWithFormat:@"剩余工位：%ld",self.stationTotalNumber.integerValue];
             }
@@ -458,7 +466,9 @@
             case ORDER_TYPE_SITE:
             case ORDER_TYPE_MEETING:
             {
-                [cell.infoImg  sd_setImageWithURL:[_meetingModel.conferencePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+                NSArray  *array = [_meetingModel.conferencePicture componentsSeparatedByString:@","];
+                NSString *imageUrl = [array firstObject];
+                [cell.infoImg  sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _meetingModel.conferenceName;
                 cell.dailyRentLabel.text = _meetingModel.location;
             }
@@ -474,7 +484,13 @@
             cell = [[WOTOrderForSelectDateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTOrderForSelectDateCell"];
         }
         [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
-        
+//        if (self.isValidTime) {
+//            [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
+//        }else
+//        {
+//            [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:self.view];
+//            self.datepickerview.hidden  = NO;
+//        }
         if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
             if (indexPath.row == 1) {
                 [cell.dateNameLab setText:@"开始日期："];
@@ -507,6 +523,7 @@
         if (cell == nil) {
             cell = [[WOTOrderForBookStationCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForBookStationCell"];
         }
+        cell.maxNumber = self.stationTotalNumber;
         cell.delegate = self;
         return cell;
     }
@@ -661,7 +678,12 @@
     NSString *startDate =[self.reservationStationStartDate substringToIndex:10];
     NSString *endDate = [self.reservationStationEndDate substringToIndex:10];
     if ([self.judgmentTime compareDate:startDate withDate:endDate]) {
+        WOTOrderForSelectDateCell *cell = [self.table cellForRowAtIndexPath:self.selectCellIndex];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
+        });
         [self imputedPriceAndLoadCost];
+        
     } else {
         [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
         _datepickerview.hidden  = NO;
@@ -948,6 +970,12 @@
             [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
         }
     }];
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [super touchesBegan:touches withEvent:event];
+    self.datepickerview.hidden = YES;
 }
 
 -(NSString *)payWayStr

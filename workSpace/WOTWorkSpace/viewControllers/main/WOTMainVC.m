@@ -204,7 +204,7 @@ int a = 0;
         NSLog(@"lat:%f,lon:%f",lat,lon);
         [WOTHTTPNetwork getSpaceWithLocation:lat lon:lon response:^(id bean, NSError *error) {
             [WOTSingtleton shared].nearbySpace = ((WOTLocationModel_Msg*)bean).msg;
-            
+            NSLog(@"最近空间：%@",[WOTSingtleton shared].nearbySpace.spaceName);
         }];
     }];
     

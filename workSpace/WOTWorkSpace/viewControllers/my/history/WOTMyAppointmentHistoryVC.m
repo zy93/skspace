@@ -126,6 +126,7 @@
         cell.firstLab.text = [NSString stringWithFormat:@"访问对象：%@",model.targetName];
        
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = model;
     
     return cell;

@@ -102,8 +102,8 @@
     
     [self.giftBagInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.giftBagImageView.mas_bottom);
-        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(10);
-        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-10);
+        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(15);
+        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-15);
         make.height.equalTo(@100);
     }];
 
@@ -119,33 +119,33 @@
 
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.giftBagNameLabel.mas_bottom).with.offset(5);
-        make.left.equalTo(self.giftBagInfoView.mas_left).with.offset(10);
-        make.right.equalTo(self.giftBagInfoView.mas_right).with.offset(-10);
+        make.left.equalTo(self.giftBagInfoView.mas_left).with.offset(20);
+        make.right.equalTo(self.giftBagInfoView.mas_right).with.offset(-20);
         make.height.mas_offset(1);
     }];
 
     [self.voucherImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.lineView.mas_bottom).with.offset(10);
-        make.left.equalTo(self.giftBagInfoView.mas_left).with.offset(10);
+        make.left.equalTo(self.giftBagInfoView.mas_left).with.offset(20);
         make.height.mas_offset(26);
         make.width.mas_offset(40);
     }];
 
     [self.voucherInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.voucherImageView);
-        make.left.equalTo(self.voucherImageView.mas_right).with.offset(10);
+        make.left.equalTo(self.voucherImageView.mas_right).with.offset(20);
     }];
 
     [self.giftBagInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.giftBagInfoView.mas_bottom).with.offset(5);
-        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(5);
-        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-5);
+        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(20);
+        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-20);
     }];
 
     [self.explainLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.giftBagInfoLabel.mas_bottom).with.offset(10);
-        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(5);
-        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-5);
+        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(20);
+        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-20);
     }];
 
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -169,7 +169,7 @@
 
     [self.moneyNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.paymentLabel);
-        make.left.equalTo(self.paymentLabel.mas_right).with.offset(5);
+        make.left.equalTo(self.paymentLabel.mas_right).with.offset(10);
     }];
 
     [self.payButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -450,7 +450,7 @@
         _explainLabel.preferredMaxLayoutWidth = (self.view.frame.size.width -10.0 * 2);
         [_explainLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
         _explainLabel.numberOfLines =0;
-        NSString *explainLabelStr = @"企业工位代金券使用说明：\n\n1. 使用范围：尚科社区全国任意社区；\n\n2. 限制条件：此工位代金券仅限订购优客工场中的开放工位；\n\n3. 有效期：每次购买礼包时，所获得的代金券有效期均为从使用礼包后起3个月内；\n\n4. 使用方法：通过优客工场web网站，app预定工位时，结算流程中选择“企业支付”，并选择有该代金券的企业账户，选中代金券，即可抵扣现金使用；\n\n5. 使用说明：工位预订单次消费不限代金券使用数量，直至订单金额抵扣为0元，如代金券抵扣金额超过实际金额，扣除的整张代金券不予找零；\n\n6. 过期说明：代金券超过有效截止日期之后，将无法使用，并不予返赠，请优先使用即将过期的代金券。";
+        NSString *explainLabelStr = @"礼包说明：\n\n1. 使用范围：尚科社区全国任意社区。\n\n2. 限制条件：限制条件：此礼包内工位与会议室使用时长只限开放工位及开放会议室使用。\n\n3. 有效期：永久有效。\n\n4. 使用方法：购买礼包后，通过尚科社区APP、微信公众号预定工位或会议室，系统自动扣除相应时间。\n\n5. 使用说明：工位使用时间，将根据客户具体使用时间扣除。会议室时间将按照预定时长扣除。\n";
         _explainLabel.text = explainLabelStr;
     }
     return _explainLabel;

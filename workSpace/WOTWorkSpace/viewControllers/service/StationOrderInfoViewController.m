@@ -62,7 +62,8 @@
     self.bookStationScrollView = [[UIScrollView alloc] init];
     [self.view addSubview:self.bookStationScrollView];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"确认订单";
+    self.navigationItem.title = @"订单详情";
+   
     self.navigationItem.leftBarButtonItem = [self customLeftBackButton];
     
     self.contentView = [UIView new];
@@ -194,7 +195,7 @@
     [self.bookStationScrollView addSubview:self.attentionLabel];
     
     self.attentionInfoLabel = [[UILabel alloc] init];
-    self.attentionInfoLabel.text = @" 您将被安排在优客工场A层 \n 请携带有效身份证件在前台办理进场 \n 您也可以在预定前一天23：59前取消订单";
+    self.attentionInfoLabel.text = @" 您将被安排在开放办公区域 \n 请携带有效身份证件在前台办理进场 \n 您也可以在预定前一天23：59前取消订单";
     self.attentionInfoLabel.numberOfLines = 0;
     self.attentionInfoLabel.font = [UIFont systemFontOfSize:13.0];
     self.attentionInfoLabel.textColor = [UIColor grayColor];

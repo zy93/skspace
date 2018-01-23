@@ -35,6 +35,8 @@
     // Configure the view for the selected state
 }
 
+
+
 - (IBAction)subButton:(id)sender {
     _orderNumberInt = [self.orderNumber.text intValue];
     _orderNumberInt -=1;
@@ -50,20 +52,21 @@
     }
 }
 
+
 - (IBAction)addButton:(id)sender {
     _orderNumberInt = [self.orderNumber.text intValue];
     _orderNumberInt +=1;
     //需要更改
-//    if (_orderNumberInt > [self.spaceModel.alreadyTakenNum intValue]) {
-//        [MBProgressHUDUtil showMessage:@"数量超过剩余最大工位数量" toView:self.superview];
-//    }else
-//    {
+    if (_orderNumberInt > [self.maxNumber intValue]) {
+        [MBProgressHUDUtil showMessage:@"数量超过剩余最大工位数量" toView:self.superview];
+    }else
+    {
          [WOTSingtleton shared].buttonType = BUTTON_TYPE_ADDBUTTON;
         self.orderNumber.text =  [NSString stringWithFormat:@"%d",_orderNumberInt];
         if ([_delegate respondsToSelector:@selector(changeValue:)]) {
             [_delegate changeValue:self];
         }
-//    }
+    }
     
 }
 

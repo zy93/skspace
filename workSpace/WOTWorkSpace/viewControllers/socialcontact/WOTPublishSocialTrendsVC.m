@@ -10,15 +10,13 @@
 #import "WOTImageCollectionViewCell.h"
 #import "WOTPhotosBaseUtils.h"
 #import <Photos/Photos.h>
-//#import "ZSImagePickerController.h"
+#import "ZSImagePickerController.h"
 #import "WOTMapManager.h"
 #import "MBProgressHUD+Extension.h"
 #import "ZLPhotoActionSheet.h"
 
 #define TextViewPlaceholder @"想你所想，写你想讲..."
-@interface WOTPublishSocialTrendsVC ()<UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource
-//,ZSImagePickerControllerDelegate
->
+@interface WOTPublishSocialTrendsVC ()<UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,ZSImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     ZLPhotoActionSheet *actionSheet;
 }
@@ -75,7 +73,19 @@
 }
 
 -(void)viewWillLayoutSubviews{
- _viewHeight.constant = (SCREEN_WIDTH-20)/3.5 * ceil(_photosArray.count*0.3) + 30;
+    int lineNum;
+    if ((self.photosArray.count+1) < 3) {
+        lineNum = 1;
+    }else
+    {
+        if ((self.photosArray.count+1)%3 == 0) {
+            lineNum = ((int)self.photosArray.count+1) /3;
+        }else
+        {
+            lineNum = ((int)self.photosArray.count+1) /3+1;
+        }
+    }
+    _viewHeight.constant = (SCREEN_WIDTH-20)/3.5 * lineNum + 30;
 }
 
 -(void)loadLoaction
@@ -127,8 +137,15 @@
     [self configNaviRightItemWithTitle:@"发布" textColor:UICOLOR_MAIN_TEXT];
     
 }
+
+#pragma mark - 发布消息
 -(void)rightItemAction{
   //TODO:调用接口发布动态消息
+    
+    if ([_textView.text isEqualToString:TextViewPlaceholder] || [_textView.text isEqualToString:@""]) {
+        [MBProgressHUDUtil showMessage:@"请填写发布内容！" toView:self.view];
+        return;
+    }
     NSMutableArray *arr =  self.photosArray;
     [arr removeObjectAtIndex:0];
     [MBProgressHUDUtil showLoadingWithMessage:@"发布中" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
@@ -151,6 +168,7 @@
         }];
     }];
 }
+
 - (IBAction)createNewLocation:(id)sender {
     
 }
@@ -214,33 +232,72 @@
 //选择了某个cell
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     __weak typeof(self) weakSelf = self;
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     if (indexPath.row == 0) {
-//        WOTPhotosBaseUtils *photo = [[WOTPhotosBaseUtils alloc]init];
-//        photo.onlyOne = NO;
-//        photo.vc = self;
-//        
-//        [photo showSelectedPhotoSheet];
-    }
-    
-    if (!actionSheet) {
-        actionSheet = [[ZLPhotoActionSheet alloc] init];
-        actionSheet.maxPreviewCount = 20;
-        actionSheet.maxSelectCount = 9;
-        actionSheet.sender = self;
-        [actionSheet setSelectImageBlock:^(NSArray<UIImage *> *images, NSArray<PHAsset *> *assets, BOOL isOriginal){
-            if (_photosArray.count<10) {
-                  [weakSelf.photosArray addObjectsFromArray:images];
-            } else {
-                [MBProgressHUDUtil showMessage:@"最多选择9张照片" toView:weakSelf.view];
-            }
-            [weakSelf.collectionView reloadData];
-            [weakSelf viewWillLayoutSubviews];
+        UIAlertController *alertController = [[UIAlertController alloc] init];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
         }];
         
+        UIAlertAction *wxPayAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //[self wxPayMethod];
+            [self openCamera];
+        }];
+        
+        UIAlertAction *aliPayAction = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //[self aliPayMethod];
+            if (!actionSheet) {
+                actionSheet = [[ZLPhotoActionSheet alloc] init];
+                actionSheet.maxPreviewCount = 0;
+                actionSheet.maxSelectCount = 9;
+                actionSheet.sender = self;
+                [actionSheet setSelectImageBlock:^(NSArray<UIImage *> *images, NSArray<PHAsset *> *assets, BOOL isOriginal){
+                    [weakSelf.photosArray removeAllObjects];
+                    [weakSelf.photosArray addObject:[weakSelf createAddImage]];
+                    if (_photosArray.count<10) {
+                        [weakSelf.photosArray addObjectsFromArray:images];
+                    } else {
+                        [MBProgressHUDUtil showMessage:@"最多选择9张照片" toView:weakSelf.view];
+                    }
+                    [weakSelf.collectionView reloadData];
+                    [weakSelf viewWillLayoutSubviews];
+                }];
+                
+            }
+            //[actionSheet showPreviewAnimated:YES];
+            [actionSheet showPhotoLibrary];
+            
+        }];
+        //aliPayMethod
+        //最后将这些按钮都添加到界面上去，显示界面
+        [alertController addAction:aliPayAction];
+        [alertController addAction:wxPayAction];
+        [alertController addAction:cancelAction];
+        [self presentViewController: alertController animated:YES completion:nil];
     }
-    [actionSheet showPreviewAnimated:YES];
+    
+    
+    
+    
+}
+
+- (void)openCamera
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
+    //判断是否可以打开照相机
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
+    else
+    {
+        [MBProgressHUDUtil showMessage:@"摄像头不可用" toView:self.view];
+    }
 }
 
 //取消选择了某个cell
@@ -251,7 +308,31 @@
 }
 
 
-#pragma mark -
+#pragma mark - UIImagePickerControllerDelegate
+
+// 拍照完成回调
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0)
+{
+    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+    {
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    }
+    [self.photosArray removeAllObjects];
+    [self.photosArray addObject:[self createAddImage]];
+    [self.photosArray addObject:image];
+    [self.collectionView reloadData];
+    [self viewWillLayoutSubviews];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+//进入拍摄页面点击取消按钮
+
+//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+//{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 
 #pragma mark ZSImagePickerController delegate  选择多张照片代理
@@ -259,6 +340,7 @@
 //- (void)zs_imagePickerController:(nullable ZSImagePickerController *)picker beyondMaxSelectedPhotoCount:(NSInteger)count{
 //    NSLog(@"%zd",count);
 //}
+//
 //
 //- (void)zs_imagePickerController:(nullable ZSImagePickerController *)picker didFinishPickingMediaWithInfo:(nullable NSDictionary<NSString *,NSArray *> *)info{
 //    NSLog(@"%@",info);
@@ -268,30 +350,30 @@
 //    NSLog(@"Cancel");
 //}
 //
-//- (void)zs_imagePickerController:(nullable ZSImagePickerController *)picker didFinishPickingImage:(nullable NSDictionary<NSString *,id> *)info{
-//    NSLog(@"%@",info);
-//    NSArray <PHAsset *>*assets = info[@"result"];
-//    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-//    options.synchronous = YES;
-//    for (PHAsset *asset in assets) {
-//        // 是否要原图
-//        CGSize size = CGSizeMake(asset.pixelWidth, asset.pixelHeight);
-//        
-//        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-//            NSLog(@"%@", result);
-//            if (_photosArray.count<10) {
-//                  [_photosArray addObject:result];
-//            } else {
-//                [MBProgressHUDUtil showMessage:@"最多选择9张照片" toView:self.view];
-//            }
-//          
-//        }];
-//        
-//        [_collectionView reloadData];
-//        [self viewWillLayoutSubviews];
-//    }
-//}
-//
+- (void)zs_imagePickerController:(nullable ZSImagePickerController *)picker didFinishPickingImage:(nullable NSDictionary<NSString *,id> *)info{
+    NSLog(@"%@",info);
+    NSArray <PHAsset *>*assets = info[@"result"];
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.synchronous = YES;
+    for (PHAsset *asset in assets) {
+        // 是否要原图
+        CGSize size = CGSizeMake(asset.pixelWidth, asset.pixelHeight);
+
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            NSLog(@"%@", result);
+            if (_photosArray.count<10) {
+                  [_photosArray addObject:result];
+            } else {
+                [MBProgressHUDUtil showMessage:@"最多选择9张照片" toView:self.view];
+            }
+
+        }];
+
+        [_collectionView reloadData];
+        [self viewWillLayoutSubviews];
+    }
+}
+
 
 /*
 #pragma mark - Navigation

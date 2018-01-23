@@ -371,6 +371,11 @@
         return;
     }
     
+    if ([[WOTUserSingleton shareUser].userInfo.userName isEqualToString:userName]) {
+        [MBProgressHUDUtil showMessage:@"访问对象不能选择自己，请重新选择！" toView:self.view];
+        return;
+    }
+    
 //    __weak typeof(self) weakSelf = self;
     WOTVisitorsResultVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTVisitorsResultVC"];
 

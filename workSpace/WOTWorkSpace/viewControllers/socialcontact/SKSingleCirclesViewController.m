@@ -212,6 +212,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             body.repliedUser = replyModel.byReplyname;
             body.replyInfo = replyModel.replyInfo;
             body.replyUserId = replyModel.replyId;
+            body.recordId = replyModel.recordId;
             [replyModelList addObject:body];
         }
         messBody.posterReplies = replyModelList;
@@ -220,7 +221,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         messBody.posterIntro = @"";
         messBody.posterFavour = [NSMutableArray new];
         messBody.focusId = infoModel.focusId;
-        messBody.isUnfold = YES;
+        messBody.isUnfold = NO;
         if ([infoModel.focus isEqualToNumber:@0]) {
             messBody.isFavour = NO;
         }else
@@ -605,26 +606,43 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     
 }
 
+#pragma mark - 删除评论操作
 - (void)actionSheet:(WFActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
         //delete
+        
         YMTextData *ymData = (YMTextData *)[_tableDataSource objectAtIndex:actionSheet.actionIndex];
         WFMessageBody *m = ymData.messageBody;
-        [m.posterReplies removeObjectAtIndex:_replyIndex];
-        ymData.messageBody = m;
-        [ymData.completionReplySource removeAllObjects];
-        [ymData.attributedDataReply removeAllObjects];
+        WFReplyBody *body  = m.posterReplies[_replyIndex];
+        [WOTHTTPNetwork deleteReplyRecorWithRecordId:body.recordId response:^(id bean, NSError *error) {
+            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+            if ([baseModel.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUDUtil showMessage:@"删除成功！" toView:self.view];
+                    [m.posterReplies removeObjectAtIndex:_replyIndex];
+                    ymData.messageBody = m;
+                    [ymData.completionReplySource removeAllObjects];
+                    [ymData.attributedDataReply removeAllObjects];
+                    
+                    
+                    ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
+                    [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
+                    
+                    [mainTable reloadData];
+                });
+            }
+            else
+            {
+                [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
+                _replyIndex = -1;
+            }
+        }];
         
-        
-        ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
-        [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
-        
-        [mainTable reloadData];
         
     }else{
-        
+        _replyIndex = -1;
     }
-    _replyIndex = -1;
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated

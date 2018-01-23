@@ -474,9 +474,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             [ymImageV removeFromSuperview];
             [maskview removeFromSuperview];
         }];
-
     }];
-    
 }
 
 #pragma mark - 长按评论整块区域的回调

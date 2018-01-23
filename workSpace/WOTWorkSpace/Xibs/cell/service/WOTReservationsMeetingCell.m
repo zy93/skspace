@@ -32,7 +32,9 @@
     _meetingModel = meetingModel;
     [self.meetingNameLab setText:_meetingModel.conferenceName];
     [self.meetingInfoLab setText:_meetingModel.conferenceDescribe];
-    [self.meetingImg sd_setImageWithURL:[_meetingModel.conferencePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+    NSArray  *array = [_meetingModel.conferencePicture componentsSeparatedByString:@","];
+    NSString *imageUrl = [array firstObject];
+    [self.meetingImg sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
     [self.meetingPriceLab setText:[NSString stringWithFormat:@"%.2f元/小时",[_meetingModel.conferencePrice floatValue]]];
 }
 @end

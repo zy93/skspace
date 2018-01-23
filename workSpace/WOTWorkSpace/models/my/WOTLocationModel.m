@@ -9,11 +9,17 @@
 #import "WOTLocationModel.h"
 
 @implementation WOTLocationModel
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 @end
 
 
 @implementation WOTLocationModel_Msg
-
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
 
 @end

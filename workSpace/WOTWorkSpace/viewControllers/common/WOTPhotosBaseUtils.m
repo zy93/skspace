@@ -44,9 +44,7 @@
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
         [_vc presentViewController:imagePicker animated:YES completion:nil];
-        
     }
-    
     else
         
     {
@@ -106,7 +104,6 @@
     if (_onlyOne) {
         if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
         {
-            
             UIImagePickerController *imageVC = [[UIImagePickerController alloc]init];
             imageVC.allowsEditing = YES;
             imageVC.delegate = _vc;
@@ -118,7 +115,6 @@
         else
         {
             NSLog(@"不能打开相册");
-            
         }
     }
     else
