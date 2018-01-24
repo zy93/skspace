@@ -38,7 +38,7 @@
     // Do any additional setup after loading the view.
     [self.table registerNib:[UINib nibWithNibName:@"WOTReservationsMeetingCell" bundle:nil] forCellReuseIdentifier:@"WOTReservationsMeetingCell"];
     
-    _spaceId = [WOTSingtleton shared].nearbySpace.spaceId ;
+    self.spaceId = [WOTSingtleton shared].nearbySpace.spaceId ;
    // _spaceSite = [WOTSingtleton shared].nearbySpace.spaceSite;
     [self creatSpace];
     WOTLocationModel *model = [WOTSingtleton shared].nearbySpace;

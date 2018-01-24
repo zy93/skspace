@@ -10,16 +10,17 @@
 #import "WOTImageCollectionViewCell.h"
 #import "WOTPhotosBaseUtils.h"
 #import <Photos/Photos.h>
-#import "ZSImagePickerController.h"
 #import "WOTMapManager.h"
 #import "MBProgressHUD+Extension.h"
-#import "ZLPhotoActionSheet.h"
+#import "TZTestCell.h"
+#import "TZImageManager.h"
+#import "TZImagePickerController.h"
 
 #define TextViewPlaceholder @"想你所想，写你想讲..."
-@interface WOTPublishSocialTrendsVC ()<UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,ZSImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-{
-    ZLPhotoActionSheet *actionSheet;
-}
+@interface WOTPublishSocialTrendsVC ()<UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,TZImagePickerControllerDelegate>
+//{
+//    ZLPhotoActionSheet *actionSheet;
+//}
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIView *collectionSuperVIew;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -52,10 +53,11 @@
     _collectionView.delegate = self;
     _collectionView.dataSource =self;
     [_collectionView setScrollEnabled:NO];
-    [_collectionView registerNib:[UINib nibWithNibName:@"WOTImageCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"WOTImageCollectionViewCellID"];
+    [_collectionView registerClass:[TZTestCell class] forCellWithReuseIdentifier:@"TZTestCell"];
+//    [_collectionView registerNib:[UINib nibWithNibName:@"WOTImageCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"WOTImageCollectionViewCellID"];
     
-    [self loadLoaction];
-    [self.photosArray addObject:[self createAddImage]];
+   // [self loadLoaction];
+    //[self.photosArray addObject:[self createAddImage]];
 
     // Do any additional setup after loading the view.
 }
@@ -88,29 +90,28 @@
     _viewHeight.constant = (SCREEN_WIDTH-20)/3.5 * lineNum + 30;
 }
 
--(void)loadLoaction
-{
-    [[WOTMapManager shared].mapmanager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
-        if (error)
-        {
-            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
-            if (error.code == AMapLocationErrorLocateFailed)
-            {
-                return;
-            }
-        }
-        
-        NSLog(@"location:%@", location);
-        NSLog(@"纬度:%f,经度:%f",location.coordinate.latitude,location.coordinate.longitude);
-        if (regeocode)
-        {
-            NSLog(@"reGeocode:%@", regeocode);
-            self.locationLabel.text = [NSString stringWithFormat:@"%@%@",regeocode.street,regeocode.POIName];
-        }
-    }];
-}
+//-(void)loadLoaction
+//{
+//    [[WOTMapManager shared].mapmanager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+//        if (error)
+//        {
+//            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
+//            if (error.code == AMapLocationErrorLocateFailed)
+//            {
+//                return;
+//            }
+//        }
+//        NSLog(@"location:%@", location);
+//        NSLog(@"纬度:%f,经度:%f",location.coordinate.latitude,location.coordinate.longitude);
+//        if (regeocode)
+//        {
+//            NSLog(@"reGeocode:%@", regeocode);
+//            self.locationLabel.text = [NSString stringWithFormat:@"%@%@",regeocode.street,regeocode.POIName];
+//        }
+//    }];
+//}
 
--(UIImage *)createAddImage{
+//-(UIImage *)createAddImage{
 //    UIView *addView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
 //    addView.backgroundColor = RGB(242.0, 243.0, 244.0);
 //    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 40, 40)];
@@ -124,8 +125,8 @@
 //    label.font  = [UIFont systemFontOfSize:20];
 //    [addView addSubview:label];
 //     [addView toImage];
-    return [UIImage imageNamed:@"addPhoto"];
-}
+//    return [UIImage imageNamed:@"addPhoto"];
+//}
 
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
@@ -201,15 +202,27 @@
 //item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _photosArray.count;
+    return _photosArray.count+1;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //重用cell
-    WOTImageCollectionViewCell *cell = [_collectionView dequeueReusableCellWithReuseIdentifier:@"WOTImageCollectionViewCellID" forIndexPath:indexPath];
-    [cell.cityImage  setImage:_photosArray[indexPath.row]];
+    TZTestCell *cell = (TZTestCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"TZTestCell" forIndexPath:indexPath];
+    cell.videoImageView.hidden = YES;
+    if (indexPath.row == _photosArray.count) {
+        cell.imageView.image = [UIImage imageNamed:@"addPhoto"];
+        cell.deleteBtn.hidden = YES;
+        cell.gifLable.hidden = YES;
+    } else {
+        cell.imageView.image = _photosArray[indexPath.row];
+        cell.deleteBtn.hidden = NO;
+    }
+    cell.imageView.contentMode = UIViewContentModeScaleToFill;
+    cell.deleteBtn.tag = indexPath.row;
+    [cell.deleteBtn addTarget:self action:@selector(deleteBtnClik:) forControlEvents:UIControlEventTouchUpInside];
+
     return cell;
     
 }
@@ -223,11 +236,11 @@
         return CGSizeMake((SCREEN_WIDTH-20)/3.5,(SCREEN_WIDTH-20)/3.5);
     }
 }
-//定义每个Section 的 margin
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(10, 10, 10, 10);//分别为上、左、下、右
-}
+////定义每个Section 的 margin
+//-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+//{
+//    return UIEdgeInsetsMake(10, 10, 10, 10);//分别为上、左、下、右
+//}
 
 //选择了某个cell
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -247,27 +260,28 @@
         }];
         
         UIAlertAction *aliPayAction = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self pushTZImagePickerController];
             //[self aliPayMethod];
-            if (!actionSheet) {
-                actionSheet = [[ZLPhotoActionSheet alloc] init];
-                actionSheet.maxPreviewCount = 0;
-                actionSheet.maxSelectCount = 9;
-                actionSheet.sender = self;
-                [actionSheet setSelectImageBlock:^(NSArray<UIImage *> *images, NSArray<PHAsset *> *assets, BOOL isOriginal){
-                    [weakSelf.photosArray removeAllObjects];
-                    [weakSelf.photosArray addObject:[weakSelf createAddImage]];
-                    if (_photosArray.count<10) {
-                        [weakSelf.photosArray addObjectsFromArray:images];
-                    } else {
-                        [MBProgressHUDUtil showMessage:@"最多选择9张照片" toView:weakSelf.view];
-                    }
-                    [weakSelf.collectionView reloadData];
-                    [weakSelf viewWillLayoutSubviews];
-                }];
-                
-            }
-            //[actionSheet showPreviewAnimated:YES];
-            [actionSheet showPhotoLibrary];
+//            if (!actionSheet) {
+//                actionSheet = [[ZLPhotoActionSheet alloc] init];
+//                actionSheet.maxPreviewCount = 0;
+//                actionSheet.maxSelectCount = 9;
+//                actionSheet.sender = self;
+//                [actionSheet setSelectImageBlock:^(NSArray<UIImage *> *images, NSArray<PHAsset *> *assets, BOOL isOriginal){
+//                    [weakSelf.photosArray removeAllObjects];
+//                    [weakSelf.photosArray addObject:[weakSelf createAddImage]];
+//                    if (_photosArray.count<10) {
+//                        [weakSelf.photosArray addObjectsFromArray:images];
+//                    } else {
+//                        [MBProgressHUDUtil showMessage:@"最多选择9张照片" toView:weakSelf.view];
+//                    }
+//                    [weakSelf.collectionView reloadData];
+//                    [weakSelf viewWillLayoutSubviews];
+//                }];
+//
+//            }
+//            //[actionSheet showPreviewAnimated:YES];
+//            [actionSheet showPhotoLibrary];
             
         }];
         //aliPayMethod
@@ -312,77 +326,58 @@
 
 // 拍照完成回调
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0)
-{
-    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)
-    {
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-    }
-    [self.photosArray removeAllObjects];
-    [self.photosArray addObject:[self createAddImage]];
-    [self.photosArray addObject:image];
-    [self.collectionView reloadData];
-    [self viewWillLayoutSubviews];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-}
-
-//进入拍摄页面点击取消按钮
-
-//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0)
 //{
+//    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+//    {
+//        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+//    }
+//    [self.photosArray removeAllObjects];
+//    //[self.photosArray addObject:[self createAddImage]];
+//    [self.photosArray addObject:image];
+//    [self.collectionView reloadData];
+//    [self viewWillLayoutSubviews];
 //    [self dismissViewControllerAnimated:YES completion:nil];
+//
 //}
 
+#pragma mark - TZImagePickerController
+- (void)pushTZImagePickerController {
+    
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
 
-#pragma mark ZSImagePickerController delegate  选择多张照片代理
-//
-//- (void)zs_imagePickerController:(nullable ZSImagePickerController *)picker beyondMaxSelectedPhotoCount:(NSInteger)count{
-//    NSLog(@"%zd",count);
-//}
-//
-//
-//- (void)zs_imagePickerController:(nullable ZSImagePickerController *)picker didFinishPickingMediaWithInfo:(nullable NSDictionary<NSString *,NSArray *> *)info{
-//    NSLog(@"%@",info);
-//}
-//
-//- (void)zs_imagePickerControllerDidCancel:(nullable ZSImagePickerController *)picker{
-//    NSLog(@"Cancel");
-//}
-//
-- (void)zs_imagePickerController:(nullable ZSImagePickerController *)picker didFinishPickingImage:(nullable NSDictionary<NSString *,id> *)info{
-    NSLog(@"%@",info);
-    NSArray <PHAsset *>*assets = info[@"result"];
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    options.synchronous = YES;
-    for (PHAsset *asset in assets) {
-        // 是否要原图
-        CGSize size = CGSizeMake(asset.pixelWidth, asset.pixelHeight);
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
 
-        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-            NSLog(@"%@", result);
-            if (_photosArray.count<10) {
-                  [_photosArray addObject:result];
-            } else {
-                [MBProgressHUDUtil showMessage:@"最多选择9张照片" toView:self.view];
-            }
+    }];
+    
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
+}
 
-        }];
-
-        [_collectionView reloadData];
-        [self viewWillLayoutSubviews];
+- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
+    _photosArray = [NSMutableArray arrayWithArray:photos];
+   // [self numberForLine];
+    [self viewWillLayoutSubviews];
+    [_collectionView reloadData];
+    if (iOS8Later) {
+        for (PHAsset *phAsset in assets) {
+            NSLog(@"location:%@",phAsset.location);
+        }
     }
 }
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - 图片删除方法
+- (void)deleteBtnClik:(UIButton *)sender {
+    [_photosArray removeObjectAtIndex:sender.tag];
+    [_collectionView performBatchUpdates:^{
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
+        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+    } completion:^(BOOL finished) {
+        [_collectionView reloadData];
+    }];
 }
-*/
+
+
+
 
 @end

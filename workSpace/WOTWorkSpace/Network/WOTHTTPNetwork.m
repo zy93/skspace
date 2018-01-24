@@ -348,7 +348,9 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Space/findNearSpace"];
     NSDictionary * parameters = @{@"lng":@(lon),
-                                  @"lat":@(lat)};
+                                  @"lat":@(lat)
+                                  };
+                                
     
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
         
@@ -359,7 +361,7 @@
 
 +(void)getSpaceFromSpaceID:(NSNumber *)spaceId bolock:(response)response
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Space/findBySpaceId"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Space/findById"];
     NSDictionary * parameters = @{@"spaceId":spaceId};
     
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {

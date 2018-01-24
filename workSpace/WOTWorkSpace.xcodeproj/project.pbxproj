@@ -3554,7 +3554,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/** ${SRCROOT}/WOTWorkSpace/librarys/Alipay/openssl/include/asn1.h";
+				USER_HEADER_SEARCH_PATHS = "${PODS_ROOT}/** ${SRCROOT}/WOTWorkSpace/librarys/Alipay/openssl/include/asn1.h";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = "ad hoc distrbution";
@@ -3715,7 +3715,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/** ${SRCROOT}/WOTWorkSpace/librarys/Alipay/openssl/include/asn1.h";
+				USER_HEADER_SEARCH_PATHS = "${PODS_ROOT}/** ${SRCROOT}/WOTWorkSpace/librarys/Alipay/openssl/include/asn1.h";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -3756,7 +3756,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/** ${SRCROOT}/WOTWorkSpace/librarys/Alipay/openssl/include/asn1.h";
+				USER_HEADER_SEARCH_PATHS = "${PODS_ROOT}/** ${SRCROOT}/WOTWorkSpace/librarys/Alipay/openssl/include/asn1.h";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;

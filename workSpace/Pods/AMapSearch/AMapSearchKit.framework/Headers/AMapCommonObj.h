@@ -293,6 +293,8 @@
 
 ///地址组成要素
 @interface AMapAddressComponent : AMapSearchObject
+///国家（since 5.7.0）
+@property (nonatomic, copy)   NSString         *country;
 ///省/直辖市
 @property (nonatomic, copy)   NSString         *province; 
 ///市
