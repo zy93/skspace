@@ -44,6 +44,8 @@
 -(NSArray*)getHourToSecondArray;
 //获取10进制时间，0.5=30分钟  //传入: 09:30:00-20:00:00 传出:@[@(9.5),@(20)]
 -(NSArray*)getDECTime;
+//获取下一个整点时间（30分钟） 传入：time:2018/01/24 17:22:30 返回 17.5
+-(CGFloat)getNextTopOfHour;
 //获取开始与结束时间范围内时间数组.
 +(NSArray*)getReservationsTimesWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
 //获取后台所需预约时间格式

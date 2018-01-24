@@ -170,6 +170,7 @@
             weakSelf.datepickerview.hidden  = NO;
         }
         if ([WOTSingtleton shared].orderType != ORDER_TYPE_BOOKSTATION) {
+            weakSelf.reservationStationStartDate = selecTime;
             [weakSelf requestMeetingReservationsInfo];
         }else {
             if (weakSelf.isValidTime) {
@@ -254,7 +255,7 @@
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
         NSInteger bookstationInter = [self.bookSationTime integerValue];
         if (!( bookstationInter> 0)) {
-            [MBProgressHUDUtil showMessage:@"该用户下没有工位时间，请充值" toView:self.view];
+            [MBProgressHUDUtil showMessage:@"该用户下没有工位时间，请购买礼包" toView:self.view];
             return;
         }
     }
@@ -263,7 +264,7 @@
         NSInteger difference = (self.meetingEndTime-self.meetingBeginTime)*60;
         NSInteger meetInteger = [self.meetingTime integerValue];
         if (difference > meetInteger) {
-            [MBProgressHUDUtil showMessage:@"该用户下会议室时间剩余不足，请充值" toView:self.view];
+            [MBProgressHUDUtil showMessage:@"该用户下会议室时间剩余不足，请购买礼包" toView:self.view];
             return;
         }
     }
@@ -507,7 +508,8 @@
             cell = [[WOTOrderForSelectTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTOrderForSelectTimeCell"];
         }
         cell.delegate  =  self;
-        [cell setReservationList:mettingReservationList];
+        [cell setSelectDate: self.reservationStationStartDate]; //先设置日期
+        [cell setReservationList:mettingReservationList];   //再设置时间
         if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ||
             [WOTSingtleton shared].orderType == ORDER_TYPE_SITE ) {
             [cell.selectTimeScroll setOpenTime:self.meetingModel.openTime];

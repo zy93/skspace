@@ -27,7 +27,7 @@
 
 @property (nonatomic, strong) NSArray *reservationList;//已预订的时间数组;
 @property (nonatomic, strong) NSIndexPath *index;
-
+@property (nonatomic, strong) NSString *selectDate; //选择的日期
 @property (nonatomic, assign)CGFloat allTime;
 
 

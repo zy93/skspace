@@ -131,6 +131,21 @@
     return @[@(begT),@(endT)];
 }
 
+-(CGFloat)getNextTopOfHour
+{
+    NSString *s = [self substringFromIndex:10];
+    NSArray *timeArr = [s componentsSeparatedByString:@":"];
+    CGFloat result = [timeArr.firstObject integerValue];
+    
+    if ([timeArr[1] integerValue] > 30 ) {
+        result += 1;
+    }
+    else {
+        result +=0.5;
+    }
+    return result;
+}
+
 +(NSArray *)getReservationsTimesWithStartTime:(NSString *)startTime endTime:(NSString *)endTime
 {
     NSArray *startArr = [startTime getYearToSecondArray];
@@ -177,6 +192,8 @@
     }
     
 }
+
+
 
 + (BOOL)valiMobile:(NSString*)mobile
 {

@@ -35,7 +35,14 @@
 -(void)setReservationList:(NSArray *)reservationList
 {
     _reservationList = reservationList;
-    [self.selectTimeScroll setInvalidBtnTimeList:_reservationList];
+    NSString *newTime =[NSDate getNewTime];
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:reservationList];
+    if ([newTime containsString:[_selectDate substringToIndex:10]]) {
+        //选择日期是今天，需要禁用当前时间之前的时间选项。
+        CGFloat fl = [newTime getNextTopOfHour];
+        [arr addObject:@[@(0.f),@(fl)]];
+    }
+    [self.selectTimeScroll setInvalidBtnTimeList:arr];
 }
 
 #pragma mark - scroll delegate
@@ -45,7 +52,6 @@
         [_delegate selectTimeWithCell:self Time:button.time];
     }
 }
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
