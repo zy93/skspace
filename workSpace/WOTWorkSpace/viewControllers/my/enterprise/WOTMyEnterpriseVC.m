@@ -144,10 +144,16 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
-    vc.model = self.tableList[indexPath.row];
-    vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.isSelectEnterprise) {
+        self.selectEnterpriseBlock(self.tableList[indexPath.row]);
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+        vc.model = self.tableList[indexPath.row];
+        vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 

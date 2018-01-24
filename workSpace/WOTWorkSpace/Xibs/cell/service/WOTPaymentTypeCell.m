@@ -23,9 +23,9 @@
     self.separatorInset = UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0); // ViewWidth  [宏] 指的是手机屏幕的宽度
     
     [self.enterpriseBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateNormal];
-    [self.enterpriseBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateSelected];
+    [self.enterpriseBtn setTitleColor:UICOLOR_MAIN_BLACK forState:UIControlStateSelected];
     [self.personBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateNormal];
-    [self.personBtn setTitleColor:UICOLOR_MAIN_LINE forState:UIControlStateSelected];
+    [self.personBtn setTitleColor:UICOLOR_MAIN_BLACK forState:UIControlStateSelected];
 
 
 }
@@ -40,23 +40,29 @@
 {
     _enterprise = enterprise;
     if (enterprise) {
-        self.enterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+        self.enterpriseBtn.layer.borderColor = UICOLOR_MAIN_BLACK.CGColor;
         self.personBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
         self.enterpriseBtn.selected = YES;
         self.personBtn.selected = NO;
     }
     else {
         self.enterpriseBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
-        self.personBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+        self.personBtn.layer.borderColor = UICOLOR_MAIN_BLACK.CGColor;
         self.enterpriseBtn.selected = NO;
         self.personBtn.selected = YES;
     }
 }
 - (IBAction)clickPersonBtn:(id)sender {
     self.enterprise = NO;
+    if ([_delegate respondsToSelector:@selector(paymentTypeCell:selectPaymentType:)] ) {
+        [_delegate paymentTypeCell:self selectPaymentType:@(1)];
+    }
 }
 - (IBAction)clickEnterpriseBtn:(id)sender {
     self.enterprise = YES;
+    if ([_delegate respondsToSelector:@selector(paymentTypeCell:selectPaymentType:)] ) {
+        [_delegate paymentTypeCell:self selectPaymentType:@(0)];
+    }
 }
 
 @end

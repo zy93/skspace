@@ -38,7 +38,7 @@
 #define uitableCell @"uitableCell"
 #define paymentCell @"paymentCell"
 
-@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,UIGestureRecognizerDelegate>
+@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,WOTPaymentTypeCellDelegate>
 {
     NSArray *tableList;
     NSArray *mettingReservationList; //会议室已预订时间数组
@@ -79,6 +79,7 @@
 @property (nonatomic, strong) NSString *total_fee;        //总金额
 @property (nonatomic, strong) NSString *spbill_create_ip; //终端IP
 @property (nonatomic, strong) NSString *trade_type;       //交易类型
+@property (nonatomic, strong) NSString *invoiceInfo;      //发票信息
 @property (nonatomic, assign) NSNumber *bookSationTime;
 @property (nonatomic, assign) NSNumber *meetingTime;
 @property (nonatomic, strong) NSNumber *userId;
@@ -101,6 +102,8 @@
     self.reservationDate = [NSDate getNewTimeZero];
     self.reservationStationStartDate = [NSDate getNewTimeZero];
     self.reservationStationEndDate = [NSDate getNewTimeZero];
+    self.payType = @(0); //默认
+    self.invoiceInfo = @"请选择企业";
     [self configNav];
     [self loadData];
     [self loadCost];
@@ -200,27 +203,33 @@
 -(void)loadData
 {
     NSArray *list1 = nil;
-    
+    NSArray *list2 = @[serviceCell];
+    NSArray *list3 = @[payTypeCell, selectCell];
+    NSArray *list4 = @[uitableCell,paymentCell];
+
     switch ([WOTSingtleton shared].orderType) {
         case ORDER_TYPE_BOOKSTATION:
         {
             list1 = @[infoCell, selectDateCell,selectDateCell, selectNumberCell];
+            tableList = @[list1, list2];
+
         }
             break;
         case ORDER_TYPE_MEETING:
+        {
+            list1 = @[infoCell, selectDateCell, selectTimeCell];
+            tableList = @[list1, list2];
+        }
+            break;
         case ORDER_TYPE_SITE:
         {
             list1 = @[infoCell, selectDateCell, selectTimeCell];
+            tableList = @[list1, list2, list3, list4];
         }
             break;
         default:
             break;
     }
-    
-    NSArray *list2 = @[serviceCell];
-    NSArray *list3 = @[payTypeCell, selectCell, selectCell];
-    NSArray *list4 = @[uitableCell,paymentCell];
-    tableList = @[list1, list2, list3, list4];
 }
 
 #pragma mark - update table
@@ -269,7 +278,6 @@
         }
     }
     self.dealMode = @"微信支付";
-    self.payType = @(1);
     self.payObject= [WOTUserSingleton shareUser].userInfo.userName;
     
     switch ([WOTSingtleton shared].orderType) {
@@ -379,6 +387,20 @@
 {
     self.reservationStationNumber = cell.orderNumberInt;
     [self imputedPriceAndLoadCost];
+}
+
+-(void)paymentTypeCell:(WOTPaymentTypeCell *)cell selectPaymentType:(NSNumber *)paymentType
+{
+    self.payType = paymentType;
+    if (paymentType.integerValue == 0) {
+        self.invoiceInfo = @"请选择企业";
+    }
+    else {
+        self.invoiceInfo = @"个人";
+    }
+    NSIndexPath *path = [NSIndexPath indexPathForRow:cell.index.row+1 inSection:cell.index.section];
+    [self.table reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
+    
 }
 
 
@@ -572,6 +594,9 @@
         if (cell == nil) {
             cell = [[WOTPaymentTypeCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTPaymentTypeCell"];
         }
+        cell.delegate = self;
+        cell.index = indexPath;
+        cell.enterprise= YES;
         return cell;
     }
     else if ([cellType isEqualToString:selectCell]) {
@@ -581,12 +606,12 @@
         }
         if (indexPath.row==1) {
             [cell.titleLab setText:@"发票信息"];
-            [cell.subtitleLab setText:@"北京物联港科技发展有限公司"];
+            [cell.subtitleLab setText:self.invoiceInfo];
         }
-        else {
-            [cell.titleLab setText:@"代金券"];
-            [cell.subtitleLab setText:@"无代金券可用"];
-        }
+//        else {
+//            [cell.titleLab setText:@"代金券"];
+//            [cell.subtitleLab setText:@"无代金券可用"];
+//        }
         return cell;
     }
     else if ([cellType isEqualToString:uitableCell]) {
@@ -629,20 +654,24 @@
     if ([cellType isEqualToString:selectDateCell]) {
         _datepickerview.hidden = NO;
     }
-    
-//    if (indexPath.section==0) {
-//        if (indexPath.row == 4 || indexPath.row == 5) {
-//            payTypeIndex = indexPath;
-////            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//        }
-////        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-//    }
-//    else if (indexPath.section == 1) {
-//        if (indexPath.row == 1 || indexPath.row == 2) {
-//            paymentIndex = indexPath;
-//        }
-//        [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
-//    }
+    if ([cellType isEqualToString:selectCell]) {
+        //
+        if ([self.payType isEqual:@(0)]) {
+            //企业发票
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"My" bundle:[NSBundle mainBundle]];
+            WOTMyEnterpriseVC *myenterprisevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTMyEnterpriseVC"];
+            myenterprisevc.selectEnterprise = YES;
+            [self.navigationController pushViewController:myenterprisevc animated:YES];
+            myenterprisevc.selectEnterpriseBlock = ^(WOTEnterpriseModel *model) {
+                self.invoiceInfo = model.companyName;
+                NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                [self.table reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
+            };
+        }
+        else {
+            //个人发票
+        }
+    }
 }
 
 #pragma mark - WOTOrderForPaymentCellDelegate
@@ -786,7 +815,8 @@
                                @"starTime":self.starTime,
                                @"endTime":self.endTime,
                                @"spaceName":self.spaceModel.spaceName,
-                               @"conferenceDetailsId":self.conferenceDetailsId
+                               @"conferenceDetailsId":self.conferenceDetailsId,
+                               @"invoiceInfo":self.invoiceInfo,
                                };
     [WOTHTTPNetwork submitAlipayOrderWith:parameters response:^(id bean, NSError *error) {
         SKAliPayModel_msg *model_msg = (SKAliPayModel_msg *)bean;
@@ -862,7 +892,8 @@
                                  @"payObject":self.payObject,
                                  @"payMode":self.payMode,
                                  @"contractMode":self.contractMode,
-                                 @"conferenceDetailsId":self.conferenceDetailsId
+                                 @"conferenceDetailsId":self.conferenceDetailsId,
+                                 @"invoiceInfo":self.invoiceInfo,
                                  };
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){

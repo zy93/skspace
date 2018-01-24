@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class WOTPaymentTypeCell;
+
+@protocol WOTPaymentTypeCellDelegate <NSObject>
+-(void)paymentTypeCell:(WOTPaymentTypeCell*)cell selectPaymentType:(NSNumber *)paymentType;
+@end
+
 @interface WOTPaymentTypeCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *enterpriseBtn;
 @property (weak, nonatomic) IBOutlet UIButton *personBtn;
 
 @property (nonatomic, assign, getter=isEnterprise) BOOL enterprise;
+@property (nonatomic, strong) NSIndexPath *index;
+@property (nonatomic, strong) id <WOTPaymentTypeCellDelegate> delegate;
 
 @end
