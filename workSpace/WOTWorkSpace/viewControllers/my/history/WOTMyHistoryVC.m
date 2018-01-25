@@ -40,8 +40,8 @@
 }
 -(void)configNavi{
     [self configNaviBackItem];
-    self.navigationItem.title = @"我的历史";
-    [self configNaviRightItemWithImage:[UIImage imageNamed:@"remind_icon"]];
+    self.navigationItem.title = @"维修记录";
+   // [self configNaviRightItemWithImage:[UIImage imageNamed:@"remind_icon"]];
     
 }
 
