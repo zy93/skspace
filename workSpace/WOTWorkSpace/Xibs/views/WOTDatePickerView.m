@@ -19,7 +19,7 @@
 -(void)awakeFromNib{
     [super awakeFromNib];
     
-    _dataPicker = [[DatePickerView alloc]initWithFrame:CGRectMake(10,0, self.pickerView.frame.size.width-20, self.pickerView.frame.size.height)];
+    _dataPicker = [[DatePickerView alloc]initWithFrame:CGRectMake(10,0, SCREEN_WIDTH-20, self.pickerView.frame.size.height)];
     
     [self.pickerView addSubview:_dataPicker];
 }

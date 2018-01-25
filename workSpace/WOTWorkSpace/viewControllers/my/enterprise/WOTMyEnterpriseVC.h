@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WOTEnterpriseModel.h"
 
 @interface WOTMyEnterpriseVC : UIViewController
+
+@property (nonatomic, assign, getter=isSelectEnterprise) BOOL selectEnterprise;
+@property (nonatomic, copy) void(^selectEnterpriseBlock)(WOTEnterpriseModel *model);
+
 
 @end

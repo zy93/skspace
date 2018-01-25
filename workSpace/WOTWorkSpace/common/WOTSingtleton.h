@@ -11,7 +11,7 @@
 #import "WOTLocationModel.h"
 
 
-
+//订单页面类型
 typedef NS_ENUM(NSInteger, ORDER_TYPE) {
     ORDER_TYPE_BOOKSTATION,
     ORDER_TYPE_MEETING,

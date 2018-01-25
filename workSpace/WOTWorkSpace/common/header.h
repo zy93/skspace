@@ -25,6 +25,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "WOTEnumUtils.h"
 #import "MJRefresh.h"
+#import "NSString+Category.h"
 
 //Network
 #import "WOTHTTPNetwork.h"
