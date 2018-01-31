@@ -232,7 +232,6 @@
     id model = tableList[indexPath.row];
     [cell setMeetingModel:model];
     return cell;
-
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

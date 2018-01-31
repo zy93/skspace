@@ -238,7 +238,13 @@
         [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTVisitorsAppointmentVC"];
 
     } else if ([serviceName isEqualToString:@"问题报修"]) {
-        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKRepairsViewController"];
+        if (![[WOTUserSingleton shareUser].userInfo.spaceId isEqualToNumber:@0]) {
+           [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKRepairsViewController"];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"请先加入企业！" toView:self.view];
+        }
+        
     } else if ([serviceName isEqualToString:@"发布需求"]) {
         [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController"];
     }

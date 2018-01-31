@@ -19,7 +19,6 @@
     BOOL lightOpen;
     NSInteger lightcellindex;
     NSMutableArray *lightSelectedindex;
-    
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(nonatomic,strong)WOTDeviceListRequestTool *deviceListTool;
