@@ -193,7 +193,7 @@ bool ismenu1 =  NO;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTH5VC *h5vc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    h5vc.url = [_dataSource[indexPath.row].htmlLocation stringToResourcesUrl];
+    h5vc.url = [_dataSource[indexPath.row].htmlLocation stringToUrl];
     [self.navigationController pushViewController:h5vc animated:YES];
 }
 

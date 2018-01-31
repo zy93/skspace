@@ -29,6 +29,7 @@
 -(NSURL *)ToResourcesUrl;
 //字符串型资源地址
 -(NSString *)stringToResourcesUrl;
+-(NSString *)stringToUrl;
 @end
 
 @interface NSString (Date)

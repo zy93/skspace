@@ -229,14 +229,14 @@ int a = 0;
 - (IBAction)showActivityDetail:(id)sender {
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     WOTActivityModel *model = self.activityData.firstObject;
-    detailvc.url = [model.htmlLocation stringToResourcesUrl];
+    detailvc.url = [model.htmlLocation stringToUrl];
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 //跳转新闻详情页
 - (IBAction)showInfoDetail:(id)sender {
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     WOTNewsModel *model = self.newsData.firstObject;
-    detailvc.url = [model.htmlLocation stringToResourcesUrl];
+    detailvc.url = [model.htmlLocation stringToUrl];
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 
@@ -454,8 +454,9 @@ int a = 0;
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
     }
-    //从网络加载图片用    
-    [bannerView.mainImageView sd_setImageWithURL:[self.spaceData[index].spacePicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
+    //从网络加载图片用
+    NSArray *arr = [self.spaceData[index].spacePicture componentsSeparatedByString:@","];
+    [bannerView.mainImageView sd_setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
     return bannerView;
 }
 
@@ -510,7 +511,15 @@ int a = 0;
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-//    detailvc.url = _sliderUrlStrings[index];
+    detailvc.url = self.bannerData[index].webpageUrl;
+    //如果是分享注册页面，需要加邀请码
+    if (![WOTSingtleton shared].isuserLogin) {
+        
+    }
+    
+    if ([detailvc.url isEqualToString:@"http://219.143.170.98:10011/SKwork/SKmaker/share/shareRegistration.html"]) {
+        detailvc.url = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
+    }
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 

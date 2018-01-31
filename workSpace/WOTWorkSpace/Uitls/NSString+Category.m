@@ -84,6 +84,11 @@
     return [NSString stringWithFormat:@"%@/SKwork%@",HTTPBaseURL,self];
 }
 
+-(NSString *)stringToUrl
+{
+    return [NSString stringWithFormat:@"%@/%@",HTTPBaseURL,self];
+}
+
 -(NSArray *)getYearToSecondArray
 {
     NSArray *dateArr1 = [self componentsSeparatedByString:@" "];
