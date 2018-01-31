@@ -148,7 +148,7 @@
         return;
     }
     NSMutableArray *arr =  self.photosArray;
-    [arr removeObjectAtIndex:0];
+    //[arr removeObjectAtIndex:0];
     [MBProgressHUDUtil showLoadingWithMessage:@"发布中" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
         [WOTHTTPNetwork sendMessageWithUserId:[WOTUserSingleton shareUser].userInfo.userId userName:[WOTUserSingleton shareUser].userInfo.userName circleMessage:self.textView.text photosArray:arr response:^(id bean, NSError *error) {
             if (!error) {

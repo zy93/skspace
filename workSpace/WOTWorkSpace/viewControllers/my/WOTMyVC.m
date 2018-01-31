@@ -200,6 +200,7 @@
                 else {
                     
                     WOTMyHistoryVC *historyvc = [[WOTMyHistoryVC alloc]init];
+                    historyvc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:historyvc animated:YES];
                 }
                 
@@ -211,16 +212,13 @@
             return;
         }
         [[WOTConfigThemeUitls shared] showLoginVC:self];
-        
     }
-   
 }
 
 -(void)showLoginView
 {
     [[WOTConfigThemeUitls shared] showLoginVC:self];
 }
-
 
 
 #pragma mark - cell delegate

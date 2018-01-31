@@ -21,6 +21,7 @@
 @property(nonatomic,strong)UIView *lineView;
 @property(nonatomic,strong)UITextView *demandInfoTextView;
 @property(nonatomic,strong)UIButton *demandSubmitButton;
+@property(nonatomic,strong)SKTypeView *typeView;
 
 @end
 
@@ -31,6 +32,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:@"f9f9f9"];
     self.navigationItem.title = @"获取支持";
+    self.navigationItem.leftBarButtonItem = [self customLeftBackButton];
     [self.view addSubview:self.topview];
     [self.topview addSubview:self.typeLabel];
     [self.topview addSubview:self.typeInfoLabel];
@@ -163,18 +165,41 @@
                                  }];
 }
 
+
+
 #pragma mark - 选择支持类型
 -(void)chooseTypeButtonMethod
 {
-    SKTypeView *typeView = [[SKTypeView alloc] initWithFrame:(CGRect){0, 64, kScreenW, kScreenH-64}];
-    typeView.sureBtnsClick = ^(NSString *typeString){
-        self.typeString = typeString;
+    __weak typeof(self) weakSelf = self;
+    self.typeView = [[SKTypeView alloc] initWithFrame:(CGRect){0, 64, kScreenW, kScreenH-64}];
+    self.typeView.sureBtnsClick = ^(NSString *typeString){
+        weakSelf.typeString = typeString;
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.typeInfoLabel.text = typeString;
+            weakSelf.typeInfoLabel.text = typeString;
         });
        
     };
-    [typeView showInView:self.navigationController.view];
+    [self.typeView showInView:self.navigationController.view];
+}
+
+#pragma mark - 自定义返回按钮图片
+-(UIBarButtonItem*)customLeftBackButton{
+    UIImage *image = [UIImage imageNamed:@"back"];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    [backButton setBackgroundImage:image
+                          forState:UIControlStateNormal];
+    [backButton addTarget:self
+                   action:@selector(backBarButtonItemAction)
+         forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    return backItem;
+}
+
+- (void)backBarButtonItemAction
+{
+    [self.typeView removeFromSuperview];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(UIView *)topview

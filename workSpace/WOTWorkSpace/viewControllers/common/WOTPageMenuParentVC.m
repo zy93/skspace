@@ -28,8 +28,7 @@
     [self setpageMenu];
 }
 
-
-- (UIViewController *)makeVC {
+-(UIViewController *)makeVC {
     UIViewController *basevc = [[UIViewController alloc]init];
 //    //解决布局空白问题
 //    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;

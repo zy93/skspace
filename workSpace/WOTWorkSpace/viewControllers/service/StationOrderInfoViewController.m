@@ -284,6 +284,7 @@
     [self.startTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.bookSiteLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self.bookSiteView.mas_left).with.offset(5);
+        make.width.mas_offset(100);
     }];
     
     [self.startTimeInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -294,6 +295,7 @@
     [self.endTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.startTimeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self.bookSiteView.mas_left).with.offset(5);
+        make.width.mas_offset(100);
     }];
     
     [self.endTimeInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -304,6 +306,7 @@
     [self.bookNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.endTimeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self.bookSiteView.mas_left).with.offset(5);
+        make.width.mas_offset(100);
     }];
     [self.bookNumInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.bookNumLabel.mas_top);
@@ -320,6 +323,7 @@
     [self.facilityLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.facilityView);
         make.left.equalTo(self.facilityView).with.offset(5);
+        make.width.mas_offset(100);
     }];
     
     [self.facilityInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -338,6 +342,7 @@
     [self.payTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.payTypeView.mas_top).with.offset(10);
         make.left.equalTo(self.payTypeView.mas_left).with.offset(5);
+        make.width.mas_offset(100);
     }];
     
     [self.payTypeInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -348,6 +353,7 @@
     [self.sumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.payTypeLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self.payTypeView.mas_left).with.offset(5);
+        make.width.mas_offset(100);
     }];
     
     [self.durationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -359,6 +365,7 @@
     [self.orderTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.durationLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self.payTypeView.mas_left).with.offset(5);
+        make.width.mas_offset(100);
     }];
     
     [self.orderTimeInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {

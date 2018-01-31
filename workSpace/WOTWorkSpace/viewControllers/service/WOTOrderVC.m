@@ -268,7 +268,6 @@
             return;
         }
     }
-    
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
         NSInteger difference = (self.meetingEndTime-self.meetingBeginTime)*60;
         NSInteger meetInteger = [self.meetingTime integerValue];
