@@ -111,7 +111,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTH5VC *detailvc = [WOTH5VC loadH5VC];
-    detailvc.url = [_dataSource[indexPath.row].htmlLocation stringToResourcesUrl];
+    detailvc.url = [_dataSource[indexPath.row].htmlLocation stringToUrl];
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 //

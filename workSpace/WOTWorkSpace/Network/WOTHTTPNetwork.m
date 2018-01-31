@@ -488,7 +488,7 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findforApp"];
     NSDictionary * parameters = @{@"pageNo":page,
-                                  @"pageSize":@(10)
+                                  @"pageSize":@(100)
                                   };
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
         WOTActivityModel_msg * activitymodel = [[WOTActivityModel_msg alloc]initWithDictionary:responseobj error:nil];
