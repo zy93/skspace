@@ -55,8 +55,8 @@
 #define UICOLOR_GRAY_b4     UIColorFromRGB(0xf1f1f1) //灰色
 #define UICOLOR_MAIN_TEXT_PLACEHOLDER  RGBA(0,0,31,0.22) //输入框底纹颜色
 
- #define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
-//#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
+//#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
+#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
 //#define HTTPBaseURL @"http://192.168.34.80:8080"//石宇驰
 
 //集团的appid

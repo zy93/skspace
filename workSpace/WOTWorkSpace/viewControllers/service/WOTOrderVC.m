@@ -108,7 +108,7 @@
     [self loadData];
     [self loadCost];
     [self requestQuerySingularMan];
-    
+    self.payObject = [[WOTUserSingleton shareUser].userInfo.userId stringValue];
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ||
         [WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
         [self requestMeetingReservationsInfo];
@@ -261,6 +261,17 @@
         return;
     }
     
+    if ([self.judgmentTime compareDate:self.starTime withDate:self.endTime]) {
+        [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
+        return;
+    }
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
+        if ([self.invoiceInfo isEqualToString:@"请选择企业"]) {
+            [MBProgressHUDUtil showMessage:@"如果选择企业支付，请选择企业" toView:self.view];
+            return;
+        }
+    }
+    
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
         NSInteger bookstationInter = [self.bookSationTime integerValue];
         if (!( bookstationInter> 0)) {
@@ -277,7 +288,7 @@
         }
     }
     self.dealMode = @"微信支付";
-    self.payObject= [WOTUserSingleton shareUser].userInfo.userName;
+    //self.payObject= [[WOTUserSingleton shareUser].userInfo.userId stringValue];
     
     switch ([WOTSingtleton shared].orderType) {
         case ORDER_TYPE_BOOKSTATION:
@@ -299,18 +310,15 @@
             self.body = @"工位预定";
             self.total_fee = @"1";// self.money.floatValue * 100;
             self.trade_type = @"APP";
+            self.payObject = [[WOTUserSingleton shareUser].userInfo.userId stringValue];
 //            if ([WOTSingtleton shared].payType == PAY_TYPE_WX) {
 //                [self commitOrder];
 //            }else
 //            {
 //                [self commitAliOrder];
 //            }
-            if ([self.payWayStr isEqualToString:@"支付宝"]) {
-                [self commitAliOrder];
-            }else
-            {
-                [self commitOrder];
-            }
+            self.payType = @1;
+            [self commitOrder];
             
         }
             break;
@@ -396,6 +404,7 @@
     }
     else {
         self.invoiceInfo = @"个人";
+        self.payObject = [[WOTUserSingleton shareUser].userInfo.userId stringValue];
     }
     NSIndexPath *path = [NSIndexPath indexPathForRow:cell.index.row+1 inSection:cell.index.section];
     [self.table reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
@@ -662,6 +671,7 @@
             myenterprisevc.selectEnterprise = YES;
             [self.navigationController pushViewController:myenterprisevc animated:YES];
             myenterprisevc.selectEnterpriseBlock = ^(WOTEnterpriseModel *model) {
+                self.payObject = [model.companyId stringValue];
                 self.invoiceInfo = model.companyName;
                 NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
                 [self.table reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
@@ -707,17 +717,17 @@
 {
     NSString *startDate =[self.reservationStationStartDate substringToIndex:10];
     NSString *endDate = [self.reservationStationEndDate substringToIndex:10];
-    if ([self.judgmentTime compareDate:startDate withDate:endDate]) {
-        WOTOrderForSelectDateCell *cell = [self.table cellForRowAtIndexPath:self.selectCellIndex];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
-        });
-        [self imputedPriceAndLoadCost];
+//    if ([self.judgmentTime compareDate:startDate withDate:endDate]) {
+    WOTOrderForSelectDateCell *cell = [self.table cellForRowAtIndexPath:self.selectCellIndex];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
+    });
+    [self imputedPriceAndLoadCost];
         
-    } else {
-        [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
-        _datepickerview.hidden  = NO;
-    }
+//    } else {
+//        [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
+//        _datepickerview.hidden  = NO;
+//    }
 }
 
 #pragma mark - 预定场地
@@ -809,7 +819,7 @@
                                @"productNum":self.productNum,
                                @"money":@(self.costNumber),
                                @"payType":self.payType,
-                               @"payObject":[WOTUserSingleton shareUser].userInfo.userName,
+                               @"payObject":self.payObject,
                                @"body":self.body,
                                @"starTime":self.starTime,
                                @"endTime":self.endTime,
