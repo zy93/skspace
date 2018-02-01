@@ -320,10 +320,10 @@
         return;
     }
     BOOL isFirName = strIsEmpty(tableInputDatadic[@"firmName"]);
-    BOOL isBusinessScope = tableInputDatadic[@"businessScope"] == nil;
-    BOOL isContatcts =tableInputDatadic[@"contacts"] == nil;
-    BOOL isTel =tableInputDatadic[@"tel"] == nil;
-    BOOL isFacilitatorType = tableInputDatadic[@"facilitatorType"] == nil;
+    BOOL isBusinessScope = strIsEmpty(tableInputDatadic[@"businessScope"]);
+    BOOL isContatcts =strIsEmpty(tableInputDatadic[@"contacts"]);
+    BOOL isTel =strIsEmpty(tableInputDatadic[@"tel"]);
+    BOOL isFacilitatorType = strIsEmpty(tableInputDatadic[@"facilitatorType"]);
     if (isFirName || isBusinessScope ||isContatcts ||isTel || isFacilitatorType) {
         [MBProgressHUDUtil showMessage:@"请将信息填写完整后再提交" toView:self.view];
         return;

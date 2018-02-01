@@ -83,7 +83,9 @@
 
 - (IBAction)submitFeedbackInfo:(id)sender {
     
-    if (strIsEmpty(_textView.text)) {
+    
+    
+    if (strIsEmpty(_textView.text) || [_textView.text isEqualToString:@"*您的意见，是我们前进的动力"]) {
         [MBProgressHUDUtil showMessage:@"请输入内容！" toView:self.view];
         return;
     }
