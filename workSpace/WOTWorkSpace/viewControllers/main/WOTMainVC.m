@@ -33,6 +33,7 @@
 #import "WOTShortcutMenuView.h"
 #import "CardView.h"
 #import "WOTEnterpriseIntroduceVC.h"
+#import "SKSpaceDetailsVC.h"
 
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
@@ -436,10 +437,16 @@ int a = 0;
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
     return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
 }
+
+#pragma mark - 点击单个图片
 - (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex {
-    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    [self.navigationController pushViewController:detailvc animated:YES];
+//    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
+//    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+//    [self.navigationController pushViewController:detailvc animated:YES];
+    SKSpaceDetailsVC *spaceDetailsVC = [[SKSpaceDetailsVC alloc] init];
+    spaceDetailsVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:spaceDetailsVC animated:YES];
+    
 }
 
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {

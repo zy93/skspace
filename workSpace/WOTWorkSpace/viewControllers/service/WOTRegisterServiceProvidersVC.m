@@ -319,7 +319,7 @@
         [MBProgressHUDUtil showMessage:@"请上传企业logo" toView:self.view];
         return;
     }
-    BOOL isFirName = tableInputDatadic[@"firmName"] == nil;
+    BOOL isFirName = strIsEmpty(tableInputDatadic[@"firmName"]);
     BOOL isBusinessScope = tableInputDatadic[@"businessScope"] == nil;
     BOOL isContatcts =tableInputDatadic[@"contacts"] == nil;
     BOOL isTel =tableInputDatadic[@"tel"] == nil;
