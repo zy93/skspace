@@ -149,6 +149,9 @@
 		2AFAC8951F0FB796001BAB14 /* WOTRadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFAC8931F0FB796001BAB14 /* WOTRadioView.m */; };
 		59BB1AF86E21AC99D91DDCE6 /* libPods-WOTWorkSpace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D773A878FA3518662358C7A0 /* libPods-WOTWorkSpace.a */; };
 		97D06A114DB42F1134696656 /* libPods-WOTWorkSpaceUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFC264D6C897C120A10B700D /* libPods-WOTWorkSpaceUITests.a */; };
+		C509611B2022EF68009A9D4F /* SKSpaceDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C509611A2022EF68009A9D4F /* SKSpaceDetailsVC.m */; };
+		C509611E2022F1B0009A9D4F /* SKSpaceSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = C509611D2022F1B0009A9D4F /* SKSpaceSiteView.m */; };
+		C50961212022FA18009A9D4F /* SKTtileView.m in Sources */ = {isa = PBXBuildFile; fileRef = C50961202022FA18009A9D4F /* SKTtileView.m */; };
 		C55A29871FD6DFD9001E0DB7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29811FD6DFD8001E0DB7 /* LoginViewController.m */; };
 		C55A29881FD6DFD9001E0DB7 /* FindPassWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29821FD6DFD9001E0DB7 /* FindPassWordViewController.m */; };
 		C55A29891FD6DFD9001E0DB7 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29841FD6DFD9001E0DB7 /* RegisterViewController.m */; };
@@ -674,6 +677,12 @@
 		61996A58C52879228CF28B28 /* libPods-WOTWorkSpaceTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WOTWorkSpaceTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD7419E0440D789E522F1B2 /* Pods-WOTWorkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTWorkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B06E1E0FEBF126912B787519 /* Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig"; path = "Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig"; sourceTree = "<group>"; };
+		C50961192022EF68009A9D4F /* SKSpaceDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceDetailsVC.h; sourceTree = "<group>"; };
+		C509611A2022EF68009A9D4F /* SKSpaceDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSpaceDetailsVC.m; sourceTree = "<group>"; };
+		C509611C2022F1B0009A9D4F /* SKSpaceSiteView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceSiteView.h; sourceTree = "<group>"; };
+		C509611D2022F1B0009A9D4F /* SKSpaceSiteView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSpaceSiteView.m; sourceTree = "<group>"; };
+		C509611F2022FA18009A9D4F /* SKTtileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTtileView.h; sourceTree = "<group>"; };
+		C50961202022FA18009A9D4F /* SKTtileView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKTtileView.m; sourceTree = "<group>"; };
 		C55A29811FD6DFD8001E0DB7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		C55A29821FD6DFD9001E0DB7 /* FindPassWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPassWordViewController.m; sourceTree = "<group>"; };
 		C55A29831FD6DFD9001E0DB7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -1474,11 +1483,15 @@
 			isa = PBXGroup;
 			children = (
 				2A69A8421FE2282C00C0862A /* WOTButton.h */,
+				2A69A8461FE2282C00C0862A /* WOTButton.m */,
 				2A69A8431FE2282C00C0862A /* WOTServiceProvidersView.m */,
 				2A69A8441FE2282C00C0862A /* WOTSelectScrollView.h */,
 				2A69A8451FE2282C00C0862A /* WOTSelectScrollView.m */,
-				2A69A8461FE2282C00C0862A /* WOTButton.m */,
 				2A69A8471FE2282C00C0862A /* WOTServiceProvidersView.h */,
+				C509611C2022F1B0009A9D4F /* SKSpaceSiteView.h */,
+				C509611D2022F1B0009A9D4F /* SKSpaceSiteView.m */,
+				C509611F2022FA18009A9D4F /* SKTtileView.h */,
+				C50961202022FA18009A9D4F /* SKTtileView.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -2324,6 +2337,8 @@
 				E86FD1F61F207734009BE16A /* WOTMainAppleRepairVC.m */,
 				E8747AE01F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.h */,
 				E8747AE11F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.m */,
+				C50961192022EF68009A9D4F /* SKSpaceDetailsVC.h */,
+				C509611A2022EF68009A9D4F /* SKSpaceDetailsVC.m */,
 				C5FA65491FFE0E7300675A6A /* GiftBag */,
 				C5FA65481FFE0E5400675A6A /* Demand */,
 				C5FA65441FFDFCB900675A6A /* Repairs */,
@@ -3239,6 +3254,7 @@
 				E8190DA41F0F69660000B07C /* WOTworkSpaceSearchCell.m in Sources */,
 				E86245641F3D4F4900CF0D9D /* SRProxyConnect.m in Sources */,
 				E86245811F3D59F100CF0D9D /* WOTDeviceListRequestTool.m in Sources */,
+				C50961212022FA18009A9D4F /* SKTtileView.m in Sources */,
 				E85A861B1F0252F20016FCA1 /* WOTBaseNavigationController.m in Sources */,
 				E847E0981F1621DC003BAF6C /* WOTUserSingleton.m in Sources */,
 				2A69A84E1FE2282C00C0862A /* WOTServiceProvidersView.m in Sources */,
@@ -3420,10 +3436,12 @@
 				C5FA65471FFDFCF800675A6A /* TZTestCell.m in Sources */,
 				E8747AE21F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.m in Sources */,
 				C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */,
+				C509611B2022EF68009A9D4F /* SKSpaceDetailsVC.m in Sources */,
 				E86245711F3D4F4900CF0D9D /* NSURLRequest+SRWebSocket.m in Sources */,
 				E86245651F3D4F4900CF0D9D /* SRRunLoopThread.m in Sources */,
 				2AF18A351F136034004681CE /* WOTOrderForBookStationCell.m in Sources */,
 				E86245691F3D4F4900CF0D9D /* SRHash.m in Sources */,
+				C509611E2022F1B0009A9D4F /* SKSpaceSiteView.m in Sources */,
 				2AED7BE11FFB513700316588 /* WOTEnterpriseApplyVC.m in Sources */,
 				C5A125B01FE229DD0058AA0C /* QueryCommentModel.m in Sources */,
 				E8693AE51F04AEB900772BC1 /* WOTMyEnterpriseVC.m in Sources */,

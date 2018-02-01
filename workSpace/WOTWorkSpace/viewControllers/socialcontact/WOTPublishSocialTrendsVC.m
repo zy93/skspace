@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewHeight;
+@property(nonatomic,strong)NSMutableArray *selectedAssets;
 
 @end
 
@@ -217,6 +218,7 @@
         cell.gifLable.hidden = YES;
     } else {
         cell.imageView.image = _photosArray[indexPath.row];
+        cell.asset = self.selectedAssets[indexPath.row];
         cell.deleteBtn.hidden = NO;
     }
     cell.imageView.contentMode = UIViewContentModeScaleToFill;
@@ -248,7 +250,7 @@
     
     __weak typeof(self) weakSelf = self;
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    if (indexPath.row == 0) {
+    if (indexPath.row == _photosArray.count) {
         UIAlertController *alertController = [[UIAlertController alloc] init];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
@@ -345,7 +347,7 @@
 - (void)pushTZImagePickerController {
     
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
-
+    imagePickerVc.selectedAssets = self.selectedAssets; // 目前已经选中的图片数组
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
 
     }];
@@ -353,8 +355,23 @@
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
+
+- (void)imagePickerController:(UIImagePickerController *)aPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [aPicker dismissViewControllerAnimated:YES completion:nil];
+    __block UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    PHFetchOptions*options = [[PHFetchOptions alloc]init];
+    options.sortDescriptors=@[[NSSortDescriptor sortDescriptorWithKey:@"creationDate"ascending:NO]];
+    PHFetchResult *assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
+    [self.photosArray addObject:image];
+    [self.selectedAssets addObject:[assetsFetchResults firstObject]];
+    [self viewDidLayoutSubviews];
+    [_collectionView reloadData];
+    
+}
+
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
     _photosArray = [NSMutableArray arrayWithArray:photos];
+    _selectedAssets = [NSMutableArray arrayWithArray:assets];
    // [self numberForLine];
     [self viewWillLayoutSubviews];
     [_collectionView reloadData];
@@ -369,6 +386,7 @@
 #pragma mark - 图片删除方法
 - (void)deleteBtnClik:(UIButton *)sender {
     [_photosArray removeObjectAtIndex:sender.tag];
+    [_selectedAssets removeObjectAtIndex:sender.tag];
     [_collectionView performBatchUpdates:^{
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
         [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
@@ -377,6 +395,13 @@
     }];
 }
 
+-(NSMutableArray *)selectedAssets
+{
+    if (_selectedAssets == nil) {
+        _selectedAssets = [[NSMutableArray alloc] init];
+    }
+    return _selectedAssets;
+}
 
 
 
