@@ -50,7 +50,7 @@
     self.navigationItem.title = @"详情";
     [self.navigationController.navigationBar setHidden:NO];
     //
-    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_icon_image"] style:UIBarButtonItemStylePlain target:self action:@selector(shareDetail)];
+    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(shareDetail)];
     [self.navigationItem setRightBarButtonItem:shareItem];
     //解决布局空白问题
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
@@ -115,7 +115,7 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     messageObject.text = pTitle;
     
-    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:@"众创空间" thumImage:[UIImage imageNamed:@"share_icon"]];
+    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:@"众创空间" thumImage:[UIImage imageNamed:@"share_icon_image"]];
     pMessageObject.webpageUrl = self.url;
     messageObject.shareObject = pMessageObject;
     

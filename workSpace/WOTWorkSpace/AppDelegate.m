@@ -52,8 +52,9 @@
     }
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
     [JPUSHService setupWithOption:launchOptions appKey:@"17c41ffb02dae0dcdaabaf8c" channel:@"Test" apsForProduction:NO];
-    
-    
+    [JPUSHService resetBadge];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+
     
     return YES;
 }
