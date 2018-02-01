@@ -11,6 +11,7 @@
 #import "UIColor+ColorChange.h"
 #import "RegisterViewController.h"
 #import "FindPassWordViewController.h"
+#import "JPUSHService.h"
 
 
 @interface LoginViewController ()<UITextFieldDelegate>
@@ -236,14 +237,14 @@
             WOTLoginModel_msg *model = (WOTLoginModel_msg *)bean;
             NSLog(@"登陆%@",model.msg);
             if ([model.code isEqualToString:@"200"]) {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     [[WOTUserSingleton shareUser] saveUserInfoToPlistWithModel:model.msg];
                     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:LOGIN_STATE_USERDEFAULT];
                     [WOTSingtleton shared].isuserLogin = YES;
-                });
-                dispatch_async(dispatch_get_main_queue(), ^{
                     NSLog(@"是否登陆：%d",[WOTSingtleton shared].isuserLogin);
-                   // [self dismissViewControllerAnimated:YES completion:nil];
+                    [JPUSHService setAlias:[NSString stringWithFormat:@"%@C",self.userTelField.text] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+                        
+                    } seq:1];
                     [self.navigationController popViewControllerAnimated:YES];
                 });
             }
