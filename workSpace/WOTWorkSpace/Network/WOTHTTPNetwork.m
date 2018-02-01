@@ -419,7 +419,7 @@
     } response:response];
 }
 
-+(void)applyJoinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId enterpriseName:(NSString *)name response:(response)response
++(void)applyJoinEnterpriseWithEnterpriseId:(NSString *)enterpriseId enterpriseName:(NSString *)name response:(response)response
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Applyforcompany/AddApplyforcompany"];
     NSDictionary * parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,

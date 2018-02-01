@@ -150,7 +150,7 @@ typedef void(^response)(id bean,NSError *error);
  @param name 企业名称
  @param response 响应回调
  */
-+(void)applyJoinEnterpriseWithEnterpriseId:(NSNumber *)enterpriseId enterpriseName:(NSString *)name response:(response)response;
++(void)applyJoinEnterpriseWithEnterpriseId:(NSString *)enterpriseId enterpriseName:(NSString *)name response:(response)response;
 
 /**
  处理加入企业的申请

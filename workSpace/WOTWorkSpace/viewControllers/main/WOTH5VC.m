@@ -50,7 +50,7 @@
     self.navigationItem.title = @"详情";
     [self.navigationController.navigationBar setHidden:NO];
     //
-    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(shareDetail)];
+    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_icon_image"] style:UIBarButtonItemStylePlain target:self action:@selector(shareDetail)];
     [self.navigationItem setRightBarButtonItem:shareItem];
     //解决布局空白问题
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
@@ -102,10 +102,10 @@
             socialPlatformType = UMSocialPlatformType_QQ;
             break;
         case 3:
-            socialPlatformType = UMSocialPlatformType_Qzone;
+            socialPlatformType = UMSocialPlatformType_Sina;
             break;
         case 4:
-            socialPlatformType = UMSocialPlatformType_Sina;
+            socialPlatformType = UMSocialPlatformType_Qzone ;
             break;
         default:
             socialPlatformType = UMSocialPlatformType_Sina;
@@ -115,8 +115,8 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     messageObject.text = pTitle;
     
-    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:@"众创空间" thumImage:[UIImage imageNamed:@"space_bj"]];
-    pMessageObject.webpageUrl = [NSString stringWithFormat:@"%@",@"www.baidu.com"];
+    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:@"众创空间" thumImage:[UIImage imageNamed:@"share_icon"]];
+    pMessageObject.webpageUrl = self.url;
     messageObject.shareObject = pMessageObject;
     
     if ([[UMSocialManager defaultManager] isInstall:socialPlatformType]) {

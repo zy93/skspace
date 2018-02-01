@@ -671,7 +671,7 @@
             myenterprisevc.selectEnterprise = YES;
             [self.navigationController pushViewController:myenterprisevc animated:YES];
             myenterprisevc.selectEnterpriseBlock = ^(WOTEnterpriseModel *model) {
-                self.payObject = [model.companyId stringValue];
+                self.payObject = model.companyId;
                 self.invoiceInfo = model.companyName;
                 NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
                 [self.table reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];

@@ -23,7 +23,7 @@
 @property(nonatomic,strong)NSString* businessPlan ;
 @property(nonatomic,strong)NSString* businessScope ;
 @property(nonatomic,strong)NSString* busnissTerm ;
-@property(nonatomic,assign)NSNumber* companyId ;
+@property(nonatomic,assign)NSString* companyId ;
 @property(nonatomic,strong)NSString* companyName ;
 @property(nonatomic,strong)NSString* companyPicture ;
 @property(nonatomic,strong)NSString* companyProfile;
