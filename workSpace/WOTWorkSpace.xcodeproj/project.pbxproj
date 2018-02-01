@@ -558,6 +558,7 @@
 		2A69A8551FE27C9E00C0862A /* UIImage+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blur.h"; sourceTree = "<group>"; };
 		2A6B87DB1FFB68A800F1E070 /* WOTApplyJoinEnterpriseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTApplyJoinEnterpriseModel.h; sourceTree = "<group>"; };
 		2A6B87DC1FFB68A800F1E070 /* WOTApplyJoinEnterpriseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTApplyJoinEnterpriseModel.m; sourceTree = "<group>"; };
+		2A6D36C120230A9F00754A72 /* WOTWorkSpace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WOTWorkSpace.entitlements; sourceTree = "<group>"; };
 		2A7AE8431FF62F80000CAC04 /* WOTTitleAndEnterCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTTitleAndEnterCell.h; sourceTree = "<group>"; };
 		2A7AE8441FF62F80000CAC04 /* WOTTitleAndEnterCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTTitleAndEnterCell.m; sourceTree = "<group>"; };
 		2A7AE8451FF62F80000CAC04 /* WOTTitleAndEnterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTTitleAndEnterCell.xib; sourceTree = "<group>"; };
@@ -2047,6 +2048,7 @@
 		E85A85861F0201F30016FCA1 /* WOTWorkSpace */ = {
 			isa = PBXGroup;
 			children = (
+				2A6D36C120230A9F00754A72 /* WOTWorkSpace.entitlements */,
 				E85A860B1F0233270016FCA1 /* Uitls */,
 				E85A85BD1F0202450016FCA1 /* common */,
 				E85A85BF1F0202450016FCA1 /* librarys */,
@@ -2811,6 +2813,11 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 5EY377SJTX;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					E85A859F1F0201F30016FCA1 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -3035,7 +3042,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9A63C7223633683843284F6A /* [CP] Copy Pods Resources */ = {
@@ -3068,7 +3075,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C8A633B506C111B121D3FECC /* [CP] Check Pods Manifest.lock */ = {
@@ -3086,7 +3093,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		CD490373BD6421CCE8FFF0C5 /* [CP] Embed Pods Frameworks */ = {
@@ -3514,6 +3521,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = WOTWorkSpace/WOTWorkSpace.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing WOT Technology Development Co.,Ltd. (5EY377SJTX)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 5EY377SJTX;
@@ -3675,6 +3683,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = WOTWorkSpace/WOTWorkSpace.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing WOT Technology Development Co.,Ltd. (5EY377SJTX)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -3718,6 +3727,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = WOTWorkSpace/WOTWorkSpace.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing WOT Technology Development Co.,Ltd. (5EY377SJTX)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 5EY377SJTX;
