@@ -59,6 +59,7 @@
         WOTApplyJoinEnterpriseModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"已同意" toView:self.view];
+            [self createRequest];
         }
     }];
 }

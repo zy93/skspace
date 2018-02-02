@@ -449,8 +449,8 @@ int a = 0;
 //    [self.navigationController pushViewController:detailvc animated:YES];
     SKSpaceDetailsVC *spaceDetailsVC = [[SKSpaceDetailsVC alloc] init];
     spaceDetailsVC.hidesBottomBarWhenPushed = YES;
+    spaceDetailsVC.spaceModel = self.spaceData[subIndex];
     [self.navigationController pushViewController:spaceDetailsVC animated:YES];
-    
 }
 
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {

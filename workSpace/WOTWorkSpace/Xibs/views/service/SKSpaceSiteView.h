@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface SKSpaceSiteView : UIView
-
 @property(nonatomic,strong)NSString *nameString;
 @property(nonatomic,strong)NSURL *imageUrl;
 @property(nonatomic,strong)NSString *numString;
 @property(nonatomic,strong)NSString *moneyString;
+
+-(void)setDataWith:(NSString *)numString  moneyString:(NSString *)moneyString imageUrl:(NSURL *)imageUrl;
+
 @end

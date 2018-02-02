@@ -12,7 +12,7 @@
 @property (nonatomic,strong)UIImageView *imageView;
 @property (nonatomic,strong)UILabel *numLabel;
 @property (nonatomic,strong)UILabel *moneyLabel;
-@property (nonatomic,strong)UIView *lineView;
+@property (nonatomic,strong)UIView *spaceInfolineView;
 @end
 
 @implementation SKSpaceSiteView
@@ -31,8 +31,15 @@
     [self addSubview:self.imageView];
     [self addSubview:self.numLabel];
     [self addSubview:self.moneyLabel];
-    [self addSubview:self.lineView];
+    [self addSubview:self.spaceInfolineView];
     [self layoutSubviews];
+}
+
+-(void)setDataWith:(NSString *)numString  moneyString:(NSString *)moneyString imageUrl:(NSURL *)imageUrl
+{
+    _numLabel.text = numString;
+    _moneyLabel.text = moneyString;
+    [_imageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"placeholder"]];
 }
 
 -(void)layoutSubviews
@@ -60,7 +67,7 @@
         make.left.equalTo(self.nameLabel.mas_left);
     }];
     
-    [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.spaceInfolineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self);
         make.left.equalTo(self).with.offset(5);
         make.right.equalTo(self).with.offset(-5);
@@ -103,13 +110,13 @@
     }
     return _moneyLabel;
 }
--(UIView *)lineView
+-(UIView *)spaceInfolineView
 {
-    if (_lineView == nil) {
-        _lineView = [[UIView alloc] init];
-        _lineView.backgroundColor = UICOLOR_MAIN_LINE;
+    if (_spaceInfolineView == nil) {
+        _spaceInfolineView = [[UIView alloc] init];
+        _spaceInfolineView.backgroundColor = UICOLOR_MAIN_LINE;
     }
-    return _lineView;
+    return _spaceInfolineView;
 }
 
 @end

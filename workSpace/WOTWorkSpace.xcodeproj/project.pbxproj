@@ -196,6 +196,8 @@
 		C5CBA582201073A8002943EF /* SKOrderStringModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CBA581201073A8002943EF /* SKOrderStringModel.m */; };
 		C5CBA58520109E56002943EF /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C5CBA58320109E56002943EF /* AlipaySDK.bundle */; };
 		C5CBA58620109E56002943EF /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CBA58420109E56002943EF /* AlipaySDK.framework */; };
+		C5DB4D59202439D100806BC1 /* SKSpaceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */; };
+		C5DB4D5C202445F200806BC1 /* NSArray+ImageArray.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB4D5B202445F200806BC1 /* NSArray+ImageArray.m */; };
 		C5E565DB1FF246C600534546 /* SKGiftBagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565DA1FF246C600534546 /* SKGiftBagViewController.m */; };
 		C5E565DE1FF2474700534546 /* SKGiftBagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565DD1FF2474700534546 /* SKGiftBagTableViewCell.m */; };
 		C5E565E11FF2486D00534546 /* SKGiftBagInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E565E01FF2486D00534546 /* SKGiftBagInfoViewController.m */; };
@@ -770,6 +772,10 @@
 		C5CBA581201073A8002943EF /* SKOrderStringModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKOrderStringModel.m; sourceTree = "<group>"; };
 		C5CBA58320109E56002943EF /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		C5CBA58420109E56002943EF /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		C5DB4D57202439D100806BC1 /* SKSpaceInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceInfoModel.h; sourceTree = "<group>"; };
+		C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSpaceInfoModel.m; sourceTree = "<group>"; };
+		C5DB4D5A202445F100806BC1 /* NSArray+ImageArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ImageArray.h"; sourceTree = "<group>"; };
+		C5DB4D5B202445F200806BC1 /* NSArray+ImageArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ImageArray.m"; sourceTree = "<group>"; };
 		C5E565D91FF246C600534546 /* SKGiftBagViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKGiftBagViewController.h; sourceTree = "<group>"; };
 		C5E565DA1FF246C600534546 /* SKGiftBagViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKGiftBagViewController.m; sourceTree = "<group>"; };
 		C5E565DC1FF2474700534546 /* SKGiftBagTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKGiftBagTableViewCell.h; sourceTree = "<group>"; };
@@ -1540,6 +1546,8 @@
 				E8774BB71F41710F00168033 /* WOTOrderModel.m */,
 				C5A2D7032007750B003F1574 /* SKFacilitatorModel.h */,
 				C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */,
+				C5DB4D57202439D100806BC1 /* SKSpaceInfoModel.h */,
+				C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -2395,6 +2403,8 @@
 				E85E63421F3B0B650050ABB6 /* WOTBueToothManager.m */,
 				2A6442B91F5FE80100E84273 /* MBProgressHUD+Extension.h */,
 				2A6442BA1F5FE80100E84273 /* MBProgressHUD+Extension.m */,
+				C5DB4D5A202445F100806BC1 /* NSArray+ImageArray.h */,
+				C5DB4D5B202445F200806BC1 /* NSArray+ImageArray.m */,
 			);
 			path = Uitls;
 			sourceTree = "<group>";
@@ -3300,7 +3310,9 @@
 				C59D56DF1FDA2C6D001870B2 /* YMTextData.m in Sources */,
 				E8190DC61F0F69660000B07C /* WOTVisitTypeCell.m in Sources */,
 				E8EACF961F035ABA0015535D /* WOTOrderLIstBaseVC.m in Sources */,
+				C5DB4D5C202445F200806BC1 /* NSArray+ImageArray.m in Sources */,
 				E86245681F3D4F4900CF0D9D /* SRError.m in Sources */,
+				C5DB4D59202439D100806BC1 /* SKSpaceInfoModel.m in Sources */,
 				C59D56FF1FDA2D6A001870B2 /* WFPopView.m in Sources */,
 				C5A125BA1FE242CD0058AA0C /* SKCommentTableViewCell.m in Sources */,
 				2AAA19862008B90D00786500 /* WOTMeetingHistoryModel.m in Sources */,

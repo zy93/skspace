@@ -83,9 +83,6 @@
     [shareView ShowView];
 }
 
-
-
-
 #pragma mark - YYShareViewDelegate methods
 -(void)ClickShareWithType:(NSInteger)argType
 {
@@ -111,6 +108,7 @@
             socialPlatformType = UMSocialPlatformType_Sina;
             break;
     }
+    
     NSString *pTitle = @"众创空间";
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     messageObject.text = pTitle;
@@ -126,19 +124,13 @@
     }else
     {
         [MBProgressHUDUtil showMessage:@"未安装应用，请安装后分享！" toView:self.view];
-
     }
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)dealloc
+{
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
-*/
+
 
 @end
