@@ -223,7 +223,7 @@
 //MARK:SDCycleScrollView   Delegate  点击轮播图显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    detailvc.url = _sliderUrlStrings[index];
+    detailvc.url = self.bannerData[index].webpageUrl;
     [self.navigationController pushViewController:detailvc animated:YES];
     NSLog(@"%@+%ld",cycleScrollView.titlesGroup[index],index);
 }
@@ -321,6 +321,7 @@
 
 #pragma mark - 获取服务banner数据
 -(void)getNannerData:(void(^)())complete{
+    
     _imageTitles = [[NSMutableArray alloc] init];
     _imageUrlStrings = [[NSMutableArray alloc] init];
     __weak typeof(self) weakSelf = self;

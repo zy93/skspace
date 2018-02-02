@@ -118,7 +118,14 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getBookStationNumberWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
-//+(void)getSpaceWith
+
+/**
+ 通过空间id查询空间信息
+
+ @param spaceId 空间id
+ @param response 结果回调
+ */
++(void)getSpaceInfoWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
 #pragma mark - 企业
 /**

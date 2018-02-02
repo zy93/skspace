@@ -44,6 +44,7 @@
 #import "WOTCityModel.h"
 #import "SKAliPayModel.h"
 #import "SKOrderStringModel.h"
+#import "SKSpaceInfoModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -322,6 +323,17 @@
     } response:response];
 }
 
+#pragma mark
++(void)getSpaceInfoWithSpaceId:(NSNumber *)spaceId response:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findNum"];
+    NSDictionary * parameters =@{@"spaceId":spaceId};
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        SKSpaceInfoModel_msg * stationNumberModel = [[SKSpaceInfoModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  stationNumberModel;
+    } response:response];
+}
+
 #pragma mark - 获取所有的空间列表
 +(void)getSapaceFromGroupBlock:(response)response
 {
@@ -512,7 +524,9 @@
 +(void)getHomeSliderSouceInfo:(response)response{
     NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Proclamation/find"];
     NSDictionary *dic = @{@"pageNo":@1,
-                          @"pageSize":@1000};
+                          @"pageSize":@1000,
+                          @"proclamationState":@"显示"
+                          };
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTSliderModel_msg *model = [[WOTSliderModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
@@ -1252,7 +1266,9 @@
 {
     NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/FacilitatorProclamation/find"];
     NSDictionary *dic = @{@"pageNo":@1,
-                          @"pageSize":@1000};
+                          @"pageSize":@1000,
+                          @"proclamationState":@"显示"
+                          };
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTSliderModel_msg *model = [[WOTSliderModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;

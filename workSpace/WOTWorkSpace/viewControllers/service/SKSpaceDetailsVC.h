@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WOTSpaceModel.h"
 
 @interface SKSpaceDetailsVC : UIViewController
+@property(nonatomic,strong)WOTSpaceModel *spaceModel;
 
 @end
