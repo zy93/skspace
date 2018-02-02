@@ -521,6 +521,8 @@
     } response:response];
 }
 
+#pragma mark - 轮播图
+
 +(void)getHomeSliderSouceInfo:(response)response{
     NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Proclamation/find"];
     NSDictionary *dic = @{@"pageNo":@1,
@@ -534,13 +536,17 @@
 }
 
 
-
-+(void)getServeSliderSouceInfo:(response)response{
-    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/Slider/findByServe"];
-    [self doRequestWithParameters:nil useUrl:sliderurl complete:^JSONModel *(id responseobj) {
++(void)getServiceBannerData:(response)response
+{
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/FacilitatorProclamation/find"];
+    NSDictionary *dic = @{@"pageNo":@1,
+                          @"pageSize":@1000,
+                          @"proclamationState":@"显示"
+                          };
+    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTSliderModel_msg *model = [[WOTSliderModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
-    }response:response];
+    } response:response];
 }
 
 
@@ -1262,17 +1268,6 @@
     } response:response];
 }
 
-+(void)getServiceBannerData:(response)response
-{
-    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/FacilitatorProclamation/find"];
-    NSDictionary *dic = @{@"pageNo":@1,
-                          @"pageSize":@1000,
-                          @"proclamationState":@"显示"
-                          };
-    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
-        WOTSliderModel_msg *model = [[WOTSliderModel_msg alloc]initWithDictionary:responseobj error:nil];
-        return model;
-    } response:response];
-}
+
 
 @end
