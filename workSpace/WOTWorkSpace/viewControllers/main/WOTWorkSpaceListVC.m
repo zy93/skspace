@@ -106,10 +106,12 @@
 {
     [WOTHTTPNetwork getCityListResponse:^(id bean, NSError *error) {
         WOTCityModel_msg *model = bean;
+        [self StopRefresh];
         if ([model.code isEqualToString:@"200"]) {
             NSMutableArray *cityarr = [@[@"全部"] mutableCopy];
             [cityarr addObjectsFromArray:model.msg];
             self.headerView.cityList = cityarr;
+            
         }
         else {
             [MBProgressHUDUtil showMessage:strIsEmpty(model.result)?error.localizedDescription:model.result toView:self.view];
@@ -121,6 +123,7 @@
 {
     [WOTHTTPNetwork getAllSpaceWithCity:cityName block:^(id bean, NSError *error) {
         WOTSpaceModel_msg *model = bean;
+        [self StopRefresh];
         if ([model.code isEqualToString:@"200"]) {
             _dataSource = model.msg.list;
         }

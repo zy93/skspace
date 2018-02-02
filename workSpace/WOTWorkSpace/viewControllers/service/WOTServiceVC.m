@@ -166,11 +166,13 @@
     [self getNannerData:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self loadAutoScrollView];
+            [self StopRefresh];
         });
     }];
     [self getFacilitatorData:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.table reloadData];
+            [self StopRefresh];
         });
     }];
 //    [self getSliderDataSource:^{
@@ -339,8 +341,8 @@
         WOTSliderModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             weakSelf.bannerData = model.msg.list;
-            complete();
         }
+        complete();
     }];
 }
     
@@ -351,13 +353,13 @@
         SKFacilitatorModel *model = (SKFacilitatorModel *)bean;
         if ([model.code isEqualToString:@"200"]) {
             weakSelf.facilitatorData = model.msg.list;
-            complete();
             
         }else
         {
             [MBProgressHUDUtil showMessage:@"获取服务商失败！" toView:self.view];
             return ;
         }
+        complete();
     }];
 }
 
