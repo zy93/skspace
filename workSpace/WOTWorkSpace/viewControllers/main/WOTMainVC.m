@@ -34,15 +34,18 @@
 #import "CardView.h"
 #import "WOTEnterpriseIntroduceVC.h"
 #import "SKSpaceDetailsVC.h"
+#import "UIDevice+Resolutions.h"
 
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bannerConstraint;
 
 //空间
 //@property (weak, nonatomic) IBOutlet CardView *spaceView;
 @property (weak, nonatomic) IBOutlet SDCycleScrollView *autoScrollView;
 @property (weak, nonatomic) IBOutlet UIView *spaceView;
+
 
 @property (weak, nonatomic) IBOutlet WOTShortcutMenuView *ballView;
 
@@ -84,7 +87,8 @@
     [self getAllData];
     [self AddRefreshHeader];
      // Do any additional setup after loading the view.
-    
+    CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? -44: 0;
+    self.bannerConstraint.constant = buff;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -105,6 +105,7 @@
                 <outlet property="headerImage" destination="eB9-Kk-Iwx" id="NCy-C5-PZo"/>
                 <outlet property="loginButton" destination="DFz-Ku-k2G" id="wHm-AH-Jcz"/>
                 <outlet property="memberLabel" destination="Ch5-ah-PPX" id="ozl-ET-4aU"/>
+                <outlet property="topBtnConstraint" destination="0VV-Vd-N3I" id="smy-hw-5Zf"/>
                 <outlet property="topButton" destination="hks-Y5-3f3" id="jeO-ap-cdp"/>
                 <outlet property="userName" destination="R5H-Ba-aCZ" id="oNJ-yU-kYe"/>
             </connections>

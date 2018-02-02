@@ -367,6 +367,7 @@
                         <outlet property="activityView" destination="heX-LE-hiG" id="d6T-Kf-gaS"/>
                         <outlet property="autoScrollView" destination="HSz-Ke-nyz" id="Olt-FQ-o0T"/>
                         <outlet property="ballView" destination="FYh-Er-sLD" id="Ich-oC-WPV"/>
+                        <outlet property="bannerConstraint" destination="P8W-6t-h3h" id="L02-rT-r48"/>
                         <outlet property="enterpriseScrollView" destination="Xlp-6m-zNO" id="trk-5X-Jnv"/>
                         <outlet property="enterpriseView" destination="7nj-Nx-AkA" id="pON-88-kyz"/>
                         <outlet property="informationView" destination="asL-0x-wIO" id="HTk-hn-Fs9"/>

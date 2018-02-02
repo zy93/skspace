@@ -12,6 +12,7 @@
 #import "TZImagePickerController.h"
 #import "TZTestCell.h"
 #import <Photos/Photos.h>
+#import "UIDevice+Resolutions.h"
 
 @interface SKRepairsViewController ()<UITextViewDelegate,TZImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -76,21 +77,21 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.tabBarController.tabBar setHidden:YES];
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.translucent = NO;
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.tabBarController.tabBar setHidden:NO];
 }
 
 #pragma mark - 布局约束
 -(void)layoutSubviews
 {
+    
     [self.lineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).with.offset(64);
+        make.top.equalTo(self.view.mas_top);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.mas_offset(1);
@@ -184,11 +185,12 @@
         make.right.equalTo(self.view).with.offset(-5);
         make.height.mas_offset(1);
     }];
-    
+    CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? -45: -20;
+
     [self.submitButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).with.offset(10);
         make.right.equalTo(self.view).with.offset(-10);
-        make.bottom.equalTo(self.view).with.offset(-10);
+        make.bottom.equalTo(self.view).with.offset(buff);
         make.height.mas_offset(48);
     }];
 }

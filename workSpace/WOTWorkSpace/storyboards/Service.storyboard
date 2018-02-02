@@ -40,7 +40,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGo-0d-bQt" customClass="WOTButton">
-                                                            <rect key="frame" x="90.5" y="15" width="69.5" height="77.5"/>
+                                                            <rect key="frame" x="90.5" y="15" width="70" height="77.5"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="问题报修" image="lssue_repair">
@@ -51,7 +51,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-ye-4yK" customClass="WOTButton">
-                                                            <rect key="frame" x="160" y="15" width="70" height="77.5"/>
+                                                            <rect key="frame" x="160.5" y="15" width="70" height="77.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -63,7 +63,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88Q-nM-hD2" customClass="WOTButton">
-                                                            <rect key="frame" x="230" y="15" width="70" height="77.5"/>
+                                                            <rect key="frame" x="230.5" y="15" width="69.5" height="77.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -245,7 +245,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="FUq-sb-SOy" firstAttribute="leading" secondItem="Uu7-Hm-JCl" secondAttribute="leading" id="0pB-wj-CZu"/>
                             <constraint firstItem="rCf-ps-14O" firstAttribute="top" secondItem="FUq-sb-SOy" secondAttribute="bottom" id="3Rt-1v-Je7"/>
@@ -258,7 +258,9 @@
                     <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="autoScrollView" destination="PcB-rN-qG4" id="N0M-83-axA"/>
+                        <outlet property="bannerConstraint" destination="2Ca-Bb-V9Q" id="Pex-pu-DLC"/>
                         <outlet property="scrollView" destination="FUq-sb-SOy" id="qOQ-rC-dSV"/>
+                        <outlet property="scrollViewConstraint" destination="WV6-a5-JSB" id="xHo-To-4lp"/>
                         <outlet property="table" destination="ua4-Zy-Yb3" id="zpX-Jr-JIM"/>
                         <outlet property="tableHeight" destination="1Lf-1t-vbv" id="iw6-qE-hno"/>
                     </connections>

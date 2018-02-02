@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *topButton;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBtnConstraint;
 
 @property(nonatomic,strong)id<WOTOMyCellDelegate> mycelldelegate;
 @end

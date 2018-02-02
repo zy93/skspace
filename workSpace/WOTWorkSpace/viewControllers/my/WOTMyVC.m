@@ -17,6 +17,7 @@
 #import "WOTReservationsMeetingVC.h"
 #import "LoginViewController.h"
 #import "WOTMyAppointmentHistoryVC.h"
+#import "UIDevice+Resolutions.h"
 
 @interface WOTMyVC ()<WOTOrderCellDelegate,WOTOMyCellDelegate, UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic,strong)WOTSettingVC *settingvc;
@@ -39,6 +40,17 @@
     
     [self.tableView registerClass:[WOTMycommonCell class] forCellReuseIdentifier:@"mycommonCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderCell" bundle:nil] forCellReuseIdentifier:@"myorderCellID"];
+    
+    CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? -45: 0;
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *maker){
+        maker.top.mas_equalTo(buff);
+        maker.left.mas_equalTo(self.view);
+        maker.right.mas_equalTo(self.view);
+        maker.bottom.mas_equalTo(self.view);
+        
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,17 +67,6 @@
     
     [self.tableView reloadData];
     
-}
-
-
--(void)viewWillLayoutSubviews{
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *maker){
-        maker.top.mas_equalTo(self.view).offset(-20);
-        maker.left.mas_equalTo(self.view);
-        maker.right.mas_equalTo(self.view);
-        maker.bottom.mas_equalTo(self.view);
-        
-    }];
 }
 
 #pragma mark - table delegate 

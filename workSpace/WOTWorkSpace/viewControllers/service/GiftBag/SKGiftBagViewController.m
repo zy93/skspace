@@ -24,6 +24,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //self.hidesBottomBarWhenPushed = YES;
+    self.navigationItem.title = @"礼包";
     self.giftBagTableView = [[UITableView alloc] init];
     self.giftBagTableView.delegate = self;
     self.giftBagTableView.dataSource = self;

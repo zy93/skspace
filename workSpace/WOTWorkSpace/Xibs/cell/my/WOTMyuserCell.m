@@ -9,6 +9,7 @@
 #import "WOTMyuserCell.h"
 #import "UIView+Extension.h"
 #import "WOTSingtleton.h"
+#import "UIDevice+Resolutions.h"
 @implementation WOTMyuserCell
 
 - (void)awakeFromNib {
@@ -24,6 +25,11 @@
     [self.headerImage setCorenerRadius:self.headerImage.frame.size.width/2 borderColor:UICOLOR_WHITE];
     [[WOTConfigThemeUitls shared] setLabelColorss:[NSArray arrayWithObjects:self.userName,self.memberLabel, nil] withColor:[UIColor blackColor]];
     // Initialization code
+    
+    CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? 45: 20;
+    self.topBtnConstraint.constant = buff;
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

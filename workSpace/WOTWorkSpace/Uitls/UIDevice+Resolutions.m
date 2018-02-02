@@ -26,6 +26,9 @@
             if (pixelHeight == 1242.0f && pixelWidth == 2208.0f)
                 resolution = UIDeviceResolution_iPhoneRetina55;
             
+            if (pixelHeight == 2436.0f && pixelWidth == 1125.0f)
+                resolution = UIDeviceResolution_iPhoneRetina58;
+            
         }else if (scale == 2.0f) {
             if ( (pixelHeight == 960.0f && pixelWidth == 640.0f) || (pixelHeight == 640.0f && pixelWidth == 960.0f))
                 resolution = UIDeviceResolution_iPhoneRetina35;
