@@ -201,15 +201,19 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getNewsWithPage:(NSNumber *)page response:(response)response;
 
+#pragma mark - 轮播图
 /**
  *获取首页页面轮播图资源数据
  */
 +(void)getHomeSliderSouceInfo:(response)response;
 
 /**
- *获取服务页面轮播图资源数据
+ 获取服务界面banner 数据
+ 
+ @param response 结果回调
  */
-+(void)getServeSliderSouceInfo:(response)response;
++(void)getServiceBannerData:(response)response;
+
 /**
  *获取我的历史--反馈列表数据
  @param userId  登录者用户id
@@ -656,12 +660,7 @@ typedef void(^response)(id bean,NSError *error);
 +(void)getQRcodeInfoWithUserId:(NSNumber *)userId  response:(response)response;
 
 
-/**
- 获取服务界面banner 数据
 
- @param response 结果回调
- */
-+(void)getServiceBannerData:(response)response;
 
 
 @end
