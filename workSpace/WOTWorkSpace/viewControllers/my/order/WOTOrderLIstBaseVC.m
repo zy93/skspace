@@ -72,6 +72,7 @@
         {
             [WOTHTTPNetwork getUserSiteOrderResponse:^(id bean, NSError *error) {
                 WOTMeetingHistoryModel_msg *model = bean;
+                [self StopRefresh];
                 if ([model.code isEqualToString:@"200"]) {
                     weakSelf.tableList = model.msg.list;
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -88,6 +89,7 @@
         {
             [WOTHTTPNetwork getUserMeetingOrderResponse:^(id bean, NSError *error) {
                 WOTMeetingHistoryModel_msg *model = bean;
+                [self StopRefresh];
                 if ([model.code isEqualToString:@"200"]) {
                     weakSelf.tableList = model.msg.list;
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -104,6 +106,7 @@
         {
             [WOTHTTPNetwork getUserWorkStationOrderResponse:^(id bean, NSError *error) {
                 WOTMeetingHistoryModel_msg *model = bean;
+                [self StopRefresh];
                 if ([model.code isEqualToString:@"200"]) {
                     weakSelf.tableList = model.msg.list;
                     dispatch_async(dispatch_get_main_queue(), ^{
