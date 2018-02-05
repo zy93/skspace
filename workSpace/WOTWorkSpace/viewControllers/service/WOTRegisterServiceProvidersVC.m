@@ -30,6 +30,7 @@
 @property(nonatomic,strong)UIScrollView *scrollView;
 @property(nonatomic,strong)UIButton *applicationSubmitButton;
 @property(nonatomic,strong)NSString *serviceType;
+@property(nonatomic,strong)NSMutableArray *selectedArray;
 
 @end
 
@@ -104,7 +105,9 @@
 //    [self.navigationController pushViewController:vc animated:YES];
     __weak typeof(self) weakSelf = self;
     WOTEnterpriseTypeVC *vc = [[UIStoryboard storyboardWithName:@"My" bundle:nil]instantiateViewControllerWithIdentifier:@"WOTEnterpriseTypeVCID"];
-    vc.gobackBlock = ^(NSString *type){
+    vc.selectedArray = self.selectedArray;
+    vc.gobackBlock = ^(NSString *type,NSMutableArray *selectedArray){
+        self.selectedArray = selectedArray;
         _serviceType = type;
         tableInputDatadic[@"facilitatorType"] = type;
         [weakSelf.tableView reloadData];
@@ -414,5 +417,12 @@
     return _scrollView;
 }
 
+-(NSMutableArray *)selectedArray
+{
+    if (_selectedArray == nil) {
+        _selectedArray = [[NSMutableArray alloc] init];
+    }
+    return _selectedArray;
+}
 
 @end

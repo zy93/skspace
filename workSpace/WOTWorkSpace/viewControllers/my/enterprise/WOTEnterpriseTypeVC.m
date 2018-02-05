@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property(nonatomic,strong)NSArray *sectionName;
 @property(nonatomic,strong)NSArray *typeimage;
-@property(nonatomic,strong)NSMutableArray *selectedArray;
+
 
 @property(nonatomic,strong)NSArray *typeName;
 @end
@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UICOLOR_WHITE;
-    self.selectedArray = [NSMutableArray array];
+    //self.selectedArray = [NSMutableArray array];
     [self configNav];
     [self congitCollectionView];
     [self makeCollectionDataSource];
@@ -153,16 +153,18 @@
 //选择了某个cell
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.selectedArray.count<4) {
-        if ([self.selectedArray containsObject:indexPath]) {
-            [self.selectedArray removeObject:indexPath];
+    if ([self.selectedArray containsObject:indexPath]) {
+        [self.selectedArray removeObject:indexPath];
+    }else
+    {
+        if (self.selectedArray.count<4) {
+            [self.selectedArray addObject:indexPath];
         }else
         {
-            [self.selectedArray addObject:indexPath];
+            [MBProgressHUDUtil showMessage:@"最多可以选择4项" toView:self.view];
         }
-    } else {
-        [MBProgressHUDUtil showMessage:@"最多可以选择4项" toView:self.view];
     }
+
    
     [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
     
@@ -184,11 +186,12 @@
     }
  
     if (_gobackBlock) {
-        self.gobackBlock([typeNameArray componentsJoinedByString:@","]);
+        self.gobackBlock([typeNameArray componentsJoinedByString:@","],self.selectedArray);
     }
 //    NSLog(@"---选择企业---%@",string);
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 
  /*
 #pragma mark - Navigation

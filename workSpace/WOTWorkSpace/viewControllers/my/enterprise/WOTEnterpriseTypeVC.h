@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface WOTEnterpriseTypeVC : UIViewController
-@property (nonatomic,copy) void (^gobackBlock)(NSString *);
+@property (nonatomic,copy) void (^gobackBlock)(NSString *str,NSMutableArray *selectedArray);
+@property(nonatomic,strong)NSMutableArray *selectedArray;
+
 @end

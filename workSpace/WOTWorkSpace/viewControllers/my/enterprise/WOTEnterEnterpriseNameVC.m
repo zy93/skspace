@@ -43,6 +43,10 @@
 #pragma mark - action
 -(void)rightItemAction{
     //跳转页面
+    if (strIsEmpty(self.name)) {
+        [MBProgressHUDUtil showMessage:@"请填写企业名称" toView:self.view];
+        return;
+    }
     if (self.enterpriseName) {
         self.enterpriseName(self.name);
     }

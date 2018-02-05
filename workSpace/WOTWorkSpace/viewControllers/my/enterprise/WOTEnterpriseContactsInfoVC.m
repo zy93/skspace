@@ -41,9 +41,19 @@
 -(void)rightItemAction{
     
     if (strIsEmpty(self.name) || strIsEmpty(self.tel) || strIsEmpty(self.email)) {
+        [MBProgressHUDUtil showMessage:@"请输入完整信息！" toView:self.view];
         return;
     }
     
+    if (![NSString valiMobile:self.tel]) {
+        [MBProgressHUDUtil showMessage:@"电话格式不正确！" toView:self.view];
+        return;
+    }
+    
+    if (![NSString isValidateEmail:self.email]) {
+        [MBProgressHUDUtil showMessage:@"邮箱格式不正确！" toView:self.view];
+        return;
+    }
     //跳转页面
     if (self.contactsBlock) {
         self.contactsBlock(self.name, self.tel, self.email);

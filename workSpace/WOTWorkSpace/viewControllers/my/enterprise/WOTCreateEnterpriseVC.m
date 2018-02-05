@@ -22,6 +22,7 @@
 @property(nonatomic,strong)NSString *contactsTel;
 @property(nonatomic,strong)NSString *contactsEmail;
 @property(nonatomic,strong)UIImage *enterpriseLogo;
+@property(nonatomic,strong)NSMutableArray *selectedArray;
 @end
 
 @implementation WOTCreateEnterpriseVC
@@ -76,6 +77,7 @@
         return;
     }
     else if (!_enterpriseLogo) {
+        [MBProgressHUDUtil showMessage:@"请上传企业logo" toView:self.view];
         return;
     }
     
@@ -179,7 +181,10 @@
     }
     else if (indexPath.row == 2) {
         WOTEnterpriseTypeVC *vc = [[UIStoryboard storyboardWithName:@"My" bundle:nil]instantiateViewControllerWithIdentifier:@"WOTEnterpriseTypeVCID"];
-        vc.gobackBlock = ^(NSString *type){
+        //[vc setSelectedArrayData:self.selectedArray];
+        vc.selectedArray = self.selectedArray;
+        vc.gobackBlock = ^(NSString *type,NSMutableArray *selectedArray){
+            self.selectedArray = selectedArray;
             _enterpriseType = type;
             [weakSelf.tableView reloadData];
         };
@@ -232,6 +237,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+-(NSMutableArray *)selectedArray
+{
+    if (_selectedArray == nil) {
+        _selectedArray = [[NSMutableArray alloc] init];
+    }
+    return _selectedArray;
+}
 
 /*
 #pragma mark - Navigation
