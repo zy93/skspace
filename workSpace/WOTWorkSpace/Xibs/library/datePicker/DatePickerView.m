@@ -125,7 +125,7 @@
         //获得前二个滚轮的当前所选行的索引
         int row = (int)[picker selectedRowInComponent:0];
         int nowyear;
-        if (_yeararr.count != 0) {
+        if (_yeararr.count!= 0) {
             nowyear = [[_yeararr objectAtIndex:row] intValue];
         }
      

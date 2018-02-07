@@ -110,4 +110,15 @@ static dispatch_once_t token;
     return [dic copy];
 }
 
+-(void)updateUserInfo:(void(^)())complete
+{
+    [WOTHTTPNetwork querySingularManInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+        WOTLoginModel_msg *model_msg = (WOTLoginModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            [[WOTUserSingleton shareUser] saveUserInfoToPlistWithModel:model_msg.msg];
+        }
+        complete();
+    }];
+}
+
 @end

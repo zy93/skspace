@@ -116,7 +116,7 @@ typedef void(^response)(id bean,NSError *error);
  @param spaceId spaceId
  @param response 结果回调
  */
-+(void)getBookStationNumberWithSpaceId:(NSNumber *)spaceId response:(response)response;
++(void)getBookStationNumberWithSpaceId:(NSNumber *)spaceId time:(NSString *)time response:(response)response;
 
 
 /**
@@ -434,10 +434,19 @@ typedef void(^response)(id bean,NSError *error);
 #pragma mark - 订单
 
 /**
- 预定会议室、场地、工位订单
+ 预定会议室、场地
  @param response 结果回调
  */
 +(void)generateOrderWithParam:(NSDictionary *)param response:(response)response;
+
+
+/**
+ 工位微信订单
+
+ @param param 参数
+ @param response 结果回调
+ */
++(void)generateBookStationOrderWithParam:(NSDictionary *)param response:(response)response;
 
 /**
  查询会议室订单

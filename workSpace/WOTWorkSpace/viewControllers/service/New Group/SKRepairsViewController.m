@@ -27,8 +27,8 @@
 @property(nonatomic,strong)UIView *lineView2;
 @property(nonatomic,strong)UILabel *repairsDescribeLabel;
 @property(nonatomic,strong)UITextView *describeTextView;
-@property (strong, nonatomic) UICollectionView *collectionView;
-@property (strong, nonatomic) UICollectionViewFlowLayout *layout;
+@property(strong, nonatomic) UICollectionView *collectionView;
+@property(strong, nonatomic) UICollectionViewFlowLayout *layout;
 @property(nonatomic,strong)UIView *lineView3;
 @property(nonatomic,strong)UILabel *repairsAddressLabel;
 @property(nonatomic,strong)UITextField *repairsAddressTextField;
@@ -77,7 +77,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.translucent = NO;
+    //self.navigationController.navigationBar.translucent = NO;
 
 }
 
@@ -91,7 +91,7 @@
 {
     
     [self.lineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
+        make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.mas_offset(1);
@@ -185,14 +185,21 @@
         make.right.equalTo(self.view).with.offset(-5);
         make.height.mas_offset(1);
     }];
-    CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? -45: -20;
+    //CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? -45: -20;
 
     [self.submitButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).with.offset(10);
         make.right.equalTo(self.view).with.offset(-10);
-        make.bottom.equalTo(self.view).with.offset(buff);
+        if (@available(iOS 11.0, *)) {
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom).with.offset(-20);
+        } else {
+            make.bottom.equalTo(self.view).with.offset(-20);
+        }
         make.height.mas_offset(48);
     }];
+    
+    
+    
 }
 
 #pragma mark - 初始化滚动视图

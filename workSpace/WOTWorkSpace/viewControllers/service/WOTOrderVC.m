@@ -25,6 +25,7 @@
 #import "UIColor+ColorChange.h"
 #import "SKAliPayModel.h"
 #import "SKOrderStringModel.h"
+#import "SKBookStationOrderModel.h"
 
 #define infoCell @"infoCell"
 #define selectDateCell @"selectDateCell"
@@ -92,9 +93,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-//    self.table.separatorStyle = UITableViewCellSelectionStyleNone;
-   // NSNotification *LoseResponse = [NSNotification notificationWithName:@"buttonLoseResponse" object:nil];
     
    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(backMainView:)
@@ -261,7 +259,7 @@
         return;
     }
     
-    if ([self.judgmentTime compareDate:self.starTime withDate:self.endTime]) {
+    if ([self.judgmentTime compareDate:self.reservationStationStartDate withDate:self.reservationStationEndDate]) {
         [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
         return;
     }
@@ -307,18 +305,12 @@
             self.contractMode = @(1);
             self.facilitator = @"1006";
             self.carrieroperator = @"1006";
-            self.body = @"工位预定";
+            self.body = @"工位";
             self.total_fee = @"1";// self.money.floatValue * 100;
             self.trade_type = @"APP";
             self.payObject = [[WOTUserSingleton shareUser].userInfo.userId stringValue];
-//            if ([WOTSingtleton shared].payType == PAY_TYPE_WX) {
-//                [self commitOrder];
-//            }else
-//            {
-//                [self commitAliOrder];
-//            }
             self.payType = @1;
-            [self commitOrder];
+            [self commitBookStationOrder];
             
         }
             break;
@@ -491,7 +483,7 @@
                 NSString *imageUrl = [array firstObject];
                 [cell.infoImg  sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
                 cell.infoTitle.text = _spaceModel.spaceName;
-                cell.dailyRentLabel.text = [NSString stringWithFormat:@"剩余工位：%ld",self.stationTotalNumber.integerValue];
+                cell.dailyRentLabel.text = [NSString stringWithFormat:@"今日剩余工位：%ld",self.stationTotalNumber.integerValue];
             }
                 break;
             case ORDER_TYPE_SITE:
@@ -717,17 +709,11 @@
 {
     NSString *startDate =[self.reservationStationStartDate substringToIndex:10];
     NSString *endDate = [self.reservationStationEndDate substringToIndex:10];
-//    if ([self.judgmentTime compareDate:startDate withDate:endDate]) {
     WOTOrderForSelectDateCell *cell = [self.table cellForRowAtIndexPath:self.selectCellIndex];
     dispatch_async(dispatch_get_main_queue(), ^{
         [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
     });
     [self imputedPriceAndLoadCost];
-        
-//    } else {
-//        [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
-//        _datepickerview.hidden  = NO;
-//    }
 }
 
 #pragma mark - 预定场地
@@ -877,6 +863,71 @@
     }];
 }
 
+#pragma mark - 工位微信订单接口
+-(void)commitBookStationOrder
+{
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"facilitator":self.facilitator,
+                                 @"carrieroperator":self.carrieroperator,
+                                 @"body":self.body,
+                                 @"total_fee":self.total_fee,
+                                 @"trade_type":self.trade_type,
+                                 @"spaceId":self.spaceId,
+                                 @"spaceName":self.spaceModel.spaceName,
+                                 @"commodityNum":self.commodityNum,
+                                 @"commodityKind":self.commodityKind,
+                                 @"productNum":self.productNum,//,@500
+                                 @"starTime":self.starTime,
+                                 @"endTime":self.endTime,
+                                 @"money":@(self.costNumber),
+                                 @"dealMode":self.dealMode,
+                                 @"payType":self.payType,
+                                 @"payObject":self.payObject,
+                                 @"payMode":self.payMode,
+                                 @"contractMode":self.contractMode,
+                                 @"conferenceDetailsId":self.conferenceDetailsId,
+                                 @"invoiceInfo":self.invoiceInfo,
+                                 };
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork generateBookStationOrderWithParam:parameters response:^(id bean, NSError *error) {
+        SKBookStationOrderModel_msg *model_msg = (SKBookStationOrderModel_msg *)bean;
+        SKBookStationOrderModel *model = model_msg.msg;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            SKBookStationOrderModel_object *model_object = model.Object;
+            StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
+            vc.orderNum = model_object.orderNum;
+            vc.nameStr = self.spaceModel.spaceName;
+            //vc.model = model_object;
+            vc.startTime = self.starTime;
+            vc.endTime = self.endTime;
+            vc.productNum = self.productNum;
+            vc.payType = self.payType;
+            vc.money = self.money;
+            vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }else if ([model_msg.code isEqualToString:@"201"])
+        {
+            NSArray <SKBookStationOrderModel_array *>*objectArray = model.Array;
+            NSMutableArray *infoArray = [[NSMutableArray alloc] init];
+            [infoArray addObject:@"以下日期不能预约："];
+            for (SKBookStationOrderModel_array *infoObject in objectArray) {
+                
+                [infoArray addObject:[infoObject.time substringToIndex:11]];
+            }
+            
+            NSString *string = [infoArray componentsJoinedByString:@" "];
+            [MBProgressHUDUtil showMessage:string toView:self.view];
+            return ;
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+            return ;
+        }
+    }];
+}
+
 #pragma mark - 微信订单接口
 -(void)commitOrder{
     //是否选择了时间
@@ -892,7 +943,7 @@
                                  @"spaceName":self.spaceModel.spaceName,
                                  @"commodityNum":self.commodityNum,
                                  @"commodityKind":self.commodityKind,
-                                 @"productNum":self.productNum,
+                                 @"productNum":self.productNum,//,@500
                                  @"starTime":self.starTime,
                                  @"endTime":self.endTime,
                                  @"money":@(self.costNumber),
@@ -928,7 +979,6 @@
                 vc.startTime = self.starTime;
                 vc.endTime = self.endTime;
                 vc.productNum = self.productNum;
-                //vc.orderString = model.msg;
                 vc.payType = self.payType;
                 vc.money = self.money;
                 vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
@@ -936,6 +986,7 @@
             }
             else
             {
+                
                 [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
                 return ;
             }
@@ -962,7 +1013,7 @@
 -(void)requestStationNumber
 {
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getBookStationNumberWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork getBookStationNumberWithSpaceId:self.spaceModel.spaceId time:[NSDate getNewTimeZero] response:^(id bean, NSError *error) {
         if (error) {
             NSLog(@"error:%@",error);
             return ;
@@ -1037,29 +1088,5 @@
     }
     return _conferenceDetailsId;
 }
-
-//-(void)request
-
-
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
-//    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
-//    [lab setText:@"您可以在使用前2小时取消预定"];
-//    [lab setTextAlignment:NSTextAlignmentCenter];
-//    [view addSubview:lab];
-//    [view setBackgroundColor:UIColorFromRGB(0x12fdff)];
-//    return view;
-//}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

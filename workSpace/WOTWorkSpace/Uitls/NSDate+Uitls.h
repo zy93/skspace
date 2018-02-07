@@ -21,4 +21,5 @@
 //计算传入时间与当前时间差 //2017/08/25 17:06:37
 +(NSString *)timeDifference:(NSString *)dateStr;
 
+
 @end

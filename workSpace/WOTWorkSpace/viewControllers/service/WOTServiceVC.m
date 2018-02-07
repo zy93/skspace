@@ -113,18 +113,20 @@
 
 - (void)StartRefresh
 {
-    if (_table.mj_footer != nil && [_table.mj_footer isRefreshing])
+    //[_pageFlowView removeFromSuperview];
+    if (_scrollView.mj_footer != nil && [_scrollView.mj_footer isRefreshing])
     {
-        [_table.mj_footer endRefreshing];
+        [_scrollView.mj_footer endRefreshing];
     }
+    
     [self loadData];
 }
 
 - (void)StopRefresh
 {
-    if (_table.mj_header != nil && [_table.mj_header isRefreshing])
+    if (_scrollView.mj_header != nil && [_scrollView.mj_header isRefreshing])
     {
-        [_table.mj_header endRefreshing];
+        [_scrollView.mj_header endRefreshing];
     }
 }
 
@@ -164,21 +166,19 @@
 -(void)loadData
 {
     [self getNannerData:^{
+        [self StopRefresh];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self loadAutoScrollView];
-            [self StopRefresh];
+            
         });
     }];
     [self getFacilitatorData:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.table reloadData];
-            [self StopRefresh];
+            //[self StopRefresh];
         });
     }];
-//    [self getSliderDataSource:^{
-//        [self loadAutoScrollView];
-//
-//    }];
+    
 }
 
 #pragma mark - setup View
@@ -338,18 +338,21 @@
     _imageUrlStrings = [[NSMutableArray alloc] init];
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getServiceBannerData:^(id bean, NSError *error) {
+        complete();
         WOTSliderModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             weakSelf.bannerData = model.msg.list;
         }
-        complete();
+        //complete();
     }];
+    //complete();
 }
     
 #pragma mark - 获取服务商列表
 -(void)getFacilitatorData:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getServiceProviders:^(id bean, NSError *error) {
+        complete();
         SKFacilitatorModel *model = (SKFacilitatorModel *)bean;
         if ([model.code isEqualToString:@"200"]) {
             weakSelf.facilitatorData = model.msg.list;
@@ -361,6 +364,7 @@
         }
         complete();
     }];
+    //complete();
 }
 
 -(NSArray<SKFacilitatorInfoModel*>*)facilitatorData

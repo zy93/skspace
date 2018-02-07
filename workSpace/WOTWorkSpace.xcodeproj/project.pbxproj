@@ -165,6 +165,7 @@
 		C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */; };
 		C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */ = {isa = PBXBuildFile; fileRef = C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */; };
 		C598E9021FDFC4A300CBAD8E /* SKAddReply.m in Sources */ = {isa = PBXBuildFile; fileRef = C598E9011FDFC4A300CBAD8E /* SKAddReply.m */; };
+		C59BFDC12029BFBF00D45EC3 /* SKBookStationOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C59BFDC02029BFBF00D45EC3 /* SKBookStationOrderModel.m */; };
 		C59C89301FF5EB7400C358A1 /* SKRepairsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59C892F1FF5EB7400C358A1 /* SKRepairsViewController.m */; };
 		C59D56CB1FDA280C001870B2 /* YHWorkGroupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56C51FDA280B001870B2 /* YHWorkGroupButton.m */; };
 		C59D56DF1FDA2C6D001870B2 /* YMTextData.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56D31FDA2C6C001870B2 /* YMTextData.m */; };
@@ -712,6 +713,8 @@
 		C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryCircleofFriendsModel_msg.m; sourceTree = "<group>"; };
 		C598E9001FDFC4A300CBAD8E /* SKAddReply.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKAddReply.h; sourceTree = "<group>"; };
 		C598E9011FDFC4A300CBAD8E /* SKAddReply.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKAddReply.m; sourceTree = "<group>"; };
+		C59BFDBF2029BFBF00D45EC3 /* SKBookStationOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKBookStationOrderModel.h; sourceTree = "<group>"; };
+		C59BFDC02029BFBF00D45EC3 /* SKBookStationOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKBookStationOrderModel.m; sourceTree = "<group>"; };
 		C59C892E1FF5EB7400C358A1 /* SKRepairsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRepairsViewController.h; sourceTree = "<group>"; };
 		C59C892F1FF5EB7400C358A1 /* SKRepairsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKRepairsViewController.m; sourceTree = "<group>"; };
 		C59D56C51FDA280B001870B2 /* YHWorkGroupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YHWorkGroupButton.m; sourceTree = "<group>"; };
@@ -1548,6 +1551,8 @@
 				C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */,
 				C5DB4D57202439D100806BC1 /* SKSpaceInfoModel.h */,
 				C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */,
+				C59BFDBF2029BFBF00D45EC3 /* SKBookStationOrderModel.h */,
+				C59BFDC02029BFBF00D45EC3 /* SKBookStationOrderModel.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -3200,6 +3205,7 @@
 				2A3B54F51FD93C2F00358B8A /* UIView+Frame.m in Sources */,
 				E869E83D1F1DE1DF00DBDBB9 /* WOTPhotosBaseUtils.m in Sources */,
 				C595C9781FE1126E0083430A /* SKFocusCirclesViewController.m in Sources */,
+				C59BFDC12029BFBF00D45EC3 /* SKBookStationOrderModel.m in Sources */,
 				C55A29891FD6DFD9001E0DB7 /* RegisterViewController.m in Sources */,
 				E8190DAA1F0F69660000B07C /* WOTMyActivitiesCell.m in Sources */,
 				2AB90BCA1FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.m in Sources */,

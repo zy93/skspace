@@ -253,11 +253,11 @@
                                  @"facilitator":@"1006",
                                  @"carrieroperator":@"1006",
                                  @"body":self.commodityDescribeStr,
-                                 @"total_fee":@1,//self.payNumber
+                                 @"total_fee":self.payNumber,//self.payNumber
                                  @"trade_type":@"APP",
                                  @"commodityKind":self.commodityDescribeStr,
                                  @"productNum":@1,
-                                 @"money":@0.01,//self.paySumNumber
+                                 @"money":self.paySumNumber,//self.paySumNumber
                                  @"payType":@1,
                                  @"payObject":[WOTUserSingleton shareUser].userInfo.userName
                                  };

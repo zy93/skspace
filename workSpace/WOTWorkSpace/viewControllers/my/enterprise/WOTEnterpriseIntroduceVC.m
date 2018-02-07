@@ -1,4 +1,4 @@
-//
+         //
 //  WOTEnterpriseIntroduceVC.m
 //  WOTWorkSpace
 //
@@ -142,6 +142,9 @@
         //加载button
         if (self.vcType == INTRODUCE_VC_TYPE_Enterprise) {
             //判断当前用户是否是该企业员工
+            NSLog(@"-----## %@",[WOTUserSingleton shareUser].userInfo.companyId);
+            NSLog(@"-----** %@",self.model.companyId);
+            
             if ([WOTUitls stringArrayContainsStringWithArrayStr:[WOTUserSingleton shareUser].userInfo.companyId string:self.model.companyId] ||
                 [WOTUitls stringArrayContainsStringWithArrayStr:[WOTUserSingleton shareUser].userInfo.companyIdAdmin string:self.model.companyId]) {
                 cell.applyJoinBtn.hidden = YES;

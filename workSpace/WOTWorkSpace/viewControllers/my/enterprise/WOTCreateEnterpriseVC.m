@@ -86,11 +86,15 @@
         [WOTHTTPNetwork createEnterpriseWithEnterpriseName:self.enterpriseName enterpriseType:self.enterpriseType enterpriseLogo:self.enterpriseLogo contactsName:self.contactsName contactsTel:self.contactsTel contactsEmail:self.contactsEmail response:^(id bean, NSError *error) {
             WOTBusinessModel*model = bean;
             if ([model.code isEqualToString:@"200"]) {
+                
                 [hud setLabelText:@"创建成功!"];
                 [hud hide:YES afterDelay:2.f complete:^{
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self back];
-                    });
+                    [[WOTUserSingleton shareUser] updateUserInfo:^{
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self back];
+                        });
+                    }];
+                    
                 }];
             }
             else {

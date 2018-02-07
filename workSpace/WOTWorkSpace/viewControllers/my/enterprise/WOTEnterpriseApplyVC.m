@@ -35,9 +35,9 @@
 }
 
 
+
 -(void)createRequest
 {
-//
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getApplyJoinEnterpriseListWithEnterpriseIds:[WOTUserSingleton shareUser].userInfo.companyIdAdmin response:^(id bean, NSError *error) {
         WOTApplyJoinEnterpriseModel_msg *model = bean;
@@ -48,7 +48,6 @@
             });
         }
     }];
-    
 }
 
 
@@ -59,6 +58,11 @@
         WOTApplyJoinEnterpriseModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"已同意" toView:self.view];
+            [self createRequest];
+        }
+        else
+        {
+            [MBProgressHUDUtil showMessage:@"操作失败" toView:self.view];
             [self createRequest];
         }
     }];

@@ -45,6 +45,7 @@
 #import "SKAliPayModel.h"
 #import "SKOrderStringModel.h"
 #import "SKSpaceInfoModel.h"
+#import "SKBookStationOrderModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -77,6 +78,7 @@
                          @"text/json", nil];
     
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    manager.requestSerializer.timeoutInterval = 10;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.requestSerializer.HTTPMethodsEncodingParametersInURI = [NSSet setWithArray:@[@"POST", @"GET", @"HEAD"]];
     
@@ -133,6 +135,7 @@
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [manager.requestSerializer setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"image/jpeg",@"image/png",@"application/octet-stream",@"text/json",nil];
+    manager.requestSerializer.timeoutInterval = 10;
     manager.requestSerializer= [AFHTTPRequestSerializer serializer];
     manager.responseSerializer= [AFHTTPResponseSerializer serializer];
     [manager POST:Url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -313,10 +316,12 @@
 }
 
 #pragma mark - 获取指定空间id下的工位数量
-+(void)getBookStationNumberWithSpaceId:(NSNumber *)spaceId response:(response)response
++(void)getBookStationNumberWithSpaceId:(NSNumber *)spaceId time:(NSString *)time response:(response)response
 {
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/StationInfo/residueStation"];
-    NSDictionary * parameters =@{@"spaceId":spaceId};
+    NSDictionary * parameters =@{@"spaceId":spaceId,
+                                 @"time":time
+                                 };
     [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
         SKBookStationNumberModel * stationNumberModel = [[SKBookStationNumberModel alloc]initWithDictionary:responseobj error:nil];
         return  stationNumberModel;
@@ -339,7 +344,6 @@
 {
     [WOTHTTPNetwork getSapaceWithPage:@1 pageSize:@1000 response:response];
 }
-
 
 
 +(void)getSapaceWithPage:(NSNumber *)page pageSize:(NSNumber *)pageSize response:(response)response
@@ -940,6 +944,17 @@
     
     [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
         WOTWXPayModel_msg *model = [[WOTWXPayModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
+#pragma mark - 工位微信订单接口
++(void)generateBookStationOrderWithParam:(NSDictionary *)param response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/wxAddOrder",HTTPBaseURL];
+    
+    [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
+        SKBookStationOrderModel_msg *model = [[SKBookStationOrderModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  model;
     } response:response];
 }

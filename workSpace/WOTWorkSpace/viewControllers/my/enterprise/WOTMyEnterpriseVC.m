@@ -68,6 +68,18 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+//#pragma mark - 查询个人信息
+//-(void)querySingleInfo
+//{
+//    //querySingularManInfoWithUserId
+//    [WOTHTTPNetwork querySingularManInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+//        WOTLoginModel_msg *model_msg = (WOTLoginModel_msg *)bean;
+//        if ([model_msg.code isEqualToString:@"200"]) {
+//            [[WOTUserSingleton shareUser] saveUserInfoToPlistWithModel:model_msg.msg];
+//            [self createRequest];
+//        }
+//    }];
+//}
 
 -(void)createRequest
 {

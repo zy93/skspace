@@ -19,6 +19,9 @@
 -(void)saveUserInfoToPlistWithModel:(WOTLoginModel *)model;
 -(void)deletePlistFile;
 
+//更新用户信息
+
+-(void)updateUserInfo:(void(^)())complete;
 //销毁单例
 + (void)destroyInstance;
 @end

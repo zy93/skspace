@@ -39,23 +39,22 @@
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setTimeZone: [NSTimeZone timeZoneWithName:@"GMT"]];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
+    [formatter setDateFormat:@"yyyy/MM/dd hh:mm:ss"];
     NSDate *fromDate = [formatter dateFromString:aDate];
     NSDate *toDate = [formatter dateFromString:bDate];
     NSLog(@"%@,%@",fromDate,toDate);
     NSComparisonResult result = [fromDate compare:toDate];
     if (result==NSOrderedSame)
     {
-        return YES;
+        return NO;
     }else if (result==NSOrderedAscending)
     {
-        return YES;
+        return NO;
     }else if (result==NSOrderedDescending)
     {
-        return NO;
+        return YES;
     }
     return NO;
-    
 }
 
 //计算两个时间的字符串的相隔几天

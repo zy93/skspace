@@ -73,6 +73,7 @@
     [self createRequest];
     self.menuArray = [[NSMutableArray alloc] init];
     [self configNavi];
+    
 }
 
 -(void)configNavi{
