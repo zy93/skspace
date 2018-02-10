@@ -36,13 +36,12 @@
 #define serviceCell @"WOTOrderForServiceInfoCell"
 #define describeCell @"WOTOrderForDescribeCell"
 #define scrollViewCell @"WOTScrollViewCell"
-
-//#define payTypeCell @"payTypeCell"
-//#define selectCell @"selectCell"
+#define paymentCell @"WOTPaymentTypeCell"
+#define selectCell @"WOTOrderForSelectCell"
+//#define payTypeCell @"WOTOrderForSelectCell"
 //#define siteCell @"siteCell"
 //#define amountCell @"amountCell"
 //#define uitableCell @"uitableCell"
-//#define paymentCell @"paymentCell"
 
 @interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,WOTPaymentTypeCellDelegate>
 {
@@ -216,15 +215,20 @@
     switch ([WOTSingtleton shared].orderType) {
         case ORDER_TYPE_BOOKSTATION:
         {
-//            list1 = @[infoCell, selectDateCell,selectDateCell, selectNumberCell];
-//            tableList = @[list1, list2];
+            list1 = @[infoCell, selectDateCell,selectDateCell, serviceCell, describeCell];
+            list2 = @[scrollViewCell]; //配套设施
+            list3 = @[scrollViewCell]; //社区团队
+            tableList = @[list1, list2,list3];
 
         }
             break;
         case ORDER_TYPE_MEETING:
         {
-//            list1 = @[infoCell, selectDateCell, selectTimeCell];
-//            tableList = @[list1, list2];
+            list1 = @[infoCell, selectDateCell, selectTimeCell, paymentCell, selectCell, serviceCell, describeCell];
+            list2 = @[scrollViewCell]; //配套设施
+            list3 = @[scrollViewCell]; //支持活动类型
+            list4 = @[scrollViewCell]; //社区团队
+            tableList = @[list1, list2, list3, list4];
         }
             break;
         case ORDER_TYPE_SITE:
@@ -458,27 +462,38 @@
         return 60+heigth;
     }
     else if ([cellType isEqualToString:scrollViewCell]) {
-        if (indexPath.section == 1) {
-            return 130;
+        if ([WOTSingtleton shared].orderType==ORDER_TYPE_BOOKSTATION) {
+            if (indexPath.section == 1) {
+                return 130;
+            }
+            return 250*[WOTUitls GetLengthAdaptRate];
         }
-        else if (indexPath.section == 2) {
-            //70 其他高度、40scroll高度，10数据量、3每行显示数量 1基础数量1行。
-            return 70+(40*(((int)(10/3))+1));
+//        else if ([WOTSingtleton shared].orderType==ORDER_TYPE_MEETING){
+//
+//        }
+        else {
+            if (indexPath.section == 1) {
+                return 130;
+            }
+            else if (indexPath.section == 2) {
+                //70 其他高度、40scroll高度，10数据量、3每行显示数量 1基础数量1行。
+                return 70+(40*(((int)(10/3))+1));
+            }
+            return 250*[WOTUitls GetLengthAdaptRate];
         }
-        return 250*[WOTUitls GetLengthAdaptRate];
     }
 //    else if ([cellType isEqualToString:payTypeCell]) {
 //        return 50;
 //    }
-//    else if ([cellType isEqualToString:selectCell]) {
-//        return 50;
-//    }
+    else if ([cellType isEqualToString:selectCell]) {
+        return 50;
+    }
 //    else if ([cellType isEqualToString:uitableCell]) {
 //        return 30;
 //    }
-//    else if ([cellType isEqualToString:paymentCell]) {
-//        return 97;
-//    }
+    else if ([cellType isEqualToString:paymentCell]) {
+        return 50;
+    }
     else // ([cellType isEqualToString:amountCell])
     {
         return 50;
@@ -628,44 +643,57 @@
         if (cell == nil) {
             cell = [[WOTScrollViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:scrollViewCell];
         }
-        if (indexPath.section==1) {
-            cell.cellType = WOTScrollViewCellType_facilities;
+        
+        if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+            if (indexPath.section==1) {
+                cell.cellType = WOTScrollViewCellType_facilities;
+            }
+            
+            else {
+                cell.cellType = WOTScrollViewCellType_team;
+            }
         }
-        else if (indexPath.section==2) {
-            cell.cellType = WOTScrollViewCellType_type;
-        }
+//        else if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+//
+//        }
         else {
-            cell.cellType = WOTScrollViewCellType_team;
+            if (indexPath.section==1) {
+                cell.cellType = WOTScrollViewCellType_facilities;
+            }
+            else if (indexPath.section==2) {
+                cell.cellType = WOTScrollViewCellType_type;
+            }
+            else {
+                cell.cellType = WOTScrollViewCellType_team;
+            }
         }
+        
+        
         [cell setData:@[@"wifi", @"咖啡吧",@"wifi", @"休息区",@"wifi", @"萌妹子",@"wifi",@"wifi",@"wifi",@"wifi",] otherInfos:@[@"a", @"b", @"c"]];
 
         return cell;
     }
-//    else if ([cellType isEqualToString:payTypeCell]) {
-//        WOTPaymentTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTPaymentTypeCell"];
-//        if (cell == nil) {
-//            cell = [[WOTPaymentTypeCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTPaymentTypeCell"];
-//        }
-//        cell.delegate = self;
-//        cell.index = indexPath;
-//        cell.enterprise= YES;
-//        return cell;
-//    }
-//    else if ([cellType isEqualToString:selectCell]) {
-//        WOTOrderForSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForSelectCell"];
-//        if (cell == nil) {
-//            cell = [[WOTOrderForSelectCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForSelectCell"];
-//        }
-//        if (indexPath.row==1) {
-//            [cell.titleLab setText:@"发票信息"];
-//            [cell.subtitleLab setText:self.invoiceInfo];
-//        }
-////        else {
-////            [cell.titleLab setText:@"代金券"];
-////            [cell.subtitleLab setText:@"无代金券可用"];
-////        }
-//        return cell;
-//    }
+    else if ([cellType isEqualToString:paymentCell]) {
+        WOTPaymentTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:paymentCell];
+        if (cell == nil) {
+            cell = [[WOTPaymentTypeCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:paymentCell];
+        }
+        cell.delegate = self;
+        cell.index = indexPath;
+        cell.enterprise= YES;
+        return cell;
+    }
+    else if ([cellType isEqualToString:selectCell]) {
+        WOTOrderForSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForSelectCell"];
+        if (cell == nil) {
+            cell = [[WOTOrderForSelectCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForSelectCell"];
+        }
+        if (indexPath.row==1) {
+            [cell.titleLab setText:@"发票信息"];
+            [cell.subtitleLab setText:self.invoiceInfo];
+        }
+        return cell;
+    }
 //    else if ([cellType isEqualToString:uitableCell]) {
 //        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCelll"];
 //        if (cell == nil) {

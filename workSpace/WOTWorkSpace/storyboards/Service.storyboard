@@ -40,7 +40,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGo-0d-bQt" customClass="WOTButton">
-                                                            <rect key="frame" x="90.5" y="15" width="69.5" height="77.5"/>
+                                                            <rect key="frame" x="90.5" y="15" width="70" height="77.5"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <state key="normal" title="问题报修" image="lssue_repair">
@@ -51,7 +51,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-ye-4yK" customClass="WOTButton">
-                                                            <rect key="frame" x="160" y="15" width="70" height="77.5"/>
+                                                            <rect key="frame" x="160.5" y="15" width="70" height="77.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -63,7 +63,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88Q-nM-hD2" customClass="WOTButton">
-                                                            <rect key="frame" x="230" y="15" width="70" height="77.5"/>
+                                                            <rect key="frame" x="230.5" y="15" width="69.5" height="77.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -2498,7 +2498,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="DAi-Og-bF2"/>
                                         </constraints>
-                                        <state key="normal" title="确定">
+                                        <state key="normal" title="预  定">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
