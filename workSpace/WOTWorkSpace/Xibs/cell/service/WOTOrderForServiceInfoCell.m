@@ -16,6 +16,9 @@
     if ([self respondsToSelector:@selector(setSeparatorInset:)]) {
         [self setSeparatorInset:UIEdgeInsetsZero];
     }
+    self.addressLab.textColor = UICOLOR_GRAY_99;
+    self.peopleLab.textColor  = UICOLOR_GRAY_99;
+    self.openTimeLab.textColor= UICOLOR_GRAY_99;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
