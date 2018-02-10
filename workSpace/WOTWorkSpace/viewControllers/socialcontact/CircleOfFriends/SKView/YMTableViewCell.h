@@ -23,6 +23,11 @@
 @end
 
 @interface YMTableViewCell : UITableViewCell<WFCoretextDelegate>
+{
+    
+    
+    
+}
 
 @property (nonatomic,strong) NSMutableArray * imageArray;
 @property (nonatomic,strong) NSMutableArray * ymTextArray;
@@ -31,6 +36,9 @@
 @property (nonatomic,assign) id<cellDelegate> delegate;
 @property (nonatomic,assign) NSInteger stamp;
 @property (nonatomic,strong) YMButton *replyBtn;
+
+@property(nonatomic,strong)UIImageView *replyImageView;//评论背景图
+@property(nonatomic,strong)UIButton *openCommentBtn;//评论条数按钮
 
 @property (nonatomic,strong) UIImageView *favourImage;//点赞的图
 

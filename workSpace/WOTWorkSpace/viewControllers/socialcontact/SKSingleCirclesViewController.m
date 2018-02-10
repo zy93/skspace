@@ -221,7 +221,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         messBody.posterIntro = @"";
         messBody.posterFavour = [NSMutableArray new];
         messBody.focusId = infoModel.focusId;
-        messBody.isUnfold = NO;
+        messBody.isUnfold = YES;
         if ([infoModel.focus isEqualToNumber:@0]) {
             messBody.isFavour = NO;
         }else
@@ -321,11 +321,19 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    YMTableViewCell *cell = (YMTableViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     YMTextData *ym = [_tableDataSource objectAtIndex:indexPath.row];
     BOOL unfold = ym.foldOrNot;
     NSLog(@"行高：%f",TableHeader + kLocationToBottom + ym.replyHeight + ym.showImageHeight  + kDistance + (ym.islessLimit?0:30) + (unfold?ym.shuoshuoHeight:ym.unFoldShuoHeight) + kReplyBtnDistance + ym.favourHeight + (ym.favourHeight == 0?0:kReply_FavourDistance)+20);
-    return TableHeader + kLocationToBottom + ym.replyHeight + ym.showImageHeight  + kDistance + (ym.islessLimit?0:30) + (unfold?ym.shuoshuoHeight:ym.unFoldShuoHeight) + kReplyBtnDistance + ym.favourHeight + (ym.favourHeight == 0?0:kReply_FavourDistance)+20;
+    if (ym.replyDataSource.count == 0) {//没有评论，没有数量
+        return cell.addTimeLabel.frame.origin.y+cell.addTimeLabel.frame.size.height+10;
+    }else if (ym.replyDataSource.count >=  3 )
+    {
+        return cell.openCommentBtn.frame.origin.y+cell.openCommentBtn.frame.size.height+10;
+    }else
+    {
+        return cell.replyImageView.frame.origin.y+cell.replyImageView.frame.size.height+10;//replyImageView
+    }
 }
 #pragma mark - 按钮动画
 
