@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 #define TableHeader 50
 #define ShowImage_H 80
+#define ShowNewImage_H ([UIScreen mainScreen].bounds.size.width-134)/3
 #define PlaceHolder @" "
 #define offSet_X 20
 #define EmotionItemPattern    @"\\[em:(\\d+):\\]"

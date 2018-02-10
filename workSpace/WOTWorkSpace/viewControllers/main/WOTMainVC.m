@@ -35,6 +35,8 @@
 #import "WOTEnterpriseIntroduceVC.h"
 #import "SKSpaceDetailsVC.h"
 #import "UIDevice+Resolutions.h"
+#import "PGCustomBannerView.h"
+#import "SKServiceProviderScrollView.h"
 
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
@@ -44,15 +46,22 @@
 //空间
 //@property (weak, nonatomic) IBOutlet CardView *spaceView;
 @property (weak, nonatomic) IBOutlet SDCycleScrollView *autoScrollView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *autoScrollViewHeight;
 @property (weak, nonatomic) IBOutlet UIView *spaceView;
+
+@property (weak, nonatomic) IBOutlet UIView *serviceProvideView;
+@property (weak, nonatomic) IBOutlet SKServiceProviderScrollView *serviceProvideScrollView;
 
 
 @property (weak, nonatomic) IBOutlet WOTShortcutMenuView *ballView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ballViewHeight;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollVIew;
 @property (weak, nonatomic) IBOutlet UIView *activityView;
 @property (weak, nonatomic) IBOutlet UIView *informationView;
 @property (weak, nonatomic) IBOutlet UIView *workspaceView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *workspaceHeight;
 @property (weak, nonatomic) IBOutlet UIView *enterpriseView;
 
 //企业
@@ -74,6 +83,7 @@
 @property (nonatomic,strong) NSArray <WOTNewsModel  *>   *newsData; //资讯list
 @property (nonatomic,  copy) NSString *cityName;
 @property (nonatomic, strong) WOTEnterpriseModel *enterpriseModel;
+@property (nonatomic,strong) NSArray <SKFacilitatorInfoModel*> *facilitatorData;
 @end
 
 @implementation WOTMainVC
@@ -81,6 +91,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //    [self load3DBallView];
+    if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58) {
+        self.autoScrollViewHeight.constant = (self.view.bounds.size.height-49-41-10-42)*0.6;
+        self.ballViewHeight.constant = (self.view.bounds.size.height-49-41-10-42)*0.4;
+        self.workspaceHeight.constant =self.autoScrollViewHeight.constant;
+    }else
+    {
+        self.autoScrollViewHeight.constant = (self.view.bounds.size.height-49-41-10-20)*0.6;
+        self.ballViewHeight.constant = (self.view.bounds.size.height-49-41-10-20)*0.4;
+        self.workspaceHeight.constant =(self.view.bounds.size.height-49-41-10-10)*0.6;
+    }
+    NSLog(@"菜单高度：%f",self.autoScrollViewHeight.constant);
+//    self.ballView.frame = CGRectMake(0, self.autoScrollView.size.height, self.view.bounds.size.width, (self.view.bounds.size.height-41)*0.4);
     self.ballView.delegate = self;
     self.enterpriseScrollView.mDelegate = self;
     [self configScrollView];
@@ -111,7 +133,7 @@ int a = 0;
         [self loadLocationSpace];
     }
     [super viewDidAppear:animated];
-    self.scrollVIew.contentSize = CGSizeMake(self.view.frame.size.width,self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70);
+    self.scrollVIew.contentSize = CGSizeMake(self.view.frame.size.width,self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70+self.serviceProvideView.frame.size.height);
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -150,6 +172,18 @@ int a = 0;
     [self getInfoDataFromWeb:^{
     }];
     
+    //加载服务商
+    
+    [self getFacilitatorData:^{
+        [self.serviceProvideScrollView setData:self.facilitatorData];
+
+    }];
+    
+    self.serviceProvideScrollView.imageBlock = ^(NSInteger tapTag){
+        NSLog(@"%ld",tapTag);
+        __weak typeof(self) weakSelf = self;
+        [weakSelf facilitatorInfoMethod:tapTag];
+    };
 }
 
 
@@ -166,7 +200,7 @@ int a = 0;
         NSLog(@"图片地址url：%@",[model.coverPicture ToResourcesUrl]);
         [imageArr addObject:[model.coverPicture ToResourcesUrl]];
     }
-    
+//    self.autoScrollView.frame = CGRectMake(0, 0,self.view.bounds.size.width,(self.view.bounds.size.height-41)*0.6);
     self.autoScrollView.imageURLStringsGroup = imageArr;
     self.autoScrollView.delegate = self;
     self.autoScrollView.titlesGroup = titleArr;
@@ -181,24 +215,25 @@ int a = 0;
 
 - (void)loadSpaceView {
     if (!_pageFlowView) {
-        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height-10)];
+        _pageFlowView = [[NewPagedFlowView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, self.spaceView.frame.size.height)];
+        //_pageFlowView.backgroundColor = [UIColor redColor];
+        //_pageFlowView.backgroundColor = [UIColor redColor];
         _pageFlowView.delegate = self;
         _pageFlowView.dataSource = self;
         _pageFlowView.minimumPageAlpha = 0.1;
         _pageFlowView.isCarousel = YES;
         _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
-        _pageFlowView.isOpenAutoScroll = YES;
+        _pageFlowView.isOpenAutoScroll = NO;
+        _pageFlowView.topBottomMargin = 20;
         
         //初始化pageControl
-        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 10, SCREEN_WIDTH, 8)];
-        _pageFlowView.pageControl = pageControl;
-        [_pageFlowView addSubview:pageControl];
+//        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 10, SCREEN_WIDTH, 8)];//8
+//
+//        //_pageFlowView.pageControl = pageControl;
+//        [_pageFlowView addSubview:pageControl];
     }
-    
     [self.spaceView addSubview:_pageFlowView];
-    
     [_pageFlowView reloadData];
-    
 }
 
 
@@ -439,7 +474,7 @@ int a = 0;
 
 #pragma mark - NewPagedFlowView Delegate & Datasource
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
-    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH - 60) * 9 / 16);
+    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH) * 9 / 16);//(SCREEN_WIDTH - 60) * 9 / 16
 }
 
 #pragma mark - 点击单个图片
@@ -457,17 +492,21 @@ int a = 0;
     return self.spaceData.count>5?5:self.spaceData.count;
 }
 
-- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
-    PGIndexBannerSubiew *bannerView = (PGIndexBannerSubiew *)[flowView dequeueReusableCell];
+- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
+    PGCustomBannerView *bannerView = (PGCustomBannerView *)[flowView dequeueReusableCell];
     if (!bannerView) {
-        bannerView = [[PGIndexBannerSubiew alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 9 / 16)];
+        bannerView = [[PGCustomBannerView alloc] init];
         bannerView.tag = index;
         bannerView.layer.cornerRadius = 4;
         bannerView.layer.masksToBounds = YES;
     }
-    //从网络加载图片用
+    
+    //在这里下载网络图片
+    //[bannerView.mainImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:hostUrlsImg,imageDict[@"img"]]] placeholderImage:[UIImage imageNamed:@""]];
+    
     NSArray *arr = [self.spaceData[index].spacePicture componentsSeparatedByString:@","];
     [bannerView.mainImageView sd_setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
+    bannerView.indexLabel.text = [NSString stringWithFormat:@"第%ld张图",(long)index + 1];
     return bannerView;
 }
 
@@ -627,6 +666,34 @@ int a = 0;
     }];
 }
 
+#pragma mark - 获取服务商列表
+-(void)getFacilitatorData:(void(^)())complete{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getServiceProviders:^(id bean, NSError *error) {
+        complete();
+        SKFacilitatorModel *model = (SKFacilitatorModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            weakSelf.facilitatorData = model.msg.list;
+            
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"获取服务商失败！" toView:self.view];
+            return ;
+        }
+        complete();
+    }];
+    //complete();
+}
+
+#pragma mark - 跳转到服务商详细信息界面
+-(void)facilitatorInfoMethod:(NSInteger)tapTag
+{
+    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+    vc.facilitatorModel = self.facilitatorData[tapTag];
+    vc.vcType = INTRODUCE_VC_TYPE_Providers;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 /*
 #pragma mark - Navigation

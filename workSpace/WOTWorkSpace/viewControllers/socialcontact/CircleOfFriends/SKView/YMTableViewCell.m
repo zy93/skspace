@@ -21,8 +21,7 @@
 {
     UIButton *foldBtn;
     YMTextData *tempDate;
-    UIImageView *replyImageView;
-    UIButton *openCommentBtn;
+    
     BOOL isOpen;
 }
 
@@ -34,17 +33,17 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
         //头像
-        _userHeaderImage = [[UIImageView alloc] initWithFrame:CGRectMake(20, 5, 50, TableHeader)];
+        _userHeaderImage = [[UIImageView alloc] initWithFrame:CGRectMake(12, 5, 42, 42)];
         _userHeaderImage.backgroundColor = [UIColor clearColor];
-        CALayer *layer = [_userHeaderImage layer];
-        [layer setMasksToBounds:YES];
-        [layer setCornerRadius:10.0];
-        [layer setBorderWidth:1];
-        [layer setBorderColor:[[UIColor clearColor] CGColor]];
+//        CALayer *layer = [_userHeaderImage layer];
+//        [layer setMasksToBounds:YES];
+//        [layer setCornerRadius:10.0];
+//        [layer setBorderWidth:1];
+//        [layer setBorderColor:[[UIColor clearColor] CGColor]];
         [self.contentView addSubview:_userHeaderImage];
         
         //用户名
-        _userNameLbl = [[UILabel alloc] initWithFrame:CGRectMake(20 + TableHeader + 20, 5, screenWidth - 120, TableHeader/2)];
+        _userNameLbl = [[UILabel alloc] initWithFrame:CGRectMake(_userHeaderImage.frame.origin.x+_userHeaderImage.frame.size.width+10, 5, screenWidth - 120, TableHeader/2)];
         _userNameLbl.textAlignment = NSTextAlignmentLeft;
         _userNameLbl.font = [UIFont systemFontOfSize:15.0];
         _userNameLbl.textColor = [UIColor colorWithHexString:@"666666"];
@@ -73,19 +72,19 @@
         [foldBtn addTarget:self action:@selector(foldText) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:foldBtn];
         
-        openCommentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [openCommentBtn setTitle:@"共0条评论>"  forState:UIControlStateNormal];
-        openCommentBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        openCommentBtn.titleLabel.font = [UIFont systemFontOfSize:12.0];
+        _openCommentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_openCommentBtn setTitle:@"共0条评论>"  forState:UIControlStateNormal];
+        _openCommentBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        _openCommentBtn.titleLabel.font = [UIFont systemFontOfSize:12.0];
         [foldBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [openCommentBtn setTitleColor:[UIColor blackColor]forState:UIControlStateNormal];
-        [openCommentBtn addTarget:self action:@selector(openCommentBtnMethod) forControlEvents:UIControlEventTouchDown];
-        [self.contentView addSubview:openCommentBtn];
+        [_openCommentBtn setTitleColor:[UIColor blackColor]forState:UIControlStateNormal];
+        [_openCommentBtn addTarget:self action:@selector(openCommentBtnMethod) forControlEvents:UIControlEventTouchDown];
+        [self.contentView addSubview:_openCommentBtn];
         
-        replyImageView = [[UIImageView alloc] init];
+        _replyImageView = [[UIImageView alloc] init];
         
-        replyImageView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
-        [self.contentView addSubview:replyImageView];
+        _replyImageView.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
+        [self.contentView addSubview:_replyImageView];
         
         _replyBtn = [YMButton buttonWithType:0];
         [_replyBtn setImage:[UIImage imageNamed:@"fw_r2_c2.png"] forState:0];
@@ -146,7 +145,7 @@
   
 #pragma mark - // /////////添加说说view
 
-    WFTextView *textView = [[WFTextView alloc] initWithFrame:CGRectMake(offSet_X, 15 + TableHeader, screenWidth - 2 * offSet_X, 0)];
+    WFTextView *textView = [[WFTextView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x, 5 + self.userNameLbl.frame.origin.y+self.userNameLbl.frame.size.height, screenWidth - self.userNameLbl.frame.origin.x-15, 0)];
     textView.delegate = self;
     textView.attributedData = ymData.attributedDataShuoshuo;
     //textView.textColor = [UIColor redColor];
@@ -158,12 +157,12 @@
     BOOL foldOrnot = ymData.foldOrNot;
     float hhhh = foldOrnot?ymData.shuoshuoHeight:ymData.unFoldShuoHeight;
     
-    textView.frame = CGRectMake(offSet_X, 15 + TableHeader, screenWidth - 2 * offSet_X, hhhh);
+    textView.frame = CGRectMake(self.userNameLbl.frame.origin.x, 5 + self.userNameLbl.frame.origin.y+self.userNameLbl.frame.size.height,screenWidth - self.userNameLbl.frame.origin.x-15, hhhh);
     
     [_ymShuoshuoArray addObject:textView];
     
     //按钮
-    foldBtn.frame = CGRectMake(offSet_X - 10, 15 + TableHeader + hhhh + 10 , 50, 20 );
+    foldBtn.frame = CGRectMake(self.userNameLbl.frame.origin.x,  self.userNameLbl.frame.origin.y+self.userNameLbl.frame.size.height + hhhh + 10 , 50, 20 );
     
     if (ymData.islessLimit) {//小于最小限制 隐藏折叠展开按钮
         
@@ -193,8 +192,24 @@
     [_imageArray removeAllObjects];
     
     for (int  i = 0; i < [ymData.showImageArray count]; i++) {
+        int num;
+        if ((i+1)%3==0 && (i+1) != 0) {
+            num = 2;
+        }else
+        {
+            
+            num =(i+1)%3-1;
+        }
+       // UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x*(i%3 + 1) + 10*(i%3), 10 * ((i/3) + 1) + (i/3) *  ShowNewImage_H + hhhh + kDistance + (ymData.islessLimit?0:30), ShowNewImage_H, ShowNewImage_H)];
         
-        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(((screenWidth - 240)/4)*(i%3 + 1) + 80*(i%3), TableHeader + 10 * ((i/3) + 1) + (i/3) *  ShowImage_H + hhhh + kDistance + (ymData.islessLimit?0:30), 80, ShowImage_H)];
+        UIImageView *image ;
+        if (i==0 || i == 1 || i == 2) {
+            image = [[UIImageView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x+ 5*num+ShowNewImage_H*num, 10 * ((i/3) + 1) + (i/3) *  ShowNewImage_H + hhhh + kDistance + (ymData.islessLimit?0:30), ShowNewImage_H, ShowNewImage_H)];
+        }else
+        {
+            image = [[UIImageView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x+ 5*num+ShowNewImage_H*num, 5 * ((i/3) + 1) + (i/3) *  ShowNewImage_H + hhhh + kDistance + (ymData.islessLimit?0:30), ShowNewImage_H, ShowNewImage_H)];
+        }
+        
         image.userInteractionEnabled = YES;
         
         YMTapGestureRecongnizer *tap = [[YMTapGestureRecongnizer alloc] initWithTarget:self action:@selector(tapImageView:)];
@@ -228,7 +243,7 @@
     float balanceHeight = 0; //纯粹为了解决没图片高度的问题
     if (ymData.showImageArray.count == 0) {
         scale_Y = 0;
-        balanceHeight = - ShowImage_H - kDistance ;
+        balanceHeight = - ShowNewImage_H - kDistance ;
     }
     
     float backView_Y = 0;
@@ -236,7 +251,7 @@
     
     
     
-    WFTextView *favourView = [[WFTextView alloc] initWithFrame:CGRectMake(offSet_X + 30, TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance, screenWidth - 2 * offSet_X - 30, 0)];
+    WFTextView *favourView = [[WFTextView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x + 30, TableHeader + 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance, screenWidth - 2 * offSet_X - 30, 0)];
     favourView.delegate = self;
     favourView.attributedData = ymData.attributedDataFavour;
     favourView.isDraw = YES;
@@ -244,7 +259,7 @@
     favourView.canClickAll = NO;
     favourView.textColor = [UIColor redColor];
     [favourView setOldString:ymData.showFavour andNewString:ymData.completionFavour];
-    favourView.frame = CGRectMake(offSet_X + 30,TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance, screenWidth - offSet_X * 2 - 30, ymData.favourHeight);
+    favourView.frame = CGRectMake(self.userNameLbl.frame.origin.x + 30,TableHeader + 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance, screenWidth - offSet_X * 2 - 30, ymData.favourHeight);
     [self.contentView addSubview:favourView];
     backView_H += ((ymData.favourHeight == 0)?(-kReply_FavourDistance):ymData.favourHeight);
     [_ymFavourArray addObject:favourView];
@@ -270,26 +285,26 @@
     if (!ymData.messageBody.isUnfold) {
         if (ymData.replyDataSource.count > 2) {
             showNum = 2;
-            [openCommentBtn setHidden:NO];
-            [openCommentBtn setTitle:[NSString stringWithFormat:@"共%ld条评论>",ymData.replyDataSource.count] forState:UIControlStateNormal];
+            [_openCommentBtn setHidden:NO];
+            [_openCommentBtn setTitle:[NSString stringWithFormat:@"共%ld条评论>",ymData.replyDataSource.count] forState:UIControlStateNormal];
         }else
         {
-            [openCommentBtn setHidden:YES];
+            [_openCommentBtn setHidden:YES];
             showNum = ymData.replyDataSource.count;
         }
         
     } else {
-        [openCommentBtn setHidden:YES];
+        [_openCommentBtn setHidden:YES];
         showNum = ymData.replyDataSource.count;
     }
     
     
     for (int i = 0; i < showNum; i ++ ) {
         
-        WFTextView *_ilcoreText = [[WFTextView alloc] initWithFrame:CGRectMake(offSet_X,TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - offSet_X * 2, 0)];
+        WFTextView *_ilcoreText = [[WFTextView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x,TableHeader + 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - offSet_X * 2, 0)];
         
         if (i == 0) {
-            backView_Y = TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30);
+            backView_Y = TableHeader + 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30);
         }
         
         _ilcoreText.delegate = self;
@@ -317,7 +332,7 @@
         }
         
         
-        _ilcoreText.frame = CGRectMake(offSet_X,TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - offSet_X * 2, [_ilcoreText getTextHeight]);
+        _ilcoreText.frame = CGRectMake(self.userNameLbl.frame.origin.x, 5+10+10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - offSet_X * 2, [_ilcoreText getTextHeight]);
         [self.contentView addSubview:_ilcoreText];
         origin_Y += [_ilcoreText getTextHeight] + 5 ;
         
@@ -332,22 +347,22 @@
         backView_H += (ymData.replyDataSource.count - 1)*5;
     }
     
-    
-    
-    
     if (ymData.replyDataSource.count == 0) {//没回复的时候
-        _addTimeLabel.frame = CGRectMake(offSet_X, TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance - 24, 100, 20);
-        replyImageView.frame = CGRectMake(offSet_X, backView_Y - 10 + balanceHeight + 5 + kReplyBtnDistance, 0, 0);
-        _replyBtn.frame = CGRectMake(screenWidth - offSet_X - 40 + 6,TableHeader + 10 + ShowImage_H + (ShowImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance - 24, 40, 18);
-        openCommentBtn.frame = CGRectMake(offSet_X, 0, 200, 18);
+        _addTimeLabel.frame = CGRectMake(self.userNameLbl.frame.origin.x, 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance - 24, 100, 20);
+        
+        _replyImageView.frame = CGRectMake(self.userNameLbl.frame.origin.x, backView_Y - 10 + balanceHeight + 5 + kReplyBtnDistance, 0, 0);
+        
+        _replyBtn.frame = CGRectMake(screenWidth - offSet_X - 40 + 6,10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance - 24, 40, 18);
+       
+        _openCommentBtn.frame = CGRectMake(offSet_X, 0, 200, 18);
     }else{
         
-        replyImageView.frame = CGRectMake(offSet_X, backView_Y - 10 + balanceHeight + 5 + kReplyBtnDistance, screenWidth - offSet_X * 2, backView_H + 20 - 8);//微调
+        _replyImageView.frame = CGRectMake(self.userNameLbl.frame.origin.x, backView_Y - 10 + balanceHeight + 5 , screenWidth - self.userNameLbl.frame.origin.x -10, backView_H + 20 - 8);//微调
         
-        _replyBtn.frame = CGRectMake(screenWidth - offSet_X - 40 + 6, replyImageView.frame.origin.y - 24, 40, 18);
-        NSLog(@"测试高度：%f",replyImageView.frame.origin.y+backView_H+24);
-        _addTimeLabel.frame = CGRectMake(offSet_X,replyImageView.frame.origin.y - 24, 100, 18);
-        openCommentBtn.frame = CGRectMake(offSet_X,replyImageView.frame.origin.y+backView_H+18, 200, 20);
+        _replyBtn.frame = CGRectMake(screenWidth - offSet_X - 40 + 6, _replyImageView.frame.origin.y - 24, 40, 18);
+        NSLog(@"测试高度：%f",_replyImageView.frame.origin.y+backView_H+24);
+        _addTimeLabel.frame = CGRectMake(self.userNameLbl.frame.origin.x,_replyImageView.frame.origin.y - 24, 100, 18);
+        _openCommentBtn.frame = CGRectMake(self.userNameLbl.frame.origin.x,_replyImageView.frame.origin.y+backView_H+18, 200, 20);
         //tempDate.foldOrNot?0:20
     }
     

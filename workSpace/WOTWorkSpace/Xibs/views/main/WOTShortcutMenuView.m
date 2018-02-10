@@ -7,7 +7,7 @@
 //
 
 #import "WOTShortcutMenuView.h"
-
+#import "UIDevice+Resolutions.h"
 
 @interface WOTShortcutMenuView ()
 {
@@ -55,30 +55,42 @@
 {
     //self.backgroundColor = UIColorFromRGB(0x8fc5f3);
     self.backgroundColor = [UIColor whiteColor];
-    sbNameList = @[@"Service",@"Service",@"Service",@"Service",@"",
-                   @"",@"spaceMain",@"spaceMain",];
+    sbNameList = @[@"",@"Service",@"Service",@"Service",@"",
+                   @"spaceMain",@"spaceMain",@"Service",];
     
-    vcNameList = @[@"WOTReservationsMeetingVC",
-                   @"WOTVisitorsAppointmentVC",
+    vcNameList = @[
+                   @"SKGiftBagViewController",
                    @"WOTBookStationVCID",
                    @"WOTReservationsMeetingVC",
-                   @"SKGiftBagViewController",
+                   @"WOTReservationsMeetingVC",
                    @"WOTEnterpriseLIstVC",
                    @"WOTInformationListVC",
-                   @"WOTActivitiesLIstVC"];
+                   @"WOTActivitiesLIstVC",
+                   @"WOTVisitorsAppointmentVC"
+                   ];
     
     
-    titleList = @[@"预定场地", @"访客预约",@"预定工位",@"订会议室", @"礼包", @"友邻", @"资讯", @"活动"];
-    imageNameList = @[@"shortcut_site_icon",
-                      @"shortcut_visitors_icon",
+    titleList = @[@"分时礼包", @"分时预定",@"订会议室",@"预订场地", @"入驻企业", @"尚科资讯", @"尚科活动", @"访客预约"];
+    imageNameList = @[@"shortcut_open_icon",
                       @"shortcut_station_icon",
                       @"shortcut_meeting_icon",
-                      @"shortcut_open_icon",
+                      @"shortcut_site_icon",
                       @"shortcut_finds_icon",
                       @"shortcut_news_icon",
-                      @"shortcut_activity_icon"];
-    buttonDefaultY = 15;
-    lineDefaultHeight = 10;
+                      @"shortcut_activity_icon",
+                      @"shortcut_visitors_icon"];
+    buttonDefaultY = 15;//15，50
+    lineDefaultHeight = 10;//10，90
+    if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ||[[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina55) {
+        buttonDefaultY = 50;
+        lineDefaultHeight = 90;
+    }
+    
+    if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina47) {
+        buttonDefaultY = 30;
+        lineDefaultHeight = 40;
+    }
+    
     buttonHeight = (180-(buttonDefaultY*2))/2;
     buttonWidth = SCREEN_WIDTH/4;
     
@@ -111,12 +123,9 @@
     //lab.textColor = RGBA(72,134,236,1);
     lab.textColor = [UIColor blackColor];
     lab.textAlignment = NSTextAlignmentCenter;
-    lab.font = [UIFont systemFontOfSize:15.f];
-    
-    
+    lab.font = [UIFont systemFontOfSize:12.f];
     [button addSubview:imgV];
     [button addSubview:lab];
-    
     [self addSubview:button];
     return button;
 }
@@ -126,16 +135,14 @@
 {
     if ([_delegate respondsToSelector:@selector(shortcutMenu:pushToVCWithStoryBoardName:vcName:)]) {
         
-        if (sender.tag == 0) {
-            [WOTSingtleton shared].orderType = ORDER_TYPE_SITE;
-        }
-        else if (sender.tag == 2) {
+        if (sender.tag == 1) {
             [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
         }
-        else if (sender.tag == 3) {
+        else if (sender.tag == 2) {
             [WOTSingtleton shared].orderType = ORDER_TYPE_MEETING;
+        }else if (sender.tag == 3) {
+            [WOTSingtleton shared].orderType = ORDER_TYPE_SITE;
         }
-        
         [_delegate shortcutMenu:self pushToVCWithStoryBoardName:sbNameList[sender.tag] vcName:vcNameList[sender.tag]];
     }
 }

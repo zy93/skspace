@@ -161,6 +161,7 @@
 		C595C9781FE1126E0083430A /* SKFocusCirclesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C595C9771FE1126E0083430A /* SKFocusCirclesViewController.m */; };
 		C595C97B1FE11A830083430A /* SKSingleCirclesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C595C97A1FE11A830083430A /* SKSingleCirclesViewController.m */; };
 		C595C97E1FE121F00083430A /* QuerySingleCircleofFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C595C97D1FE121F00083430A /* QuerySingleCircleofFriendModel.m */; };
+		C59738D5202C685700AC8E73 /* SKServiceProviderScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59738D4202C685700AC8E73 /* SKServiceProviderScrollView.m */; };
 		C59840451FDE3206009B49CE /* PublishCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */; };
 		C59840461FDE3206009B49CE /* QueryCircleofFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */; };
 		C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */ = {isa = PBXBuildFile; fileRef = C59840431FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m */; };
@@ -186,6 +187,7 @@
 		C59E270F1FF0986E00791269 /* SKFocusListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59E270E1FF0986E00791269 /* SKFocusListViewController.m */; };
 		C59E27121FF09E9700791269 /* SKFocusListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C59E27111FF09E9700791269 /* SKFocusListTableViewCell.m */; };
 		C59E27151FF0A93800791269 /* SKFocusListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C59E27141FF0A93800791269 /* SKFocusListModel.m */; };
+		C5A1058F202D519A00E99BA6 /* PGCustomBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A1058D202D519A00E99BA6 /* PGCustomBannerView.m */; };
 		C5A125B01FE229DD0058AA0C /* QueryCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125AF1FE229DD0058AA0C /* QueryCommentModel.m */; };
 		C5A125B31FE22A260058AA0C /* QueryCommentModel_msg.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125B21FE22A260058AA0C /* QueryCommentModel_msg.m */; };
 		C5A125B61FE242660058AA0C /* SKCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A125B51FE242660058AA0C /* SKCommentViewController.m */; };
@@ -705,6 +707,8 @@
 		C595C97A1FE11A830083430A /* SKSingleCirclesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSingleCirclesViewController.m; sourceTree = "<group>"; };
 		C595C97C1FE121F00083430A /* QuerySingleCircleofFriendModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuerySingleCircleofFriendModel.h; sourceTree = "<group>"; };
 		C595C97D1FE121F00083430A /* QuerySingleCircleofFriendModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuerySingleCircleofFriendModel.m; sourceTree = "<group>"; };
+		C59738D3202C685700AC8E73 /* SKServiceProviderScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKServiceProviderScrollView.h; sourceTree = "<group>"; };
+		C59738D4202C685700AC8E73 /* SKServiceProviderScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKServiceProviderScrollView.m; sourceTree = "<group>"; };
 		C598403C1FDE3205009B49CE /* QueryCircleofFriendsModel_msg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCircleofFriendsModel_msg.h; sourceTree = "<group>"; };
 		C598403D1FDE3205009B49CE /* PublishCircleofFriendsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishCircleofFriendsModel.m; sourceTree = "<group>"; };
 		C598403E1FDE3205009B49CE /* QueryCircleofFriendsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryCircleofFriendsModel.m; sourceTree = "<group>"; };
@@ -756,6 +760,8 @@
 		C59E27111FF09E9700791269 /* SKFocusListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKFocusListTableViewCell.m; sourceTree = "<group>"; };
 		C59E27131FF0A93800791269 /* SKFocusListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKFocusListModel.h; sourceTree = "<group>"; };
 		C59E27141FF0A93800791269 /* SKFocusListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKFocusListModel.m; sourceTree = "<group>"; };
+		C5A1058D202D519A00E99BA6 /* PGCustomBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCustomBannerView.m; sourceTree = "<group>"; };
+		C5A1058E202D519A00E99BA6 /* PGCustomBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCustomBannerView.h; sourceTree = "<group>"; };
 		C5A125AE1FE229DD0058AA0C /* QueryCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueryCommentModel.h; sourceTree = "<group>"; };
 		C5A125AF1FE229DD0058AA0C /* QueryCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QueryCommentModel.m; sourceTree = "<group>"; };
 		C5A125B11FE22A260058AA0C /* QueryCommentModel_msg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueryCommentModel_msg.h; sourceTree = "<group>"; };
@@ -1983,6 +1989,8 @@
 		E8190D781F0F69660000B07C /* pagedFlowView */ = {
 			isa = PBXGroup;
 			children = (
+				C5A1058E202D519A00E99BA6 /* PGCustomBannerView.h */,
+				C5A1058D202D519A00E99BA6 /* PGCustomBannerView.m */,
 				E8190D791F0F69660000B07C /* NewPagedFlowView.h */,
 				E8190D7A1F0F69660000B07C /* NewPagedFlowView.m */,
 				E8190D7B1F0F69660000B07C /* PGIndexBannerSubiew.h */,
@@ -2045,6 +2053,8 @@
 				E8C7203D1F14785800DED44C /* WOTDatePickerView.xib */,
 				E86C05B31F2B105D000ABDBF /* WOTCityTileView.h */,
 				E86C05B41F2B105D000ABDBF /* WOTCityTileView.m */,
+				C59738D3202C685700AC8E73 /* SKServiceProviderScrollView.h */,
+				C59738D4202C685700AC8E73 /* SKServiceProviderScrollView.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -3405,12 +3415,14 @@
 				2A3B54F31FD93C2F00358B8A /* HCCreateQRCode.m in Sources */,
 				E86245771F3D4FAB00CF0D9D /* WOTDeviceInfoModel.m in Sources */,
 				E8747AE61F26E1E400125CEB /* WOTAirconditioningCell.m in Sources */,
+				C59738D5202C685700AC8E73 /* SKServiceProviderScrollView.m in Sources */,
 				E8190DB21F0F69660000B07C /* WOTMyOrderCell.m in Sources */,
 				E8588CE91F0B27F900951105 /* NSString+Category.m in Sources */,
 				E86B81F41F3847B7002AAC63 /* WOTMD5.m in Sources */,
 				E8190DC71F0F69660000B07C /* WOTFilterTypeModel.m in Sources */,
 				E8190DB41F0F69660000B07C /* WOTMyuserCell.m in Sources */,
 				C5FA65551FFE378400675A6A /* SKAboutViewController.m in Sources */,
+				C5A1058F202D519A00E99BA6 /* PGCustomBannerView.m in Sources */,
 				E86B81F71F38480C002AAC63 /* JSONKit.m in Sources */,
 				E8370F171F0DD8BF0070C077 /* WOTActivitiesLIstVC.m in Sources */,
 				E85A85891F0201F30016FCA1 /* main.m in Sources */,

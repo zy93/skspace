@@ -9,6 +9,7 @@
 //  github:https://github.com/PageGuo/NewPagedFlowView
 
 #import <UIKit/UIKit.h>
+#import "PGIndexBannerSubiew.h"
 
 @protocol NewPagedFlowViewDataSource;
 @protocol NewPagedFlowViewDelegate;
@@ -116,7 +117,7 @@ typedef enum{
  *
  *  @return <#return value description#>
  */
-- (UIView *)dequeueReusableCell;
+- (PGIndexBannerSubiew *)dequeueReusableCell;
 
 /**
  *  滚动到指定的页面
@@ -135,6 +136,11 @@ typedef enum{
  */
 - (void)stopTimer;
 
+/**
+ 调整中间页居中，经常出现滚动卡住一半时调用
+ */
+- (void)adjustCenterSubview;
+
 @end
 
 
@@ -142,7 +148,7 @@ typedef enum{
 
 @optional
 /**
- *  当前显示cell的Size
+ *  当前显示cell的Size(中间页显示大小)
  *
  *  @param flowView <#flowView description#>
  *
@@ -166,7 +172,7 @@ typedef enum{
  *
  *  @return <#return value description#>
  */
-- (void)didSelectCell:(UIView *)subView withSubViewIndex:(NSInteger)subIndex;
+- (void)didSelectCell:(PGIndexBannerSubiew *)subView withSubViewIndex:(NSInteger)subIndex;
 
 @end
 
@@ -190,6 +196,6 @@ typedef enum{
  *
  *  @return <#return value description#>
  */
-- (UIView *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index;
+- (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index;
 
 @end

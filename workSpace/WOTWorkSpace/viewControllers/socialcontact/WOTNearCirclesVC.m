@@ -151,6 +151,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64-48-40)];
     mainTable.backgroundColor = [UIColor clearColor];
+    [mainTable registerClass:[YMTableViewCell class] forCellReuseIdentifier:@"ILTableViewCell"];
     // mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
     mainTable.mj_header.automaticallyChangeAlpha = YES;
@@ -324,11 +325,19 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    YMTableViewCell *cell = (YMTableViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     YMTextData *ym = [_tableDataSource objectAtIndex:indexPath.row];
     BOOL unfold = ym.foldOrNot;
     NSLog(@"行高：%f",TableHeader + kLocationToBottom + ym.replyHeight + ym.showImageHeight  + kDistance + (ym.islessLimit?0:30) + (unfold?ym.shuoshuoHeight:ym.unFoldShuoHeight) + kReplyBtnDistance + ym.favourHeight + (ym.favourHeight == 0?0:kReply_FavourDistance)+20);
-    return TableHeader + kLocationToBottom + ym.replyHeight + ym.showImageHeight  + kDistance + (ym.islessLimit?0:30) + (unfold?ym.shuoshuoHeight:ym.unFoldShuoHeight) + kReplyBtnDistance + ym.favourHeight + (ym.favourHeight == 0?0:kReply_FavourDistance)+20;
+    if (ym.replyDataSource.count == 0) {//没有评论，没有数量
+        return cell.addTimeLabel.frame.origin.y+cell.addTimeLabel.frame.size.height+10;
+    }else if (ym.replyDataSource.count >=  3 )
+    {
+        return cell.openCommentBtn.frame.origin.y+cell.openCommentBtn.frame.size.height+10;
+    }else
+    {
+        return cell.replyImageView.frame.origin.y+cell.replyImageView.frame.size.height+10;//replyImageView
+    }
 }
 
 #pragma mark - 按钮动画
