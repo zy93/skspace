@@ -41,6 +41,7 @@
 #import "SKNewFacilitatorModel.h"
 #import "SKNewSpaceModel.h"
 #import "SKNewEnterpriseModel.h"
+#import "WOTShareVC.h"
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
@@ -139,10 +140,17 @@ int a = 0;
     self.scrollVIew.contentSize = CGSizeMake(self.view.frame.size.width,self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70+self.serviceProvideView.frame.size.height);
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.tabBarController.tabBar setHidden:YES];
+    [self.tabBarController.tabBar setTranslucent:YES];
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
 }
 
 -(void)configScrollView{
@@ -568,13 +576,13 @@ int a = 0;
 {
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     detailvc.url = self.bannerData[index].webpageUrl;
-    //如果是分享注册页面，需要加邀请码
-    if (![WOTSingtleton shared].isuserLogin) {
-        
-    }
-    
+    //如果是分享注册页面，需要加邀请码,//跳转原生页面
     if ([detailvc.url isEqualToString:@"http://219.143.170.98:10011/SKwork/SKmaker/share/shareRegistration.html"]) {
-        detailvc.url = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
+        WOTShareVC *vc = [[WOTShareVC alloc] init];
+        vc.shareUrl = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
+        [self.navigationController pushViewController:vc animated:YES];
+
+        return;
     }
     [self.navigationController pushViewController:detailvc animated:YES];
 }
