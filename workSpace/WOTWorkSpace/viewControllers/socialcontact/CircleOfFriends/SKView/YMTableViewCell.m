@@ -204,10 +204,10 @@
         
         UIImageView *image ;
         if (i==0 || i == 1 || i == 2) {
-            image = [[UIImageView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x+ 5*num+ShowNewImage_H*num, 10 * ((i/3) + 1) + (i/3) *  ShowNewImage_H + hhhh + kDistance + (ymData.islessLimit?0:30), ShowNewImage_H, ShowNewImage_H)];
+            image = [[UIImageView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x+ 5*num+ShowNewImage_H*num, 5 * ((i/3) + 1) + (i/3) *  ShowNewImage_H + hhhh + kDistance + (ymData.islessLimit?0:30)+5, ShowNewImage_H, ShowNewImage_H)];
         }else
         {
-            image = [[UIImageView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x+ 5*num+ShowNewImage_H*num, 5 * ((i/3) + 1) + (i/3) *  ShowNewImage_H + hhhh + kDistance + (ymData.islessLimit?0:30), ShowNewImage_H, ShowNewImage_H)];
+            image = [[UIImageView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x+ 5*num+ShowNewImage_H*num, 5 * ((i/3) + 1) + (i/3) *  ShowNewImage_H + hhhh + kDistance + (ymData.islessLimit?0:30)+5, ShowNewImage_H, ShowNewImage_H)];
         }
         
         image.userInteractionEnabled = YES;

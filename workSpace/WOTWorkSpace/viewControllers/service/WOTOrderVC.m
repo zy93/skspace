@@ -511,6 +511,7 @@
     }
     else if ([cellType isEqualToString:mapCell]){
         return 160*[WOTUitls GetLengthAdaptRate];
+
     }
     else if ([cellType isEqualToString:describeCell]) {
         //计算高度
@@ -718,7 +719,6 @@
             default:
                 break;
         }
-         
         return cell;
     }
     else if ([cellType isEqualToString:describeCell]) {

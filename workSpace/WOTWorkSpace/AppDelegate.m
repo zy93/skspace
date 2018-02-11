@@ -16,7 +16,7 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-#define MAP_API_KEY @"47411f2c349b36c1fbdee073cd648149"
+#define MAP_API_KEY @"d4ac301f3334bc74439bda2d81e41061"
 
 @interface AppDelegate () <JPUSHRegisterDelegate>
 @property (nonatomic, strong)WOTTabBarVCViewController *tabbar;
@@ -40,7 +40,8 @@
     [self ConfigUSharePlatforms];
     
     //配置高德地图key
-   // [AMapServices sharedServices].apiKey =  MAP_API_KEY;
+//    [AMapServices sharedServices].enableHTTPS = YES;
+//    [AMapServices sharedServices].apiKey =  MAP_API_KEY;
     //配置微信注册
     [WXApi registerApp:APPID enableMTA:YES];
     //注册推送
