@@ -14,6 +14,10 @@
     [super awakeFromNib];
     // Initialization code
     self.separatorInset = UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0); // ViewWidth  [宏] 指的是手机屏幕的宽度
+    self.scrollview.delegate = self;
+    self.scrollview.pageDotColor = UICOLOR_GRAY_66;
+    self.scrollview.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
+    self.scrollview.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;  //设置图片填充格式;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

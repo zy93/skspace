@@ -61,7 +61,8 @@
     self.contactBtn.backgroundColor = [UIColor blackColor];
     self.contactBtn.layer.cornerRadius = 2.5f;
     [self.contactBtn setTitle:@"联系他" forState:UIControlStateNormal];
-    [self.contactBtn.titleLabel setFont:[UIFont systemFontOfSize:13.f]];
+    [self.contactBtn addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contactBtn.titleLabel setFont:[UIFont systemFontOfSize:12.f]];
     [self.contactBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.bgView addSubview:self.contactBtn];
     
@@ -89,11 +90,18 @@
     [self.contactBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.bgView.mas_bottom).with.offset(-10);
 //        make.centerX.equalTo(self.mas_centerX);
-        make.height.mas_equalTo(28);
-        make.left.mas_equalTo(16);
-        make.right.equalTo(self.bgView.mas_right).with.offset(-16);
+        make.height.mas_equalTo(25);
+        make.left.mas_equalTo(15);
+        make.right.equalTo(self.bgView.mas_right).with.offset(-15);
     }];
     
+}
+
+-(void)buttonClick:(UIButton *)sender
+{
+    if ([_delegate respondsToSelector:@selector(teamView:buttonClickWithTel:)]) {
+        [_delegate teamView:self buttonClickWithTel:self.tel];
+    }
 }
 
 @end

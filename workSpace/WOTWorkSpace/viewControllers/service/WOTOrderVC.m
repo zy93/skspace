@@ -32,6 +32,7 @@
 #import "WOTMeetingFacilityModel.h"
 #import "WOTStaffModel.h"
 
+
 #define infoCell @"WOTOrderForInfoCell"
 #define selectDateCell @"WOTOrderForSelectDateCell"
 #define selectTimeCell @"WOTOrderForSelectTimeCell"
@@ -46,7 +47,7 @@
 //#define amountCell @"amountCell"
 //#define uitableCell @"uitableCell"
 
-@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,WOTPaymentTypeCellDelegate,SDCycleScrollViewDelegate>
+@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,WOTPaymentTypeCellDelegate,SDCycleScrollViewDelegate,WOTScrollViewCellDelegate>
 {
     NSArray *tableList;
     NSArray *mettingReservationList; //会议室已预订时间数组
@@ -147,7 +148,8 @@
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self creatDataPickerView];
     [self getTeam];
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ||
+        [WOTSingtleton shared].orderType == ORDER_TYPE_SPACE) {
         [self getSpaceFacility];
 
     }
@@ -260,6 +262,13 @@
             tableList = @[list1, list2, list3, list4];
         }
             break;
+        case ORDER_TYPE_SPACE:
+        {
+            list1 = @[infoCell, serviceCell, describeCell];
+            list2 = @[scrollViewCell]; //配套设施
+            list4 = @[scrollViewCell]; //社区团队
+            tableList = @[list1, list2, list4];
+        }
         default:
             break;
     }
@@ -442,6 +451,21 @@
     
 }
 
+-(void)scrollviewCell:(WOTScrollViewCell *)cell didSelectBtn:(NSString *)tel
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:tel message:@"是否拨打联系电话?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAct = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"telprompt:%@",tel]]];
+    }];
+    UIAlertAction *clearAct = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alert addAction:clearAct];
+    [alert addAction:okAct];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 
 #pragma mark - table delegate & dataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -482,19 +506,34 @@
     else if ([cellType isEqualToString:describeCell]) {
         //计算高度
 //
-        CGFloat heigth = [self.meetingModel.conferenceDescribe heightWithFont:[UIFont systemFontOfSize:13.f] maxWidth:SCREEN_WIDTH-40];
+        NSString *str = nil;
+        switch ([WOTSingtleton shared].orderType) {
+            case ORDER_TYPE_BOOKSTATION:
+            case ORDER_TYPE_SPACE:
+            {
+                str = self.spaceModel.spaceDescribe;
+            }
+                break;
+            case ORDER_TYPE_SITE:
+            case ORDER_TYPE_MEETING:
+            {
+                str = self.meetingModel.conferenceDescribe;
+            }
+                break;
+            default:
+                break;
+        }
+        CGFloat heigth = [str heightWithFont:[UIFont systemFontOfSize:13.f] maxWidth:SCREEN_WIDTH-40];
         return 60+heigth;
     }
     else if ([cellType isEqualToString:scrollViewCell]) {
-        if ([WOTSingtleton shared].orderType==ORDER_TYPE_BOOKSTATION) {
+        if ([WOTSingtleton shared].orderType==ORDER_TYPE_BOOKSTATION ||
+            [WOTSingtleton shared].orderType==ORDER_TYPE_SPACE) {
             if (indexPath.section == 1) {
                 return 130;
             }
             return 250*[WOTUitls GetLengthAdaptRate];
         }
-//        else if ([WOTSingtleton shared].orderType==ORDER_TYPE_MEETING){
-//
-//        }
         else {
             if (indexPath.section == 1) {
                 return 130;
@@ -551,10 +590,6 @@
                     [imageArr addObject:[str ToResourcesUrl]];
                 }
                 cell.scrollview.imageURLStringsGroup = imageArr;
-                cell.scrollview.delegate = self;
-                cell.scrollview.pageDotColor = UICOLOR_GRAY_66;
-                cell.scrollview.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
-                cell.scrollview.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;  //设置图片填充格式
                 cell.infoTitle.text = _spaceModel.spaceName;
                 cell.dailyRentLabel.text = [NSString stringWithFormat:@"今日剩余工位：%ld",self.stationTotalNumber.integerValue];
             }
@@ -571,15 +606,20 @@
                     [imageArr addObject:[str ToResourcesUrl]];
                 }
                 cell.scrollview.imageURLStringsGroup = imageArr;
-                cell.scrollview.delegate = self;
-//                cell.scrollview.titlesGroup = titleArr;
-                cell.scrollview.pageDotColor = UICOLOR_CLEAR;
-                cell.scrollview.backgroundColor = UICOLOR_GRAY_F1;
-                cell.scrollview.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
-                cell.scrollview.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;  //设置图片填充格式
                 
             }
                 break;
+            case ORDER_TYPE_SPACE:
+            {
+                cell.infoTitle.text = self.spaceModel.spaceName;
+                cell.dailyRentLabel.text = nil;
+                NSArray  *array = [_spaceModel.spacePicture componentsSeparatedByString:@","];
+                NSMutableArray *imageArr = [NSMutableArray new];
+                for (NSString *str in array) {
+                    [imageArr addObject:[str ToResourcesUrl]];
+                }
+                cell.scrollview.imageURLStringsGroup = imageArr;
+            }
             default:
                 break;
         }
@@ -591,13 +631,6 @@
             cell = [[WOTOrderForSelectDateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selectDateCell];
         }
         [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
-//        if (self.isValidTime) {
-//            [cell.dateLab setText:[self.reservationDate substringToIndex:10]];
-//        }else
-//        {
-//            [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:self.view];
-//            self.datepickerview.hidden  = NO;
-//        }
         if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
             if (indexPath.row == 1) {
                 [cell.dateNameLab setText:@"开始日期："];
@@ -676,7 +709,22 @@
         if (cell == nil) {
             cell = [[WOTOrderForDescribeCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:describeCell];
         }
-        cell.contentText.text = self.meetingModel.conferenceDescribe;
+        switch ([WOTSingtleton shared].orderType) {
+            case ORDER_TYPE_BOOKSTATION:
+            case ORDER_TYPE_SPACE:
+                {
+                    cell.contentText.text = self.spaceModel.spaceDescribe;
+                }
+                break;
+            case ORDER_TYPE_SITE:
+            case ORDER_TYPE_MEETING:
+            {
+                cell.contentText.text = self.meetingModel.conferenceDescribe;
+            }
+                break;
+            default:
+                break;
+        }
         
         return cell;
     }
@@ -685,8 +733,9 @@
         if (cell == nil) {
             cell = [[WOTScrollViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:scrollViewCell];
         }
-        
-        if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+        cell.delegate = self;
+        if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ||
+            [WOTSingtleton shared].orderType==ORDER_TYPE_SPACE) {
             if (indexPath.section==1) {
                 cell.cellType = WOTScrollViewCellType_facilities;
                 [cell setData:self.spaceFacilityList];
@@ -696,9 +745,6 @@
                 [cell setData:self.teamList];
             }
         }
-//        else if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
-//
-//        }
         else {
             if (indexPath.section==1) {
                 cell.cellType = WOTScrollViewCellType_facilities;

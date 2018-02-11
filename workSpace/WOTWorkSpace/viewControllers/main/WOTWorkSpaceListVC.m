@@ -16,6 +16,7 @@
 #import "MJRefresh.h"
 #import "WOTCityModel.h"
 #import "WOTRefreshControlUitls.h"
+#import "WOTOrderVC.h"
 @interface WOTWorkSpaceListVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate, WOTSpaceCityScrollViewDelegate>{
     NSInteger citySelectedIndex;
 }
@@ -226,8 +227,12 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    [self.navigationController pushViewController:detailvc animated:YES];
+//    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+//    [self.navigationController pushViewController:detailvc animated:YES];
+    [WOTSingtleton shared].orderType = ORDER_TYPE_SPACE;
+    WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
+    vc.spaceModel = self.dataSource[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma textfield delegate

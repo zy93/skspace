@@ -7,17 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WOTTeamView.h"
 typedef NS_ENUM(NSInteger, WOTScrollViewCellType) {
     WOTScrollViewCellType_facilities, //配套设施
     WOTScrollViewCellType_type,    //活动类型
     WOTScrollViewCellType_team,  //社区团队
 };
 
-@interface WOTScrollViewCell : UITableViewCell
+@class WOTScrollViewCell;
+
+@protocol WOTScrollViewCellDelegate <NSObject>
+-(void)scrollviewCell:(WOTScrollViewCell *)cell didSelectBtn:(NSString *)tel;
+@end
+
+@interface WOTScrollViewCell : UITableViewCell  <WOTTeamViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, assign) WOTScrollViewCellType cellType;
-
+@property (nonatomic, strong) id <WOTScrollViewCellDelegate> delegate;
 
 -(void)setData:(NSArray *)data;
 

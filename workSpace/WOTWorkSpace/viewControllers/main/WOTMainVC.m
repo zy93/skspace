@@ -37,6 +37,7 @@
 #import "UIDevice+Resolutions.h"
 #import "PGCustomBannerView.h"
 #import "SKServiceProviderScrollView.h"
+#import "WOTOrderVC.h"
 
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
@@ -482,10 +483,13 @@ int a = 0;
 //    NSLog(@"点击了第%ld张图",(long)subIndex + 1);
 //    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
 //    [self.navigationController pushViewController:detailvc animated:YES];
-    SKSpaceDetailsVC *spaceDetailsVC = [[SKSpaceDetailsVC alloc] init];
-    spaceDetailsVC.hidesBottomBarWhenPushed = YES;
-    spaceDetailsVC.spaceModel = self.spaceData[subIndex];
-    [self.navigationController pushViewController:spaceDetailsVC animated:YES];
+//    SKSpaceDetailsVC *spaceDetailsVC = [[SKSpaceDetailsVC alloc] init];
+//    spaceDetailsVC.hidesBottomBarWhenPushed = YES;
+//    spaceDetailsVC.spaceModel = self.spaceData[subIndex];
+    [WOTSingtleton shared].orderType = ORDER_TYPE_SPACE;
+    WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
+    vc.spaceModel = self.spaceData[subIndex];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {

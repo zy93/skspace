@@ -86,6 +86,8 @@
             [view.iconIV setImageWithURL:[model.headPortrait ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
             [view.titleLab setText:model.realName];
             [view.subtitleLab setText:model.staffName];
+            view.tel = model.tel;
+            view.delegate = self;
 //            [view.]
             [self.scrollView addSubview:view];
             [self.scrollView setContentSize:CGSizeMake(data.count*teamViewWidth+ (data.count*(facilitiesViewGap)) + startX, 0)];
@@ -95,6 +97,13 @@
     
 }
 
+#pragma mark - delegate
+-(void)teamView:(WOTTeamView *)teamView buttonClickWithTel:(NSString *)tel
+{
+    if ([_delegate respondsToSelector:@selector(scrollviewCell:didSelectBtn:)]) {
+        [_delegate scrollviewCell:self didSelectBtn:tel];
+    }
+}
 
 
 @end
