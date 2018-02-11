@@ -48,6 +48,9 @@
 #import "SKBookStationOrderModel.h"
 #import "WOTMeetingFacilityModel.h"
 #import "WOTStaffModel.h"
+#import "SKNewFacilitatorModel.h"
+#import "SKNewSpaceModel.h"
+#import "SKNewEnterpriseModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()

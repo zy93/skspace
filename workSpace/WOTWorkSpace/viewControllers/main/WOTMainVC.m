@@ -38,7 +38,9 @@
 #import "PGCustomBannerView.h"
 #import "SKServiceProviderScrollView.h"
 #import "WOTOrderVC.h"
-
+#import "SKNewFacilitatorModel.h"
+#import "SKNewSpaceModel.h"
+#import "SKNewEnterpriseModel.h"
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
