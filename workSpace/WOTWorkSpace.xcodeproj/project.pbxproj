@@ -91,6 +91,7 @@
 		2A7AFABA1FF33D9F00038D26 /* WOTSearchMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7AFAB91FF33D9F00038D26 /* WOTSearchMemberVC.m */; };
 		2A7D877620302A7D00CF4CCD /* WOTMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D877420302A7D00CF4CCD /* WOTMapCell.m */; };
 		2A7D877720302A7D00CF4CCD /* WOTMapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A7D877520302A7D00CF4CCD /* WOTMapCell.xib */; };
+		2A7D877A20303A1B00CF4CCD /* WOTShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D877920303A1B00CF4CCD /* WOTShareVC.m */; };
 		2A99FB621F258A0F00869732 /* WOTBookStationListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB5C1F258A0F00869732 /* WOTBookStationListModel.m */; };
 		2A99FB631F258A0F00869732 /* WOTMeetingListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB5E1F258A0F00869732 /* WOTMeetingListModel.m */; };
 		2A99FB641F258A0F00869732 /* WOTMeetingReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB601F258A0F00869732 /* WOTMeetingReservationsModel.m */; };
@@ -588,6 +589,8 @@
 		2A7D877320302A7D00CF4CCD /* WOTMapCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTMapCell.h; sourceTree = "<group>"; };
 		2A7D877420302A7D00CF4CCD /* WOTMapCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTMapCell.m; sourceTree = "<group>"; };
 		2A7D877520302A7D00CF4CCD /* WOTMapCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTMapCell.xib; sourceTree = "<group>"; };
+		2A7D877820303A1B00CF4CCD /* WOTShareVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTShareVC.h; sourceTree = "<group>"; };
+		2A7D877920303A1B00CF4CCD /* WOTShareVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTShareVC.m; sourceTree = "<group>"; };
 		2A99FB5B1F258A0F00869732 /* WOTBookStationListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTBookStationListModel.h; sourceTree = "<group>"; };
 		2A99FB5C1F258A0F00869732 /* WOTBookStationListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTBookStationListModel.m; sourceTree = "<group>"; };
 		2A99FB5D1F258A0F00869732 /* WOTMeetingListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMeetingListModel.h; sourceTree = "<group>"; };
@@ -2360,6 +2363,8 @@
 				E8370F161F0DD8BF0070C077 /* WOTActivitiesLIstVC.m */,
 				E8370F1E1F0E04850070C077 /* WOTInformationListVC.h */,
 				E8370F1F1F0E04850070C077 /* WOTInformationListVC.m */,
+				2A7D877820303A1B00CF4CCD /* WOTShareVC.h */,
+				2A7D877920303A1B00CF4CCD /* WOTShareVC.m */,
 			);
 			path = main;
 			sourceTree = "<group>";
@@ -3357,6 +3362,7 @@
 				E85A861B1F0252F20016FCA1 /* WOTBaseNavigationController.m in Sources */,
 				E847E0981F1621DC003BAF6C /* WOTUserSingleton.m in Sources */,
 				2A69A84E1FE2282C00C0862A /* WOTServiceProvidersView.m in Sources */,
+				2A7D877A20303A1B00CF4CCD /* WOTShareVC.m in Sources */,
 				E85A85FD1F0202B10016FCA1 /* WOTTabBarVCViewController.m in Sources */,
 				E8693ADB1F049A6B00772BC1 /* WOTSearchVC.m in Sources */,
 				E8190DC41F0F69660000B07C /* WOTSubmitRegisterServiceCell.m in Sources */,
