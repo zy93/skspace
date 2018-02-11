@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTSecondCell" rowHeight="117" id="KGk-i7-Jjw" customClass="WOTSecondCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="116.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lU4-ed-nEg">
+                        <rect key="frame" x="20" y="53.5" width="280" height="43"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jieshao" translatesAutoresizingMaskIntoConstraints="NO" id="mYa-0n-3d3">
+                        <rect key="frame" x="20" y="15" width="18" height="18"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vae-n1-eRT">
+                        <rect key="frame" x="48" y="15.5" width="37.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="lU4-ed-nEg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="5Im-xU-nbj"/>
+                    <constraint firstItem="Vae-n1-eRT" firstAttribute="leading" secondItem="mYa-0n-3d3" secondAttribute="trailing" constant="10" id="7Pq-E7-b4d"/>
+                    <constraint firstAttribute="trailing" secondItem="lU4-ed-nEg" secondAttribute="trailing" constant="20" id="Av9-xn-DKf"/>
+                    <constraint firstItem="mYa-0n-3d3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="JwU-n0-yGz"/>
+                    <constraint firstItem="mYa-0n-3d3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="PHa-BI-SE8"/>
+                    <constraint firstAttribute="bottom" secondItem="lU4-ed-nEg" secondAttribute="bottom" constant="20" id="k7B-tp-xV0"/>
+                    <constraint firstItem="lU4-ed-nEg" firstAttribute="top" secondItem="Vae-n1-eRT" secondAttribute="bottom" constant="20" id="ubk-Zz-niu"/>
+                    <constraint firstItem="Vae-n1-eRT" firstAttribute="centerY" secondItem="mYa-0n-3d3" secondAttribute="centerY" id="znU-z9-8VY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="iconIV" destination="mYa-0n-3d3" id="qna-Vk-cJa"/>
+                <outlet property="textView" destination="lU4-ed-nEg" id="NhQ-qJ-EUE"/>
+                <outlet property="titleLab" destination="Vae-n1-eRT" id="JUL-rE-Nt3"/>
+            </connections>
+            <point key="canvasLocation" x="25" y="88.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="jieshao" width="18" height="18"/>
+    </resources>
+</document>

@@ -23,7 +23,7 @@
 @property(nonatomic,strong)NSString *firmLogo;
 @property(nonatomic,strong)NSString *firmName;
 @property(nonatomic,strong)NSString *tel;
-
+@property(nonatomic,strong)NSString *facilitatorDescribe;
 
 @end
 

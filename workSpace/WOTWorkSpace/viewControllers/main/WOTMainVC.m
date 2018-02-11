@@ -42,6 +42,8 @@
 #import "SKNewSpaceModel.h"
 #import "SKNewEnterpriseModel.h"
 #import "WOTShareVC.h"
+#import "WOTProvidersVC.h"
+
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
@@ -706,9 +708,11 @@ int a = 0;
 -(void)facilitatorInfoMethod:(NSInteger)tapTag
 {
     //跳转到新界面
-    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+//    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+//    vc.facilitatorModel = self.facilitatorData[tapTag];
+//    vc.vcType = INTRODUCE_VC_TYPE_Providers;
+    WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
     vc.facilitatorModel = self.facilitatorData[tapTag];
-    vc.vcType = INTRODUCE_VC_TYPE_Providers;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
