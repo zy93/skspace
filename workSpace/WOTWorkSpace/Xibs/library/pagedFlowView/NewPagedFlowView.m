@@ -416,7 +416,7 @@ static NSString *subviewClassName;
         }
         
         //重置pageWidth
-        _pageSize = CGSizeMake(self.bounds.size.width - 4 * self.leftRightMargin,(self.bounds.size.width - 4 * self.leftRightMargin) * 9 /16);
+        _pageSize = CGSizeMake(self.bounds.size.width - 4 * self.leftRightMargin,(self.bounds.size.width - 4 * self.leftRightMargin) * 5 /8);
         if (self.delegate && [self.delegate respondsToSelector:@selector(sizeForPageInFlowView:)]) {
             _pageSize = [self.delegate sizeForPageInFlowView:self];
         }

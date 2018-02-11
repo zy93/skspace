@@ -384,7 +384,17 @@
     } response:response];
 }
 
-
++(void)getNewSpaceDataBlock:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/ShowList/find"];
+    NSDictionary *parameters = @{@"state":@"显示",
+                                 @"showClassify":@"空间"
+                                 };
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        SKNewSpaceModel * spacemodel = [[SKNewSpaceModel alloc]initWithDictionary:responseobj error:nil];
+        return  spacemodel;
+    } response:response];
+}
 
 +(void)getSpaceWithLocation:(CGFloat)lat lon:(CGFloat)lon response:(response)response
 {
@@ -423,6 +433,23 @@
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
         
         WOTEnterpriseModel_msg * enterprisemodel = [[WOTEnterpriseModel_msg alloc]initWithDictionary:responseobj error:nil];
+        
+        return  enterprisemodel;
+        
+        
+    }response:response];
+}
+
++(void)getNewEnterprisesDataResponse:(response)response
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/ShowList/find"];
+    NSDictionary * parameters = @{@"state":@"显示",
+                                  @"showClassify":@"企业"
+                                  };
+    
+    [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
+        
+        SKNewEnterpriseModel * enterprisemodel = [[SKNewEnterpriseModel alloc]initWithDictionary:responseobj error:nil];
         
         return  enterprisemodel;
         
@@ -647,6 +674,20 @@
     [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
         
         SKFacilitatorModel *model = [[SKFacilitatorModel alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)getNewServiceProviders:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/ShowList/find"];
+    NSDictionary *parameters = @{@"state":@"显示",
+                                 @"showClassify":@"服务商"
+                                 
+                                 };
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        
+        SKNewFacilitatorModel *model = [[SKNewFacilitatorModel alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
 }

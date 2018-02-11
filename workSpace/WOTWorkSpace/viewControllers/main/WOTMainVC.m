@@ -475,7 +475,7 @@ int a = 0;
 
 #pragma mark - NewPagedFlowView Delegate & Datasource
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
-    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH) * 9 / 16);//(SCREEN_WIDTH - 60) * 9 / 16
+    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH) * 5 / 8);//(SCREEN_WIDTH - 60) * 9 / 16
 }
 
 #pragma mark - 点击单个图片
@@ -510,7 +510,7 @@ int a = 0;
     
     NSArray *arr = [self.spaceData[index].spacePicture componentsSeparatedByString:@","];
     [bannerView.mainImageView sd_setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
-    bannerView.indexLabel.text = [NSString stringWithFormat:@"第%ld张图",(long)index + 1];
+    bannerView.indexLabel.text = [NSString stringWithFormat:@"%@",self.spaceData[index].spaceName];
     return bannerView;
 }
 
@@ -580,17 +580,29 @@ int a = 0;
 #pragma mark -  Network
 -(void)getEnterpriseListDataFromWeb:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getEnterprisesWithSpaceId:[[NSNumber alloc]initWithInt:69] response:^(id bean, NSError *error) {
+    
+    [WOTHTTPNetwork getNewEnterprisesDataResponse:^(id bean, NSError *error) {
         complete();
         if (bean) {
-            WOTEnterpriseModel_msg *dd = (WOTEnterpriseModel_msg *)bean;
-            weakSelf.enterpriseData = dd.msg.list;
-            [weakSelf.enterpriseScrollView setData:dd.msg.list];
+            SKNewEnterpriseModel *dd = (SKNewEnterpriseModel *)bean;
+            weakSelf.enterpriseData = dd.msg;
+            [weakSelf.enterpriseScrollView setData:dd.msg];
         }
         if (error) {
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
         }
     }];
+//    [WOTHTTPNetwork getEnterprisesWithSpaceId:[[NSNumber alloc]initWithInt:69] response:^(id bean, NSError *error) {
+//        complete();
+//        if (bean) {
+//            WOTEnterpriseModel_msg *dd = (WOTEnterpriseModel_msg *)bean;
+//            weakSelf.enterpriseData = dd.msg.list;
+//            [weakSelf.enterpriseScrollView setData:dd.msg.list];
+//        }
+//        if (error) {
+//            [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
+//        }
+//    }];
 }
 
 
@@ -607,17 +619,18 @@ int a = 0;
     }];
 }
 
+#pragma mark - 得到空间信息
 -(void)getDataSourceFromWebFWithCity:( NSString * __nullable )city complete:(void(^)())complete loadVIews:(void(^)())loadViews{
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getSapaceWithPage:@1 pageSize:@5 response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork getNewSpaceDataBlock:^(id bean, NSError *error) {
         complete();
         if (bean) {
-            WOTSpaceModel_msg *model = (WOTSpaceModel_msg *)bean;
-            weakSelf.spaceData = model.msg.list;
+            SKNewSpaceModel *model = (SKNewSpaceModel *)bean;
+            weakSelf.spaceData = model.msg;
             if (self.spaceData.count>5) {
-                    weakSelf.spaceData = [model.msg.list subarrayWithRange:NSMakeRange(0, 4)];
+                weakSelf.spaceData = [model.msg subarrayWithRange:NSMakeRange(0, 4)];
             } else {
-                    weakSelf.spaceData = model.msg.list ;
+                weakSelf.spaceData = model.msg;
             }
             loadViews();
         }
@@ -625,7 +638,6 @@ int a = 0;
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
         }
     }];
-    
 }
 
 
@@ -673,11 +685,11 @@ int a = 0;
 #pragma mark - 获取服务商列表
 -(void)getFacilitatorData:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getServiceProviders:^(id bean, NSError *error) {
+    [WOTHTTPNetwork getNewServiceProviders:^(id bean, NSError *error) {
         complete();
-        SKFacilitatorModel *model = (SKFacilitatorModel *)bean;
+        SKNewFacilitatorModel *model = (SKNewFacilitatorModel *)bean;
         if ([model.code isEqualToString:@"200"]) {
-            weakSelf.facilitatorData = model.msg.list;
+            weakSelf.facilitatorData = model.msg;
             
         }else
         {
@@ -686,12 +698,12 @@ int a = 0;
         }
         complete();
     }];
-    //complete();
 }
 
 #pragma mark - 跳转到服务商详细信息界面
 -(void)facilitatorInfoMethod:(NSInteger)tapTag
 {
+    //跳转到新界面
     WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
     vc.facilitatorModel = self.facilitatorData[tapTag];
     vc.vcType = INTRODUCE_VC_TYPE_Providers;

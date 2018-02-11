@@ -86,6 +86,14 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getSapaceWithPage:(NSNumber*)page pageSize:(NSNumber *)pageSize response:(response)response;
 
+
+/**
+ 获取首页空间信息
+
+ @param response 回调
+ */
++(void)getNewSpaceDataBlock:(response)response;
+
 /**
  根据空间id获取空间
 
@@ -150,6 +158,14 @@ typedef void(^response)(id bean,NSError *error);
  *@param response  对象返回上层，错误返回error
  */
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response;
+
+
+/**
+ 获取首页
+
+ @param response 结果回调
+ */
++(void)getNewEnterprisesDataResponse:(response)response;
 
 /**
  搜索企业
@@ -268,6 +284,15 @@ typedef void(^response)(id bean,NSError *error);
  @param response 返回
  */
 +(void)getServiceProviders:(response)response;
+
+
+/**
+ 首页获取服务商
+
+ @param response 结果回调
+ */
++(void)getNewServiceProviders:(response)response;
+
 
 /**
  *服务--发布需求页面
