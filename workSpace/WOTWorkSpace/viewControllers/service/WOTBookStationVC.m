@@ -20,7 +20,6 @@
 @interface WOTBookStationVC ()<UITableViewDelegate,UITableViewDataSource, WOTBookStationCellDelegate>
 {
     NSArray *allModelList; //所有的
-    NSArray *tableList;
     NSString *cityName;
     NSString *inquireTime;//查询日期;
 }
@@ -34,6 +33,7 @@
 //@property (nonatomic, assign)CGFloat y;
 //@property (nonatomic, assign)CGFloat height;
 @property (nonatomic, strong)NSMutableArray *cityList;
+@property (nonatomic, strong)NSArray *tableList;
 @property (nonatomic, strong)UIButton *cityButton;
 @property (nonatomic, strong)WOTSpaceModel *spaceModel;
 
@@ -120,17 +120,17 @@
         //return;
     }else
     {
+        __weak typeof(self) weakSelf = self;
         [WOTHTTPNetwork getAllSpaceWithCity:cityName block:^(id bean, NSError *error) {
-            if (error) {
-                NSLog(@"error:%@",error);
-                return ;
-            }
-            WOTSpaceModel_msg *list = bean;
-            //        tableList = list.msg;
-            //tableDic = [self sortByCity:list.msg];
-            tableList = list.msg.list;
+            
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (tableList.count) {
+                if (error) {
+                    NSLog(@"error:%@",error);
+                    return ;
+                }
+                WOTSpaceModel_msg *list = bean;
+                weakSelf.tableList = list.msg.list;
+                if (weakSelf.tableList.count) {
                     self.notInformationImageView.hidden = YES;
                     self.notBookStationInformationLabel.hidden = YES;
                 } else {
@@ -140,7 +140,7 @@
                     NSLog(@"没有数据");
                 }
                 //[self.table reloadData];
-                [self.tableIView  reloadData];
+                [weakSelf.tableIView  reloadData];
             });
         }];
         
@@ -223,7 +223,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  tableList.count;;
+    return  self.tableList.count;;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -239,8 +239,8 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTBookStationCell *bookcell = [tableView dequeueReusableCellWithIdentifier:@"WOTBookStationCell" forIndexPath:indexPath];
-    if (tableList) {
-        WOTSpaceModel *model = tableList[indexPath.row];
+    if (self.tableList) {
+        WOTSpaceModel *model = self.tableList[indexPath.row];
         self.spaceModel = model;
         bookcell.model = model;
         //NSLog(@"测试：%@",model);
@@ -264,7 +264,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
-    WOTSpaceModel *model = tableList[indexPath.row];
+    WOTSpaceModel *model = self.tableList[indexPath.row];
     [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
     vc.spaceModel = model;
     [self.navigationController pushViewController:vc animated:YES];

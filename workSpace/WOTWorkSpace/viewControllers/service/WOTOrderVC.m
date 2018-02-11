@@ -31,6 +31,7 @@
 #import "SKGiftBagViewController.h"
 #import "WOTMeetingFacilityModel.h"
 #import "WOTStaffModel.h"
+#import "WOTMapCell.h"
 
 
 #define infoCell @"WOTOrderForInfoCell"
@@ -42,6 +43,9 @@
 #define scrollViewCell @"WOTScrollViewCell"
 #define paymentCell @"WOTPaymentTypeCell"
 #define selectCell @"WOTOrderForSelectCell"
+#define mapCell @"WOTMapCell"
+
+
 //#define payTypeCell @"WOTOrderForSelectCell"
 //#define siteCell @"siteCell"
 //#define amountCell @"amountCell"
@@ -133,6 +137,7 @@
         [self requestStationNumber];
     }
     [self.table registerNib:[UINib nibWithNibName:scrollViewCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:scrollViewCell];
+    [self.table registerNib:[UINib nibWithNibName:mapCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:mapCell];
 
 }
 
@@ -240,7 +245,8 @@
             list1 = @[infoCell, selectDateCell,selectDateCell, serviceCell, describeCell];
             list2 = @[scrollViewCell]; //配套设施
             list3 = @[scrollViewCell]; //社区团队
-            tableList = @[list1, list2,list3];
+            list4 = @[mapCell];
+            tableList = @[list1, list4,list2,list3];
 
         }
             break;
@@ -250,7 +256,7 @@
             list2 = @[scrollViewCell]; //配套设施
             list3 = @[scrollViewCell]; //支持活动类型
             list4 = @[scrollViewCell]; //社区团队
-            tableList = @[list1, list2, list3, list4];
+            tableList = @[list1,@[mapCell], list2, list3, list4];
         }
             break;
         case ORDER_TYPE_SITE:
@@ -259,7 +265,7 @@
             list2 = @[scrollViewCell]; //配套设施
             list3 = @[scrollViewCell]; //支持活动类型
             list4 = @[scrollViewCell]; //社区团队
-            tableList = @[list1, list2, list3, list4];
+            tableList = @[list1,@[mapCell], list2, list3, list4];
         }
             break;
         case ORDER_TYPE_SPACE:
@@ -267,7 +273,7 @@
             list1 = @[infoCell, serviceCell, describeCell];
             list2 = @[scrollViewCell]; //配套设施
             list4 = @[scrollViewCell]; //社区团队
-            tableList = @[list1, list2, list4];
+            tableList = @[list1,@[mapCell], list2, list4];
         }
         default:
             break;
@@ -503,6 +509,9 @@
     else if ([cellType isEqualToString:serviceCell]) {
         return 96;
     }
+    else if ([cellType isEqualToString:mapCell]){
+        return 160*[WOTUitls GetLengthAdaptRate];
+    }
     else if ([cellType isEqualToString:describeCell]) {
         //计算高度
 //
@@ -529,16 +538,16 @@
     else if ([cellType isEqualToString:scrollViewCell]) {
         if ([WOTSingtleton shared].orderType==ORDER_TYPE_BOOKSTATION ||
             [WOTSingtleton shared].orderType==ORDER_TYPE_SPACE) {
-            if (indexPath.section == 1) {
+            if (indexPath.section == 2) {
                 return 130;
             }
             return 250*[WOTUitls GetLengthAdaptRate];
         }
         else {
-            if (indexPath.section == 1) {
+            if (indexPath.section == 2) {
                 return 130;
             }
-            else if (indexPath.section == 2) {
+            else if (indexPath.section == 3) {
                 //70 其他高度、40scroll高度，10数据量、3每行显示数量 1基础数量1行。
                 return 70+(40*(((int)(self.supportList.count/3))+1));
             }
@@ -668,6 +677,14 @@
         cell.delegate = self;
         return cell;
     }
+    else if ([cellType isEqualToString:mapCell]) {
+        WOTMapCell *cell = [tableView dequeueReusableCellWithIdentifier:mapCell];
+        if (cell == nil) {
+            cell = [[WOTMapCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:mapCell];
+        }
+        [cell.locationView setDataSpacelocationWithPointLng:self.spaceModel.lng pointLat:self.spaceModel.lat];
+        return cell;
+    }
 //    else if ([cellType isEqualToString:siteCell]) {
 //        WOTOrderForSiteCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForSiteCell"];
 //        if (cell == nil) {
@@ -736,7 +753,7 @@
         cell.delegate = self;
         if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ||
             [WOTSingtleton shared].orderType==ORDER_TYPE_SPACE) {
-            if (indexPath.section==1) {
+            if (indexPath.section==2) {
                 cell.cellType = WOTScrollViewCellType_facilities;
                 [cell setData:self.spaceFacilityList];
             }
@@ -746,12 +763,12 @@
             }
         }
         else {
-            if (indexPath.section==1) {
+            if (indexPath.section==2) {
                 cell.cellType = WOTScrollViewCellType_facilities;
                 [cell setData:self.meetingFacilityList];
 
             }
-            else if (indexPath.section==2) {
+            else if (indexPath.section==3) {
                 cell.cellType = WOTScrollViewCellType_type;
                 [cell setData:self.supportList];
             }

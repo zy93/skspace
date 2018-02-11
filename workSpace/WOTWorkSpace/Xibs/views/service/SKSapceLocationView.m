@@ -27,6 +27,16 @@
     return self;
 }
 
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self addSubview:self.mapView];
+        [self setUpMapView];
+    }
+    return self;
+}
+
 -(void)setDataSpacelocationWithPointLng:(NSNumber *)pointLng  pointLat:(NSNumber *)pointLat
 {
     MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
@@ -39,8 +49,8 @@
 -(void)setUpMapView
 {
     [self.mapView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(self).with.offset(10);
-        make.bottom.right.equalTo(self).with.offset(-10);
+        make.top.left.equalTo(self).with.offset(0);
+        make.bottom.right.equalTo(self).with.offset(0);
     }];
 }
 

@@ -89,6 +89,8 @@
 		2A7AE8461FF62F80000CAC04 /* WOTTitleAndEnterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7AE8441FF62F80000CAC04 /* WOTTitleAndEnterCell.m */; };
 		2A7AE8471FF62F80000CAC04 /* WOTTitleAndEnterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A7AE8451FF62F80000CAC04 /* WOTTitleAndEnterCell.xib */; };
 		2A7AFABA1FF33D9F00038D26 /* WOTSearchMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7AFAB91FF33D9F00038D26 /* WOTSearchMemberVC.m */; };
+		2A7D877620302A7D00CF4CCD /* WOTMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D877420302A7D00CF4CCD /* WOTMapCell.m */; };
+		2A7D877720302A7D00CF4CCD /* WOTMapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A7D877520302A7D00CF4CCD /* WOTMapCell.xib */; };
 		2A99FB621F258A0F00869732 /* WOTBookStationListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB5C1F258A0F00869732 /* WOTBookStationListModel.m */; };
 		2A99FB631F258A0F00869732 /* WOTMeetingListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB5E1F258A0F00869732 /* WOTMeetingListModel.m */; };
 		2A99FB641F258A0F00869732 /* WOTMeetingReservationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A99FB601F258A0F00869732 /* WOTMeetingReservationsModel.m */; };
@@ -583,6 +585,9 @@
 		2A7AE8451FF62F80000CAC04 /* WOTTitleAndEnterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTTitleAndEnterCell.xib; sourceTree = "<group>"; };
 		2A7AFAB81FF33D9F00038D26 /* WOTSearchMemberVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTSearchMemberVC.h; sourceTree = "<group>"; };
 		2A7AFAB91FF33D9F00038D26 /* WOTSearchMemberVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTSearchMemberVC.m; sourceTree = "<group>"; };
+		2A7D877320302A7D00CF4CCD /* WOTMapCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTMapCell.h; sourceTree = "<group>"; };
+		2A7D877420302A7D00CF4CCD /* WOTMapCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTMapCell.m; sourceTree = "<group>"; };
+		2A7D877520302A7D00CF4CCD /* WOTMapCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOTMapCell.xib; sourceTree = "<group>"; };
 		2A99FB5B1F258A0F00869732 /* WOTBookStationListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTBookStationListModel.h; sourceTree = "<group>"; };
 		2A99FB5C1F258A0F00869732 /* WOTBookStationListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTBookStationListModel.m; sourceTree = "<group>"; };
 		2A99FB5D1F258A0F00869732 /* WOTMeetingListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTMeetingListModel.h; sourceTree = "<group>"; };
@@ -1963,6 +1968,9 @@
 				2AF18A3A1F1360EC004681CE /* WOTOrderForServiceInfoCell.m */,
 				2A9E2C3B202D67850016E097 /* WOTOrderForDescribeCell.h */,
 				2A9E2C3C202D67850016E097 /* WOTOrderForDescribeCell.m */,
+				2A7D877320302A7D00CF4CCD /* WOTMapCell.h */,
+				2A7D877420302A7D00CF4CCD /* WOTMapCell.m */,
+				2A7D877520302A7D00CF4CCD /* WOTMapCell.xib */,
 				2A9E2C4C202D92D80016E097 /* WOTScrollViewCell.h */,
 				2A9E2C4D202D92D80016E097 /* WOTScrollViewCell.m */,
 				2A9E2C4E202D92D80016E097 /* WOTScrollViewCell.xib */,
@@ -3006,6 +3014,7 @@
 				2A4214711F146A700010B003 /* share_qq@3x.png in Resources */,
 				2AF18A2C1F131DEA004681CE /* WOTReservationsMeetingCell.xib in Resources */,
 				2A4214491F14699B0010B003 /* UMSocialSDKResources.bundle in Resources */,
+				2A7D877720302A7D00CF4CCD /* WOTMapCell.xib in Resources */,
 				2A42146D1F146A700010B003 /* share_pengyouquan@3x.png in Resources */,
 				2A1624EA1F0E211300F216F9 /* CityCode.plist in Resources */,
 				2A4214721F146A700010B003 /* share_qq_select@2x.png in Resources */,
@@ -3414,6 +3423,7 @@
 				2A336A861F0CF2B600F5B0AF /* WOTLoginVC.m in Sources */,
 				E85032D71F0B5A5900E79257 /* WOTPersionalInformation.m in Sources */,
 				E8A2001B1F1C8266003C8A86 /* WOTSpaceModel.m in Sources */,
+				2A7D877620302A7D00CF4CCD /* WOTMapCell.m in Sources */,
 				2AB8A4A51FF4BE06008897CB /* WOTEnterCell.m in Sources */,
 				E862456C1F3D4F4900CF0D9D /* SRMutex.m in Sources */,
 				E86594881F21CFF00093B796 /* WOTNearCirclesVC.m in Sources */,

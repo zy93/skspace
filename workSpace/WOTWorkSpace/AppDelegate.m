@@ -40,7 +40,7 @@
     [self ConfigUSharePlatforms];
     
     //配置高德地图key
-    [AMapServices sharedServices].apiKey =  MAP_API_KEY;
+   // [AMapServices sharedServices].apiKey =  MAP_API_KEY;
     //配置微信注册
     [WXApi registerApp:APPID enableMTA:YES];
     //注册推送
