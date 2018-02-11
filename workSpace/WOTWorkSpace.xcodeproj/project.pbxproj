@@ -202,6 +202,9 @@
 		C5A2D7052007750B003F1574 /* SKFacilitatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */; };
 		C5A836B11FFF5744002E4CE1 /* SKUpdateInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A836B01FFF5744002E4CE1 /* SKUpdateInfoViewController.m */; };
 		C5B1EB9E202FE76000586BAB /* SKSapceLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B1EB9D202FE75F00586BAB /* SKSapceLocationView.m */; };
+		C5B1EBA120300FF900586BAB /* SKNewFacilitatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B1EBA020300FF900586BAB /* SKNewFacilitatorModel.m */; };
+		C5B1EBA420301AD400586BAB /* SKNewSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B1EBA320301AD400586BAB /* SKNewSpaceModel.m */; };
+		C5B1EBA720301ECE00586BAB /* SKNewEnterpriseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B1EBA620301ECE00586BAB /* SKNewEnterpriseModel.m */; };
 		C5CBA57F20106738002943EF /* SKAliPayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CBA57E20106738002943EF /* SKAliPayModel.m */; };
 		C5CBA582201073A8002943EF /* SKOrderStringModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CBA581201073A8002943EF /* SKOrderStringModel.m */; };
 		C5CBA58520109E56002943EF /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C5CBA58320109E56002943EF /* AlipaySDK.bundle */; };
@@ -794,6 +797,12 @@
 		C5A836B01FFF5744002E4CE1 /* SKUpdateInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKUpdateInfoViewController.m; sourceTree = "<group>"; };
 		C5B1EB9C202FE75F00586BAB /* SKSapceLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSapceLocationView.h; sourceTree = "<group>"; };
 		C5B1EB9D202FE75F00586BAB /* SKSapceLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSapceLocationView.m; sourceTree = "<group>"; };
+		C5B1EB9F20300FF900586BAB /* SKNewFacilitatorModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKNewFacilitatorModel.h; sourceTree = "<group>"; };
+		C5B1EBA020300FF900586BAB /* SKNewFacilitatorModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKNewFacilitatorModel.m; sourceTree = "<group>"; };
+		C5B1EBA220301AD400586BAB /* SKNewSpaceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKNewSpaceModel.h; sourceTree = "<group>"; };
+		C5B1EBA320301AD400586BAB /* SKNewSpaceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKNewSpaceModel.m; sourceTree = "<group>"; };
+		C5B1EBA520301ECE00586BAB /* SKNewEnterpriseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKNewEnterpriseModel.h; sourceTree = "<group>"; };
+		C5B1EBA620301ECE00586BAB /* SKNewEnterpriseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKNewEnterpriseModel.m; sourceTree = "<group>"; };
 		C5CBA57D20106738002943EF /* SKAliPayModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKAliPayModel.h; sourceTree = "<group>"; };
 		C5CBA57E20106738002943EF /* SKAliPayModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKAliPayModel.m; sourceTree = "<group>"; };
 		C5CBA580201073A8002943EF /* SKOrderStringModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKOrderStringModel.h; sourceTree = "<group>"; };
@@ -1580,6 +1589,8 @@
 				E8774BB71F41710F00168033 /* WOTOrderModel.m */,
 				C5A2D7032007750B003F1574 /* SKFacilitatorModel.h */,
 				C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */,
+				C5B1EB9F20300FF900586BAB /* SKNewFacilitatorModel.h */,
+				C5B1EBA020300FF900586BAB /* SKNewFacilitatorModel.m */,
 				C5DB4D57202439D100806BC1 /* SKSpaceInfoModel.h */,
 				C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */,
 				C59BFDBF2029BFBF00D45EC3 /* SKBookStationOrderModel.h */,
@@ -2708,12 +2719,16 @@
 				E8A200091F1C8266003C8A86 /* WOTActivityModel.m */,
 				E8A2000A1F1C8266003C8A86 /* WOTEnterpriseModel.h */,
 				E8A2000B1F1C8266003C8A86 /* WOTEnterpriseModel.m */,
+				C5B1EBA520301ECE00586BAB /* SKNewEnterpriseModel.h */,
+				C5B1EBA620301ECE00586BAB /* SKNewEnterpriseModel.m */,
 				E8A2000C1F1C8266003C8A86 /* WOTNewsModel.h */,
 				E8A2000D1F1C8266003C8A86 /* WOTNewsModel.m */,
 				E8A2000E1F1C8266003C8A86 /* WOTSliderModel.h */,
 				E8A2000F1F1C8266003C8A86 /* WOTSliderModel.m */,
 				E8A200101F1C8266003C8A86 /* WOTSpaceModel.h */,
 				E8A200111F1C8266003C8A86 /* WOTSpaceModel.m */,
+				C5B1EBA220301AD400586BAB /* SKNewSpaceModel.h */,
+				C5B1EBA320301AD400586BAB /* SKNewSpaceModel.m */,
 				2AB79D932010ABE600F7B57A /* WOTCityModel.h */,
 				2AB79D942010ABE600F7B57A /* WOTCityModel.m */,
 			);
@@ -3225,6 +3240,7 @@
 				E8A200181F1C8266003C8A86 /* WOTEnterpriseModel.m in Sources */,
 				E8370F351F0E2A750070C077 /* WOTJoiningEnterpriseVC.m in Sources */,
 				E8190D941F0F69660000B07C /* WOTActivitiesListCell.m in Sources */,
+				C5B1EBA420301AD400586BAB /* SKNewSpaceModel.m in Sources */,
 				E8C7203C1F14783900DED44C /* WOTDatePickerView.m in Sources */,
 				2AB8A4B21FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.m in Sources */,
 				E86245731F3D4F4900CF0D9D /* SRSecurityPolicy.m in Sources */,
@@ -3249,6 +3265,7 @@
 				E869E83D1F1DE1DF00DBDBB9 /* WOTPhotosBaseUtils.m in Sources */,
 				C595C9781FE1126E0083430A /* SKFocusCirclesViewController.m in Sources */,
 				C59BFDC12029BFBF00D45EC3 /* SKBookStationOrderModel.m in Sources */,
+				C5B1EBA120300FF900586BAB /* SKNewFacilitatorModel.m in Sources */,
 				2A9E2C46202D71AF0016E097 /* WOTTeamView.m in Sources */,
 				C55A29891FD6DFD9001E0DB7 /* RegisterViewController.m in Sources */,
 				E8190DAA1F0F69660000B07C /* WOTMyActivitiesCell.m in Sources */,
@@ -3413,6 +3430,7 @@
 				E8190DCB1F0F69660000B07C /* PFGoldenSectionSpiral.m in Sources */,
 				E8DDCCD61F11D542007D001C /* WOTEnterpriseTypeCell.m in Sources */,
 				2AF18A441F136F6D004681CE /* WOTOrderForPaymentCell.m in Sources */,
+				C5B1EBA720301ECE00586BAB /* SKNewEnterpriseModel.m in Sources */,
 				2AB8A4A11FF4BC83008897CB /* WOTEnterEnterpriseNameVC.m in Sources */,
 				C5B1EB9E202FE76000586BAB /* SKSapceLocationView.m in Sources */,
 				E86245671F3D4F4900CF0D9D /* SRConstants.m in Sources */,
