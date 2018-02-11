@@ -18,7 +18,7 @@
 @interface NSString (Size)
 //获取在特定字体下，单行显示该字符串所需要的宽度
 -(CGFloat)widthWithFont:(UIFont *)f;
-//获取在特定字体、特定宽度下，多行显示该字符串所需要的高度
+/** 获取在特定字体、特定宽度下，多行显示该字符串所需要的高度 @return 高度 */
 -(CGFloat)heightWithFont:(UIFont *)f maxWidth:(CGFloat)mWidth;
 
 - (CGSize)labelAutoCalculateRectWith:(NSString *)text FontSize:(CGFloat)fontSize MaxSize:(CGSize)maxSize;
