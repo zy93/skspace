@@ -53,6 +53,13 @@ typedef void(^response)(id bean,NSError *error);
 +(void)updatePassWordWithVerifyCode:(NSString *)code tel:(NSString *)tel password:(NSString *)pass response:(response)response;
 
 
+/**
+ 获取我的邀请
+
+ @param response 结果回调  
+ */
++(void)getUserInviteResponse:(response)response;
+
 
 #pragma mark- 空间
 

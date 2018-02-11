@@ -18,6 +18,9 @@
 #import "LoginViewController.h"
 #import "WOTMyAppointmentHistoryVC.h"
 #import "UIDevice+Resolutions.h"
+#import "WOTMyInviteVC.h"
+#import "WOTSurplusTimeVC.h"
+
 
 @interface WOTMyVC ()<WOTOrderCellDelegate,WOTOMyCellDelegate, UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic,strong)WOTSettingVC *settingvc;
@@ -84,7 +87,7 @@
             return 1;
             break;
         case 2:
-            return 4;
+            return 6;
             break;
         default:
             break;
@@ -166,7 +169,7 @@
     } else {
         WOTMycommonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycommonCellID" forIndexPath:indexPath];
         NSArray *titlearray = [NSArray arrayWithObjects:@"我的企业",@"我的活动",@"我的预约", @"我的维修", @"我的邀请",@"剩余时长",nil];
-        NSArray *imageNameArray = [NSArray arrayWithObjects:@"enterprise",@"activities",@"history", @"repairs_history",nil];
+        NSArray *imageNameArray = [NSArray arrayWithObjects:@"enterprise",@"activities",@"history", @"repairs_history",@"my_invite", @"my_time",nil];
         cell.nameLabel.text = titlearray[indexPath.row];
         cell.cellImage.image = [UIImage imageNamed:imageNameArray[indexPath.row]];
         commoncell = cell;
@@ -198,11 +201,23 @@
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
-                else {
+                else if (indexPath.row ==3) {
                     
                     WOTMyHistoryVC *historyvc = [[WOTMyHistoryVC alloc]init];
                     historyvc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:historyvc animated:YES];
+                }
+                else if (indexPath.row ==4) {
+                    
+                    WOTMyInviteVC *vc = [[WOTMyInviteVC alloc]init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                else if (indexPath.row ==5) {
+                    
+                    WOTSurplusTimeVC *vc = [[WOTSurplusTimeVC alloc]init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
                 
             default:

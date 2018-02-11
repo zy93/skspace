@@ -41,3 +41,17 @@
     return YES;
 }
 @end
+
+@implementation WOTMyInviteModel
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+@end
+@implementation WOTMyInviteModel_model
++(BOOL)propertyIsOptional:(NSString *)propertyName
+{
+    return YES;
+}
+@end
+

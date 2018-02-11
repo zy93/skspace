@@ -140,14 +140,6 @@ int a = 0;
     self.scrollVIew.contentSize = CGSizeMake(self.view.frame.size.width,self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70+self.serviceProvideView.frame.size.height);
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.tabBarController.tabBar setHidden:YES];
-    [self.tabBarController.tabBar setTranslucent:YES];
-    [self.navigationController.navigationBar setHidden:NO];
-}
-
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];

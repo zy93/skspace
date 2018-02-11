@@ -26,6 +26,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"邀请好友注册";
+    [self.navigationController.navigationBar setHidden:NO];
     self.view.backgroundColor = UIColorFromRGB(0xfce7c9);
     
     self.scrollView = [[UIScrollView alloc] init];

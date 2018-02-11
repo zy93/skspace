@@ -18,20 +18,24 @@
 @property (nonatomic, strong) NSString *appId;//集团编号
 @property (nonatomic, strong) NSString *alias;
 @property (nonatomic, strong) NSString *birthDate;
-@property (nonatomic, strong) NSString *companyId;    //公司id，员工身份
-@property (nonatomic, strong) NSString *companyIdAdmin; //公司id，管理员身份
-@property (nonatomic, strong) NSString *meInvitationCode; //我的邀请码
 @property (nonatomic, strong) NSString *byInvitationCode; //被邀请码，注册传
+@property (nonatomic, strong) NSString *companyId;       //公司id，员工身份
+@property (nonatomic, strong) NSString *companyIdAdmin; //公司id，管理员身份
 @property (nonatomic, strong) NSString *companyName;
 @property (nonatomic, strong) NSString *constellation;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *headPortrait;
 @property (nonatomic, strong) NSString *industry;
+@property (nonatomic, assign) NSNumber *integral;
 @property (nonatomic, strong) NSString *interest;
+@property (nonatomic, assign) NSNumber *meetingHours;
+@property (nonatomic, strong) NSString *meInvitationCode; //我的邀请码
 @property (nonatomic, strong) NSString *papersNum;
 @property (nonatomic, strong) NSNumber *papersType;
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSString *realName;
+@property (nonatomic, strong) NSString *rebateState;
+@property (nonatomic, strong) NSNumber *rebateSum;
 @property (nonatomic, strong) NSString *registerTime;
 @property (nonatomic, strong) NSString *sex;
 @property (nonatomic, strong) NSString *site;
@@ -42,9 +46,7 @@
 @property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, assign) NSNumber *userType;
-@property (nonatomic, assign) NSNumber *meetingHours;
 @property (nonatomic, assign) NSNumber *workHours;
-@property (nonatomic, assign) NSNumber *integral;
 
 @end
 
@@ -71,6 +73,20 @@
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSString *result;
 @property(nonatomic,strong)WOTSearchModel_msg  *msg;
+@end
+
+//我的邀请model
+@interface WOTMyInviteModel : JSONModel
+
+@property(nonatomic,strong)NSNumber *sum;
+@property(nonatomic,strong)NSArray <WOTLoginModel>*list;
+@end
+
+@interface WOTMyInviteModel_model : JSONModel
+
+@property(nonatomic,strong)NSString *code;
+@property(nonatomic,strong)NSString *result;
+@property(nonatomic,strong)WOTMyInviteModel  *msg;
 @end
 
 

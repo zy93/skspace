@@ -80,7 +80,7 @@
             return 4;
             break;
         case 1:
-            return 4;
+            return 2;
             break;
         case 2:
             return 2;
@@ -160,25 +160,13 @@
         
     } else if (indexPath.section == 1){
         cell.accessoryType = UITableViewCellAccessoryNone;
-        if (indexPath.row == 0) {
-            //分钟制转小时制
-            long hours = self.userInfoModel.workHours.integerValue/60;
-            long minute= self.userInfoModel.workHours.integerValue%60;
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%01ld分钟",hours==0?@"":[NSString stringWithFormat:@"%02ld小时",hours],minute];
-        }
-        else if (indexPath.row == 1) {
-            //分钟制转小时制
-            long hours = self.userInfoModel.meetingHours.integerValue/60;
-            long minute= self.userInfoModel.meetingHours.integerValue%60;
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%01ld分钟",hours==0?@"":[NSString stringWithFormat:@"%02ld小时",hours],minute];
-        }
-        else if (indexPath.row == 2) {
+         if (indexPath.row == 0) {
             cell.detailTextLabel.text = [self.userInfoModel.integral stringValue];
         }
         else {
             cell.detailTextLabel.text = self.userInfoModel.meInvitationCode;
         }
-        NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"剩余工位时间",@"剩余会议室时间",@"积分",@"我的邀请码",nil];
+        NSArray *nameArray1 = [[NSArray alloc]initWithObjects:@"积分",@"我的邀请码",nil];
         cell.textLabel.text = nameArray1[indexPath.row];
         
     } else if (indexPath.section == 2){

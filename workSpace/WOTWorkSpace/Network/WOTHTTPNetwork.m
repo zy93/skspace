@@ -266,6 +266,17 @@
     } response:response];
 }
 
++(void)getUserInviteResponse:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/findByByInvitationCode"];
+    NSDictionary * parameters =@{@"userId":[WOTUserSingleton shareUser].userInfo.userId
+                                 };
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        WOTMyInviteModel_model * stationNumberModel = [[WOTMyInviteModel_model alloc]initWithDictionary:responseobj error:nil];
+        return  stationNumberModel;
+    } response:response];
+}
+
 #pragma mark - 空间
 +(void)getCityListResponse:(response)response
 {
