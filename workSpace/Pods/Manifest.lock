@@ -14,8 +14,8 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - AMap2DMap (4.6.0):
-    - AMapFoundation (~> 1.3)
+  - AMap3DMap (5.7.0):
+    - AMapFoundation (~> 1.4)
   - AMapFoundation (1.4.0)
   - AMapLocation (2.4.0):
     - AMapFoundation (~> 1.4)
@@ -38,7 +38,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
-  - AMap2DMap
+  - AMap3DMap
   - AMapLocation
   - AMapSearch
   - IQKeyboardManager
@@ -52,7 +52,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  AMap2DMap: 003fa70526983a1469ae6fc3323a6ee8b5ccf53c
+  AMap3DMap: 97afc57b88628237d916991ac31795eb7bde3f63
   AMapFoundation: 458974f46a39df8407fd818ab83d2630d494c726
   AMapLocation: 47b62b5381a66e4d0c2931b70ffde72682427896
   AMapSearch: d4c924b929f433968669721a07b4bd57736f5f2a
@@ -67,6 +67,6 @@ SPEC CHECKSUMS:
   UITableView+FDTemplateLayoutCell: 5c949b4a5059c404b442926c0e80f81d10a2d66f
   ZLPhotoBrowser: e3b90e4ab9ec5d19ba2ed2ef7c9ded654e1b1c8e
 
-PODFILE CHECKSUM: 8677e767a5d39145a06208d3ffa957fd3a45e00f
+PODFILE CHECKSUM: 5e76f81c07e40f58296ae486466cc960892cff69
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

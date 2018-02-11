@@ -27,6 +27,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [AMapServices sharedServices].apiKey =@"d4ac301f3334bc74439bda2d81e41061";
     self.tabbar = [[WOTTabBarVCViewController alloc]init];
     //self.tabbar.delegate = self;
     [self loadTabView];

@@ -195,6 +195,7 @@
 		C5A125BB1FE242CD0058AA0C /* SKCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A125B91FE242CD0058AA0C /* SKCommentTableViewCell.xib */; };
 		C5A2D7052007750B003F1574 /* SKFacilitatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */; };
 		C5A836B11FFF5744002E4CE1 /* SKUpdateInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A836B01FFF5744002E4CE1 /* SKUpdateInfoViewController.m */; };
+		C5B1EB9E202FE76000586BAB /* SKSapceLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B1EB9D202FE75F00586BAB /* SKSapceLocationView.m */; };
 		C5CBA57F20106738002943EF /* SKAliPayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CBA57E20106738002943EF /* SKAliPayModel.m */; };
 		C5CBA582201073A8002943EF /* SKOrderStringModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CBA581201073A8002943EF /* SKOrderStringModel.m */; };
 		C5CBA58520109E56002943EF /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C5CBA58320109E56002943EF /* AlipaySDK.bundle */; };
@@ -775,6 +776,8 @@
 		C5A2D7042007750B003F1574 /* SKFacilitatorModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKFacilitatorModel.m; sourceTree = "<group>"; };
 		C5A836AF1FFF5744002E4CE1 /* SKUpdateInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKUpdateInfoViewController.h; sourceTree = "<group>"; };
 		C5A836B01FFF5744002E4CE1 /* SKUpdateInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKUpdateInfoViewController.m; sourceTree = "<group>"; };
+		C5B1EB9C202FE75F00586BAB /* SKSapceLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSapceLocationView.h; sourceTree = "<group>"; };
+		C5B1EB9D202FE75F00586BAB /* SKSapceLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSapceLocationView.m; sourceTree = "<group>"; };
 		C5CBA57D20106738002943EF /* SKAliPayModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKAliPayModel.h; sourceTree = "<group>"; };
 		C5CBA57E20106738002943EF /* SKAliPayModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKAliPayModel.m; sourceTree = "<group>"; };
 		C5CBA580201073A8002943EF /* SKOrderStringModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKOrderStringModel.h; sourceTree = "<group>"; };
@@ -1498,6 +1501,8 @@
 		2A69A8411FE2282C00C0862A /* service */ = {
 			isa = PBXGroup;
 			children = (
+				C5B1EB9C202FE75F00586BAB /* SKSapceLocationView.h */,
+				C5B1EB9D202FE75F00586BAB /* SKSapceLocationView.m */,
 				2A69A8421FE2282C00C0862A /* WOTButton.h */,
 				2A69A8461FE2282C00C0862A /* WOTButton.m */,
 				2A69A8431FE2282C00C0862A /* WOTServiceProvidersView.m */,
@@ -3033,7 +3038,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WOTWorkSpace/Pods-WOTWorkSpace-resources.sh",
-				"${PODS_ROOT}/AMap2DMap/MAMapKit.framework/AMap.bundle",
+				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
@@ -3082,7 +3087,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9A63C7223633683843284F6A /* [CP] Copy Pods Resources */ = {
@@ -3115,7 +3120,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C8A633B506C111B121D3FECC /* [CP] Check Pods Manifest.lock */ = {
@@ -3133,7 +3138,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CD490373BD6421CCE8FFF0C5 /* [CP] Embed Pods Frameworks */ = {
@@ -3379,6 +3384,7 @@
 				E8DDCCD61F11D542007D001C /* WOTEnterpriseTypeCell.m in Sources */,
 				2AF18A441F136F6D004681CE /* WOTOrderForPaymentCell.m in Sources */,
 				2AB8A4A11FF4BC83008897CB /* WOTEnterEnterpriseNameVC.m in Sources */,
+				C5B1EB9E202FE76000586BAB /* SKSapceLocationView.m in Sources */,
 				E86245671F3D4F4900CF0D9D /* SRConstants.m in Sources */,
 				2A99FB791F26021000869732 /* WOTGetVerifyModel.m in Sources */,
 				2AE57C441F2ECB0600A1F149 /* WOTH5VC.m in Sources */,
