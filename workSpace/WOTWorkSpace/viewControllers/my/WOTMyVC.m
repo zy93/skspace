@@ -165,7 +165,7 @@
         commoncell = ordercell;
     } else {
         WOTMycommonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycommonCellID" forIndexPath:indexPath];
-        NSArray *titlearray = [NSArray arrayWithObjects:@"我的企业",@"我的活动",@"我的预约", @"我的维修",nil];
+        NSArray *titlearray = [NSArray arrayWithObjects:@"我的企业",@"我的活动",@"我的预约", @"我的维修", @"我的邀请",@"剩余时长",nil];
         NSArray *imageNameArray = [NSArray arrayWithObjects:@"enterprise",@"activities",@"history", @"repairs_history",nil];
         cell.nameLabel.text = titlearray[indexPath.row];
         cell.cellImage.image = [UIImage imageNamed:imageNameArray[indexPath.row]];

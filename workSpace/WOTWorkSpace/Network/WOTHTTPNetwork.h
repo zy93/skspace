@@ -127,6 +127,22 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getSpaceInfoWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
+/**
+ 查询空间运营团队
+
+ @param spaceId 空间id
+ @param response 结果回调
+ */
++(void)getSpaceTeamWithSpaceId:(NSNumber *)spaceId response:(response)response;
+
+/**
+ 获取空间设施
+
+ @param spaceId 空间id
+ @param response 回调
+ */
++(void)getSpaceFacilitiesWithSpaceId:(NSNumber *)spaceId response:(response)response;
+
 #pragma mark - 企业
 /**
  * 获取空间下的友邻企业
@@ -387,6 +403,17 @@ typedef void(^response)(id bean,NSError *error);
                                userId:(NSNumber *)userId
                                  body:(NSString *)body
                              response:(response)response;
+
+
+/**
+ 获取会议室、场地设施
+
+ @param meetingId 会议室场地id
+ @param response 结果回调
+ */
++(void)getMeetingFacilitiesWithMeetingId:(NSNumber *)meetingId response:(response)response;
+
+
 //TODO: 工位
 
 /**

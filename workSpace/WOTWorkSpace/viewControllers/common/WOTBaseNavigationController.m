@@ -26,7 +26,7 @@
         self.navigationBar.shadowImage = [[UIImage alloc]init];
         self.tabBarController.tabBar.tintColor = [UIColor blackColor];
         UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 0.5)];
-        line.backgroundColor = UICOLOR_MAIN_BLACK;
+        line.backgroundColor = UICOLOR_MAIN_LINE;
         [self.navigationBar addSubview:line];
     }
     return self;

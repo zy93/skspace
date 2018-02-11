@@ -28,6 +28,9 @@
 #import "SKBookStationOrderModel.h"
 #import "WOTOrderForDescribeCell.h"
 #import "WOTScrollViewCell.h"
+#import "SKGiftBagViewController.h"
+#import "WOTMeetingFacilityModel.h"
+#import "WOTStaffModel.h"
 
 #define infoCell @"WOTOrderForInfoCell"
 #define selectDateCell @"WOTOrderForSelectDateCell"
@@ -43,7 +46,7 @@
 //#define amountCell @"amountCell"
 //#define uitableCell @"uitableCell"
 
-@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,WOTPaymentTypeCellDelegate>
+@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,WOTPaymentTypeCellDelegate,SDCycleScrollViewDelegate>
 {
     NSArray *tableList;
     NSArray *mettingReservationList; //会议室已预订时间数组
@@ -63,6 +66,13 @@
 @property (nonatomic, strong)NSString *reservationStationStartDate;//预定工位开始日期
 @property (nonatomic, strong)NSString *reservationStationEndDate;//预定工位结束日期
 @property (nonatomic, assign)NSInteger reservationStationNumber; //预定工位数量
+
+//@property (nonatomic, strong) WOTMeetingFacilityModel_msg * meetingFacilityModel; //会议室
+@property (nonatomic, strong) NSMutableArray * meetingFacilityList;
+@property (nonatomic, strong) NSMutableArray * supportList;
+@property (nonatomic, strong) NSArray * spaceFacilityList;
+@property (nonatomic, strong) NSArray *teamList;
+
 
 //订单信息
 @property (nonatomic, strong) NSNumber *spaceId;
@@ -106,6 +116,7 @@
     self.reservationStationEndDate = [NSDate getNewTimeZero];
     self.payType = @(0); //默认
     self.invoiceInfo = @"请选择企业";
+    self.reservationStationNumber = 1;
     self.confirmButton.backgroundColor = UICOLOR_MAIN_ORANGE;
     self.confirmButton.layer.cornerRadius = 5.f;
     [self configNav];
@@ -135,6 +146,15 @@
     [super viewWillAppear:animated];
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self creatDataPickerView];
+    [self getTeam];
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+        [self getSpaceFacility];
+
+    }
+    else {
+        [self getmeetingFacility];
+
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -289,6 +309,8 @@
         NSInteger bookstationInter = [self.bookSationTime integerValue];
         if (!( bookstationInter> 0)) {
             [MBProgressHUDUtil showMessage:@"该用户下没有工位时间，请购买礼包" toView:self.view];
+            SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
             return;
         }
     }
@@ -297,6 +319,8 @@
         NSInteger meetInteger = [self.meetingTime integerValue];
         if (difference > meetInteger) {
             [MBProgressHUDUtil showMessage:@"该用户下会议室时间剩余不足，请购买礼包" toView:self.view];
+            SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
             return;
         }
     }
@@ -438,7 +462,7 @@
     NSString *cellType = list[indexPath.row];
     
     if ([cellType isEqualToString:infoCell]) {
-        return 265;
+        return 300;
     }
     else if ([cellType isEqualToString:selectDateCell]) {
         return 40;
@@ -477,7 +501,7 @@
             }
             else if (indexPath.section == 2) {
                 //70 其他高度、40scroll高度，10数据量、3每行显示数量 1基础数量1行。
-                return 70+(40*(((int)(10/3))+1));
+                return 70+(40*(((int)(self.supportList.count/3))+1));
             }
             return 250*[WOTUitls GetLengthAdaptRate];
         }
@@ -522,8 +546,15 @@
             case ORDER_TYPE_BOOKSTATION:
             {
                 NSArray  *array = [_spaceModel.spacePicture componentsSeparatedByString:@","];
-                NSString *imageUrl = [array firstObject];
-                [cell.infoImg  sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+                NSMutableArray *imageArr = [NSMutableArray new];
+                for (NSString *str in array) {
+                    [imageArr addObject:[str ToResourcesUrl]];
+                }
+                cell.scrollview.imageURLStringsGroup = imageArr;
+                cell.scrollview.delegate = self;
+                cell.scrollview.pageDotColor = UICOLOR_GRAY_66;
+                cell.scrollview.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
+                cell.scrollview.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;  //设置图片填充格式
                 cell.infoTitle.text = _spaceModel.spaceName;
                 cell.dailyRentLabel.text = [NSString stringWithFormat:@"今日剩余工位：%ld",self.stationTotalNumber.integerValue];
             }
@@ -532,10 +563,21 @@
             case ORDER_TYPE_MEETING:
             {
                 NSArray  *array = [_meetingModel.conferencePicture componentsSeparatedByString:@","];
-                NSString *imageUrl = [array firstObject];
-                [cell.infoImg  sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+//                NSString *imageUrl = [array firstObject];
                 cell.infoTitle.text = _meetingModel.conferenceName;
                 cell.dailyRentLabel.text = _meetingModel.location;
+                NSMutableArray *imageArr = [NSMutableArray new];
+                for (NSString *str in array) {
+                    [imageArr addObject:[str ToResourcesUrl]];
+                }
+                cell.scrollview.imageURLStringsGroup = imageArr;
+                cell.scrollview.delegate = self;
+//                cell.scrollview.titlesGroup = titleArr;
+                cell.scrollview.pageDotColor = UICOLOR_CLEAR;
+                cell.scrollview.backgroundColor = UICOLOR_GRAY_F1;
+                cell.scrollview.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;//dong删除默认居中
+                cell.scrollview.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;  //设置图片填充格式
+                
             }
                 break;
             default:
@@ -647,10 +689,11 @@
         if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
             if (indexPath.section==1) {
                 cell.cellType = WOTScrollViewCellType_facilities;
+                [cell setData:self.spaceFacilityList];
             }
-            
             else {
                 cell.cellType = WOTScrollViewCellType_team;
+                [cell setData:self.teamList];
             }
         }
 //        else if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
@@ -659,17 +702,20 @@
         else {
             if (indexPath.section==1) {
                 cell.cellType = WOTScrollViewCellType_facilities;
+                [cell setData:self.meetingFacilityList];
+
             }
             else if (indexPath.section==2) {
                 cell.cellType = WOTScrollViewCellType_type;
+                [cell setData:self.supportList];
             }
             else {
                 cell.cellType = WOTScrollViewCellType_team;
+                [cell setData:self.teamList];
             }
         }
         
         
-        [cell setData:@[@"wifi", @"咖啡吧",@"wifi", @"休息区",@"wifi", @"萌妹子",@"wifi",@"wifi",@"wifi",@"wifi",] otherInfos:@[@"a", @"b", @"c"]];
 
         return cell;
     }
@@ -1142,6 +1188,59 @@
         } else {
             [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
         }
+    }];
+}
+
+#pragma mark - 获取会议室场地配套设施
+-(void)getmeetingFacility
+{
+    if (!self.meetingFacilityList) {
+        self.meetingFacilityList= [NSMutableArray new];
+    }
+    if (!self.supportList) {
+        self.supportList = [NSMutableArray new];
+    }
+    [self.meetingFacilityList removeAllObjects];
+    [self.supportList removeAllObjects];
+    [WOTHTTPNetwork getMeetingFacilitiesWithMeetingId:self.meetingModel.conferenceId response:^(id bean, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            WOTMeetingFacilityModel_msg *msg = bean;
+            //需要把数据拆出来
+            for (WOTMeetingFacilityModel *model in msg.msg) {
+                //如果是空，就是支持类型，
+                if (strIsEmpty(model.facilitiesPicture)) {
+                    [self.supportList addObject:model];
+                }
+                //否则是设施
+                else {
+                    [self.meetingFacilityList addObject:model];
+                }
+            }
+            [self.table reloadData];
+        });
+    }];
+}
+
+-(void)getSpaceFacility
+{
+    [WOTHTTPNetwork getSpaceFacilitiesWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            WOTMeetingFacilityModel_msg *msg = bean;
+            self.spaceFacilityList = msg.msg;
+            [self.table reloadData];
+        });
+    }];
+}
+
+#pragma mark - 查询团队
+-(void)getTeam
+{
+    [WOTHTTPNetwork getSpaceTeamWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            WOTStaffModel_msg *model = bean;
+            self.teamList = model.msg.list;
+            [self.table reloadData];
+        });
     }];
 }
 

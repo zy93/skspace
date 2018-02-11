@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, ORDER_TYPE) {
     ORDER_TYPE_BOOKSTATION,
     ORDER_TYPE_MEETING,
     ORDER_TYPE_SITE,
+    ORDER_TYPE_SPACE, //空间详情
 };
 
 typedef NS_ENUM(NSInteger,PAY_TYPE){

@@ -10,7 +10,8 @@
 
 #import "WOTFacilitiesView.h"
 #import "WOTTeamView.h"
-
+#import "WOTMeetingFacilityModel.h"
+#import "WOTStaffModel.h"
 
 #define facilitiesViewWidth  (([[UIScreen mainScreen] bounds].size.width - 40)/5)
 #define teamViewWidth  (([[UIScreen mainScreen] bounds].size.width- 40) /3 )
@@ -29,16 +30,17 @@
     // Configure the view for the selected state
 }
 
--(void)setData:(NSArray *)data otherInfos:(NSArray *)oterInfos
+-(void)setData:(NSArray *)data
 {
     if (self.cellType == WOTScrollViewCellType_facilities) {
         [self.titleLab setText:@"配套设施"];
         for (int i = 0; i<data.count; i++) {
             CGFloat facilitiesViewHeight = 70 *[WOTUitls GetLengthAdaptRate];
             CGFloat facilitiesStartX =  20;
+            WOTMeetingFacilityModel *model = data[i];
             WOTFacilitiesView *view = [[WOTFacilitiesView alloc] initWithFrame:CGRectMake(i==0? facilitiesStartX: i*facilitiesViewWidth + ((i)*(facilitiesViewGap)) + facilitiesStartX, 0, facilitiesViewWidth, facilitiesViewHeight)];
-            [view.image setImage:[UIImage imageNamed:@"testttt"]];
-            [view.lab setText:data[i]];
+            [view.image setImageWithURL:[model.facilitiesPicture ToResourcesUrl]];
+            [view.lab setText:model.facilities];
             [self.scrollView addSubview:view];
             [self.scrollView setContentSize:CGSizeMake(data.count*facilitiesViewWidth+ (data.count*(facilitiesViewGap)) + facilitiesStartX, 0)];
             
@@ -57,12 +59,16 @@
             int shang = i/3;
             startX = startX+(yushu*(typeViewWidth+gap));
             startY = (shang)*height+(shang*verGap);
+            WOTMeetingFacilityModel *model = data[i];
             UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY, typeViewWidth, height)];
-            view.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+            view.layer.borderColor = UIColorFromRGB(0xeaeaea).CGColor;
             view.layer.borderWidth = 1.f;
+            view.layer.cornerRadius = 2.5f;
+            view.clipsToBounds = YES;
+            view.backgroundColor = UIColorFromRGB(0xf7f7f7);
             view.textColor = UICOLOR_MAIN_TEXT;
             view.font = [UIFont systemFontOfSize:13.f];
-            view.text = data[i];
+            view.text = model.facilities;
             view.textAlignment = NSTextAlignmentCenter;
             [self.scrollView addSubview:view];
             [self.scrollView setContentSize:CGSizeMake(0, startY+30)];
@@ -75,8 +81,12 @@
         for (int i = 0; i<data.count; i++) {
             CGFloat height = 160 * [WOTUitls GetLengthAdaptRate];
             CGFloat startX = 20;
+            WOTStaffModel *model = data[i];
             WOTTeamView *view = [[WOTTeamView alloc] initWithFrame:CGRectMake(i==0? startX: i*teamViewWidth + ((i)*(facilitiesViewGap)) + startX, 0, teamViewWidth, height)];
-            
+            [view.iconIV setImageWithURL:[model.headPortrait ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
+            [view.titleLab setText:model.realName];
+            [view.subtitleLab setText:model.staffName];
+//            [view.]
             [self.scrollView addSubview:view];
             [self.scrollView setContentSize:CGSizeMake(data.count*teamViewWidth+ (data.count*(facilitiesViewGap)) + startX, 0)];
             

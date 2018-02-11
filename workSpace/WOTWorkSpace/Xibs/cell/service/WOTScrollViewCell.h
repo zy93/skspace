@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, WOTScrollViewCellType) {
 @property (nonatomic, assign) WOTScrollViewCellType cellType;
 
 
--(void)setData:(NSArray *)data otherInfos:(NSArray *)oterInfos;
+-(void)setData:(NSArray *)data;
 
 
 

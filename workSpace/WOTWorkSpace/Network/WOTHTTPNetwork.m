@@ -46,6 +46,8 @@
 #import "SKOrderStringModel.h"
 #import "SKSpaceInfoModel.h"
 #import "SKBookStationOrderModel.h"
+#import "WOTMeetingFacilityModel.h"
+#import "WOTStaffModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -328,13 +330,37 @@
     } response:response];
 }
 
-#pragma mark
 +(void)getSpaceInfoWithSpaceId:(NSNumber *)spaceId response:(response)response
 {
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findNum"];
     NSDictionary * parameters =@{@"spaceId":spaceId};
     [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
         SKSpaceInfoModel_msg * stationNumberModel = [[SKSpaceInfoModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  stationNumberModel;
+    } response:response];
+}
+
++(void)getSpaceTeamWithSpaceId:(NSNumber *)spaceId response:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Staff/find"];
+    NSDictionary * parameters =@{@"spaceList":spaceId,
+                                 @"staffName":@"运营经理",
+                                 @"pageNo":@(1),
+                                 @"pageSize":@(10),
+                                 };
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        WOTStaffModel_msg * model = [[WOTStaffModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
++(void)getSpaceFacilitiesWithSpaceId:(NSNumber *)spaceId response:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findfac"];
+    NSDictionary * parameters =@{@"spaceId":spaceId,
+                                 };
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        WOTMeetingFacilityModel_msg * stationNumberModel = [[WOTMeetingFacilityModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  stationNumberModel;
     } response:response];
 }
@@ -814,6 +840,18 @@
                           };
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTReservationsResponseModel_msg *model = [[WOTReservationsResponseModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)getMeetingFacilitiesWithMeetingId:(NSNumber *)meetingId response:(response)response
+{
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conference/findfac"];
+    NSDictionary *dic = @{
+                          @"conferenceId":meetingId,
+                          };
+    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
+        WOTMeetingFacilityModel_msg *model = [[WOTMeetingFacilityModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
 }
