@@ -9,8 +9,9 @@
 #import "SKServiceProviderScrollView.h"
 #import "SKFacilitatorModel.h"
 #import "WOTServiceProvidersView.h"
+#import "SKServiceProvidersView.h"
 
-#define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 50)
+#define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 60)/2
 #define providersViewHeight ([[UIScreen mainScreen] bounds].size.width/350 * 180)
 #define providersViewGap  10
 #define providersStartX   20
@@ -32,23 +33,47 @@
     for (UIView *vi in arr ) {
         [vi removeFromSuperview];
     }
-    
+    CGFloat height = self.frame.size.height;
     for (int i = 0; i<facilitatorArray.count; i++) {
-        WOTServiceProvidersView *view = [[WOTServiceProvidersView alloc] initWithFrame:CGRectMake(i==0? providersStartX: i*providersViewWidth + ((i)*(providersViewGap)) + providersStartX, 0, providersViewWidth, providersViewHeight)];
+        SKServiceProvidersView *view = [[SKServiceProvidersView alloc] initWithFrame:CGRectMake(i==0? providersStartX: i*providersViewWidth + ((i)*(providersViewGap)) + providersStartX, 0, providersViewWidth, height)];
+//        view.backgroundColor = UICOLOR_GRAY_99;
         view.clipsToBounds = YES;
         SKFacilitatorInfoModel *infoModel = facilitatorArray[i];
         //NSURL *image = [infoModel.firmLogo ToResourcesUrl];
-        [view.iconIV sd_setImageWithURL:[infoModel.firmLogo ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
+        NSArray *arr = [infoModel.firmLogo componentsSeparatedByString:@","];
+        
+        [view.iconIV sd_setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
+        if (arr.count>=2) {
+            [view.topIV setImageWithURL:[arr[1] ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"servcie_bg"]];
+        }
         view.titleLab.text = infoModel.firmName;
-        [view setData:infoModel];
-        view.tag = i;
         view.subtitleLab.text = infoModel.businessScope;
+        view.tag = i;
+//        view.subtitleLab.text = infoModel.businessScope;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewClick:)];
         [view addGestureRecognizer:tap];
         [self addSubview:view];
     }
     NSLog(@"---------HH:%f",CGRectGetHeight(self.frame));
     self.contentSize = CGSizeMake(facilitatorArray.count*providersViewWidth+ (facilitatorArray.count*(providersViewGap)) + providersStartX, self.frame.size.height);
+    
+    //老代码
+//    for (int i = 0; i<facilitatorArray.count; i++) {
+//        WOTServiceProvidersView *view = [[WOTServiceProvidersView alloc] initWithFrame:CGRectMake(i==0? providersStartX: i*providersViewWidth + ((i)*(providersViewGap)) + providersStartX, 0, providersViewWidth, height)];
+//        view.clipsToBounds = YES;
+//        SKFacilitatorInfoModel *infoModel = facilitatorArray[i];
+//        //NSURL *image = [infoModel.firmLogo ToResourcesUrl];
+//        [view.iconIV sd_setImageWithURL:[infoModel.firmLogo ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
+//        view.titleLab.text = infoModel.firmName;
+//        [view setData:infoModel];
+//        view.tag = i;
+//        view.subtitleLab.text = infoModel.businessScope;
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewClick:)];
+//        [view addGestureRecognizer:tap];
+//        [self addSubview:view];
+//    }
+//    NSLog(@"---------HH:%f",CGRectGetHeight(self.frame));
+//    self.contentSize = CGSizeMake(facilitatorArray.count*providersViewWidth+ (facilitatorArray.count*(providersViewGap)) + providersStartX, self.frame.size.height);
     
 }
 -(void)scrollViewClick:(UITapGestureRecognizer*)tap

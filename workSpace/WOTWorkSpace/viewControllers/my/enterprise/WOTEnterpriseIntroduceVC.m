@@ -48,7 +48,7 @@
         self.tel = self.facilitatorModel.tel;
         self.enterpriseIntroduce= @"暂未填写";
         self.companyName = self.facilitatorModel.firmName;
-        self.companyPicture = self.facilitatorModel.firmLogo;
+        self.companyPicture = [self.facilitatorModel.firmLogo componentsSeparatedByString:@","].firstObject;
 
     }
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];

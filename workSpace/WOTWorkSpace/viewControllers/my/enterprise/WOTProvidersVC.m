@@ -81,9 +81,10 @@
         if (!cell) {
             cell = [[WOTFirstCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTFirstCell"];
         }
-        [cell.iconIV setImageWithURL:[self.facilitatorModel.firmLogo ToResourcesUrl] placeholderImage:[UIImage imageNamed:@""]];
+        NSArray *arr = [self.facilitatorModel.firmLogo componentsSeparatedByString:@","];
+        [cell.iconIV setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@""]];
         cell.titleLab.text = self.facilitatorModel.firmName;
-        NSArray *arr = [self.facilitatorModel.businessScope componentsSeparatedByString:@","];
+        arr = [self.facilitatorModel.businessScope componentsSeparatedByString:@","];
         if (arr.count<=0) {
             cell.subtitle1Lab.hidden = YES;
             cell.subtitle2Lab.hidden = YES;
