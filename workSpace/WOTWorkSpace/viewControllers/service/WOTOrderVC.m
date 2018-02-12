@@ -150,6 +150,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self creatDataPickerView];
     [self getTeam];
@@ -171,7 +172,12 @@
 }
 
 -(void)configNav{
-    self.navigationItem.title = @"预定";
+    if ([WOTSingtleton shared].orderType==ORDER_TYPE_SPACE) {
+        self.navigationItem.title = @"空间介绍";
+    }
+    else {
+        self.navigationItem.title = @"预定";
+    }
     self.navigationController.navigationBar.translucent = NO;
     //解决布局空白问题
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;

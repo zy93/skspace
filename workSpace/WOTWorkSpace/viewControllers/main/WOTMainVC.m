@@ -99,7 +99,7 @@
     //    [self load3DBallView];
     if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58) {
         self.autoScrollViewHeight.constant = (self.view.bounds.size.height-49-41-10-42)*0.6;
-        self.ballViewHeight.constant = (self.view.bounds.size.height-49-41-10-42)*0.4;
+        self.ballViewHeight.constant = (self.view.bounds.size.height-49-41-10-42-100)*0.4;
         self.workspaceHeight.constant =self.autoScrollViewHeight.constant;
     }else
     {

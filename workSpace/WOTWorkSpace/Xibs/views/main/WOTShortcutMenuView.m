@@ -81,18 +81,20 @@
                       @"shortcut_visitors_icon"];
     buttonDefaultY = 15;//15，50
     lineDefaultHeight = 10;//10，90
-    if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ||[[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina55) {
-        buttonDefaultY = 50;
-        lineDefaultHeight = 90;
+    if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ||
+        [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina55) {
+        buttonDefaultY = 20;
+        lineDefaultHeight = 80;
     }
     
     if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina47) {
-        buttonDefaultY = 30;
+        buttonDefaultY = 20;
         lineDefaultHeight = 40;
     }
-    
-    buttonHeight = (180-(buttonDefaultY*2))/2;
-    buttonWidth = SCREEN_WIDTH/4;
+    NSLog(@"---_%lf",self.frame.size.height);;
+    CGFloat buttonBottom = 20;
+    buttonHeight = (self.frame.size.height-(buttonDefaultY*2)-buttonBottom)/2;
+    buttonWidth = (SCREEN_WIDTH-20)/4;
     
     for (int i = 0; i<titleList.count; i++) {
         UIButton *btn = [self createButtonWithTitle:titleList[i] imgName:imageNameList[i] i:i];
@@ -102,13 +104,13 @@
 
 -(UIButton *)createButtonWithTitle:(NSString *)title imgName:(NSString *)imgName i:(int)i
 {
-    
+    CGFloat startX = 10;
     NSInteger index = i%4;
     NSInteger line = i/4;
     
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(index*buttonWidth, line*buttonHeight+buttonDefaultY+(line*lineDefaultHeight), buttonWidth, buttonHeight)];
+    [button setFrame:CGRectMake(index*buttonWidth+startX, line*buttonHeight+buttonDefaultY, buttonWidth, buttonHeight)];
     button.tag = i;
     [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     

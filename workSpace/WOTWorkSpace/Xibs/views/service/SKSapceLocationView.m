@@ -83,7 +83,7 @@
     if (_mapView == nil) {
         [AMapServices sharedServices].enableHTTPS = YES;
         _mapView = [[MAMapView alloc] init];
-        [_mapView setZoomLevel:12 animated:YES];
+        [_mapView setZoomLevel:5 animated:YES];
         _mapView.delegate = self;
     }
     return _mapView;
