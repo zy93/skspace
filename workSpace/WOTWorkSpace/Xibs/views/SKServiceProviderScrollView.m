@@ -11,10 +11,10 @@
 #import "WOTServiceProvidersView.h"
 #import "SKServiceProvidersView.h"
 
-#define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 60)/2
+#define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 40)/2
 #define providersViewHeight ([[UIScreen mainScreen] bounds].size.width/350 * 180)
 #define providersViewGap  10
-#define providersStartX   20
+#define providersStartX   10
 
 @implementation SKServiceProviderScrollView
 

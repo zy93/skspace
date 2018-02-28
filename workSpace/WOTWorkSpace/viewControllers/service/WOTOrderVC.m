@@ -32,6 +32,7 @@
 #import "WOTMeetingFacilityModel.h"
 #import "WOTStaffModel.h"
 #import "WOTMapCell.h"
+#import "MBProgressHUDUtil.h"
 
 
 #define infoCell @"WOTOrderForInfoCell"
@@ -124,6 +125,8 @@
     self.reservationStationNumber = 1;
     self.confirmButton.backgroundColor = UICOLOR_MAIN_ORANGE;
     self.confirmButton.layer.cornerRadius = 5.f;
+    self.confirmButton.layer.borderWidth = 1.f;
+    self.confirmButton.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     [self configNav];
     [self loadData];
     [self loadCost];
@@ -135,6 +138,9 @@
         
     } else if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
         [self requestStationNumber];
+    }
+    else if ([WOTSingtleton shared].orderType == ORDER_TYPE_SPACE){
+        [self.confirmButton setTitle:@"预约入驻" forState:UIControlStateNormal];
     }
     [self.table registerNib:[UINib nibWithNibName:scrollViewCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:scrollViewCell];
     [self.table registerNib:[UINib nibWithNibName:mapCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:mapCell];
@@ -174,9 +180,11 @@
 -(void)configNav{
     if ([WOTSingtleton shared].orderType==ORDER_TYPE_SPACE) {
         self.navigationItem.title = @"空间介绍";
+        [self.confirmButton setTitle:@"预约入驻" forState:UIControlStateNormal];
     }
     else {
         self.navigationItem.title = @"预定";
+        [self.confirmButton setTitle:@"预   定" forState:UIControlStateNormal];
     }
     self.navigationController.navigationBar.translucent = NO;
     //解决布局空白问题
@@ -184,9 +192,6 @@
     if (is7Version) {
         self.edgesForExtendedLayout=UIRectEdgeNone;
     }
-    self.confirmButton.layer.cornerRadius = 5.f;
-    self.confirmButton.layer.borderWidth = 1.f;
-    self.confirmButton.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
 }
 
 -(void)creatDataPickerView
@@ -324,9 +329,7 @@
             [MBProgressHUDUtil showMessage:@"如果选择企业支付，请选择企业" toView:self.view];
             return;
         }
-    }
-    
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+    } else if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
         NSInteger bookstationInter = [self.bookSationTime integerValue];
         if (!( bookstationInter> 0)) {
             [MBProgressHUDUtil showMessage:@"该用户下没有工位时间，请购买礼包" toView:self.view];
@@ -335,7 +338,7 @@
             return;
         }
     }
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+    else if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
         NSInteger difference = (self.meetingEndTime-self.meetingBeginTime)*60;
         NSInteger meetInteger = [self.meetingTime integerValue];
         if (difference > meetInteger) {
@@ -407,6 +410,19 @@
             {
                 [self reservationsSite];
             }
+        }
+            break;
+        case ORDER_TYPE_SPACE:
+        {
+            [WOTHTTPNetwork appointmentSettledWithSpaceId:self.spaceModel.spaceId spaceName:self.spaceModel.spaceName response:^(id bean, NSError *error) {
+                if (!error) {
+                    WOTBaseModel *model = bean;
+                    if ([model.code isEqualToString:@"200"]) {
+                        //预定成功
+                        [MBProgressHUDUtil showMessage:@"预订成功，我们将安排服务人员尽快与您联系！" toView:self.view];
+                    }
+                }
+            }];
         }
             break;
         default:

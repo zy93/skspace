@@ -140,29 +140,32 @@
     }
 
 
-    [WOTHTTPNetwork issueDemandWithUserId:[WOTUserSingleton shareUser].userInfo.userId
-                                 userName:[WOTUserSingleton shareUser].userInfo.userName
-                                  spaceId:[WOTUserSingleton shareUser].userInfo.spaceId
-                                  userTel:[WOTUserSingleton shareUser].userInfo.tel
-                               demandType:self.typeInfoLabel.text
-                            demandContent:self.demandInfoTextView.text
-                                 response:^(id bean, NSError *error) {
-                                     WOTBaseModel *model = (WOTBaseModel *)bean;
-                                     if ([model.code isEqualToString:@"200"]) {
-                                         [MBProgressHUDUtil showLoadingWithMessage:@"提交成功" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
-                                             [hud hide:YES afterDelay:1.f complete:^{
-                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                     [self.navigationController popToRootViewControllerAnimated:YES];
-                                                 });
-                                                 
-                                             }];
-                                         }];
-                                     }
-                                     else
-                                     {
-                                         [MBProgressHUDUtil showMessage:@"提交失败！" toView:self.view];
-                                     }
-                                 }];
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId,
+                                 @"tel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"demandType":self.typeInfoLabel.text,
+                                 @"demandContent":self.demandInfoTextView.text,
+                                 @"needType":@"其他",
+                                 @"dealState":@"未处理",
+                                 };
+    [WOTHTTPNetwork obtainSupportWithParams:parameters response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showLoadingWithMessage:@"申请成功，我们将安排服务人员尽快与您联系！" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+                [hud hide:YES afterDelay:1.f complete:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    });
+                    
+                }];
+            }];
+        }
+        else
+        {
+            [MBProgressHUDUtil showMessage:@"提交失败！" toView:self.view];
+        }
+    }];
 }
 
 
@@ -254,7 +257,7 @@
     if (_demandSubmitButton == nil) {
         _demandSubmitButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _demandSubmitButton.backgroundColor = [UIColor colorWithHexString:@"528bfa"];
-        [_demandSubmitButton setTitle:@"提交" forState:UIControlStateNormal];
+        [_demandSubmitButton setTitle:@"获取支持" forState:UIControlStateNormal];
         _demandSubmitButton.layer.cornerRadius = 5.f;
         _demandSubmitButton.layer.borderWidth = 1.f;
         _demandSubmitButton.layer.borderColor = [UIColor colorWithHexString:@"528bfa"].CGColor;

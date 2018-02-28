@@ -45,6 +45,7 @@
     pointAnnotation.coordinate = CLLocationCoordinate2DMake([pointLat floatValue], [pointLng floatValue]);
     [self.mapView setCenterCoordinate:pointAnnotation.coordinate animated:YES];
     [self.mapView addAnnotation:pointAnnotation];
+    [_mapView setZoomLevel:12 animated:YES];
 }
 
 -(void)setUpLayout
@@ -83,7 +84,7 @@
     if (_mapView == nil) {
         [AMapServices sharedServices].enableHTTPS = YES;
         _mapView = [[MAMapView alloc] init];
-        [_mapView setZoomLevel:5 animated:YES];
+        
         _mapView.delegate = self;
     }
     return _mapView;

@@ -15,7 +15,7 @@
 #define ssstr @"我们通过三方面打造共享办公：\n1、通过办公租赁、双创运营、办公服务、金融服务来打造企业共享办公生态圈；\n2、打造孵化器、产业园的升级版平台；通过社区内大企业带动小微企业的入驻模式给小型、小微型企业更多成长空间。另一方面通过线上做为入口，办理会员、注册、入驻，完善服务、聚集数据。通过智能信息化的手段来运营，在平台上完善客户、会员、门禁、监控、宽带、楼宇智能化等系统；\n3、实现社区平台的品牌化、服务标准化、共享化、社交化、智能化、数据化，完善企业办公生态圈服务体系。"
 
 @interface WOTProvidersVC () <UITableViewDataSource,UITableViewDelegate>
-
+@property (nonatomic, strong) UIButton * getProvidersBtn;
 @end
 
 @implementation WOTProvidersVC
@@ -28,13 +28,59 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTFirstCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTFirstCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTSecondCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTSecondCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTThirdCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTThirdCell"];
-
+    
+    self.getProvidersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.getProvidersBtn setTitle:@"获取服务支持" forState:UIControlStateNormal];
+    [self.getProvidersBtn.layer setCornerRadius:5.f];
+    [self.getProvidersBtn setBackgroundColor:UICOLOR_MAIN_ORANGE];
+    [self.getProvidersBtn addTarget:self action:@selector(getProvidersBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.getProvidersBtn];
+    
+    [self.getProvidersBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(-10);
+        make.left.equalTo(self.view.mas_left).with.offset(10);
+        make.right.equalTo(self.view.mas_right).with.offset(-10);
+        make.height.mas_equalTo(45);
+    }];
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(-65);
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark - action
+-(void)getProvidersBtnClick:(UIButton *)sender
+{
+    if (![WOTSingtleton shared].isuserLogin) {
+        [MBProgressHUDUtil showMessage:@"请先登录！" toView:self.view];
+        return;
+    }
+    
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId,
+                                 @"tel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"facilitatorId":self.facilitatorModel.facilitatorId,
+                                 @"firmName":self.facilitatorModel.firmName,
+                                 @"dealState":@"未处理",
+                                 @"needType":@"服务商",
+                                 };
+    [WOTHTTPNetwork obtainSupportWithParams:parameters response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showMessage:@"申请成功，我们将安排服务人员尽快与您联系！" toView:self.view];
+        }
+        else
+        {
+            [MBProgressHUDUtil showMessage:@"申请失败！" toView:self.view];
+        }
+    }];
+}
+
 
 #pragma mark - table
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
