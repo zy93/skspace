@@ -490,8 +490,9 @@ int a = 0;
 //    SKSpaceDetailsVC *spaceDetailsVC = [[SKSpaceDetailsVC alloc] init];
 //    spaceDetailsVC.hidesBottomBarWhenPushed = YES;
 //    spaceDetailsVC.spaceModel = self.spaceData[subIndex];
-    [WOTSingtleton shared].orderType = ORDER_TYPE_SPACE;
+    
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
+    [WOTSingtleton shared].orderType = ORDER_TYPE_SPACE;
     vc.spaceModel = self.spaceData[subIndex];
     [self.navigationController pushViewController:vc animated:YES];
 }

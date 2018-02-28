@@ -272,7 +272,7 @@
             break;
         case ORDER_TYPE_SITE:
         {
-            list1 = @[infoCell, selectDateCell, selectTimeCell, serviceCell, describeCell];
+            list1 = @[infoCell,selectDateCell, selectTimeCell, serviceCell, describeCell];
             list2 = @[scrollViewCell]; //配套设施
             list3 = @[scrollViewCell]; //支持活动类型
             list4 = @[scrollViewCell]; //社区团队
@@ -297,7 +297,6 @@
     self.meetingEndTime = 0;
     [self.table reloadData];
 }
-
 
 -(void)loadCost
 {
@@ -498,6 +497,7 @@
 #pragma mark - table delegate & dataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    NSLog(@"tableList%@",tableList);
     return tableList.count;
 }
 
@@ -559,8 +559,7 @@
         return 60+heigth;
     }
     else if ([cellType isEqualToString:scrollViewCell]) {
-        if ([WOTSingtleton shared].orderType==ORDER_TYPE_BOOKSTATION ||
-            [WOTSingtleton shared].orderType==ORDER_TYPE_SPACE) {
+        if ([WOTSingtleton shared].orderType==ORDER_TYPE_BOOKSTATION || [WOTSingtleton shared].orderType==ORDER_TYPE_SPACE) {//
             if (indexPath.section == 2) {
                 return 130;
             }
@@ -606,7 +605,7 @@
     
     NSArray *list = tableList[indexPath.section];
     NSString *cellType = list[indexPath.row];
-    
+    NSLog(@"****************类型%@",cellType);
     if ([cellType isEqualToString:infoCell]) {
         WOTOrderForInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:infoCell];
         

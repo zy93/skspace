@@ -37,11 +37,9 @@
     return self;
 }
 
-
 -(void)setDataSpacelocationWithPointLng:(NSNumber *)pointLng  pointLat:(NSNumber *)pointLat
 {
     MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
-    
     pointAnnotation.coordinate = CLLocationCoordinate2DMake([pointLat floatValue], [pointLng floatValue]);
     [self.mapView setCenterCoordinate:pointAnnotation.coordinate animated:YES];
     [self.mapView addAnnotation:pointAnnotation];
