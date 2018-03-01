@@ -35,8 +35,8 @@
 @property (nonatomic,strong)UILabel *paymentLabel;
 @property (nonatomic,strong)UILabel *moneyNumLabel;
 @property (nonatomic,strong)UIButton *payButton;
-@property (nonatomic,assign)NSNumber *paySumNumber;
-@property (nonatomic,assign)NSNumber *payNumber;
+@property (nonatomic,strong)NSNumber *paySumNumber;
+@property (nonatomic,strong)NSNumber *payNumber;
 @property (nonatomic,strong)NSString *commodityDescribeStr;
 @property (nonatomic,assign)NSInteger price;
 

@@ -51,11 +51,11 @@
 
 @property (nonatomic,strong) NSString *friendTime;
 
-@property (nonatomic,assign) NSNumber *friendId;
+@property (nonatomic,strong) NSNumber *friendId;
 
-@property (nonatomic,assign) NSNumber *issueId;
+@property (nonatomic,strong) NSNumber *issueId;
 
-@property (nonatomic,assign) NSNumber *focusId;
+@property (nonatomic,strong) NSNumber *focusId;
 
 @property (nonatomic,assign) BOOL isUnfold;
 

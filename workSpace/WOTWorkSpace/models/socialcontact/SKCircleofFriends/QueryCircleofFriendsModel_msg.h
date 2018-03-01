@@ -20,11 +20,11 @@
 
 @interface ReplyModel : JSONModel
 
-@property (nonatomic, assign) NSNumber *byReplyid;
+@property (nonatomic, strong) NSNumber *byReplyid;
 @property (nonatomic, strong) NSString *byReplyname;//被回复的名字
-@property (nonatomic, assign) NSNumber *friendId;
-@property (nonatomic, assign) NSNumber *recordId;
-@property (nonatomic, assign) NSNumber *replyId;
+@property (nonatomic, strong) NSNumber *friendId;
+@property (nonatomic, strong) NSNumber *recordId;
+@property (nonatomic, strong) NSNumber *replyId;
 @property (nonatomic, strong) NSString *replyInfo;//回复的信息
 @property (nonatomic, strong) NSString *replyName;//回复的名字
 @property (nonatomic, strong) NSString *replyTime;
@@ -36,15 +36,15 @@
 
 @property (nonatomic, strong) NSArray<ReplyModel> *ReplyRecord;
 @property (nonatomic, strong) NSString <Optional>*circleMessage;
-@property (nonatomic, assign) NSNumber <Optional> *focus;
-@property (nonatomic, assign) NSNumber <Optional>*focusId;
-@property (nonatomic, assign) NSNumber <Optional>*friendId;
+@property (nonatomic, strong) NSNumber <Optional> *focus;
+@property (nonatomic, strong) NSNumber <Optional>*focusId;
+@property (nonatomic, strong) NSNumber <Optional>*friendId;
 @property (nonatomic, strong) NSString <Optional>*friendTime;
 @property (nonatomic, strong) NSString <Optional>*imageMessage;
-@property (nonatomic, assign) NSNumber <Optional>*userId;
+@property (nonatomic, strong) NSNumber <Optional>*userId;
 @property (nonatomic, strong) NSString <Optional>*userName;
 @property (nonatomic, strong) NSString <Optional>*userUrl;
-@property (nonatomic, assign) NSNumber <Optional>*zan;
+@property (nonatomic, strong) NSNumber <Optional>*zan;
 @property (nonatomic, strong) NSString <Optional>*zanPersonId;
 @property (nonatomic, strong) NSString <Optional>*zanPersonName;
 
@@ -53,14 +53,14 @@
 
 @interface QueryCircleofFriendsModel_msg : JSONModel
 
-@property (nonatomic, assign) NSNumber *bottomPageNo;
+@property (nonatomic, strong) NSNumber *bottomPageNo;
 @property (nonatomic, strong) NSArray<CircleofFriendsInfoModel> *list;
-@property (nonatomic, assign) NSNumber *nextPageNo;
-@property (nonatomic, assign) NSNumber *pageNo;
-@property (nonatomic, assign) NSNumber *pageSize;
-@property (nonatomic, assign) NSNumber *previousPageNo;
-@property (nonatomic, assign) NSNumber *topPageNo;
-@property (nonatomic, assign) NSNumber *totalPages;
-@property (nonatomic, assign) NSNumber *totalRecords;
+@property (nonatomic, strong) NSNumber *nextPageNo;
+@property (nonatomic, strong) NSNumber *pageNo;
+@property (nonatomic, strong) NSNumber *pageSize;
+@property (nonatomic, strong) NSNumber *previousPageNo;
+@property (nonatomic, strong) NSNumber *topPageNo;
+@property (nonatomic, strong) NSNumber *totalPages;
+@property (nonatomic, strong) NSNumber *totalRecords;
 
 @end

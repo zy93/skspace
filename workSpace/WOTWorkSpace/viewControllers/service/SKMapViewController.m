@@ -46,6 +46,7 @@ static const NSInteger RoutePlanningPaddingEdge                    = 20;
 @property (nonatomic) NSInteger currentCourse;
 @property (nonatomic, assign)CGFloat lat;
 @property (nonatomic, assign)CGFloat lng;
+
 @end
 
 @implementation SKMapViewController

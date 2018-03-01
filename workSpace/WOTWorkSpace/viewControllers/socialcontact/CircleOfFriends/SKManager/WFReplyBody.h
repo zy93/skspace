@@ -29,13 +29,13 @@
 /**
  *  评论者id
  */
-@property (nonatomic,assign) NSNumber *replyUserId;
+@property (nonatomic,strong) NSNumber *replyUserId;
 
 
 /**
  *  评论id
  */
-@property (nonatomic,assign) NSNumber *recordId;
+@property (nonatomic,strong) NSNumber *recordId;
 
 
 @end

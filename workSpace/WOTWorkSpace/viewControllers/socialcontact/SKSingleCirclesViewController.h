@@ -10,6 +10,6 @@
 
 @interface SKSingleCirclesViewController : UIViewController
 
-@property (nonatomic,assign)NSNumber *friendId;
+@property (nonatomic,strong)NSNumber *friendId;
 
 @end

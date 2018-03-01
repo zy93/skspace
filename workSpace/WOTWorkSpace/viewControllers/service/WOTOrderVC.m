@@ -102,8 +102,8 @@
 @property (nonatomic, strong) NSString *spbill_create_ip; //终端IP
 @property (nonatomic, strong) NSString *trade_type;       //交易类型
 @property (nonatomic, strong) NSString *invoiceInfo;      //发票信息
-@property (nonatomic, assign) NSNumber *bookSationTime;
-@property (nonatomic, assign) NSNumber *meetingTime;
+@property (nonatomic, strong) NSNumber *bookSationTime;
+@property (nonatomic, strong) NSNumber *meetingTime;
 @property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, strong) NSString *payWayStr;
 @property (nonatomic, strong) NSNumber *conferenceDetailsId;//预定场地的id
