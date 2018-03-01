@@ -80,6 +80,7 @@
 		2A4214811F149ECA0010B003 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A4214801F149ECA0010B003 /* libsqlite3.tbd */; };
 		2A4214831F149ED80010B003 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A4214821F149ED80010B003 /* CoreGraphics.framework */; };
 		2A4ABBAD1F2AE50D00BEE21D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A4ABBAC1F2AE50D00BEE21D /* LaunchScreen.storyboard */; };
+		2A58E532203143F50035ACD4 /* SKServiceProvidersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A58E531203143F50035ACD4 /* SKServiceProvidersView.m */; };
 		2A5B230E1F0F7DBE00466BEF /* WOTEnterTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5B230D1F0F7DBE00466BEF /* WOTEnterTextVC.m */; };
 		2A5B23171F0F9AA300466BEF /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5B23161F0F9AA300466BEF /* UIDevice+Resolutions.m */; };
 		2A6442BB1F5FE80100E84273 /* MBProgressHUD+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6442BA1F5FE80100E84273 /* MBProgressHUD+Extension.m */; };
@@ -578,6 +579,8 @@
 		2A4214801F149ECA0010B003 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		2A4214821F149ED80010B003 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2A4ABBAC1F2AE50D00BEE21D /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2A58E530203143F50035ACD4 /* SKServiceProvidersView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKServiceProvidersView.h; sourceTree = "<group>"; };
+		2A58E531203143F50035ACD4 /* SKServiceProvidersView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKServiceProvidersView.m; sourceTree = "<group>"; };
 		2A5B230C1F0F7DBE00466BEF /* WOTEnterTextVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WOTEnterTextVC.h; sourceTree = "<group>"; };
 		2A5B230D1F0F7DBE00466BEF /* WOTEnterTextVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOTEnterTextVC.m; sourceTree = "<group>"; };
 		2A5B23151F0F9AA300466BEF /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
@@ -1576,10 +1579,12 @@
 				C5B1EB9D202FE75F00586BAB /* SKSapceLocationView.m */,
 				2A69A8421FE2282C00C0862A /* WOTButton.h */,
 				2A69A8461FE2282C00C0862A /* WOTButton.m */,
-				2A69A8431FE2282C00C0862A /* WOTServiceProvidersView.m */,
 				2A69A8441FE2282C00C0862A /* WOTSelectScrollView.h */,
 				2A69A8451FE2282C00C0862A /* WOTSelectScrollView.m */,
 				2A69A8471FE2282C00C0862A /* WOTServiceProvidersView.h */,
+				2A69A8431FE2282C00C0862A /* WOTServiceProvidersView.m */,
+				2A58E530203143F50035ACD4 /* SKServiceProvidersView.h */,
+				2A58E531203143F50035ACD4 /* SKServiceProvidersView.m */,
 				C509611C2022F1B0009A9D4F /* SKSpaceSiteView.h */,
 				C509611D2022F1B0009A9D4F /* SKSpaceSiteView.m */,
 				C509611F2022FA18009A9D4F /* SKTtileView.h */,
@@ -3588,6 +3593,7 @@
 				E8605CA51F132221005C09F4 /* WOTEnterpriseHeaderView.m in Sources */,
 				2A69A84D1FE2282C00C0862A /* CLTabBar.m in Sources */,
 				2A5B230E1F0F7DBE00466BEF /* WOTEnterTextVC.m in Sources */,
+				2A58E532203143F50035ACD4 /* SKServiceProvidersView.m in Sources */,
 				2A3B600B1F2EF9D000AC9C8D /* WOTLocationModel.m in Sources */,
 				2A69A8501FE2282C00C0862A /* WOTButton.m in Sources */,
 				2A9E2C3D202D67850016E097 /* WOTOrderForDescribeCell.m in Sources */,

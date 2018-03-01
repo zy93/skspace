@@ -379,6 +379,27 @@
     } response:response];
 }
 
++(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName response:(response)response
+{
+    NSMutableDictionary *params = [@{@"clientName":[WOTUserSingleton shareUser].userInfo.realName,
+                                     @"contacts":[WOTUserSingleton shareUser].userInfo.realName,
+                                     @"tel":[WOTUserSingleton shareUser].userInfo.tel,
+                                     @"source":@"客户端",
+                                     @"specificSource":@"APP客户端",
+                                     @"will":@"一般意愿",
+                                     @"stage":@"客户咨询",
+                                     @"spaceId":spaceId,
+                                     @"spaceName":spaceName,
+                                     } mutableCopy];
+
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Sell/clientAddSell"];
+    [self doRequestWithParameters:params useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        WOTBaseModel * model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+
+}
+
 #pragma mark - 获取所有的空间列表
 +(void)getSapaceFromGroupBlock:(response)response
 {
@@ -1349,17 +1370,10 @@
     } response:response];
 }
 
-+(void)issueDemandWithUserId:(NSNumber *)userId userName:(NSString *)userName spaceId:(NSNumber *)spaceId userTel:(NSString *)userTel demandType:(NSString *)demandType demandContent:(NSString *)demandContent response:(response)response
++(void)obtainSupportWithParams:(NSDictionary *)params response:(response)response
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/Demand/addDemand",HTTPBaseURL];
-    NSDictionary *parameters = @{@"userId":userId,
-                                 @"userName":userName,
-                                 @"spaceId":spaceId,
-                                 @"tel":userTel,
-                                 @"demandType":demandType,
-                                 @"demandContent":demandContent
-                                 };
-    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+    [WOTHTTPNetwork doRequestWithParameters:params useUrl:url complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model13 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
         return model13;
     } response:response];

@@ -158,6 +158,16 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getSpaceFacilitiesWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
+
+/**
+ 预约入驻
+
+ @param response 回调
+ */
++(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName response:(response)response;
+
+
+
 #pragma mark - 企业
 /**
  * 获取空间下的友邻企业
@@ -709,15 +719,10 @@ typedef void(^response)(id bean,NSError *error);
 /**
  发布需求
 
- @param userId 用户id
- @param userName 用户名
- @param spaceId 用户所在的空间id
- @param userTel 用户电话
- @param demandType 需求类型
- @param demandContent 需求内容
+ @param params 参数列表
  @param response 结果回调
  */
-+(void)issueDemandWithUserId:(NSNumber *)userId userName:(NSString *)userName spaceId:(NSNumber *)spaceId userTel:(NSString *)userTel demandType:(NSString *)demandType demandContent:(NSString *)demandContent response:(response)response;
++(void)obtainSupportWithParams:(NSDictionary *)params response:(response)response;
 
 /**
  获取二维码信息
