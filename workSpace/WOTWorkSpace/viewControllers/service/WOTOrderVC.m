@@ -689,6 +689,7 @@
             cell = [[WOTMapCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:mapCell];
         }
         [cell.locationView setDataSpacelocationWithPointLng:self.spaceModel.lng pointLat:self.spaceModel.lat];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 //    else if ([cellType isEqualToString:siteCell]) {
@@ -782,9 +783,6 @@
                 [cell setData:self.teamList];
             }
         }
-        
-        
-
         return cell;
     }
     else if ([cellType isEqualToString:paymentCell]) {
@@ -808,6 +806,7 @@
         }
         return cell;
     }
+    
 //    else if ([cellType isEqualToString:uitableCell]) {
 //        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCelll"];
 //        if (cell == nil) {
@@ -828,6 +827,7 @@
 //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //        return cell;
 //    }
+    
     else // ([cellType isEqualToString:amountCell])
     {
         WOTOrderForAmountCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForAmountCell"];
@@ -848,6 +848,12 @@
     if ([cellType isEqualToString:selectDateCell]) {
         _datepickerview.hidden = NO;
     }
+    
+    if ([cellType isEqualToString:mapCell]) {
+        //跳转到一个新的控制器
+        
+    }
+    
 //    if ([cellType isEqualToString:selectCell]) {
 //        //
 //        if ([self.payType isEqual:@(0)]) {
