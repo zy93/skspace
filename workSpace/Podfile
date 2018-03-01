@@ -13,6 +13,7 @@ pod 'ZLPhotoBrowser'
 pod 'IQKeyboardManager'
 pod 'TZImagePickerController'
 pod 'AMap3DMap'
+pod 'AMapNavi'
 target 'WOTWorkSpace' do
 
 

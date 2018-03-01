@@ -33,6 +33,7 @@
 #import "WOTStaffModel.h"
 #import "WOTMapCell.h"
 #import "MBProgressHUDUtil.h"
+#import "SKMapViewController.h"
 
 
 #define infoCell @"WOTOrderForInfoCell"
@@ -867,7 +868,9 @@
     
     if ([cellType isEqualToString:mapCell]) {
         //跳转到一个新的控制器
-        
+        SKMapViewController *mapVC = [[SKMapViewController alloc] init];
+        mapVC.spaceModel = self.spaceModel;
+        [self.navigationController pushViewController:mapVC animated:YES];
     }
     
 //    if ([cellType isEqualToString:selectCell]) {

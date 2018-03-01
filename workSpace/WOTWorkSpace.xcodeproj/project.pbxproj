@@ -208,6 +208,15 @@
 		C59D56FF1FDA2D6A001870B2 /* WFPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56F51FDA2D69001870B2 /* WFPopView.m */; };
 		C59D57001FDA2D6A001870B2 /* YMShowImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56F71FDA2D6A001870B2 /* YMShowImageView.m */; };
 		C59D57011FDA2D6A001870B2 /* YMReplyInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D56F81FDA2D6A001870B2 /* YMReplyInputView.m */; };
+		C59DE16C2047CBFA002E127D /* SKMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE16B2047CBFA002E127D /* SKMapViewController.m */; };
+		C59DE1722047CD45002E127D /* MoreMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE1712047CD44002E127D /* MoreMenuView.m */; };
+		C59DE1752047CD61002E127D /* GPSNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE1732047CD60002E127D /* GPSNaviViewController.m */; };
+		C59DE1832047CD89002E127D /* CommonUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE1772047CD88002E127D /* CommonUtility.m */; };
+		C59DE1842047CD89002E127D /* MANaviAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE1782047CD88002E127D /* MANaviAnnotation.m */; };
+		C59DE1852047CD89002E127D /* LineDashPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE1792047CD88002E127D /* LineDashPolyline.m */; };
+		C59DE1862047CD89002E127D /* MANaviRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE17A2047CD88002E127D /* MANaviRoute.m */; };
+		C59DE1872047CD89002E127D /* MANaviPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE17D2047CD89002E127D /* MANaviPolyline.m */; };
+		C59DE1882047CD89002E127D /* SpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C59DE1822047CD89002E127D /* SpeechSynthesizer.m */; };
 		C59E270F1FF0986E00791269 /* SKFocusListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59E270E1FF0986E00791269 /* SKFocusListViewController.m */; };
 		C59E27121FF09E9700791269 /* SKFocusListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C59E27111FF09E9700791269 /* SKFocusListTableViewCell.m */; };
 		C59E27151FF0A93800791269 /* SKFocusListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C59E27141FF0A93800791269 /* SKFocusListModel.m */; };
@@ -823,6 +832,24 @@
 		C59D56F61FDA2D6A001870B2 /* YMReplyInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMReplyInputView.h; sourceTree = "<group>"; };
 		C59D56F71FDA2D6A001870B2 /* YMShowImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMShowImageView.m; sourceTree = "<group>"; };
 		C59D56F81FDA2D6A001870B2 /* YMReplyInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMReplyInputView.m; sourceTree = "<group>"; };
+		C59DE16A2047CBFA002E127D /* SKMapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKMapViewController.h; sourceTree = "<group>"; };
+		C59DE16B2047CBFA002E127D /* SKMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKMapViewController.m; sourceTree = "<group>"; };
+		C59DE1702047CD44002E127D /* MoreMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreMenuView.h; sourceTree = "<group>"; };
+		C59DE1712047CD44002E127D /* MoreMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreMenuView.m; sourceTree = "<group>"; };
+		C59DE1732047CD60002E127D /* GPSNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSNaviViewController.m; sourceTree = "<group>"; };
+		C59DE1742047CD61002E127D /* GPSNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSNaviViewController.h; sourceTree = "<group>"; };
+		C59DE1772047CD88002E127D /* CommonUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonUtility.m; sourceTree = "<group>"; };
+		C59DE1782047CD88002E127D /* MANaviAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MANaviAnnotation.m; sourceTree = "<group>"; };
+		C59DE1792047CD88002E127D /* LineDashPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineDashPolyline.m; sourceTree = "<group>"; };
+		C59DE17A2047CD88002E127D /* MANaviRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MANaviRoute.m; sourceTree = "<group>"; };
+		C59DE17B2047CD88002E127D /* LineDashPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineDashPolyline.h; sourceTree = "<group>"; };
+		C59DE17C2047CD88002E127D /* MANaviAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MANaviAnnotation.h; sourceTree = "<group>"; };
+		C59DE17D2047CD89002E127D /* MANaviPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MANaviPolyline.m; sourceTree = "<group>"; };
+		C59DE17E2047CD89002E127D /* CommonUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonUtility.h; sourceTree = "<group>"; };
+		C59DE17F2047CD89002E127D /* MANaviRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MANaviRoute.h; sourceTree = "<group>"; };
+		C59DE1802047CD89002E127D /* SpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechSynthesizer.h; sourceTree = "<group>"; };
+		C59DE1812047CD89002E127D /* MANaviPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MANaviPolyline.h; sourceTree = "<group>"; };
+		C59DE1822047CD89002E127D /* SpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechSynthesizer.m; sourceTree = "<group>"; };
 		C59E270D1FF0986E00791269 /* SKFocusListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKFocusListViewController.h; sourceTree = "<group>"; };
 		C59E270E1FF0986E00791269 /* SKFocusListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKFocusListViewController.m; sourceTree = "<group>"; };
 		C59E27101FF09E9700791269 /* SKFocusListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKFocusListTableViewCell.h; sourceTree = "<group>"; };
@@ -1803,6 +1830,41 @@
 			path = SKView;
 			sourceTree = "<group>";
 		};
+		C59DE16E2047CCB1002E127D /* Map- */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Map-";
+			sourceTree = "<group>";
+		};
+		C59DE16F2047CD34002E127D /* map */ = {
+			isa = PBXGroup;
+			children = (
+				C59DE1702047CD44002E127D /* MoreMenuView.h */,
+				C59DE1712047CD44002E127D /* MoreMenuView.m */,
+			);
+			path = map;
+			sourceTree = "<group>";
+		};
+		C59DE1762047CD70002E127D /* MapPath */ = {
+			isa = PBXGroup;
+			children = (
+				C59DE17E2047CD89002E127D /* CommonUtility.h */,
+				C59DE1772047CD88002E127D /* CommonUtility.m */,
+				C59DE17B2047CD88002E127D /* LineDashPolyline.h */,
+				C59DE1792047CD88002E127D /* LineDashPolyline.m */,
+				C59DE17C2047CD88002E127D /* MANaviAnnotation.h */,
+				C59DE1782047CD88002E127D /* MANaviAnnotation.m */,
+				C59DE1812047CD89002E127D /* MANaviPolyline.h */,
+				C59DE17D2047CD89002E127D /* MANaviPolyline.m */,
+				C59DE17F2047CD89002E127D /* MANaviRoute.h */,
+				C59DE17A2047CD88002E127D /* MANaviRoute.m */,
+				C59DE1802047CD89002E127D /* SpeechSynthesizer.h */,
+				C59DE1822047CD89002E127D /* SpeechSynthesizer.m */,
+			);
+			path = MapPath;
+			sourceTree = "<group>";
+		};
 		C5A125AD1FE2279E0058AA0C /* CommentModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -2500,6 +2562,11 @@
 				E8747AE11F26DF8D00125CEB /* WOTIntelligenceDeviceListVC.m */,
 				C50961192022EF68009A9D4F /* SKSpaceDetailsVC.h */,
 				C509611A2022EF68009A9D4F /* SKSpaceDetailsVC.m */,
+				C59DE16A2047CBFA002E127D /* SKMapViewController.h */,
+				C59DE16B2047CBFA002E127D /* SKMapViewController.m */,
+				C59DE1742047CD61002E127D /* GPSNaviViewController.h */,
+				C59DE1732047CD60002E127D /* GPSNaviViewController.m */,
+				C59DE16E2047CCB1002E127D /* Map- */,
 				C5FA65491FFE0E7300675A6A /* GiftBag */,
 				C5FA65481FFE0E5400675A6A /* Demand */,
 				C5FA65441FFDFCB900675A6A /* Repairs */,
@@ -2510,6 +2577,7 @@
 		E85A860B1F0233270016FCA1 /* Uitls */ = {
 			isa = PBXGroup;
 			children = (
+				C59DE1762047CD70002E127D /* MapPath */,
 				C55A298B1FD6E16B001E0DB7 /* UIColor+ColorChange.h */,
 				C55A298A1FD6E16B001E0DB7 /* UIColor+ColorChange.m */,
 				C7901EC41F789CF400692F02 /* JudgmentTime.h */,
@@ -2883,6 +2951,7 @@
 		E8DAE7421F30228E00830A2F /* reloadView */ = {
 			isa = PBXGroup;
 			children = (
+				C59DE16F2047CD34002E127D /* map */,
 				E8DAE7431F30228E00830A2F /* WOTConciseRefreshControl.h */,
 				E8DAE7441F30228E00830A2F /* WOTConciseRefreshControl.m */,
 				E8DAE7451F30228E00830A2F /* WOTConciseRefreshControl.xib */,
@@ -2996,6 +3065,9 @@
 						DevelopmentTeam = 5EY377SJTX;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -3183,6 +3255,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-WOTWorkSpace/Pods-WOTWorkSpace-resources.sh",
 				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
+				"${PODS_ROOT}/AMapNavi/AMapNaviKit.framework/AMapNavi.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
@@ -3359,6 +3432,7 @@
 				E8190DBC1F0F69660000B07C /* WOTSettingCell.m in Sources */,
 				2A022E591F1DBC36001AE9E9 /* NSDate+Uitls.m in Sources */,
 				E8190DA21F0F69660000B07C /* WOTNearbySapceCell.m in Sources */,
+				C59DE1752047CD61002E127D /* GPSNaviViewController.m in Sources */,
 				E8190DCF1F0F69660000B07C /* WOTCommonHeaderVIew.m in Sources */,
 				E8190DAF1F0F69660000B07C /* WOTMycommonCell.m in Sources */,
 				E84B5BD01F32E91200CC83E7 /* WOTMyAppointmentHistoryVC.m in Sources */,
@@ -3383,6 +3457,7 @@
 				2A3B600E1F2EFF4600AC9C8D /* WOTLocationManager.m in Sources */,
 				2AF18A271F131BEE004681CE /* WOTReservationsMeetingVC.m in Sources */,
 				E8774BB81F41710F00168033 /* WOTOrderModel.m in Sources */,
+				C59DE1882047CD89002E127D /* SpeechSynthesizer.m in Sources */,
 				E85A85F81F0202460016FCA1 /* MBProgressHUDUtil.m in Sources */,
 				E866156B1F1F2F56005E182A /* WOTQRCodeUtils.m in Sources */,
 				E8190DD11F0F69660000B07C /* WOTSpaceCityScrollView.m in Sources */,
@@ -3402,6 +3477,7 @@
 				C5FA654F1FFE169D00675A6A /* SKDemandInfoViewController.m in Sources */,
 				E8A200171F1C8266003C8A86 /* WOTActivityModel.m in Sources */,
 				2AF78CEB1F0A0E6B00F7B56D /* WOTServiceProvidersCategoryVC.m in Sources */,
+				C59DE1862047CD89002E127D /* MANaviRoute.m in Sources */,
 				2A345AA61F5E576500DC6B31 /* WOTSendFriendsModel.m in Sources */,
 				2A1624ED1F0E21CB00F216F9 /* WOTSelectCityCodeVC.m in Sources */,
 				C5A125B31FE22A260058AA0C /* QueryCommentModel_msg.m in Sources */,
@@ -3427,6 +3503,7 @@
 				E86615681F1F2E12005E182A /* WOTOpenLockScanVC.m in Sources */,
 				E85A858C1F0201F30016FCA1 /* AppDelegate.m in Sources */,
 				E8588CEA1F0B27F900951105 /* NSString+URL.m in Sources */,
+				C59DE1842047CD89002E127D /* MANaviAnnotation.m in Sources */,
 				2A1624F01F0E231E00F216F9 /* WOTFileUitls.m in Sources */,
 				E862457E1F3D59DB00CF0D9D /* WOTDeviceRequestTool.m in Sources */,
 				2A6B87DD1FFB68A800F1E070 /* WOTApplyJoinEnterpriseModel.m in Sources */,
@@ -3480,6 +3557,7 @@
 				2AED7BDD1FFB4D7300316588 /* WOTApplyCell.m in Sources */,
 				2AD2BE201F2711BD00D4C3BC /* WOTCurtainCell.m in Sources */,
 				E86245861F3D893900CF0D9D /* WOTWXPayModel.m in Sources */,
+				C59DE16C2047CBFA002E127D /* SKMapViewController.m in Sources */,
 				E8190DBE1F0F69660000B07C /* WOTGETServiceCell.m in Sources */,
 				C59D56DF1FDA2C6D001870B2 /* YMTextData.m in Sources */,
 				E8190DC61F0F69660000B07C /* WOTVisitTypeCell.m in Sources */,
@@ -3522,6 +3600,7 @@
 				2A1624F61F0E3F4B00F216F9 /* WOTUserRegisterVC.m in Sources */,
 				C59840451FDE3206009B49CE /* PublishCircleofFriendsModel.m in Sources */,
 				C5A125B61FE242660058AA0C /* SKCommentViewController.m in Sources */,
+				C59DE1852047CD89002E127D /* LineDashPolyline.m in Sources */,
 				E8190D971F0F69660000B07C /* WOTInformationLIstCell.m in Sources */,
 				E8DDCCD21F11D151007D001C /* WOTEnterpriseTypeVC.m in Sources */,
 				2AF7B18C1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m in Sources */,
@@ -3552,6 +3631,7 @@
 				2A3B54F41FD93C2F00358B8A /* UIFont+MyFont.m in Sources */,
 				2A9E2C43202D718F0016E097 /* WOTFacilitiesView.m in Sources */,
 				E85A85951F0201F30016FCA1 /* WOTWorkSpace.xcdatamodeld in Sources */,
+				C59DE1872047CD89002E127D /* MANaviPolyline.m in Sources */,
 				C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */,
 				2AF78CEE1F0A39E800F7B56D /* WOTGETServiceViewController.m in Sources */,
 				2AF7B18F1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.m in Sources */,
@@ -3581,6 +3661,7 @@
 				2A7D878A2030652600CF4CCD /* WOTSurplusTimeVC.m in Sources */,
 				C59738D5202C685700AC8E73 /* SKServiceProviderScrollView.m in Sources */,
 				E8190DB21F0F69660000B07C /* WOTMyOrderCell.m in Sources */,
+				C59DE1722047CD45002E127D /* MoreMenuView.m in Sources */,
 				E8588CE91F0B27F900951105 /* NSString+Category.m in Sources */,
 				E86B81F41F3847B7002AAC63 /* WOTMD5.m in Sources */,
 				E8190DC71F0F69660000B07C /* WOTFilterTypeModel.m in Sources */,
@@ -3598,6 +3679,7 @@
 				2A69A8501FE2282C00C0862A /* WOTButton.m in Sources */,
 				2A9E2C3D202D67850016E097 /* WOTOrderForDescribeCell.m in Sources */,
 				C59D57001FDA2D6A001870B2 /* YMShowImageView.m in Sources */,
+				C59DE1832047CD89002E127D /* CommonUtility.m in Sources */,
 				E862456D1F3D4F4900CF0D9D /* SRRandom.m in Sources */,
 				E8190DBF1F0F69660000B07C /* WOTRegisterServiceProvidersCell.m in Sources */,
 				2AC9EE96202FF8D30054EE6E /* WOTStaffModel.m in Sources */,

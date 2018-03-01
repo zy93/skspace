@@ -239,8 +239,6 @@
     [alertController addAction:wxPayAction];
     [alertController addAction:cancelAction];
     [self presentViewController: alertController animated:YES completion:nil];
-
-    
     
 }
 
