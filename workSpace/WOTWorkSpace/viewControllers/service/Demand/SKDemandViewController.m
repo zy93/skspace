@@ -78,7 +78,7 @@
     }
     cell.textLabel.text = self.typeArray[indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -86,26 +86,16 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     UIView *headerView = [[UIView alloc]init];
-    
     headerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    
     UILabel *label = [[UILabel alloc]init];
-    
     label.textColor = [UIColor grayColor];
-    
     label.font = [UIFont systemFontOfSize:15];
-    
     label.frame = CGRectMake(15, 0, 200, 40);
-    
     [headerView addSubview:label];
-    
     if (section == 0) {
-        
         label.text = self.headerStr;
-        
     }
     return headerView;
-    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -115,6 +105,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SKDemandInfoViewController *demandInfoVC = [[SKDemandInfoViewController alloc] init];
     demandInfoVC.typeString = self.typeArray[indexPath.row];
     [self.navigationController pushViewController:demandInfoVC animated:YES];

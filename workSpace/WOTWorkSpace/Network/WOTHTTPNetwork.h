@@ -717,7 +717,7 @@ typedef void(^response)(id bean,NSError *error);
 
 
 /**
- 发布需求
+ 发布需求（获取服务商支持）
 
  @param params 参数列表
  @param response 结果回调

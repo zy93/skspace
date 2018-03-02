@@ -387,9 +387,11 @@
                                      @"source":@"客户端",
                                      @"specificSource":@"APP客户端",
                                      @"will":@"一般意愿",
-                                     @"stage":@"客户咨询",
+                                     @"stage":@"客户订单",
                                      @"spaceId":spaceId,
                                      @"spaceName":spaceName,
+                                     @"leaderId":@(0),
+                                     @"state":@"进行中"
                                      } mutableCopy];
 
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Sell/clientAddSell"];
