@@ -10,11 +10,14 @@
 #import "Masonry.h"
 #import "SKGiftBagTableViewCell.h"
 #import "SKGiftBagInfoViewController.h"
+#import "WOTHTTPNetwork.h"
+#import "SKGiftBagModel.h"
+#import "NSString+Category.h"
 
 @interface SKGiftBagViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)UITableView *giftBagTableView;
-@property (nonatomic,strong)NSArray *giftBagImageArray;
+@property (nonatomic,copy)NSArray <SKGiftBagModel *>*giftBagListArray;
 
 @end
 
@@ -25,6 +28,7 @@
     // Do any additional setup after loading the view.
     //self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"礼包";
+    [self requestQueryGiftBag];
     self.giftBagTableView = [[UITableView alloc] init];
     self.giftBagTableView.delegate = self;
     self.giftBagTableView.dataSource = self;
@@ -48,7 +52,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  self.giftBagImageArray.count;
+    return  self.giftBagListArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -58,14 +62,15 @@
     if (cell == nil) {
         cell = [[SKGiftBagTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    [cell.giftBagImageView setImage:[UIImage imageNamed:self.giftBagImageArray[indexPath.row]]];
+    [cell.giftBagImageView sd_setImageWithURL:[self.giftBagListArray[indexPath.row].picture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SKGiftBagInfoViewController *giftBagInfoVC = [[SKGiftBagInfoViewController alloc] init];
-    giftBagInfoVC.giftBagNameStr = self.giftBagImageArray[indexPath.row];
+    giftBagInfoVC.giftBagModel = self.giftBagListArray[indexPath.row];
     [self.navigationController pushViewController:giftBagInfoVC animated:YES];
     
 }
@@ -82,13 +87,33 @@
     return 200;
 }
 
--(NSArray *)giftBagImageArray
+
+#pragma mark - 查询礼包列表
+-(void)requestQueryGiftBag
 {
-    if (_giftBagImageArray == nil) {
-        _giftBagImageArray = [[NSArray alloc] init];
-        _giftBagImageArray = @[@"GiftBag1",@"GiftBag2",@"GiftBag3"];
+    [WOTHTTPNetwork queryGiftBagListresponse:^(id bean, NSError *error) {
+        SKGiftBagModel_msg *model_msg = (SKGiftBagModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            self.giftBagListArray = model_msg.msg;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.giftBagTableView reloadData];
+            });
+        }
+        else
+        {
+            [MBProgressHUDUtil showMessage:@"未查询到礼包" toView:self.view];
+            return ;
+        }
+    }];
+}
+
+-(NSArray <SKGiftBagModel *>*)giftBagListArray
+{
+    if (_giftBagListArray == nil) {
+        _giftBagListArray = [[NSArray alloc] init];
+//        _giftBagImageArray = @[@"GiftBag1",@"GiftBag2",@"GiftBag3"];
     }
-    return _giftBagImageArray;
+    return _giftBagListArray;
 }
 
 

@@ -64,5 +64,7 @@
 //判断邮箱格式
 +(BOOL)isValidateEmail:(NSString *)email;
 
+//将分钟数转化为天、小时、分钟
++(NSString *)dateTimeDifferenceHoursWithMinutes:(NSNumber *)minutes;
 
 @end

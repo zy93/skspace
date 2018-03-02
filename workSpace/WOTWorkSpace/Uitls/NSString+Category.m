@@ -323,6 +323,33 @@
     
 }
 
++(NSString *)dateTimeDifferenceHoursWithMinutes:(NSNumber *)minutes
+{
+    NSInteger value = [minutes integerValue]*60;
+    int day = ((int)value)/(3600*24);
+    
+    int house = ((int)value)%(3600*24)/3600;
+    
+    int minute = ((int)value)%(3600*24)%3600/60;
+    
+    NSString *str;
+    if (day != 0) {
+        
+        str = [NSString stringWithFormat:@"%d天%d小时%d分钟",day,house,minute];
+        
+    }else if (day==0 && house !=0) {
+        
+        str = [NSString stringWithFormat:@"%d小时%d分钟",house,minute];
+        
+    }else if (day==0 && house==0 && minute!=0) {
+        
+        str = [NSString stringWithFormat:@"%d分钟",minute];
+        
+    }
+    
+    return str;
+}
+
 //邮箱地址的正则表达式
 +(BOOL)isValidateEmail:(NSString *)email{
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";

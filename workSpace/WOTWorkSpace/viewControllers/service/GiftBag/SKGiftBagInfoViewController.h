@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SKGiftBagModel.h"
 
 @interface SKGiftBagInfoViewController : UIViewController
 
-@property (nonatomic,strong)NSString *giftBagNameStr;
+@property(nonatomic,strong)SKGiftBagModel *giftBagModel;
 
 @end

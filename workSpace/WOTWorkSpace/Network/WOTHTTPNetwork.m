@@ -51,6 +51,8 @@
 #import "SKNewFacilitatorModel.h"
 #import "SKNewSpaceModel.h"
 #import "SKNewEnterpriseModel.h"
+#import "SKMyActivityModel.h"
+#import "SKGiftBagModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -600,6 +602,18 @@
     } response:response];
 }
 
+#pragma mark - 获取我的活动
++(void)queryMyActivityWithUserTel:(NSString *)tel response:(response)response
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/ActivityApply/findByTel"];
+    NSDictionary * parameters = @{@"applyTel":tel,
+                                  @"state":@"3"
+                                  };
+    [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
+        SKMyActivityModel_msg * activitymodel = [[SKMyActivityModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  activitymodel;
+    } response:response];
+}
 
 +(void)getNewsWithPage:(NSNumber *)page response:(response)response
 {
@@ -1390,6 +1404,15 @@
     } response:response];
 }
 
+#pragma mark - 礼包
++(void)queryGiftBagListresponse:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/GiftBag/findAll",HTTPBaseURL];
+    [WOTHTTPNetwork doRequestWithParameters:nil useUrl:url complete:^JSONModel *(id responseobj) {
+        SKGiftBagModel_msg *model13 = [[SKGiftBagModel_msg alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
+}
 
 
 @end

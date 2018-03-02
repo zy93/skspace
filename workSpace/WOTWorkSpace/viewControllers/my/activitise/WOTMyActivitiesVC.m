@@ -8,8 +8,15 @@
 
 #import "WOTMyActivitiesVC.h"
 #import "WOTMyActivitiesBaseVC.h"
+#import "WOTHTTPNetwork.h"
+#import "SKMyActivityModel.h"
+#import "SKMyActivityTableViewCell.h"
+#import "NSString+Category.h"
+#import "WOTH5VC.h"
 
-@interface WOTMyActivitiesVC ()
+@interface WOTMyActivitiesVC ()<UITableViewDelegate,UITableViewDataSource>
+@property(nonatomic,copy)NSArray <SKMyActivityModel_list *>*myActivityList;
+@property(nonatomic,strong)UITableView *myActivityTableView;
 @end
 
 @implementation WOTMyActivitiesVC
@@ -17,9 +24,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
+    [self requestWithMyActivity];
     [self configNavi];
-    
-    // Do any additional setup after loading the view.
+    [self.view addSubview:self.myActivityTableView];
+    [self layoutSubviews];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,47 +35,88 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)layoutSubviews
+{
+    [self.myActivityTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController.navigationBar setHidden:NO];
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.myActivityList.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 270;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"SKMyActivityTableViewCell";
+    SKMyActivityTableViewCell *cell = (SKMyActivityTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[SKMyActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    [cell.myActivityImageView sd_setImageWithURL:[self.myActivityList[indexPath.row].content.pictureSite ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    cell.infoLabel.text = self.myActivityList[indexPath.row].content.activityDescribe;
+    cell.spaceNameLabel.text = self.myActivityList[indexPath.row].content.spaceName;
+    cell.startTimeLabel.text = [self.myActivityList[indexPath.row].content.startTime substringToIndex:11];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+    detailvc.url = [self.myActivityList[indexPath.row].content.htmlLocation stringToUrl];
+    [self.navigationController pushViewController:detailvc animated:YES];
 }
 -(void)configNavi{
     [self configNaviBackItem];
     self.navigationItem.title = @"我的活动";
 }
 
-
-
--(NSArray *)createTitles{
-    return [[NSArray alloc]initWithObjects:@"全部",@"未开始",@"已结束",nil];
-}
--(NSArray<__kindof UIViewController *> *)createViewControllers{
-    WOTMyActivitiesBaseVC *basevc = [[WOTMyActivitiesBaseVC alloc]init];
-    basevc.vctype = @"0";
-    [basevc getActivityDataSourceFromWeb:@"0"];
-    [self addChildViewController:basevc];
-    WOTMyActivitiesBaseVC *basevc1 = [[WOTMyActivitiesBaseVC alloc]init];
-    basevc1.vctype = @"1";
-    [basevc1 getActivityDataSourceFromWeb:@"1"];
-    [self addChildViewController:basevc1];
-    WOTMyActivitiesBaseVC *basevc2 = [[WOTMyActivitiesBaseVC alloc]init];
-     basevc2.vctype = @"2";
-    [basevc2 getActivityDataSourceFromWeb:@"2"];
-    [self addChildViewController:basevc2];
-   
-    
-    return self.childViewControllers;
+#pragma mark - 请求活动信息列表
+-(void)requestWithMyActivity
+{
+    [WOTHTTPNetwork queryMyActivityWithUserTel:[WOTUserSingleton shareUser].userInfo.tel response:^(id bean, NSError *error) {
+        SKMyActivityModel_msg *model_msg = (SKMyActivityModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            self.myActivityList = model_msg.msg;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myActivityTableView reloadData];
+            });
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
+        }
+    }];
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(NSArray <SKMyActivityModel_list *> *)myActivityList
+{
+    if (_myActivityList == nil) {
+        _myActivityList = [[NSArray alloc] init];
+    }
+    return _myActivityList;
 }
-*/
+
+-(UITableView *)myActivityTableView
+{
+    if (_myActivityTableView == nil) {
+        _myActivityTableView = [[UITableView alloc] init];
+        _myActivityTableView.delegate = self;
+        _myActivityTableView.dataSource = self;
+        _myActivityTableView.separatorStyle = UITableViewCellEditingStyleNone;
+    }
+    return _myActivityTableView;
+}
 
 @end

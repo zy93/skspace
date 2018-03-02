@@ -245,6 +245,15 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getActivitiesWithPage:(NSNumber *)page response:(response)response;
 
+
+/**
+ 获取我的活动列表
+
+ @param tel 用户手机号
+ @param response 响应回调
+ */
++(void)queryMyActivityWithUserTel:(NSString *)tel response:(response)response;
+
 /**
  * 获取全部资讯列表
  */
@@ -734,6 +743,13 @@ typedef void(^response)(id bean,NSError *error);
 
 
 
+#pragma mark - 礼包
 
+/**
+ 获取礼包信息
+
+ @param response 返回
+ */
++(void)queryGiftBagListresponse:(response)response;
 
 @end
