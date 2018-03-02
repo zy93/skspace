@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
 @property (weak, nonatomic) IBOutlet UILabel *orderNumber;
 @property (nonatomic, assign)int orderNumberInt;
-@property (nonatomic, assign)NSNumber *maxNumber;
+@property (nonatomic, strong)NSNumber *maxNumber;
 @property (nonatomic,weak) id<WOTOrderForBookStationCellDelegate>delegate;
 
 

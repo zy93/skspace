@@ -22,10 +22,10 @@
 
 @interface SKBookStationOrderModel_array : JSONModel
 
-@property(nonatomic,assign)NSNumber *gross;
-@property(nonatomic,assign)NSNumber *surplusId;
-@property(nonatomic,assign)NSNumber *spaceId;
-@property(nonatomic,assign)NSNumber *surplus;
+@property(nonatomic,strong)NSNumber *gross;
+@property(nonatomic,strong)NSNumber *surplusId;
+@property(nonatomic,strong)NSNumber *spaceId;
+@property(nonatomic,strong)NSNumber *surplus;
 @property(nonatomic,strong)NSString *time;
 
 @end
@@ -37,31 +37,31 @@
 @property(nonatomic,strong)NSString <Optional>*commodityNum;
 @property(nonatomic,strong)NSString <Optional>*commodityNumList;
 
-@property(nonatomic,assign)NSNumber <Optional>*conferenceDetailsId;
-@property(nonatomic,assign)NSNumber <Optional>*contractMode;
+@property(nonatomic,strong)NSNumber <Optional>*conferenceDetailsId;
+@property(nonatomic,strong)NSNumber <Optional>*contractMode;
 @property(nonatomic,strong)NSString <Optional>*dealMode;
-@property(nonatomic,assign)NSNumber <Optional>*deduction;
-@property(nonatomic,assign)NSNumber <Optional>*deductionTimes;
+@property(nonatomic,strong)NSNumber <Optional>*deduction;
+@property(nonatomic,strong)NSNumber <Optional>*deductionTimes;
 
 @property(nonatomic,strong)NSString <Optional>*endTime;
 @property(nonatomic,strong)NSString <Optional>*evaluate;
 @property(nonatomic,strong)NSString <Optional>*finishTime;
 @property(nonatomic,strong)NSString <Optional>*invoiceInfo;
-@property(nonatomic,assign)NSNumber <Optional>*money;
+@property(nonatomic,strong)NSNumber <Optional>*money;
 
 @property(nonatomic,strong)NSString <Optional>*orderNum;
 @property(nonatomic,strong)NSString <Optional>*orderState;
 @property(nonatomic,strong)NSString <Optional>*orderTime;
-@property(nonatomic,assign)NSNumber <Optional>*payMode;
+@property(nonatomic,strong)NSNumber <Optional>*payMode;
 @property(nonatomic,strong)NSString <Optional>*payObject;
 
-@property(nonatomic,assign)NSNumber <Optional>*payType;
-@property(nonatomic,assign)NSNumber <Optional>*productNum;
-@property(nonatomic,assign)NSNumber <Optional>*spaceId;
+@property(nonatomic,strong)NSNumber <Optional>*payType;
+@property(nonatomic,strong)NSNumber <Optional>*productNum;
+@property(nonatomic,strong)NSNumber <Optional>*spaceId;
 @property(nonatomic,strong)NSString <Optional>*spaceName;
 @property(nonatomic,strong)NSString <Optional>*starTime;
 
-@property(nonatomic,assign)NSNumber <Optional>*userId;
+@property(nonatomic,strong)NSNumber <Optional>*userId;
 @property(nonatomic,strong)NSString <Optional>*userName;
 @property(nonatomic,strong)NSString <Optional>*userTel;
 

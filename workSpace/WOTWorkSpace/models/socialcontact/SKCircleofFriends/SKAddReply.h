@@ -10,10 +10,10 @@
 
 @interface SKAddReply : NSObject
 
-@property (nonatomic, assign)NSNumber *friendId;
-@property (nonatomic, assign)NSNumber *byReplyid;
+@property (nonatomic, strong)NSNumber *friendId;
+@property (nonatomic, strong)NSNumber *byReplyid;
 @property (nonatomic, strong)NSString *byReplyname;
-@property (nonatomic, assign)NSNumber *replyId;
+@property (nonatomic, strong)NSNumber *replyId;
 @property (nonatomic, strong)NSString *replyName;
 @property (nonatomic, strong)NSString *replyInfo;
 

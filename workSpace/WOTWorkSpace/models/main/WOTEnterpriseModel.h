@@ -27,13 +27,13 @@
 @property(nonatomic,strong)NSString* companyName ;
 @property(nonatomic,strong)NSString* companyPicture ;
 @property(nonatomic,strong)NSString* companyProfile;
-@property(nonatomic,assign)NSNumber* companyState;
+@property(nonatomic,strong)NSNumber* companyState;
 @property(nonatomic,strong)NSString* companyType;
 @property(nonatomic,strong)NSString* contacts ;
 @property(nonatomic,strong)NSString* creditNum ;
 @property(nonatomic,strong)NSString* dateApproval ;
-@property(nonatomic,assign)NSNumber* developmentExpenses ;
-@property(nonatomic,assign)NSNumber* employeesNum ;
+@property(nonatomic,strong)NSNumber* developmentExpenses ;
+@property(nonatomic,strong)NSNumber* employeesNum ;
 @property(nonatomic,strong)NSString* englishName ;
 @property(nonatomic,strong)NSString* enterpriseBank ;
 @property(nonatomic,strong)NSString* enterprisePhone ;
@@ -41,11 +41,11 @@
 @property(nonatomic,strong)NSString* financeMail ;
 @property(nonatomic,strong)NSString* financeTel ;
 @property(nonatomic,strong)NSString* financingNum ;
-@property(nonatomic,assign)NSNumber* givingRemainingTime ;
-@property(nonatomic,assign)NSNumber* givingTimeTotal ;
+@property(nonatomic,strong)NSNumber* givingRemainingTime ;
+@property(nonatomic,strong)NSNumber* givingTimeTotal ;
 @property(nonatomic,strong)NSString* givingTimeType ;
-@property(nonatomic,assign)NSNumber* highTech ;
-@property(nonatomic,assign)NSNumber* highTechNum ;
+@property(nonatomic,strong)NSNumber* highTech ;
+@property(nonatomic,strong)NSNumber* highTechNum ;
 @property(nonatomic,strong)NSString* industry ;
 @property(nonatomic,strong)NSString* internetEnterprises ;
 @property(nonatomic,strong)NSString* joinDate ;
@@ -57,23 +57,23 @@
 @property(nonatomic,strong)NSString* otherDuty ;
 @property(nonatomic,strong)NSString* otherMail ;
 @property(nonatomic,strong)NSString* otherTel ;
-@property(nonatomic,assign)NSNumber* patentNum ;
-@property(nonatomic,assign)NSNumber* peopleNum ;
-@property(nonatomic,assign)NSNumber* ratepaying ;
+@property(nonatomic,strong)NSNumber* patentNum ;
+@property(nonatomic,strong)NSNumber* peopleNum ;
+@property(nonatomic,strong)NSNumber* ratepaying ;
 @property(nonatomic,strong)NSString* registeredAddress ;
 @property(nonatomic,strong)NSString* registeredCapital ;
 @property(nonatomic,strong)NSString* registrationAuthority ;
-@property(nonatomic,assign)NSNumber* researchNum ;
-@property(nonatomic,assign)NSNumber* revenue ;
-@property(nonatomic,assign)NSNumber* socialNum ;
+@property(nonatomic,strong)NSNumber* researchNum ;
+@property(nonatomic,strong)NSNumber* revenue ;
+@property(nonatomic,strong)NSNumber* socialNum ;
 @property(nonatomic,strong)NSString* softwareCopyright ;
 @property(nonatomic,strong)NSString* softwareEnterprise ;
-@property(nonatomic,assign)NSNumber* spaceId;
+@property(nonatomic,strong)NSNumber* spaceId;
 @property(nonatomic,strong)NSString* spaceName;
 @property(nonatomic,strong)NSString* tatepayerNum ;
 @property(nonatomic,strong)NSString* tel ;
 @property(nonatomic,strong)NSString* typeEnterprise ;
-@property(nonatomic,assign)NSNumber* workNum ;
+@property(nonatomic,strong)NSNumber* workNum ;
 
 @end
 

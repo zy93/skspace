@@ -246,6 +246,8 @@ int a = 0;
 {
     [[WOTLocationManager shareLocation] getLocationWithBlock:^(CGFloat lat, CGFloat lon,NSString* cityName) {
         [WOTSingtleton shared].cityName = cityName;//得到所在城市
+        [WOTSingtleton shared].userLat = lat;
+        [WOTSingtleton shared].userLng = lon;
         NSLog(@"lat:%f,lon:%f",lat,lon);
         [WOTHTTPNetwork getSpaceWithLocation:lat lon:lon response:^(id bean, NSError *error) {
             [WOTSingtleton shared].nearbySpace = ((WOTLocationModel_Msg*)bean).msg;

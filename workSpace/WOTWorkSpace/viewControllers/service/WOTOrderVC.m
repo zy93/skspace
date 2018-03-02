@@ -33,6 +33,7 @@
 #import "WOTStaffModel.h"
 #import "WOTMapCell.h"
 #import "MBProgressHUDUtil.h"
+#import "SKMapViewController.h"
 
 
 #define infoCell @"WOTOrderForInfoCell"
@@ -101,8 +102,8 @@
 @property (nonatomic, strong) NSString *spbill_create_ip; //终端IP
 @property (nonatomic, strong) NSString *trade_type;       //交易类型
 @property (nonatomic, strong) NSString *invoiceInfo;      //发票信息
-@property (nonatomic, assign) NSNumber *bookSationTime;
-@property (nonatomic, assign) NSNumber *meetingTime;
+@property (nonatomic, strong) NSNumber *bookSationTime;
+@property (nonatomic, strong) NSNumber *meetingTime;
 @property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, strong) NSString *payWayStr;
 @property (nonatomic, strong) NSNumber *conferenceDetailsId;//预定场地的id
@@ -705,6 +706,7 @@
             cell = [[WOTMapCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:mapCell];
         }
         [cell.locationView setDataSpacelocationWithPointLng:self.spaceModel.lng pointLat:self.spaceModel.lat];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 //    else if ([cellType isEqualToString:siteCell]) {
@@ -798,9 +800,6 @@
                 [cell setData:self.teamList];
             }
         }
-        
-        
-
         return cell;
     }
     else if ([cellType isEqualToString:paymentCell]) {
@@ -824,6 +823,7 @@
         }
         return cell;
     }
+    
 //    else if ([cellType isEqualToString:uitableCell]) {
 //        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCelll"];
 //        if (cell == nil) {
@@ -844,6 +844,7 @@
 //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //        return cell;
 //    }
+    
     else // ([cellType isEqualToString:amountCell])
     {
         WOTOrderForAmountCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForAmountCell"];
@@ -864,6 +865,14 @@
     if ([cellType isEqualToString:selectDateCell]) {
         _datepickerview.hidden = NO;
     }
+    
+    if ([cellType isEqualToString:mapCell]) {
+        //跳转到一个新的控制器
+        SKMapViewController *mapVC = [[SKMapViewController alloc] init];
+        mapVC.spaceModel = self.spaceModel;
+        [self.navigationController pushViewController:mapVC animated:YES];
+    }
+    
 //    if ([cellType isEqualToString:selectCell]) {
 //        //
 //        if ([self.payType isEqual:@(0)]) {

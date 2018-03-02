@@ -14,11 +14,11 @@
 
 @interface CommentModel_msg: JSONModel
 
-@property (nonatomic, assign) NSNumber *byReplyid;
+@property (nonatomic, strong) NSNumber *byReplyid;
 @property (nonatomic, strong) NSString *byReplyname;
-@property (nonatomic, assign) NSNumber *friendId;
-@property (nonatomic, assign) NSNumber *recordId;
-@property (nonatomic, assign) NSNumber *replyId;
+@property (nonatomic, strong) NSNumber *friendId;
+@property (nonatomic, strong) NSNumber *recordId;
+@property (nonatomic, strong) NSNumber *replyId;
 @property (nonatomic, strong) NSString *replyInfo;
 @property (nonatomic, strong) NSString *replyName;
 @property (nonatomic, strong) NSString *replyTime;
@@ -36,14 +36,14 @@
 
 @interface QueryCommentModel_msg : JSONModel
 
-@property (nonatomic, assign) NSNumber *bottomPageNo;
+@property (nonatomic, strong) NSNumber *bottomPageNo;
 @property (nonatomic, strong) NSArray<CommentModel> *list;
-@property (nonatomic, assign) NSNumber *nextPageNo;
-@property (nonatomic, assign) NSNumber *pageNo;
-@property (nonatomic, assign) NSNumber *pageSize;
-@property (nonatomic, assign) NSNumber *previousPageNo;
-@property (nonatomic, assign) NSNumber *topPageNo;
-@property (nonatomic, assign) NSNumber *totalPages;
-@property (nonatomic, assign) NSNumber *totalRecords;
+@property (nonatomic, strong) NSNumber *nextPageNo;
+@property (nonatomic, strong) NSNumber *pageNo;
+@property (nonatomic, strong) NSNumber *pageSize;
+@property (nonatomic, strong) NSNumber *previousPageNo;
+@property (nonatomic, strong) NSNumber *topPageNo;
+@property (nonatomic, strong) NSNumber *totalPages;
+@property (nonatomic, strong) NSNumber *totalRecords;
 
 @end

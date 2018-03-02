@@ -26,9 +26,9 @@
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *headPortrait;
 @property (nonatomic, strong) NSString *industry;
-@property (nonatomic, assign) NSNumber *integral;
+@property (nonatomic, strong) NSNumber *integral;
 @property (nonatomic, strong) NSString *interest;
-@property (nonatomic, assign) NSNumber *meetingHours;
+@property (nonatomic, strong) NSNumber *meetingHours;
 @property (nonatomic, strong) NSString *meInvitationCode; //我的邀请码
 @property (nonatomic, strong) NSString *papersNum;
 @property (nonatomic, strong) NSNumber *papersType;
@@ -45,8 +45,8 @@
 @property (nonatomic, strong) NSString *tel;
 @property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, strong) NSString *userName;
-@property (nonatomic, assign) NSNumber *userType;
-@property (nonatomic, assign) NSNumber *workHours;
+@property (nonatomic, strong) NSNumber *userType;
+@property (nonatomic, strong) NSNumber *workHours;
 
 @end
 
