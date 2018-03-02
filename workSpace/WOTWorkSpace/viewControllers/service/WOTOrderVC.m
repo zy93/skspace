@@ -1328,6 +1328,10 @@
 #pragma mark - 查询团队
 -(void)getTeam
 {
+    if (self.spaceModel.spaceId == nil) {
+        [MBProgressHUDUtil showMessage:@"没有空间信息！" toView:self.view];
+        return;
+    }
     [WOTHTTPNetwork getSpaceTeamWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             WOTStaffModel_msg *model = bean;

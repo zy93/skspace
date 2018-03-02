@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WOTMyActivitiesVC : WOTPageMenuParentVC
+@interface WOTMyActivitiesVC : UIViewController
+
 
 @end

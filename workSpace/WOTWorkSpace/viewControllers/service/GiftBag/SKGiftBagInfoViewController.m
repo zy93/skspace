@@ -14,6 +14,7 @@
 #import "SKAliPayModel.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "SKOrderStringModel.h"
+#import "UILabel+ChangeLineSpaceAndWordSpace.h"
 
 @interface SKGiftBagInfoViewController ()
 @property (nonatomic,strong)UIScrollView *giftBagScrollView;
@@ -27,7 +28,12 @@
 @property (nonatomic,strong)UIImageView *voucherImageView;
 @property (nonatomic,strong)UILabel *voucherInfoLabel;
 
+@property (nonatomic,strong)UILabel *giftBagInfoTitleLabel;
+
 @property (nonatomic,strong)UILabel *giftBagInfoLabel;
+@property (nonatomic,strong)UILabel *giftBagValidityLabel;
+@property (nonatomic,strong)UILabel *giftBagValidityInfoLabel;
+@property (nonatomic,strong)UILabel *giftBagValidityDetailInfoLabel;
 @property (nonatomic,strong)UILabel *explainLabel;
 
 @property (nonatomic,strong)UIView *bottomView;
@@ -46,6 +52,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = self.giftBagModel.giftName;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.giftBagScrollView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(InfoNotificationAction:) name:@"buttonLoseResponse" object:nil];
@@ -60,7 +67,11 @@
     [self.giftBagInfoView addSubview:self.voucherImageView];
     [self.giftBagInfoView addSubview:self.voucherInfoLabel];
     
+    [self.giftBagScrollView addSubview:self.giftBagInfoTitleLabel];
     [self.giftBagScrollView addSubview:self.giftBagInfoLabel];
+    [self.giftBagScrollView addSubview:self.giftBagValidityLabel];
+    [self.giftBagScrollView addSubview:self.giftBagValidityInfoLabel];
+    [self.giftBagScrollView addSubview:self.giftBagValidityDetailInfoLabel];
     [self.giftBagScrollView addSubview:self.explainLabel];
     [self.giftBagScrollView addSubview:self.bottomView];
     
@@ -68,7 +79,8 @@
     [self.bottomView addSubview:self.paymentLabel];
     [self.bottomView addSubview:self.moneyNumLabel];
     [self.bottomView addSubview:self.payButton];
-    
+//    [UILabel changeLineSpaceForLabel:_explainLabel WithSpace:10.0];
+//    [UILabel changeWordSpaceForLabel:_explainLabel WithSpace:3.0];
     [self layoutSubviews];
     [self loadData];
 }
@@ -135,16 +147,40 @@
         make.centerY.equalTo(self.voucherImageView);
         make.left.equalTo(self.voucherImageView.mas_right).with.offset(20);
     }];
-
-    [self.giftBagInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self.giftBagInfoTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.giftBagInfoView.mas_bottom).with.offset(5);
         make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(20);
         make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-20);
     }];
 
-    [self.explainLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.giftBagInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.giftBagInfoTitleLabel.mas_bottom).with.offset(5);
+        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(25);
+        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-20);
+    }];
+    
+    [self.giftBagValidityLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.giftBagInfoLabel.mas_bottom).with.offset(10);
         make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(20);
+        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-20);
+    }];
+    
+    [self.giftBagValidityInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.giftBagValidityLabel.mas_bottom).with.offset(10);
+        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(20);
+        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-20);
+    }];
+    
+    [self.giftBagValidityDetailInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.giftBagValidityInfoLabel.mas_bottom).with.offset(10);
+        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(20);
+        make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-20);
+    }];
+
+    [self.explainLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.giftBagValidityDetailInfoLabel.mas_bottom).with.offset(10);
+        make.left.equalTo(self.giftBagScrollView.mas_left).with.offset(25);
         make.right.equalTo(self.giftBagScrollView.mas_right).with.offset(-20);
     }];
 
@@ -183,26 +219,10 @@
 #pragma mark - 加载数据
 -(void)loadData
 {
-    if ([self.giftBagNameStr isEqualToString:@"GiftBag1"]) {
-        //CGFloat price = 0.01f;
-        //self.paySumNumber = [NSDecimalNumber numberWithDouble:0.01];
-//        self.price = 0.01;
-//        self.payNumber = @1;
-
-        self.paySumNumber = @888;
-        self.payNumber = @88800;
-        self.commodityDescribeStr = @"礼包1";
-    }
-    if ([self.giftBagNameStr isEqualToString:@"GiftBag2"]) {
-        self.paySumNumber = @1688;
-        self.payNumber = @168800;
-        self.commodityDescribeStr = @"礼包2";
-    }
-    if ([self.giftBagNameStr isEqualToString:@"GiftBag3"]) {
-        self.paySumNumber = @2999;
-        self.payNumber = @299900;
-        self.commodityDescribeStr = @"礼包3";
-    }
+    self.paySumNumber = self.giftBagModel.price;
+    double giftBagPrice = [self.giftBagModel.price doubleValue]*100;
+    self.payNumber = [NSNumber numberWithDouble:giftBagPrice];
+    self.commodityDescribeStr = self.giftBagModel.giftName;
 }
 
 #pragma mark - 礼包支付接口
@@ -344,7 +364,7 @@
 {
     if (_giftBagImageView == nil) {
         _giftBagImageView = [[UIImageView alloc] init];
-        [_giftBagImageView setImage:[UIImage imageNamed:self.giftBagNameStr]];
+        [_giftBagImageView sd_setImageWithURL:[self.giftBagModel.picture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
     }
     return _giftBagImageView;
 }
@@ -362,15 +382,7 @@
 {
     if (_giftBagNameLabel == nil) {
         _giftBagNameLabel = [[UILabel alloc] init];
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag1"]) {
-            _giftBagNameLabel.text = @"礼包一（尝鲜包）";
-        }
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag2"]) {
-            _giftBagNameLabel.text = @"礼包二";
-        }
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag3"]) {
-            _giftBagNameLabel.text = @"礼包三";
-        }
+        _giftBagNameLabel.text = self.giftBagModel.giftName;
     }
     return _giftBagNameLabel;
 }
@@ -380,15 +392,7 @@
     if (_giftBagPriceLabel == nil) {
         _giftBagPriceLabel = [[UILabel alloc] init];
         _giftBagPriceLabel.textColor = [UIColor colorWithHexString:@"ff5906"];
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag1"]) {
-            _giftBagPriceLabel.text = @"¥888.00";
-        }
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag2"]) {
-            _giftBagPriceLabel.text = @"¥1688.00";
-        }
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag3"]) {
-            _giftBagPriceLabel.text = @"¥2999.00";
-        }
+        _giftBagPriceLabel.text = [NSString stringWithFormat:@"¥%@",self.giftBagModel.price];
     }
     return _giftBagPriceLabel;
 }
@@ -420,36 +424,101 @@
     return _voucherInfoLabel;
 }
 
+-(UILabel *)giftBagInfoTitleLabel
+{
+    if (_giftBagInfoTitleLabel == nil) {
+        _giftBagInfoTitleLabel = [[UILabel alloc] init];
+        _giftBagInfoTitleLabel.text = @"礼包详细信息";
+        [_giftBagInfoTitleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
+    }
+    return _giftBagInfoTitleLabel;
+}
+
 -(UILabel *)giftBagInfoLabel
 {
     if (_giftBagInfoLabel == nil) {
         _giftBagInfoLabel = [[UILabel alloc] init];
+        NSString *giftBagInfoStr =[NSString stringWithFormat:@"%@\n",self.giftBagModel.giftInfo];
+        [_giftBagInfoLabel setFont:[UIFont systemFontOfSize:14]];
+        
+        _giftBagInfoLabel.preferredMaxLayoutWidth = (self.view.frame.size.width -10.0 * 2);
         [_giftBagInfoLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
         _giftBagInfoLabel.numberOfLines =0;
-        NSString *giftBagInfoStr;
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag1"]) {
-            giftBagInfoStr = @"礼包详细信息：\n\n  工位：    128小时\n\n  会议室：5小时";
-        }
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag2"]) {
-            giftBagInfoStr = @"礼包详细信息：\n 工位：    200小时\n  会议室：10小时";
-        }
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag3"]) {
-            giftBagInfoStr = @"礼包详细信息：\n  工位：    400小时\n  会议室：15小时";
-        }
-        _giftBagInfoLabel.text = giftBagInfoStr;
+        NSDictionary *dic = @{NSKernAttributeName:@1.f
+                              
+                              };
+        
+        NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:giftBagInfoStr attributes:dic];
+        
+        NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        
+        [paragraphStyle setLineSpacing:8];//行间距
+        
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [giftBagInfoStr length])];
+        
+        [_giftBagInfoLabel setAttributedText:attributedString];
     }
     return _giftBagInfoLabel;
+}
+
+-(UILabel *)giftBagValidityLabel
+{
+    if (_giftBagValidityLabel == nil) {
+        _giftBagValidityLabel = [[UILabel alloc] init];
+        _giftBagValidityLabel.text = @"礼包有效期";
+        [_giftBagValidityLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
+    }
+    return _giftBagValidityLabel;
+}
+
+-(UILabel *)giftBagValidityInfoLabel
+{
+    if (_giftBagValidityInfoLabel == nil) {
+        _giftBagValidityInfoLabel = [[UILabel alloc] init];
+        [_giftBagValidityInfoLabel setFont:[UIFont systemFontOfSize:14]];
+        [_giftBagValidityInfoLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+        _giftBagValidityInfoLabel.numberOfLines =0;
+        NSString *giftBagInfo = [NSString stringWithFormat:@"  %@",self.giftBagModel.giftValidity];
+        _giftBagValidityInfoLabel.text = giftBagInfo;
+    }
+    return _giftBagValidityInfoLabel;
+}
+
+-(UILabel *)giftBagValidityDetailInfoLabel
+{
+    if (_giftBagValidityDetailInfoLabel == nil) {
+        _giftBagValidityDetailInfoLabel = [[UILabel alloc] init];
+        _giftBagValidityDetailInfoLabel.text = @"礼包使用说明";
+        [_giftBagValidityDetailInfoLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
+    }
+    return _giftBagValidityDetailInfoLabel;
 }
 
 -(UILabel *)explainLabel
 {
     if (_explainLabel == nil) {
         _explainLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        
+        NSString *explainLabelStr =[NSString stringWithFormat:@"%@\n",self.giftBagModel.giftExplain];
+        [_explainLabel setFont:[UIFont systemFontOfSize:14]];
+        
         _explainLabel.preferredMaxLayoutWidth = (self.view.frame.size.width -10.0 * 2);
         [_explainLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
         _explainLabel.numberOfLines =0;
-        NSString *explainLabelStr = @"礼包说明：\n\n1. 使用范围：尚科社区全国任意社区。\n\n2. 限制条件：限制条件：此礼包内工位与会议室使用时长只限开放工位及开放会议室使用。\n\n3. 有效期：永久有效。\n\n4. 使用方法：购买礼包后，通过尚科社区APP、微信公众号预定工位或会议室，系统自动扣除相应时间。\n\n5. 使用说明：工位使用时间，将根据客户具体使用时间扣除。会议室时间将按照预定时长扣除。\n";
-        _explainLabel.text = explainLabelStr;
+        NSDictionary *dic = @{NSKernAttributeName:@1.f
+
+                              };
+
+        NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:explainLabelStr attributes:dic];
+
+        NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+
+        [paragraphStyle setLineSpacing:8];//行间距
+
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [explainLabelStr length])];
+
+        [_explainLabel setAttributedText:attributedString];
+        
     }
     return _explainLabel;
 }
@@ -475,15 +544,8 @@
 {
     if (_moneyNumLabel == nil) {
         _moneyNumLabel = [[UILabel alloc] init];
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag1"]) {
-            _moneyNumLabel.text = @"¥888.00";
-        }
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag2"]) {
-            _moneyNumLabel.text = @"¥1688.00";
-        }
-        if ([self.giftBagNameStr isEqualToString:@"GiftBag3"]) {
-            _moneyNumLabel.text = @"¥2999.00";
-        }
+        _moneyNumLabel.text = [NSString stringWithFormat:@"¥%@.00",self.giftBagModel.price];
+
     }
     return _moneyNumLabel;
 }
