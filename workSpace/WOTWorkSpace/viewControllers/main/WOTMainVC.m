@@ -229,7 +229,9 @@ int a = 0;
         _pageFlowView.isCarousel = YES;
         _pageFlowView.orientation = NewPagedFlowViewOrientationHorizontal;
         _pageFlowView.isOpenAutoScroll = NO;
-        _pageFlowView.topBottomMargin = 20;
+        _pageFlowView.topBottomMargin = 0;
+        _pageFlowView.isCarousel = NO;
+        
         
         //初始化pageControl
 //        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _pageFlowView.frame.size.height - 10, SCREEN_WIDTH, 8)];//8
@@ -481,7 +483,7 @@ int a = 0;
 
 #pragma mark - NewPagedFlowView Delegate & Datasource
 - (CGSize)sizeForPageInFlowView:(NewPagedFlowView *)flowView {
-    return CGSizeMake(SCREEN_WIDTH - 60, (SCREEN_WIDTH) * 5 / 8);//(SCREEN_WIDTH - 60) * 9 / 16
+    return CGSizeMake(SCREEN_WIDTH - 40, (SCREEN_WIDTH) * 5 / 8);//(SCREEN_WIDTH - 60) * 9 / 16
 }
 
 #pragma mark - 点击单个图片
@@ -508,7 +510,7 @@ int a = 0;
     if (!bannerView) {
         bannerView = [[PGCustomBannerView alloc] init];
         bannerView.tag = index;
-        bannerView.layer.cornerRadius = 4;
+//        bannerView.layer.cornerRadius = 5;
         bannerView.layer.masksToBounds = YES;
     }
     

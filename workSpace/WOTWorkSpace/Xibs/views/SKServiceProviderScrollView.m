@@ -14,7 +14,7 @@
 #define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 40)/2
 #define providersViewHeight ([[UIScreen mainScreen] bounds].size.width/350 * 180)
 #define providersViewGap  10
-#define providersStartX   10
+#define providersStartX   20
 
 @implementation SKServiceProviderScrollView
 

@@ -10,6 +10,7 @@
 #import "WOTEnterpriseModel.h"
 #import "UIImageView+AFNetworking.h"
 
+#define enterpriseIVSpaceStartX 20
 #define enterpriseIVSpaceGap   10
 #define enterpriseIVWidth    ([[UIScreen mainScreen] bounds].size.width-(enterpriseIVSpaceGap*4))/3
 
@@ -27,7 +28,7 @@
     }
     for (int i = 0; i<data.count; i++) {
         WOTEnterpriseModel *model = data[i];
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake((i*enterpriseIVWidth)+( (i+1)*enterpriseIVSpaceGap), 0, enterpriseIVWidth, self.frame.size.height)];
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(i==0?enterpriseIVSpaceStartX: (i*enterpriseIVWidth)+((i)*enterpriseIVSpaceGap)+enterpriseIVSpaceStartX, 0, enterpriseIVWidth, self.frame.size.height)];
         [iv setImageWithURL:[model.companyPicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -38,7 +39,7 @@
         [self addSubview:iv];
         [self addSubview:btn];
     }
-    self.contentSize = CGSizeMake(enterpriseIVWidth*data.count+(enterpriseIVSpaceGap*(data.count+1)), self.frame.size.height);
+    self.contentSize = CGSizeMake(enterpriseIVWidth*data.count+(enterpriseIVSpaceGap*(data.count+1)+enterpriseIVSpaceStartX), self.frame.size.height);
 }
 
 -(void)selectBtn:(UIButton *)sender
