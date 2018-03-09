@@ -129,7 +129,7 @@
     //不要使用点语法，否则会设置失败。。。
     [self.tabBarController.tabBar setHidden:NO];
     [self.tabBarController.tabBar setTranslucent:NO];
-    [self.navigationController.navigationBar setHidden:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 int a = 0;
@@ -140,6 +140,7 @@ int a = 0;
     }
     [super viewDidAppear:animated];
     self.scrollVIew.contentSize = CGSizeMake(self.view.frame.size.width,self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70+self.serviceProvideView.frame.size.height);
+    NSLog(@"========%lf",self.scrollVIew.contentSize.height);
 }
 
 -(void)viewDidDisappear:(BOOL)animated

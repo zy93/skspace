@@ -43,7 +43,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

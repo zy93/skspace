@@ -66,8 +66,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyuserCell" bundle:nil] forCellReuseIdentifier:@"WOTMyuserCellID"];
     [self.tabBarController.tabBar setHidden:NO];
      self.tabBarController.tabBar.translucent = NO;
-    [self.navigationController.navigationBar setHidden:YES];
-    
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+
     [self.tableView reloadData];
     
 }

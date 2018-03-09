@@ -25,8 +25,6 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"我的邀请";
-    [self.navigationController.navigationBar setHidden:NO];
-
     [self loadViews];
     [self.table registerNib:[UINib nibWithNibName:@"WOTMyInvityCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTMyInvityCell"];
     [self createRequest];
@@ -35,6 +33,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 -(void)loadViews {

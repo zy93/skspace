@@ -78,7 +78,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [self setCropRect:kScanRect];
-   [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [self performSelector:@selector(setupCamera) withObject:nil afterDelay:0.3];
     
 }

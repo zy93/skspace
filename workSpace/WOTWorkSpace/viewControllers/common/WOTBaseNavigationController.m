@@ -10,7 +10,7 @@
 #import "WOTConstants.h"
 
 
-@interface  WOTBaseNavigationController ()
+@interface  WOTBaseNavigationController () <UIGestureRecognizerDelegate>
 
 @end
 
@@ -36,7 +36,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.delegate = self;
-    
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    __weak typeof (self) weakSelf = self;
+    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.interactivePopGestureRecognizer.delegate = weakSelf;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;    //让rootView禁止滑动
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,24 +58,30 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    //先进入子Controller
+    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.interactivePopGestureRecognizer.enabled = NO;
+    }
     [super pushViewController:viewController animated:animated];
-    if (viewController.navigationItem.leftBarButtonItem== nil && [self.viewControllers count] > 1) {
-        viewController.navigationItem.leftBarButtonItem =[self customLeftBackButton];
+    //返回按钮
+    if (viewController.navigationItem.leftBarButtonItem == nil &&
+        [self.viewControllers count] > 1) {
+        viewController.navigationItem.leftBarButtonItem = [self customLeftBackButton];
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController
+       didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
+{
+    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        navigationController.interactivePopGestureRecognizer.enabled = YES;
     }
 }
 
 #pragma mark - 自定义返回按钮图片
 -(UIBarButtonItem*)customLeftBackButton{
     UIImage *image = [UIImage imageNamed:@"back"];
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-    [backButton setBackgroundImage:image
-                          forState:UIControlStateNormal];
-    [backButton addTarget:self
-                   action:@selector(backBarButtonItemAction)
-         forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(backBarButtonItemAction)];
     return backItem;
 }
 

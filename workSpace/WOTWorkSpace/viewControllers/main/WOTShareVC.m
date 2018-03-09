@@ -26,7 +26,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"邀请好友注册";
-    [self.navigationController.navigationBar setHidden:NO];
     self.view.backgroundColor = UIColorFromRGB(0xfce7c9);
     
     self.scrollView = [[UIScrollView alloc] init];
@@ -70,6 +69,12 @@
         make.bottom.equalTo(self.view.mas_bottom).with.offset(IS_IPHONE_X?-40:-20);
     }];
     
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)didReceiveMemoryWarning {

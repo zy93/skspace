@@ -44,7 +44,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self configNaviBackItem];
-    [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 

@@ -38,7 +38,7 @@
     self.tabBarController.tabBar.translucent = NO;
     self.edgesForExtendedLayout = UIRectEdgeBottom;
     self.navigationController.navigationBar.translucent = NO;
-    [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [self createRequest];
 }
 -(void)viewWillDisappear:(BOOL)animated{
