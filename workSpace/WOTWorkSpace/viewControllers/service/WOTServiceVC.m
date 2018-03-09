@@ -264,8 +264,13 @@
         [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTFeedbackVC" object:nil];
 
     } else if ([serviceName isEqualToString:@"访客预约"]) {
-        [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTVisitorsAppointmentVC" object:nil];
-
+        if (![WOTSingtleton shared].isuserLogin) {
+            [[WOTConfigThemeUitls shared] showLoginVC:self];
+            return;
+        }else
+        {
+            [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTVisitorsAppointmentVC" object:nil];
+        }
     } else if ([serviceName isEqualToString:@"问题报修"]) {
         if (![[WOTUserSingleton shareUser].userInfo.spaceId isEqualToNumber:@0]) {
            [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKRepairsViewController" object:nil];
