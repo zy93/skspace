@@ -319,6 +319,13 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getNewServiceProviders:(response)response;
 
+/**
+ 服务页获取服务商
+ 
+ @param response 结果回调
+ */
++(void)getServiceVCServiceProviders:(response)response;
+
 
 /**
  *服务--发布需求页面

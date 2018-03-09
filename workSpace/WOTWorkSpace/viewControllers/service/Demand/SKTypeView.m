@@ -142,27 +142,7 @@
 #pragma mark - 点击方法
 -(void)clickButtonMethod:(UIButton *)button
 {
-    if (button.tag == 1) {
-        self.sureBtnsClick(@"人力资源服务");
-    }
-    if (button.tag == 2) {
-        self.sureBtnsClick(@"财税会计服务");
-    }
-    if (button.tag == 3) {
-        self.sureBtnsClick(@"法律政策咨询");
-    }
-    if (button.tag == 4) {
-        self.sureBtnsClick(@"品牌宣传推广");
-    }
-    if (button.tag == 5) {
-        self.sureBtnsClick(@"投融资对接");
-    }
-    if (button.tag == 6) {
-        self.sureBtnsClick(@"IT技术支持");
-    }
-    if (button.tag == 7) {
-        self.sureBtnsClick(@"其他");
-    }
+    self.sureBtnsClick(demandTypeList[button.tag-1000]);
     [self removeView];
 }
 
@@ -179,10 +159,10 @@
 {
     if (_button1 == nil) {
         _button1 = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_button1 setTitle:@"人力资源服务" forState:UIControlStateNormal];
+        [_button1 setTitle:demandTypeList[0] forState:UIControlStateNormal];
         [_button1 setTitleColor: [UIColor blackColor] forState:UIControlStateNormal] ;
         _button1.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
-        _button1.tag = 1;
+        _button1.tag = 1000;
         _button1.layer.cornerRadius = 5.f;
         _button1.layer.borderWidth = 1.f;
         _button1.layer.borderColor = [UIColor colorWithHexString:@"dddddd"].CGColor;
@@ -196,10 +176,10 @@
 {
     if (_button2 == nil) {
         _button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_button2 setTitle:@"财税会计服务" forState:UIControlStateNormal];
+        [_button2 setTitle:demandTypeList[1] forState:UIControlStateNormal];
         [_button2 setTitleColor: [UIColor blackColor] forState:UIControlStateNormal] ;
         _button2.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
-        _button2.tag = 2;
+        _button2.tag = 1001;
         _button2.layer.cornerRadius = 5.f;
         _button2.layer.borderWidth = 1.f;
         _button2.layer.borderColor = [UIColor colorWithHexString:@"dddddd"].CGColor;
@@ -213,10 +193,10 @@
 {
     if (_button3 == nil) {
         _button3 = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_button3 setTitle:@"法律政策咨询" forState:UIControlStateNormal];
+        [_button3 setTitle:demandTypeList[2] forState:UIControlStateNormal];
         [_button3 setTitleColor: [UIColor blackColor] forState:UIControlStateNormal] ;
         _button3.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
-        _button3.tag = 3;
+        _button3.tag = 1002;
         _button3.layer.cornerRadius = 5.f;
         _button3.layer.borderWidth = 1.f;
         _button3.layer.borderColor = [UIColor colorWithHexString:@"dddddd"].CGColor;
@@ -230,10 +210,10 @@
 {
     if (_button4 == nil) {
         _button4 = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_button4 setTitle:@"品牌宣传推广" forState:UIControlStateNormal];
+        [_button4 setTitle:demandTypeList[3] forState:UIControlStateNormal];
         [_button4 setTitleColor: [UIColor blackColor] forState:UIControlStateNormal] ;
         _button4.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
-        _button4.tag = 4;
+        _button4.tag = 1003;
         _button4.layer.cornerRadius = 5.f;
         _button4.layer.borderWidth = 1.f;
         _button4.layer.borderColor = [UIColor colorWithHexString:@"dddddd"].CGColor;
@@ -247,10 +227,10 @@
 {
     if (_button5 == nil) {
         _button5 = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_button5 setTitle:@"投融资对接" forState:UIControlStateNormal];
+        [_button5 setTitle:demandTypeList[4] forState:UIControlStateNormal];
         [_button5 setTitleColor: [UIColor blackColor] forState:UIControlStateNormal] ;
         _button5.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
-        _button5.tag = 5;
+        _button5.tag = 1004;
         _button5.layer.cornerRadius = 5.f;
         _button5.layer.borderWidth = 1.f;
         _button5.layer.borderColor = [UIColor colorWithHexString:@"dddddd"].CGColor;
@@ -264,10 +244,10 @@
 {
     if (_button6 == nil) {
         _button6 = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_button6 setTitle:@"IT技术支持" forState:UIControlStateNormal];
+        [_button6 setTitle:demandTypeList[5] forState:UIControlStateNormal];
         [_button6 setTitleColor: [UIColor blackColor] forState:UIControlStateNormal] ;
         _button6.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
-        _button6.tag = 6;
+        _button6.tag = 1005;
         _button6.layer.cornerRadius = 5.f;
         _button6.layer.borderWidth = 1.f;
         _button6.layer.borderColor = [UIColor colorWithHexString:@"dddddd"].CGColor;
@@ -281,10 +261,10 @@
 {
     if (_button7 == nil) {
         _button7 = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_button7 setTitle:@"其他" forState:UIControlStateNormal];
+        [_button7 setTitle:demandTypeList[6] forState:UIControlStateNormal];
         [_button7 setTitleColor: [UIColor blackColor] forState:UIControlStateNormal] ;
         _button7.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
-        _button7.tag = 7;
+        _button7.tag = 1006;
         _button7.layer.cornerRadius = 5.f;
         _button7.layer.borderWidth = 1.f;
         _button7.layer.borderColor = [UIColor colorWithHexString:@"dddddd"].CGColor;

@@ -21,6 +21,7 @@
 @property(nonatomic,strong)NSString *facilitatorState;
 @property(nonatomic,strong)NSString *facilitatorType;
 @property(nonatomic,strong)NSString *firmLogo;
+@property(nonatomic,strong)NSString *firmShow;
 @property(nonatomic,strong)NSString *firmName;
 @property(nonatomic,strong)NSString *tel;
 @property(nonatomic,strong)NSString *facilitatorDescribe;

@@ -743,6 +743,19 @@
     } response:response];
 }
 
++(void)getServiceVCServiceProviders:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/ShowList/find"];
+    NSDictionary *parameters = @{@"state":@"显示",
+                                 @"showClassify":@"服务页服务商"
+                                 };
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        
+        SKNewFacilitatorModel *model = [[SKNewFacilitatorModel alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
 +(void)postServiceRequestWithDescribe:(NSString *)describe spaceId:(NSString *)spaceId userId:(NSString *)userId facilitatorType:(NSString *)facilitatorType facilitatorLabel:(NSString *)facilitatorLabel  response:(response)response{
     
     NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/GetFacilitator/addGetFacilitator"];
