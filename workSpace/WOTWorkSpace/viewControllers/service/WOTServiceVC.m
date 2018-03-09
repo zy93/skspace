@@ -15,6 +15,7 @@
 #import "WOTLoginVC.h"
 #import "WOTOpenLockScanVC.h"
 #import "WOTSliderModel.h"
+#import "SKNewFacilitatorModel.h"
 #import "WOTH5VC.h"
 #import "MJRefresh.h"
 #import "SKRepairsViewController.h"
@@ -23,12 +24,20 @@
 #import "WOTEnterpriseIntroduceVC.h"
 #import "UIDevice+Resolutions.h"
 #import "WOTProvidersVC.h"
+#import "WOTGetProvidersCell.h"
+#import "WOTFeaturedProvidersCell.h"
+#import "WOTFeaturedProvidersTitleCell.h"
+#import "SKDemandInfoViewController.h"
+#import "SKDemandViewController.h"
 
 #define getService @"WOTGETServiceCell"
-#define serviceScroll @"serviceScroll"
+#define getProviders @"WOTGetProvidersCell"
+#define providersTitle @"WOTFeaturedProvidersTitleCell"
+#define providers @"WOTFeaturedProvidersCell"
+
 
 #import "WOTRefreshControlUitls.h"
-@interface WOTServiceVC () <UITableViewDelegate, UITableViewDataSource,SDCycleScrollViewDelegate, WOTGETServiceCellDelegate>
+@interface WOTServiceVC () <UITableViewDelegate, UITableViewDataSource,SDCycleScrollViewDelegate, WOTGETServiceCellDelegate, WOTGetProvidersCellDelegate, WOTFeaturedProvidersCellDelegate>
 {
     NSMutableArray *tableList;
     NSMutableArray *tableIconList;
@@ -91,10 +100,13 @@
 
 }
 
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self.navigationController.navigationBar setHidden:NO];
+    [self.tabBarController.tabBar setHidden:YES];
+    [self.tabBarController.tabBar setTranslucent:YES];
 }
 
 -(void)configNav{
@@ -156,11 +168,12 @@
 -(void)addData
 {
     NSArray *section1 = @[getService];
-    NSArray *section2 = @[serviceScroll];
+    NSArray *section2 = @[getProviders];
+    NSMutableArray *section3 = [@[providersTitle] mutableCopy];
 //    tableIconList = [@[@"visitors_icon", @"maintenance_apply_icon", @"openDoor_icon", @"get_service_icon", @"feedback_icon"] mutableCopy];
 //    NSArray *section3 = @[@"可操控设备"];
 
-    tableList = [@[section1, section2] mutableCopy];
+    tableList = [@[section1, section2, section3] mutableCopy];
     [self.table reloadData];
 }
 
@@ -175,12 +188,11 @@
     }];
     [self getFacilitatorData:^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.table reloadData];
-            //[self StopRefresh];
+            [self.view setNeedsLayout];
+            [self.table reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
         });
     }];
-    
-}
+    }
 
 #pragma mark - setup View
 -(void)loadAutoScrollView{
@@ -208,11 +220,7 @@
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-//    int coun = -2; //前两个不算.
-//    for (NSArray * arr in tableList) {
-//        coun+=arr.count;
-//    }
-    self.tableHeight.constant = 100+50+250;
+    self.tableHeight.constant = 110+155+55+((((NSArray *)tableList[2]).count-1)*350*[WOTUitls GetLengthAdaptRate]);
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetHeight(self.autoScrollView.frame)+ self.tableHeight.constant);
 }
 
@@ -268,6 +276,28 @@
     }
 }
 
+-(void)getProvidersCell:(WOTGetProvidersCell *)cell selectType:(NSString *)type
+{
+    if ([type isEqualToString:@"更多"]) {
+        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController"];
+
+    }
+    else {
+        SKDemandInfoViewController *vc = [[SKDemandInfoViewController alloc] init];
+        vc.typeString = type;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+}
+
+-(void)featuredProvidersCell:(WOTFeaturedProvidersCell *)cell selectIndex:(NSIndexPath *)index
+{
+    SKFacilitatorModel *model = tableList[index.section][index.row];
+    WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
+    vc.facilitatorModel = model;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - Table delegate & dataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -283,11 +313,21 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *arr = tableList[indexPath.section];
-    if ([arr[indexPath.row] isEqualToString:getService]) {
-        return 100;
+    if ([arr[indexPath.row] isKindOfClass:[NSString class]]) {
+        if ([arr[indexPath.row] isEqualToString:getService]) {
+            return 100;
+        }
+        else if ([arr[indexPath.row] isEqualToString:getProviders]) {
+            return 145;
+        }
+        else if ([arr[indexPath.row] isEqualToString:providersTitle]) {
+            return 45;
+        }
+        else
+            return 50;
     }
     else {
-        return 250;
+        return 340*[WOTUitls GetLengthAdaptRate];
     }
 }
 
@@ -301,27 +341,84 @@
     
     
     NSArray *arr = tableList[indexPath.section];
-    if ([arr[indexPath.row] isEqualToString:getService]) {
-        
-        WOTGETServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTGETServiceCell"];
-        if (cell == nil) {
-            cell = [[WOTGETServiceCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTGETServiceCell"];
+    if ([arr[indexPath.row] isKindOfClass:[NSString class]]) {
+        if ([arr[indexPath.row] isEqualToString:getService]) {
+            
+            WOTGETServiceCell *cell = [tableView dequeueReusableCellWithIdentifier:getService];
+            if (cell == nil) {
+                cell = [[WOTGETServiceCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:getService];
+            }
+            cell.mDelegate = self;
+            return cell;
         }
-        cell.mDelegate = self;
-        return cell;
+        else if ([arr[indexPath.row] isEqualToString:getProviders]){
+            WOTGetProvidersCell *cell = [tableView dequeueReusableCellWithIdentifier:getProviders];
+            if (cell == nil) {
+                cell = [[WOTGetProvidersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:getProviders];
+            }
+            cell.delegate = self;
+            return cell;
+        }
+        else { //if ([arr[indexPath.row] isEqualToString:providersTitle])
+            WOTFeaturedProvidersTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:providersTitle];
+            if (cell == nil) {
+                cell = [[WOTFeaturedProvidersTitleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:providersTitle];
+            }
+            return cell;
+        }
     }
     else {
-        WOTServiceForProvidersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTServiceForProvidersCell"];
+        WOTFeaturedProvidersCell *cell = [tableView dequeueReusableCellWithIdentifier:providers];
         if (cell == nil) {
-            cell = [[WOTServiceForProvidersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WOTServiceForProvidersCell"];
+            cell = [[WOTFeaturedProvidersCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:providers];
         }
-        [cell.joinButton addTarget:self action:@selector(joinButtonMethod) forControlEvents:UIControlEventTouchDown];
-        [cell setData:self.facilitatorData];
-        cell.imageBlock = ^(NSInteger tapTag){
-            NSLog(@"%ld",tapTag);
-            __weak typeof(self) weakSelf = self;
-            [weakSelf facilitatorInfoMethod:tapTag];
-        };
+        SKFacilitatorInfoModel *model = arr[indexPath.row];
+        [cell.iconIV setImageWithURL:[model.firmLogo ToResourcesUrl]];
+        cell.titleLab.text = model.firmName;
+        [cell.contentIV setImageWithURL:[model.firmShow ToResourcesUrl]];
+        cell.delegate = self;
+        cell.index = indexPath;
+        NSArray *typeArr = [model.facilitatorType componentsSeparatedByString:@","];
+        if (typeArr.count==0) {
+            cell.type1Lab.hidden = YES;
+            cell.type2Lab.hidden = YES;
+            cell.type3Lab.hidden = YES;
+            cell.type4Lab.hidden = YES;
+        }
+        else if (typeArr.count == 1) {
+            cell.type1Lab.hidden = NO;
+            cell.type1Lab.text = typeArr.firstObject;
+            cell.type2Lab.hidden = YES;
+            cell.type3Lab.hidden = YES;
+            cell.type4Lab.hidden = YES;
+        }
+        else if (typeArr.count == 2) {
+            cell.type1Lab.hidden = NO;
+            cell.type1Lab.text = typeArr.firstObject;
+            cell.type2Lab.hidden = NO;
+            cell.type2Lab.text = typeArr.lastObject;
+            cell.type3Lab.hidden = YES;
+            cell.type4Lab.hidden = YES;
+        }
+        else if (typeArr.count == 3) {
+            cell.type1Lab.hidden = NO;
+            cell.type1Lab.text = typeArr.firstObject;
+            cell.type2Lab.hidden = NO;
+            cell.type2Lab.text = typeArr[1];
+            cell.type3Lab.hidden = NO;
+            cell.type3Lab.text = typeArr.lastObject;
+            cell.type4Lab.hidden = YES;
+        }
+        else if (typeArr.count == 4) {
+            cell.type1Lab.hidden = NO;
+            cell.type1Lab.text = typeArr.firstObject;
+            cell.type2Lab.hidden = NO;
+            cell.type2Lab.text = typeArr[1];
+            cell.type3Lab.hidden = NO;
+            cell.type3Lab.text = typeArr[2];
+            cell.type4Lab.hidden = NO;
+            cell.type4Lab.text = typeArr.lastObject;
+        }
         return cell;
     }
 }
@@ -329,6 +426,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section==2 && indexPath.row==0) {
+        [self joinButtonMethod];
+    }
 }
 
 #pragma mark - 申请入驻
@@ -357,12 +457,14 @@
 #pragma mark - 获取服务商列表
 -(void)getFacilitatorData:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getServiceProviders:^(id bean, NSError *error) {
-        complete();
-        SKFacilitatorModel *model = (SKFacilitatorModel *)bean;
+    [WOTHTTPNetwork getServiceVCServiceProviders:^(id bean, NSError *error) {
+        SKNewFacilitatorModel *model = (SKNewFacilitatorModel *)bean;
         if ([model.code isEqualToString:@"200"]) {
-            weakSelf.facilitatorData = model.msg.list;
-            
+            weakSelf.facilitatorData = model.msg;
+            NSMutableArray *section3 = [@[providersTitle] mutableCopy];
+            [section3 addObjectsFromArray:model.msg];
+            [tableList removeLastObject];
+            [tableList addObject:section3];
         }else
         {
             [MBProgressHUDUtil showMessage:@"获取服务商失败！" toView:self.view];

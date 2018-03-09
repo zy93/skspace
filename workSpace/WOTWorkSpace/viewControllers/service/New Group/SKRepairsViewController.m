@@ -74,18 +74,6 @@
     [self layoutSubviews];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    //self.navigationController.navigationBar.translucent = NO;
-
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
 #pragma mark - 布局约束
 -(void)layoutSubviews
 {

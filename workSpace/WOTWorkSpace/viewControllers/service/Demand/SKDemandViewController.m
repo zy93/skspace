@@ -30,19 +30,6 @@
     [self layoutSubviews];
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.tabBarController.tabBar setHidden:NO];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    [self.tabBarController.tabBar setHidden:YES];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -52,7 +39,7 @@
 -(void)layoutSubviews
 {
     [self.demandTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).with.offset(64);
+        make.top.equalTo(self.view);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
@@ -115,7 +102,7 @@
 -(void)loadData
 {
     self.headerStr = @"选择您的需求类型";
-    self.typeArray = @[@"人力资源服务",@"财税会计服务",@"法律政策咨询",@"品牌宣传推广",@"投融资对接",@"IT技术支持",@"其他"];
+    self.typeArray = @[@"金融服务",@"人力资源&党建",@"品牌营销推广",@"智能信息化",@"政府事务",@"工商财税注册",@"其他"];
 }
 -(UITableView *)demandTableView
 {
