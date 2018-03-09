@@ -31,12 +31,19 @@
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(i==0?enterpriseIVSpaceStartX: (i*enterpriseIVWidth)+((i)*enterpriseIVSpaceGap)+enterpriseIVSpaceStartX, 0, enterpriseIVWidth, self.frame.size.height)];
         [iv setImageWithURL:[model.companyPicture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
         
+        UILabel *companyName = [[UILabel alloc] initWithFrame:CGRectMake(i==0?enterpriseIVSpaceStartX: (i*enterpriseIVWidth)+((i)*enterpriseIVSpaceGap)+enterpriseIVSpaceStartX, self.frame.size.height-20, enterpriseIVWidth, 20)];
+        companyName.backgroundColor =[UIColor colorWithWhite:0.0 alpha:0.3];;
+        companyName.textAlignment = NSTextAlignmentCenter;
+        [companyName setFont:[UIFont systemFontOfSize:12]];
+        companyName.textColor = [UIColor whiteColor];
+        companyName.text = model.companyName;
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.tag = i;
         [btn addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
         [btn setFrame:iv.frame];
         
         [self addSubview:iv];
+        [self addSubview:companyName];
         [self addSubview:btn];
     }
     self.contentSize = CGSizeMake(enterpriseIVWidth*data.count+(enterpriseIVSpaceGap*(data.count+1)+enterpriseIVSpaceStartX), self.frame.size.height);

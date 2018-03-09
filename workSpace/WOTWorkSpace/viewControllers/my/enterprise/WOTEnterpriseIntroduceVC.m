@@ -69,6 +69,11 @@
 #pragma mark - cell delegate
 -(void)enterpriseCellApplyJoin:(WOTEnterpriseIntroduceNameCell *)cell
 {
+    //先判断是否登录
+    if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
+        [MBProgressHUDUtil showMessage:@"请先登录!" toView:self.view];
+        return;
+    }
     [WOTHTTPNetwork applyJoinEnterpriseWithEnterpriseId:self.model.companyId enterpriseName:self.model.companyName response:^(id bean, NSError *error) {
         WOTApplyJoinEnterpriseModel_msg *joinModel = bean;
         if ([joinModel.code isEqualToString:@"200"]) {

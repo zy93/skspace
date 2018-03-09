@@ -123,12 +123,12 @@
     
     
     self.registerGetVCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.registerGetVCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [self.registerGetVCodeButton addTarget:self action:@selector(getRegisterVerificationCode:) forControlEvents:UIControlEventTouchDown];
+    self.registerGetVCodeButton.titleLabel.font = [UIFont systemFontOfSize:10];
     self.registerGetVCodeButton.layer.cornerRadius = 5.f;
     self.registerGetVCodeButton.layer.borderWidth = 1.f;
     self.registerGetVCodeButton.layer.borderColor = UICOLOR_MAIN_ORANGE.CGColor;
-    [self.registerGetVCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [self.registerGetVCodeButton addTarget:self action:@selector(getRegisterVerificationCode:) forControlEvents:UIControlEventTouchDown];
-    self.registerGetVCodeButton.titleLabel.font = [UIFont systemFontOfSize:12];
     [self.registerGetVCodeButton setTitleColor:UICOLOR_MAIN_ORANGE forState:UIControlStateNormal];
     self.registerButton.titleLabel.textColor = UICOLOR_MAIN_ORANGE;
     self.registerButton.layer.cornerRadius = 5.f;
@@ -200,7 +200,7 @@
         make.centerY.equalTo(self.registerVCodeImageView);
         //make.left.equalTo(self.registerVCodeText.mas_right);
         make.right.equalTo(self.registerView).with.offset(-20);
-        //make.width.mas_equalTo(100);
+        make.width.mas_equalTo(60);
     }];
     
     [self.registerLineView2 mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -88,6 +88,11 @@
     [self createRequest];
 }
 
+-(void)loadMoreTopic
+{
+    
+}
+
 - (void)StopRefresh
 {
     if (_tableVIew.mj_header != nil && [_tableVIew.mj_header isRefreshing])
@@ -119,6 +124,7 @@
         }
     }];
 }
+
 
 -(void)getSpaceRequestWithCityName:(NSString *)cityName
 {

@@ -322,7 +322,7 @@
 }
 
 
-#pragma mark - t比较
+#pragma mark - 访客预约提交按钮
 - (IBAction)submit:(id)sender {
     NSString *visitorName = self.nameText.text;
     NSString *sex = self.genderValueLab.text;
@@ -333,7 +333,15 @@
     NSString *visitorInfo = self.accessReasonText.text;
     NSNumber *number = @(self.accessNumberText.text.integerValue);
     NSString *tim = self.visitTime;
-    
+    //判断是否登录
+    //先判断是否登录
+    if (![WOTUserSingleton shareUser].userInfo.userId) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"未登录" message:@"请先登录用户" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"跳转到");
+            [[WOTConfigThemeUitls shared] showLoginVC:self];
+        }];
+    }
     if (strIsEmpty(visitorName)) {
         [MBProgressHUDUtil showMessage:@"请输入访客姓名" toView:self.view];
         return;

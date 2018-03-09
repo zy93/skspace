@@ -150,7 +150,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 - (void) initTableview{
     
-    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64-48-40)];
+    mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)];
     mainTable.backgroundColor = [UIColor clearColor];
     // mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
@@ -632,7 +632,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                     [ymData.completionReplySource removeAllObjects];
                     [ymData.attributedDataReply removeAllObjects];
                     
-                    
                     ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
                     [_tableDataSource replaceObjectAtIndex:actionSheet.actionIndex withObject:ymData];
                     
@@ -645,8 +644,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                 _replyIndex = -1;
             }
         }];
-        
-        
     }else{
         _replyIndex = -1;
     }

@@ -145,7 +145,7 @@
   
 #pragma mark - // /////////添加说说view
 
-    WFTextView *textView = [[WFTextView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x, 5 + self.userNameLbl.frame.origin.y+self.userNameLbl.frame.size.height, screenWidth - self.userNameLbl.frame.origin.x-15, 0)];
+    WFTextView *textView = [[WFTextView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x,  self.userNameLbl.frame.origin.y+self.userNameLbl.frame.size.height, screenWidth - self.userNameLbl.frame.origin.x-15, 0)];
     textView.delegate = self;
     textView.attributedData = ymData.attributedDataShuoshuo;
     //textView.textColor = [UIColor redColor];
@@ -157,7 +157,7 @@
     BOOL foldOrnot = ymData.foldOrNot;
     float hhhh = foldOrnot?ymData.shuoshuoHeight:ymData.unFoldShuoHeight;
     
-    textView.frame = CGRectMake(self.userNameLbl.frame.origin.x, 5 + self.userNameLbl.frame.origin.y+self.userNameLbl.frame.size.height,screenWidth - self.userNameLbl.frame.origin.x-15, hhhh);
+    textView.frame = CGRectMake(self.userNameLbl.frame.origin.x, self.userNameLbl.frame.origin.y+self.userNameLbl.frame.size.height,screenWidth - self.userNameLbl.frame.origin.x-15, hhhh);
     
     [_ymShuoshuoArray addObject:textView];
     
@@ -301,7 +301,7 @@
     
     for (int i = 0; i < showNum; i ++ ) {
         
-        WFTextView *_ilcoreText = [[WFTextView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x,TableHeader + 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - offSet_X * 2, 0)];
+        WFTextView *_ilcoreText = [[WFTextView alloc] initWithFrame:CGRectMake(self.userNameLbl.frame.origin.x,TableHeader + 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - self.userNameLbl.frame.origin.x-10, 0)];
         
         if (i == 0) {
             backView_Y = TableHeader + 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30);
@@ -332,7 +332,8 @@
         }
         
         
-        _ilcoreText.frame = CGRectMake(self.userNameLbl.frame.origin.x, 5+10+10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - offSet_X * 2, [_ilcoreText getTextHeight]);
+        _ilcoreText.frame = CGRectMake(self.userNameLbl.frame.origin.x, 5+10+10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance + ymData.favourHeight + (ymData.favourHeight == 0?0:kReply_FavourDistance), screenWidth - self.userNameLbl.frame.origin.x-10, [_ilcoreText getTextHeight]);
+         
         [self.contentView addSubview:_ilcoreText];
         origin_Y += [_ilcoreText getTextHeight] + 5 ;
         
