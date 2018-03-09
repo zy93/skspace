@@ -60,25 +60,18 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     
 }
 
-//@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong) WFPopView *operationView;
 @property (nonatomic,strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic,strong) NSMutableArray<CircleofFriendsInfoModel *> *circleofFriendsList;
 @property (nonatomic,strong) NSString *replyState;
-//@property (nonatomic,strong) WFMessageBody *selectMessage;
-
+@property (nonatomic,assign) int pageNum;
 @end
 
 @implementation WOTNearCirclesVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[_tableView registerNib:[UINib nibWithNibName:@"WOTSocialContactCell" bundle:nil] forCellReuseIdentifier:@"WOTSocialContactCellID"];
-    //[self AddRefreshHeader];
-    // Do any additional setup after loading the view.
-    //解决布局空白问题
-    //self.circleofFriendsList = [[NSMutableArray alloc] init];
-    //self.replyModelArray = [[NSMutableArray alloc] init];
+    self.pageNum = 1;
     UIScrollView *scView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.view = scView;
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
@@ -155,6 +148,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     // mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
     mainTable.mj_header.automaticallyChangeAlpha = YES;
+    
+    mainTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopic)];
     mainTable.delegate = self;
     mainTable.dataSource = self;
     mainTable.estimatedRowHeight = 0;
@@ -237,7 +232,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     //先判断是否已经登录
     [self.circleofFriendsList removeAllObjects];
     if ([WOTUserSingleton shareUser].userInfo.spaceId) {
-        [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@1000 response:^(id bean, NSError *error) {
+        [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@10 response:^(id bean, NSError *error) {
             [self StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
@@ -277,15 +272,46 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 //    pTableView.mj_header.automaticallyChangeAlpha = YES;
 //}
 
+#pragma mark - 下拉刷新
 - (void)StartRefresh
 {
+    self.pageNum = 1;
     if (mainTable.mj_footer != nil && [mainTable.mj_footer isRefreshing])
     {
         [mainTable.mj_footer endRefreshing];
     }
-    [self createRequest];
+    [self.circleofFriendsList removeAllObjects];
+    if ([WOTUserSingleton shareUser].userInfo.spaceId) {
+        [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:[NSNumber numberWithInt:self.pageNum] pageSize:@10 response:^(id bean, NSError *error) {
+            [self StopRefresh];
+            QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
+            self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
+            if ([model.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self configData];
+                    [self loadTextData];
+                    [mainTable reloadData];
+                    [self StopRefresh];
+                });
+            }
+            else
+            {
+                if ([model.code isEqualToString:@"202"]) {
+                    [MBProgressHUDUtil showMessage:@"没有数据！" toView:self.view];
+                    return ;
+                }else
+                {
+                    [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
+                    return ;
+                }
+            }
+        }];
+    } else {
+        [MBProgressHUDUtil showMessage:@"请先登录后再查看！" toView:self.view];
+    }
 }
 
+#pragma mark - 停止刷新
 - (void)StopRefresh
 {
     if (mainTable.mj_header != nil && [mainTable.mj_header isRefreshing])
@@ -294,6 +320,51 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     }
 }
 
+#pragma mark - 停止刷新
+- (void)stoploadMoreTopic
+{
+    if (mainTable.mj_footer != nil && [mainTable.mj_footer isRefreshing])
+    {
+        [mainTable.mj_footer endRefreshing];
+    }
+}
+
+#pragma mark - 上拉刷新
+-(void)loadMoreTopic
+{
+    self.pageNum++;
+    if ([WOTUserSingleton shareUser].userInfo.spaceId) {
+        [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:[NSNumber numberWithInt:self.pageNum] pageSize:@10 response:^(id bean, NSError *error) {
+            [self StopRefresh];
+            QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
+            
+            
+            if ([model.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.circleofFriendsList addObjectsFromArray:model.msg.list];
+                    [self configData];
+                    [self loadTextData];
+                    [mainTable reloadData];
+                   //[mainTable endUpdates];
+                    [self stoploadMoreTopic];
+                });
+            }
+            else
+            {
+                if ([model.code isEqualToString:@"202"]) {
+                    [MBProgressHUDUtil showMessage:@"没有数据！" toView:self.view];
+                    return ;
+                }else
+                {
+                    [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
+                    return ;
+                }
+            }
+        }];
+    } else {
+        [MBProgressHUDUtil showMessage:@"请先登录后再查看！" toView:self.view];
+    }
+}
 
 
 #pragma mark - UITableViewDataSource
@@ -692,11 +763,5 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 {
     [self.tabBarController.tabBar setHidden:NO];
 }
-
-//- (void)dealloc{
-//    
-//    NSLog(@"销毁");
-//    
-//}
 
 @end

@@ -509,6 +509,7 @@ int a = 0;
     PGCustomBannerView *bannerView = (PGCustomBannerView *)[flowView dequeueReusableCell];
     if (!bannerView) {
         bannerView = [[PGCustomBannerView alloc] init];
+        bannerView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
         bannerView.tag = index;
 //        bannerView.layer.cornerRadius = 5;
         bannerView.layer.masksToBounds = YES;
@@ -520,6 +521,9 @@ int a = 0;
     NSArray *arr = [self.spaceData[index].spacePicture componentsSeparatedByString:@","];
     [bannerView.mainImageView sd_setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
     bannerView.indexLabel.text = [NSString stringWithFormat:@"%@",self.spaceData[index].spaceName];
+    bannerView.spaceCityLabel.text = [NSString stringWithFormat:@"|%@|",self.spaceData[index].city];
+    //bannerView.numberLabel.text = [NSString stringWithFormat:@"|%@|",self.spaceData[index].city];
+    bannerView.numberLabel.text = @"0个工位";
     return bannerView;
 }
 
@@ -579,10 +583,12 @@ int a = 0;
     if ([detailvc.url isEqualToString:@"http://219.143.170.98:10011/SKwork/SKmaker/share/shareRegistration.html"]) {
         WOTShareVC *vc = [[WOTShareVC alloc] init];
         vc.shareUrl = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
+        vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
 
         return;
     }
+    detailvc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 

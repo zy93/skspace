@@ -80,7 +80,7 @@
 }
 
 -(NSArray *)createTitles{
-    return [[NSArray alloc]initWithObjects:@"全部",@"关注",@"评价",nil];
+    return [[NSArray alloc]initWithObjects:@"全部",@"关注",@"评论",nil];
 }
 -(NSArray<__kindof UIViewController *> *)createViewControllers{
     WOTNearCirclesVC *circle = [[UIStoryboard storyboardWithName:@"Socialcontact" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTNearCirclesVCID"];

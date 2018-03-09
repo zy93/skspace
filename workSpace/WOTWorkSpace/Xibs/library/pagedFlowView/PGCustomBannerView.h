@@ -10,6 +10,8 @@
 
 @interface PGCustomBannerView : PGIndexBannerSubiew
 
+@property (nonatomic, strong) UILabel *spaceCityLabel;
 @property (nonatomic, strong) UILabel *indexLabel;
+@property (nonatomic, strong) UILabel *numberLabel;
 
 @end
