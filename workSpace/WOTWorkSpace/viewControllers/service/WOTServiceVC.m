@@ -96,17 +96,13 @@
     //不要使用点语法，否则会设置失败。。。
     [self.tabBarController.tabBar setHidden:NO];
     [self.tabBarController.tabBar setTranslucent:NO];
-    [self.navigationController.navigationBar setHidden:YES];
-
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
-
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setHidden:NO];
-    [self.tabBarController.tabBar setHidden:YES];
-    [self.tabBarController.tabBar setTranslucent:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 -(void)configNav{
@@ -225,7 +221,7 @@
 }
 
 #pragma mark - 页面跳转、该页面内请尽量都用此方法
--(void)pushToViewControllerWithStoryBoardName:(NSString * _Nullable)sbName viewControllerName:(NSString *)vcName
+-(void)pushToViewControllerWithStoryBoardName:(NSString * _Nullable)sbName viewControllerName:(NSString *)vcName object:(id)object
 {
     UIViewController *vc = nil;
     if (strIsEmpty(sbName)) {
@@ -236,6 +232,21 @@
         vc = [[UIStoryboard storyboardWithName:sbName bundle:nil] instantiateViewControllerWithIdentifier:vcName];
     }
     
+    if ([vc isKindOfClass:[WOTH5VC class]]) {
+        ((WOTH5VC *)vc).url = object;
+    }
+    else if ([vc isKindOfClass:[SKDemandInfoViewController class]]) {
+        ((SKDemandInfoViewController *)vc).typeString = object;
+    }
+    else if ([vc isKindOfClass:[WOTProvidersVC class]]) {
+        ((WOTProvidersVC *)vc).facilitatorModel = object;
+    }
+    else if ([vc isKindOfClass:[WOTProvidersVC class]]) {
+        ((WOTProvidersVC *)vc).facilitatorModel = object;
+    }
+
+    [self.tabBarController.tabBar setHidden:YES];
+    [self.tabBarController.tabBar setTranslucent:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -243,44 +254,40 @@
 /** 点击图片回调 */
 //MARK:SDCycleScrollView   Delegate  点击轮播图显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    detailvc.url = self.bannerData[index].webpageUrl;
-    [self.navigationController pushViewController:detailvc animated:YES];
-    NSLog(@"%@+%ld",cycleScrollView.titlesGroup[index],index);
+    [self pushToViewControllerWithStoryBoardName:@"spaceMain" viewControllerName:@"WOTworkSpaceDetailVC" object:self.bannerData[index].webpageUrl];
 }
 
 #pragma mark - cell delegate
 -(void)optionService:(NSString *)serviceName
 {
     if ([serviceName isEqualToString:@"意见反馈"]) {
-        [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTFeedbackVC"];
+        [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTFeedbackVC" object:nil];
 
     } else if ([serviceName isEqualToString:@"访客预约"]) {
-        [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTVisitorsAppointmentVC"];
+        [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTVisitorsAppointmentVC" object:nil];
 
     } else if ([serviceName isEqualToString:@"问题报修"]) {
         if (![[WOTUserSingleton shareUser].userInfo.spaceId isEqualToNumber:@0]) {
-           [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKRepairsViewController"];
+           [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKRepairsViewController" object:nil];
         }else
         {
             [MBProgressHUDUtil showMessage:@"请先加入企业！" toView:self.view];
         }
         
     } else if ([serviceName isEqualToString:@"发布需求"]) {
-        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController"];
+        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController" object:nil];
     }
 }
 
 -(void)getProvidersCell:(WOTGetProvidersCell *)cell selectType:(NSString *)type
 {
     if ([type isEqualToString:@"更多"]) {
-        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController"];
+        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController" object:nil];
 
     }
     else {
-        SKDemandInfoViewController *vc = [[SKDemandInfoViewController alloc] init];
-        vc.typeString = type;
-        [self.navigationController pushViewController:vc animated:YES];
+        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandInfoViewController" object:type];
+
     }
     
 }
@@ -288,9 +295,8 @@
 -(void)featuredProvidersCell:(WOTFeaturedProvidersCell *)cell selectIndex:(NSIndexPath *)index
 {
     SKFacilitatorModel *model = tableList[index.section][index.row];
-    WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
-    vc.facilitatorModel = model;
-    [self.navigationController pushViewController:vc animated:YES];
+    [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"WOTProvidersVC" object:model];
+
 }
 
 #pragma mark - Table delegate & dataSource
@@ -429,7 +435,7 @@
 #pragma mark - 申请入驻
 -(void)joinButtonMethod
 {
-    [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"WOTRegisterServiceProvidersVC"];
+    [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"WOTRegisterServiceProvidersVC" object:nil];
 }
 
 #pragma mark - 获取服务banner数据
@@ -484,10 +490,8 @@
 //    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
 //    vc.facilitatorModel = self.facilitatorData[tapTag];
 //    vc.vcType = INTRODUCE_VC_TYPE_Providers;
-    WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
-    vc.facilitatorModel = self.facilitatorData[tapTag];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    [self pushToViewControllerWithStoryBoardName:nil viewControllerName:@"WOTProvidersVC" object:self.facilitatorData[tapTag]];
+    
 }
 
 @end

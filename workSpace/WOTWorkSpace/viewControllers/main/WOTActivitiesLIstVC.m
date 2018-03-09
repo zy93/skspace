@@ -46,7 +46,7 @@ bool ismenu1 =  NO;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [self crectRequest];
 }
 

@@ -56,7 +56,7 @@
    // [selectedPhotoArray addObject:[UIImage imageNamed:@"addPhoto"]];
     //[self.tableView reloadData];
     
-    [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (IBAction)sunmitAction:(id)sender {

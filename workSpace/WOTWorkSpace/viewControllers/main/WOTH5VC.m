@@ -45,10 +45,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.translucent = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.translucent = YES;
+}
+
 
 -(void)congigNav{
     self.navigationItem.title = @"详情";
-    [self.navigationController.navigationBar setHidden:NO];
     //
     UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(shareDetail)];
     [self.navigationItem setRightBarButtonItem:shareItem];
@@ -59,12 +69,7 @@
     }
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    self.navigationController.navigationBar.translucent = NO;
-}
--(void)viewWillDisappear:(BOOL)animated{
-    self.navigationController.navigationBar.translucent = YES;
-}
+
 -(void)setUrl:(NSString *)url
 {
     _url = url;
