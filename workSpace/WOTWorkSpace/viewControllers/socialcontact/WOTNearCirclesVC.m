@@ -31,7 +31,7 @@
 #define dataCount 10
 #define kLocationToBottom 20
 #define kAdmin @"小虎-tiger"
-
+static const CGFloat MJDuration = 2.0;
 
 typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     FDSimulatedCacheModeNone = 0,
@@ -340,13 +340,27 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             
             
             if ([model.code isEqualToString:@"200"]) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.circleofFriendsList addObjectsFromArray:model.msg.list];
-                    [self configData];
-                    [self loadTextData];
-                    [mainTable reloadData];
-                   //[mainTable endUpdates];
-                    [self stoploadMoreTopic];
+                //dispatch_async(dispatch_get_main_queue(), ^{
+                
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                        [self.circleofFriendsList addObjectsFromArray:model.msg.list];
+//                        [self configData];
+//                        [self loadTextData];
+//                        [mainTable reloadData];
+//                    });
+//
+//                    [self stoploadMoreTopic];
+                [self.circleofFriendsList addObjectsFromArray:model.msg.list];
+                [self configData];
+                [self loadTextData];
+                __weak UITableView *tableView = mainTable;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    // 刷新表格
+                    [tableView reloadData];
+                    
+                    // 拿到当前的上拉刷新控件，结束刷新状态
+                    [tableView.mj_footer endRefreshing];
                 });
             }
             else
