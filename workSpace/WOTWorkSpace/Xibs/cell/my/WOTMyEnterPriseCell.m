@@ -14,6 +14,8 @@
     [super awakeFromNib];
     [[WOTConfigThemeUitls shared]setLabelColorss:[NSArray arrayWithObjects:self.enterpariseName,self.joinEnterpriseTime, nil] withColor:UICOLOR_MAIN_TEXT];
     // Initialization code
+    self.enterpriseHeaderImage.layer.cornerRadius = 3.f;
+    self.enterpriseHeaderImage.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

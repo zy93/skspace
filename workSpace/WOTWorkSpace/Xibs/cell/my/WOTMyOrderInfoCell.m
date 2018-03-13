@@ -28,10 +28,11 @@
 
 -(void)layoutSubviews
 {
+    [super layoutSubviews];
     //弧形背景
     self.bgIV.clipsToBounds = YES;
-    NSLog(@"----%f, %f", self.bgIV.bounds.size.width, self.bgIV.bounds.size.height);
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bgIV.bounds byRoundingCorners: UIRectCornerTopLeft|UIRectCornerTopRight cornerRadii:CGSizeMake(10, 10)];
+    CGRect rect=  CGRectMake(self.bgIV.bounds.origin.x, self.bgIV.bounds.origin.y, SCREEN_WIDTH-40, self.bgIV.bounds.size.height);
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners: UIRectCornerTopLeft|UIRectCornerTopRight cornerRadii:CGSizeMake(10, 10)];
     //mask
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
     maskLayer.frame = self.bgIV.bounds;

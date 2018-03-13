@@ -1017,6 +1017,7 @@
                           @"conferenceName":self.meetingModel.conferenceName,
                           @"commodityNum":self.meetingModel.conferenceId,
                           @"commodityName":self.meetingModel.conferenceName,
+                          @"commodityKind":self.commodityKind,
                           @"startTime":arr.firstObject,
                           @"endTime":arr.lastObject,
                           @"company":self.meetingModel.conferenceName,

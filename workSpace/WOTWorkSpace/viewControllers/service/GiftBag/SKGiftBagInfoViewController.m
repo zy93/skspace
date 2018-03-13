@@ -275,7 +275,7 @@
                                  @"trade_type":@"APP",
                                  @"commodityName":self.giftBagModel.giftName,
                                  @"imageSite":self.giftBagModel.picture,
-                                 @"commodityKind":self.commodityDescribeStr,
+                                 @"commodityKind":@"礼包",
                                  @"productNum":@1,
                                  @"money":self.paySumNumber,//self.paySumNumber
                                  @"payType":@1,
@@ -305,7 +305,7 @@
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
                                  @"commodityName":self.giftBagModel.giftName,
-                                 @"commodityKind":self.commodityDescribeStr,
+                                 @"commodityKind":@"礼包",
                                  @"productNum":@1,
                                  @"imageSite":self.giftBagModel.picture,
                                  @"money":@0.01,//self.paySumNumber

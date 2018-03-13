@@ -53,6 +53,7 @@
 #import "SKNewEnterpriseModel.h"
 #import "SKMyActivityModel.h"
 #import "SKGiftBagModel.h"
+#import "WOTRepairHistoryModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -734,7 +735,6 @@
     NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/ShowList/find"];
     NSDictionary *parameters = @{@"state":@"显示",
                                  @"showClassify":@"服务商"
-                                 
                                  };
     [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
         
@@ -1043,6 +1043,16 @@
     NSDictionary *parameters = @{@"userId":userId,@"alias":alias,@"type":type,@"info":info,@"appointmentTime":appointmentTime,@"address":address};
     [self doFileRequestWithParameters:parameters useUrl:applyurl image:file complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
++(void)getUserRepairHistoryResponse:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/MaintainInfo/findByUserId"];
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId};
+    [self doRequestWithParameters:parameters useUrl:url  complete:^JSONModel *(id responseobj) {
+        WOTRepairHistoryModel_msg *model = [[WOTRepairHistoryModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  model;
     } response:response];
 }

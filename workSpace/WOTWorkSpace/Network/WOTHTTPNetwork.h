@@ -493,6 +493,13 @@ typedef void(^response)(id bean,NSError *error);
 +(void)postRepairApplyWithUserId:(NSNumber *)userId type:(NSString *)type info:(NSString *)info appointmentTime:(NSString *)appointmentTime address:(NSString *)address file:(NSArray<UIImage *> *)file alias:(NSString *)alias  response:(response)response;
 
 
+/**
+ 获取用户报修记录
+
+ @param response 返回回调
+ */
++(void)getUserRepairHistoryResponse:(response)response;
+
 
 #pragma mark - 订单
 

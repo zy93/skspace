@@ -54,24 +54,17 @@
     
     if ([self.model.commodityKind isEqualToString:@"会议室"]) {
         [self.tableList insertObject:@[@"预定会议室", @"预定时间"] atIndex:1];
-        [self.tableList insertObject:@[@"开放时间"  , @"配套设施"] atIndex:3];
-        [self.tableValueList insertObject:@[[NSString stringWithFormat:@"%@·%@",self.model.spaceName,self.model.commodityName], [NSString stringWithFormat:@"%@\n%@",[self.model.starTime substringToIndex:11],[self.model.endTime substringToIndex:11]]] atIndex:1];
-        [self.tableValueList insertObject:@[@"8:00-20:00",@"xx"] atIndex:3];
+        [self.tableValueList insertObject:@[[NSString stringWithFormat:@"%@·%@",self.model.spaceName,self.model.commodityName], [NSString stringWithFormat:@"%@\n%@",[self.model.starTime substringToIndex:16],[self.model.endTime substringToIndex:16]]] atIndex:1];
 
     }
     else if ([self.model.commodityKind isEqualToString:@"场地"]) {
         [self.tableList insertObject:@[@"预定场地", @"预定时间"] atIndex:1];
-        [self.tableList insertObject:@[@"开放时间"  , @"配套设施"] atIndex:3];
-        [self.tableValueList insertObject:@[[NSString stringWithFormat:@"%@·%@",self.model.spaceName,self.model.commodityName], [NSString stringWithFormat:@"%@\n%@",[self.model.starTime substringToIndex:11],[self.model.endTime substringToIndex:11]]] atIndex:1];
-        [self.tableValueList insertObject:@[@"8:00-20:00",@"xx"] atIndex:3];
+        [self.tableValueList insertObject:@[[NSString stringWithFormat:@"%@·%@",self.model.spaceName,self.model.commodityName], [NSString stringWithFormat:@"%@\n%@",[self.model.starTime substringToIndex:16],[self.model.endTime substringToIndex:16]]] atIndex:1];
     }
     else if ([self.model.commodityKind isEqualToString:@"工位"]) {
         [self.tableList insertObject:@[@"预定空间", @"预定时间"] atIndex:1];
-        [self.tableList insertObject:@[@"开放时间"  , @"配套设施"] atIndex:3];
 
         [self.tableValueList insertObject:@[[NSString stringWithFormat:@"%@·%@",self.model.spaceName,self.model.commodityName], [NSString stringWithFormat:@"%@\n%@",[self.model.starTime substringToIndex:11],[self.model.endTime substringToIndex:11]]] atIndex:1];
-        [self.tableValueList insertObject:@[@"8:00-20:00",@"xx"] atIndex:3];
-
     }
     //礼包
     else  {
