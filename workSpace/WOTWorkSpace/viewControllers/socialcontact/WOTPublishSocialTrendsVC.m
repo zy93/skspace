@@ -17,10 +17,9 @@
 #import "TZImagePickerController.h"
 
 #define TextViewPlaceholder @"想你所想，写你想讲..."
+
 @interface WOTPublishSocialTrendsVC ()<UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,TZImagePickerControllerDelegate>
-//{
-//    ZLPhotoActionSheet *actionSheet;
-//}
+
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIView *collectionSuperVIew;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -55,12 +54,7 @@
     _collectionView.dataSource =self;
     [_collectionView setScrollEnabled:NO];
     [_collectionView registerClass:[TZTestCell class] forCellWithReuseIdentifier:@"TZTestCell"];
-//    [_collectionView registerNib:[UINib nibWithNibName:@"WOTImageCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"WOTImageCollectionViewCellID"];
-    
-   // [self loadLoaction];
-    //[self.photosArray addObject:[self createAddImage]];
 
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {

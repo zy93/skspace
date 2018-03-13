@@ -1223,6 +1223,20 @@
     } response:response];
 }
 
+#pragma mark -删除朋友圈
++(void)deleteCircleofFriendsWithFriendId:(NSNumber *)friendId response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/del",HTTPBaseURL];
+    NSDictionary *parameters = @{@"friendId":friendId
+                                 };
+    
+    [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model14 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model14;
+    } response:response];
+}
+
+
 +(void)addReplyWithFriendId:(NSNumber *)friendId byReplyid:(NSNumber *)byReplyid byReplyname:(NSString *)byReplyname replyId:(NSNumber *)replyId replyName:(NSString *)replyName replyInfo:(NSString *)replyInfo replyState:(NSString *)replyState response:(response)response;
 
 {

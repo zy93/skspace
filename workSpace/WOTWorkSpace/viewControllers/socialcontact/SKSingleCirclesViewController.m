@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 @property (nonatomic,strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic,strong) NSMutableArray<CircleofFriendsInfoModel *> *circleofFriendsList;
 @property (nonatomic,strong) NSString *replyState;
-//@property (nonatomic,strong) WFMessageBody *selectMessage;
+@property (nonatomic,assign) BOOL isAttention;
 
 @end
 
@@ -156,6 +156,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
     mainTable.mj_header.automaticallyChangeAlpha = YES;
     mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [mainTable setTableFooterView:[UIView new]];
     mainTable.delegate = self;
     mainTable.dataSource = self;
     //    if (@available (iOS 11,*)) {
@@ -240,33 +241,28 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 #pragma mark - 请求数据
 -(void)createRequest
 {
+    __weak typeof(self) weakSelf = self;
     //先判断是否已经登录
     [self.circleofFriendsList removeAllObjects];
     if ([WOTUserSingleton shareUser].userInfo.spaceId) {
-//        [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@1000 response:^(id bean, NSError *error) {
-//            [self StopRefresh];
-//            QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
-//            self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self configData];
-//                [self loadTextData];
-//                // [mainTable reloadData];
-//                [UIView performWithoutAnimation:^{
-//                    [mainTable reloadData];
-//                }];
-//            });
-//        }];
         [WOTHTTPNetwork querySingleCircleofFriendsWithFriendId:self.friendId userid:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
                 [self StopRefresh];
                 QuerySingleCircleofFriendModel *model = (QuerySingleCircleofFriendModel*)bean;
-                self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:@[model.msg]];
+            if ([model.code isEqualToString:@"200"]) {
+                weakSelf.circleofFriendsList = [[NSMutableArray alloc] initWithArray:@[model.msg]];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self configData];
-                    [self loadTextData];
+                    [weakSelf configData];
+                    [weakSelf loadTextData];
                     [UIView performWithoutAnimation:^{
                         [mainTable reloadData];
                     }];
                 });
+            }else
+            {
+                [MBProgressHUDUtil showMessage:@"获取信息失败！" toView:self.view];
+                return ;
+            }
+            
         }];
     } else {
         [MBProgressHUDUtil showMessage:@"请先登录后再查看！" toView:self.view];
@@ -348,8 +344,18 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     }
     _selectedIndexPath = sender.appendIndexPath;
     YMTextData *ym = [_tableDataSource objectAtIndex:_selectedIndexPath.row];
-    //self.selectMessage = ym.messageBody;
-    [self.operationView showAtView:mainTable rect:targetRect isFavour:ym.hasFavour];
+    [WOTHTTPNetwork querySingleCircleofFriendsWithFriendId:ym.messageBody.friendId userid:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+        QuerySingleCircleofFriendModel *model = (QuerySingleCircleofFriendModel*)bean;
+        if ([model.msg.focus isEqualToNumber:@0]) {
+            self.isAttention = NO;
+        }else
+        {
+            self.isAttention = YES;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.operationView showAtView:mainTable rect:targetRect isFavour:self.isAttention];
+        });
+    }];
 }
 
 - (WFPopView *)operationView {
@@ -385,7 +391,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             WOTBaseModel *baseModel = (WOTBaseModel *)bean;
             if ([baseModel.code isEqualToString:@"200"]) {
                 [MBProgressHUDUtil showMessage:@"关注成功！" toView:self.view];
-                [self createRequest];
+               // [self createRequest];
             } else {
                 [MBProgressHUDUtil showMessage:@"关注失败！" toView:self.view];
                 
@@ -398,7 +404,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             WOTBaseModel *baseModel = (WOTBaseModel *)bean;
             if ([baseModel.code isEqualToString:@"200"]) {
                 [MBProgressHUDUtil showMessage:@"取消成功！" toView:self.view];
-                [self createRequest];
+               // [self createRequest];
             } else {
                 [MBProgressHUDUtil showMessage:@"取消失败！" toView:self.view];
             }
@@ -582,6 +588,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                                     WOTBaseModel *baseModel = (WOTBaseModel *)bean;
                                     if ([baseModel.code isEqualToString:@"200"]) {
                                         [MBProgressHUDUtil showMessage:@"评论成功！" toView:self.view];
+                                        [self createRequest];
                                         //清空属性数组。否则会重复添加
                                         [ymData.completionReplySource removeAllObjects];
                                         [ymData.attributedDataReply removeAllObjects];
@@ -622,6 +629,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         YMTextData *ymData = (YMTextData *)[_tableDataSource objectAtIndex:actionSheet.actionIndex];
         WFMessageBody *m = ymData.messageBody;
         WFReplyBody *body  = m.posterReplies[_replyIndex];
+        if (!body.recordId) {
+            //[MBProgressHUDUtil showMessage:@"" toView:self.view];
+            return;
+        }
         [WOTHTTPNetwork deleteReplyRecorWithRecordId:body.recordId response:^(id bean, NSError *error) {
             WOTBaseModel *baseModel = (WOTBaseModel *)bean;
             if ([baseModel.code isEqualToString:@"200"]) {
