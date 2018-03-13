@@ -10,6 +10,8 @@
 #import "WOTMeetingHistoryModel.h"
 #import "WOTWorkStationHistoryModel.h"
 #import "WOTOrderCell.h"
+#import "WOTMyOrderInfoCell.h"
+#import "WOTOrderDetailVC.h"
 @interface WOTOrderLIstBaseVC () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSArray *tableList;
 @end
@@ -19,8 +21,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTOrderCell" bundle:nil] forCellReuseIdentifier:@"orderlistCellID"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderInfoCell" bundle:nil] forCellReuseIdentifier:@"WOTMyOrderInfoCell"];
+
     // Do any additional setup after loading the view.
     [self AddRefreshHeader];
+    [self StartRefresh];
     
 }
 
@@ -32,7 +37,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self StartRefresh];
 }
 
 #pragma mark -- Refresh method
@@ -66,63 +70,22 @@
 #pragma mark - request
 -(void)createRequest
 {
+    NSArray *arr = @[@"全部订单", @"会议室", @"工位", @"场地", @"礼包"];
     __weak typeof(self) weakSelf = self;
-    switch (self.orderlisttype) {
-        case WOTPageMenuVCTypeSite:
-        {
-            [WOTHTTPNetwork getUserSiteOrderResponse:^(id bean, NSError *error) {
-                WOTMeetingHistoryModel_msg *model = bean;
-                [self StopRefresh];
-                if ([model.code isEqualToString:@"200"]) {
-                    weakSelf.tableList = model.msg.list;
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [weakSelf.tableView reloadData];
-                    });
-                }
-                else {
-                    [MBProgressHUDUtil showMessage:model.result toView:self.view];
-                }
-            }];
-        }
-            break;
-        case WOTPageMenuVCTypeMetting:
-        {
-            [WOTHTTPNetwork getUserMeetingOrderResponse:^(id bean, NSError *error) {
-                WOTMeetingHistoryModel_msg *model = bean;
-                [self StopRefresh];
-                if ([model.code isEqualToString:@"200"]) {
-                    weakSelf.tableList = model.msg.list;
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [weakSelf.tableView reloadData];
-                    });
-                }
-                else {
-                    [MBProgressHUDUtil showMessage:model.result toView:self.view];
-                }
-            }];
-        }
-            break;
-        case WOTPageMenuVCTypeStation:
-        {
-            [WOTHTTPNetwork getUserWorkStationOrderResponse:^(id bean, NSError *error) {
-                WOTMeetingHistoryModel_msg *model = bean;
-                [self StopRefresh];
-                if ([model.code isEqualToString:@"200"]) {
-                    weakSelf.tableList = model.msg.list;
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [weakSelf.tableView reloadData];
-                    });
-                }
-                else {
-                    [MBProgressHUDUtil showMessage:model.result toView:self.view];
-                }
-            }];
-        }
-            break;
-        default:
-            break;
-    }
-    
+
+    [WOTHTTPNetwork getUserOrderWithType:self.orderlisttype==WOTPageMenuVCTypeAll?nil:arr[self.orderlisttype] response:^(id bean, NSError *error) {
+            WOTWorkStationHistoryModel_msg *model = bean;
+            [self StopRefresh];
+            if ([model.code isEqualToString:@"200"]) {
+                weakSelf.tableList = model.msg.list;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.tableView reloadData];
+                });
+            }
+            else {
+                [MBProgressHUDUtil showMessage:model.result toView:self.view];
+            }
+    }];
 }
 
 
@@ -133,7 +96,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 115;
+    return 115*[WOTUitls GetLengthAdaptRate];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -148,69 +111,25 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    
-    WOTOrderCell *cell = (WOTOrderCell *)[tableView dequeueReusableCellWithIdentifier:@"orderlistCellID"];
-    switch (_orderlisttype) {
-        case WOTPageMenuVCTypeMetting:
-        {
-            WOTMeetingHistoryModel *model = self.tableList[indexPath.row];
-            [[WOTConfigThemeUitls shared] setLabelTexts:[NSArray arrayWithObjects:cell.placeLabel,cell.dateLabel,cell.timeLabel,cell.moneyLabel, nil]  withTexts:@[@"预定地点",@"预定时间",@"下单时间",@"金额总数"]];
-            NSString *loca = [NSString stringWithFormat:@"%@",model.spaceName];
-            NSString *starTime = [NSString stringWithFormat:@"%@",[model.startTime substringToIndex:16]];
-            NSString *endTime  = [NSString stringWithFormat:@"%@",[model.endTime substringToIndex:16]];
-            NSString *money = [NSString stringWithFormat:@"￥%.2f",model.conferencePrice.floatValue];
-        [[WOTConfigThemeUitls shared] setLabelTexts:[NSArray arrayWithObjects:cell.placeValue,cell.dateValue,cell.timeValue,cell.moneyValue, nil]  withTexts:@[loca,starTime,endTime,money]];
-            
-        }
-            break;
-        case WOTPageMenuVCTypeStation:
-        {
-            WOTWorkStationHistoryModel *model = self.tableList[indexPath.row];
-            [[WOTConfigThemeUitls shared] setLabelTexts:[NSArray arrayWithObjects:cell.placeLabel,cell.dateLabel,cell.timeLabel,cell.moneyLabel, nil]  withTexts:@[@"预定地点",@"预定时间",@"预定数量",@"金额总数"]];
-            
-//            [[WOTConfigThemeUitls shared] setLabelTexts:[NSArray arrayWithObjects:cell.placeValue,cell.dateValue,cell.timeValue,cell.moneyValue, nil]  withTexts:@[@"方圆大厦优客工场",@"2017-06-30 12:34:56",@"34量",@"¥5456"]];
-            NSString *loca = [NSString stringWithFormat:@"%@",model.spaceName];
-            NSString *starTime = [NSString stringWithFormat:@"%@",[model.starTime substringToIndex:16]];
-            NSString *endTime  = [NSString stringWithFormat:@"%@",[model.endTime substringToIndex:16]];
-            NSString *money = [NSString stringWithFormat:@"￥%.2f",model.money.floatValue];
-            [[WOTConfigThemeUitls shared] setLabelTexts:[NSArray arrayWithObjects:cell.placeValue,cell.dateValue,cell.timeValue,cell.moneyValue, nil]  withTexts:@[loca,starTime,endTime,money]];
-
-        }
-            case WOTPageMenuVCTypeSite:
-        {
-            WOTWorkStationHistoryModel *model = self.tableList[indexPath.row];
-            [[WOTConfigThemeUitls shared] setLabelTexts:[NSArray arrayWithObjects:cell.placeLabel,cell.dateLabel,cell.timeLabel,cell.moneyLabel, nil]  withTexts:@[@"预定地点",@"预定时间",@"预定数量",@"金额总数"]];
-            NSString *loca = [NSString stringWithFormat:@"%@",model.spaceName];
-            NSString *starTime = [NSString stringWithFormat:@"%@",[model.starTime substringToIndex:16]];
-            NSString *endTime  = [NSString stringWithFormat:@"%@",[model.endTime substringToIndex:16]];
-            NSString *money = [NSString stringWithFormat:@"￥%.2f",model.money.floatValue];
-            [[WOTConfigThemeUitls shared] setLabelTexts:[NSArray arrayWithObjects:cell.placeValue,cell.dateValue,cell.timeValue,cell.moneyValue, nil]  withTexts:@[loca,starTime,endTime,money]];
-        }
-           
-        default:
-            break;
-    }
-//    if (!cell) {
-//      
-//        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"WOTOrderCell" owner:nil options:nil];
-//        for (id obj in nibArray) {
-//            if ([obj isMemberOfClass:[WOTOrderCell class]]) {
-//                // Assign cell to obj
-//                cell = (WOTOrderCell *)obj;
-//                break;
-//            }
-//        }
-//    }
-    
+    WOTMyOrderInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyOrderInfoCell"];
+    WOTWorkStationHistoryModel *model = self.tableList[indexPath.row];
+    cell.titleLab.text = model.commodityKind;
+    cell.subtitleLab.text = [NSString stringWithFormat:@"%@·%@",model.spaceName, model.commodityName];
+    [cell.bgIV setImageWithURL:[model.imageSite ToResourcesUrl]];
+    [cell setupViews];
     return cell;
-    
-    
 }
 
--(void)createData{
-    
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    WOTOrderDetailVC *vc = [[WOTOrderDetailVC alloc] init];
+    WOTWorkStationHistoryModel *model = self.tableList[indexPath.row];
+    vc.model = model;
+    [self.navigationController pushViewController:vc animated:YES];
 }
+
+
 /*
 #pragma mark - Navigation
 

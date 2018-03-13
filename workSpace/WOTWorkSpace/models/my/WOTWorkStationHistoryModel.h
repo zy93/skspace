@@ -14,6 +14,7 @@
 @interface WOTWorkStationHistoryModel : JSONModel
 
 @property (nonatomic, strong) NSString * appId ;
+@property (nonatomic, strong) NSString * commodityName;
 @property (nonatomic, strong) NSString * commodityKind;
 @property (nonatomic, strong) NSNumber * commodityNum ;
 @property (nonatomic, strong) NSString * commodityNumList;
@@ -23,6 +24,7 @@
 @property (nonatomic, strong) NSNumber * deductionTimes;
 @property (nonatomic, strong) NSString * endTime ;
 @property (nonatomic, strong) NSString * evaluate ;
+@property (nonatomic, strong) NSString * imageSite ;
 @property (nonatomic, strong) NSNumber * money ;
 @property (nonatomic, strong) NSString * orderNum ;
 @property (nonatomic, strong) NSString * orderState;

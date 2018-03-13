@@ -18,112 +18,129 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="106.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AoI-KI-mnp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="TvO-dD-9Wi"/>
-                        </constraints>
-                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backAcssory" translatesAutoresizingMaskIntoConstraints="NO" id="n6G-w2-3lD">
-                        <rect key="frame" x="303" y="15" width="7" height="13"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="13" id="cRh-9l-Thq"/>
-                            <constraint firstAttribute="width" constant="7" id="wEx-pQ-RrI"/>
-                        </constraints>
+                        <rect key="frame" x="293" y="11" width="7" height="13"/>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tse-WD-dTh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="exp-A5-LNQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="全部订单">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="allBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="XLK-4z-lwK"/>
+                        </connections>
+                    </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I3w-qJ-j9u">
-                        <rect key="frame" x="0.0" y="40" width="320" height="60"/>
+                        <rect key="frame" x="0.0" y="36" width="320" height="70.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Uu-s2-Ttl">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="ZJw-16-QDR"/>
+                                    <constraint firstAttribute="height" constant="1" id="yej-tl-xlk"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFE-xi-3n2">
-                                <rect key="frame" x="112" y="12" width="97" height="37"/>
-                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" backgroundImage="orderStation"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAY-mZ-snr" customClass="WOTOrderButton">
+                                <rect key="frame" x="40" y="10.5" width="45" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="nac-PA-HXr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="会议室" image="my_meeting">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
-                                    <action selector="showStationVC:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fpf-cR-51m"/>
+                                    <action selector="btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="plu-Wq-Pjq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2I-XU-eIi" userLabel="button2">
-                                <rect key="frame" x="203" y="12" width="97" height="37"/>
-                                <state key="normal" image="orderSite"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jey-6e-QPi" customClass="WOTOrderButton">
+                                <rect key="frame" x="105" y="10.5" width="45" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="工位" image="my_station">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
-                                    <action selector="showSiteVC:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ATD-Xo-CKF"/>
+                                    <action selector="btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2Gl-7H-Jlj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O0R-A6-0o7" userLabel="button3">
-                                <rect key="frame" x="20" y="11" width="97" height="37"/>
-                                <state key="normal" image="orderMeeting"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YWC-kl-5Br" customClass="WOTOrderButton">
+                                <rect key="frame" x="170" y="10.5" width="45" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="场地" image="my_site">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
-                                    <action selector="showMettingroomVC:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="1OX-YB-P75"/>
+                                    <action selector="btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ftn-26-kZm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACf-p5-VFA" customClass="WOTOrderButton">
+                                <rect key="frame" x="235" y="10.5" width="45" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="礼包" image="my_gift_bag">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fD5-IV-cSC"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="O0R-A6-0o7" firstAttribute="centerY" secondItem="I3w-qJ-j9u" secondAttribute="centerY" id="0Gv-k7-2SL"/>
-                            <constraint firstItem="U2I-XU-eIi" firstAttribute="centerY" secondItem="I3w-qJ-j9u" secondAttribute="centerY" id="6iz-sc-BtS"/>
-                            <constraint firstItem="6Uu-s2-Ttl" firstAttribute="top" secondItem="I3w-qJ-j9u" secondAttribute="top" id="9g9-Tz-Eb6"/>
-                            <constraint firstItem="O0R-A6-0o7" firstAttribute="top" secondItem="6Uu-s2-Ttl" secondAttribute="bottom" constant="10" id="CHQ-l3-vtA"/>
-                            <constraint firstAttribute="trailing" secondItem="6Uu-s2-Ttl" secondAttribute="trailing" id="FqL-Cq-IE9"/>
-                            <constraint firstItem="pFE-xi-3n2" firstAttribute="centerX" secondItem="I3w-qJ-j9u" secondAttribute="centerX" id="I2h-1f-S0o"/>
-                            <constraint firstItem="pFE-xi-3n2" firstAttribute="centerY" secondItem="I3w-qJ-j9u" secondAttribute="centerY" id="STy-W0-AxY"/>
-                            <constraint firstItem="O0R-A6-0o7" firstAttribute="leading" secondItem="I3w-qJ-j9u" secondAttribute="leading" constant="20" id="jmn-GH-N8C"/>
-                            <constraint firstAttribute="trailing" secondItem="U2I-XU-eIi" secondAttribute="trailing" constant="20" id="kWe-Dh-vy7"/>
-                            <constraint firstItem="6Uu-s2-Ttl" firstAttribute="leading" secondItem="I3w-qJ-j9u" secondAttribute="leading" id="qIh-Id-shu"/>
+                            <constraint firstItem="ACf-p5-VFA" firstAttribute="centerY" secondItem="IAY-mZ-snr" secondAttribute="centerY" id="122-ZE-sXo"/>
+                            <constraint firstItem="YWC-kl-5Br" firstAttribute="width" secondItem="IAY-mZ-snr" secondAttribute="width" id="58f-oI-CGi"/>
+                            <constraint firstItem="Jey-6e-QPi" firstAttribute="leading" secondItem="IAY-mZ-snr" secondAttribute="trailing" constant="20" id="7l5-Wv-Z4L"/>
+                            <constraint firstItem="YWC-kl-5Br" firstAttribute="leading" secondItem="Jey-6e-QPi" secondAttribute="trailing" constant="20" id="9vn-BP-7fK"/>
+                            <constraint firstItem="ACf-p5-VFA" firstAttribute="leading" secondItem="YWC-kl-5Br" secondAttribute="trailing" constant="20" id="DWF-uq-7yO"/>
+                            <constraint firstItem="YWC-kl-5Br" firstAttribute="height" secondItem="IAY-mZ-snr" secondAttribute="height" id="IZE-Wr-kpi"/>
+                            <constraint firstItem="ACf-p5-VFA" firstAttribute="width" secondItem="IAY-mZ-snr" secondAttribute="width" id="KJp-ZX-Swl"/>
+                            <constraint firstItem="ACf-p5-VFA" firstAttribute="height" secondItem="IAY-mZ-snr" secondAttribute="height" id="Kld-Dg-FBa"/>
+                            <constraint firstItem="Jey-6e-QPi" firstAttribute="centerY" secondItem="IAY-mZ-snr" secondAttribute="centerY" id="N3M-En-qvZ"/>
+                            <constraint firstItem="6Uu-s2-Ttl" firstAttribute="leading" secondItem="I3w-qJ-j9u" secondAttribute="leading" id="VcP-lP-5xQ"/>
+                            <constraint firstAttribute="trailing" secondItem="ACf-p5-VFA" secondAttribute="trailing" constant="40" id="ZI5-jR-aSW"/>
+                            <constraint firstItem="6Uu-s2-Ttl" firstAttribute="top" secondItem="I3w-qJ-j9u" secondAttribute="top" id="aBb-EK-r5q"/>
+                            <constraint firstItem="IAY-mZ-snr" firstAttribute="centerY" secondItem="I3w-qJ-j9u" secondAttribute="centerY" id="be5-nC-cHz"/>
+                            <constraint firstItem="IAY-mZ-snr" firstAttribute="leading" secondItem="I3w-qJ-j9u" secondAttribute="leading" constant="40" id="cxS-gS-Tw2"/>
+                            <constraint firstItem="Jey-6e-QPi" firstAttribute="width" secondItem="IAY-mZ-snr" secondAttribute="width" id="e93-v3-oJf"/>
+                            <constraint firstAttribute="trailing" secondItem="6Uu-s2-Ttl" secondAttribute="trailing" id="gNo-Ms-7Vy"/>
+                            <constraint firstItem="YWC-kl-5Br" firstAttribute="centerY" secondItem="IAY-mZ-snr" secondAttribute="centerY" id="sjr-MU-ooR"/>
+                            <constraint firstItem="Jey-6e-QPi" firstAttribute="height" secondItem="IAY-mZ-snr" secondAttribute="height" id="vL6-WW-WWr"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="全部订单" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NtY-D7-1Cx">
-                        <rect key="frame" x="20" y="15" width="58" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tse-WD-dTh">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="40" id="jtT-fM-5uI"/>
-                        </constraints>
-                        <connections>
-                            <action selector="showAllOrderVC:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="U9O-Ii-WKg"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="AoI-KI-mnp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="68h-rf-qzD"/>
-                    <constraint firstItem="n6G-w2-3lD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="IJm-jg-j1h"/>
-                    <constraint firstItem="I3w-qJ-j9u" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" id="Krv-va-tGc"/>
-                    <constraint firstItem="tse-WD-dTh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Ojl-fH-gpY"/>
-                    <constraint firstItem="I3w-qJ-j9u" firstAttribute="top" secondItem="tse-WD-dTh" secondAttribute="bottom" id="Qn7-5h-62O"/>
-                    <constraint firstAttribute="trailing" secondItem="n6G-w2-3lD" secondAttribute="trailing" constant="10" id="VkW-Ak-Xl9"/>
-                    <constraint firstAttribute="trailing" secondItem="tse-WD-dTh" secondAttribute="trailing" id="XMA-V4-bRe"/>
-                    <constraint firstItem="tse-WD-dTh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aUR-Gm-PUr"/>
-                    <constraint firstItem="NtY-D7-1Cx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="clr-Z2-GWy"/>
-                    <constraint firstItem="NtY-D7-1Cx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="dWO-pC-JAQ"/>
-                    <constraint firstItem="AoI-KI-mnp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iIN-fg-4jU"/>
-                    <constraint firstAttribute="trailing" secondItem="AoI-KI-mnp" secondAttribute="trailing" id="iLc-n1-S5a"/>
-                    <constraint firstItem="I3w-qJ-j9u" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="viK-z0-mvB"/>
+                    <constraint firstAttribute="trailing" secondItem="n6G-w2-3lD" secondAttribute="trailing" constant="20" id="19H-XN-RgR"/>
+                    <constraint firstItem="tse-WD-dTh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="GVN-7G-XfQ"/>
+                    <constraint firstItem="I3w-qJ-j9u" firstAttribute="top" secondItem="tse-WD-dTh" secondAttribute="bottom" constant="1" id="Ua7-Kj-ef3"/>
+                    <constraint firstItem="tse-WD-dTh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="YhL-LS-lAr"/>
+                    <constraint firstAttribute="trailing" secondItem="tse-WD-dTh" secondAttribute="trailing" id="ZDs-yh-OfP"/>
+                    <constraint firstAttribute="trailing" secondItem="I3w-qJ-j9u" secondAttribute="trailing" id="bWz-TE-jTW"/>
+                    <constraint firstItem="n6G-w2-3lD" firstAttribute="centerY" secondItem="tse-WD-dTh" secondAttribute="centerY" id="oxu-JA-NM9"/>
+                    <constraint firstAttribute="bottom" secondItem="I3w-qJ-j9u" secondAttribute="bottom" id="wwA-OT-GFY"/>
+                    <constraint firstItem="I3w-qJ-j9u" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="x3p-Lv-YS4"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="bookStationButton" destination="U2I-XU-eIi" id="ATG-Im-olF"/>
-                <outlet property="mettingroomView" destination="I3w-qJ-j9u" id="mFb-jY-pYh"/>
+                <outlet property="allOrderBtn" destination="tse-WD-dTh" id="ajH-iJ-RgA"/>
+                <outlet property="giftBagBtn" destination="ACf-p5-VFA" id="Kzf-xS-a8f"/>
+                <outlet property="lineView" destination="6Uu-s2-Ttl" id="sML-WG-dZ4"/>
+                <outlet property="meetingBtn" destination="IAY-mZ-snr" id="l7X-AN-gQa"/>
+                <outlet property="orderTypeBGView" destination="I3w-qJ-j9u" id="fag-qg-T27"/>
+                <outlet property="siteBtn" destination="YWC-kl-5Br" id="wU3-wv-jAK"/>
+                <outlet property="stationBtn" destination="Jey-6e-QPi" id="bMg-c2-2dD"/>
             </connections>
             <point key="canvasLocation" x="-80" y="1.5"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="backAcssory" width="7" height="13"/>
-        <image name="orderMeeting" width="97" height="37"/>
-        <image name="orderSite" width="97" height="37"/>
-        <image name="orderStation" width="97" height="37"/>
+        <image name="my_gift_bag" width="23" height="19"/>
+        <image name="my_meeting" width="22" height="21"/>
+        <image name="my_site" width="22" height="19"/>
+        <image name="my_station" width="22" height="20"/>
     </resources>
 </document>

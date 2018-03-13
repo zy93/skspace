@@ -83,8 +83,10 @@
 
 //订单信息
 @property (nonatomic, strong) NSNumber *spaceId;
+@property (nonatomic, strong) NSString *commodityName;   //商品名称
 @property (nonatomic, strong) NSNumber *commodityNum;   //商品编号
 @property (nonatomic, strong) NSString *commodityKind; //商品对象 0:工位 1:会议室 2:场地 3:增值服务
+@property (nonatomic, strong) NSString *company;      //公司名？
 @property (nonatomic, strong) NSNumber *productNum;   //商品数量
 @property (nonatomic, strong) NSString *starTime;    //开始时间
 @property (nonatomic, strong) NSString *endTime;    //结束时间
@@ -93,7 +95,7 @@
 @property (nonatomic, strong) NSString *payObject;//支付对象 企业支付就是公司Id；个人支付就是人名
 @property (nonatomic, strong) NSNumber *payMode;//支付方式 0:线下 1:线上
 @property (nonatomic, strong) NSNumber *contractMode;     //合同方式 0:纸质 1:电子
-@property (nonatomic, strong) NSString *dealMode;         //交易方式 微信 支付宝
+@property (nonatomic, strong) NSString *dealMode;         //交易方式 剩余时间
 @property (nonatomic, strong) NSNumber *deduction;        //是否抵用 0:是 1:否
 @property (nonatomic, strong) NSString *facilitator;      //服务商编号:1006
 @property (nonatomic, strong) NSString *carrieroperator;  //运营商编号:1006
@@ -104,8 +106,8 @@
 @property (nonatomic, strong) NSString *invoiceInfo;      //发票信息
 @property (nonatomic, strong) NSNumber *bookSationTime;
 @property (nonatomic, strong) NSNumber *meetingTime;
-@property (nonatomic, strong) NSNumber *userId;
 @property (nonatomic, strong) NSString *payWayStr;
+@property (nonatomic, strong) NSString *imageSite;
 @property (nonatomic, strong) NSNumber *conferenceDetailsId;//预定场地的id
 
 @end
@@ -320,21 +322,27 @@
         return;
     }
     
-    if ([self.judgmentTime compareDate:self.reservationStationStartDate withDate:self.reservationStationEndDate]) {
-        [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
-        return;
-    }
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
-        if ([self.invoiceInfo isEqualToString:@"请选择企业"]) {
-            [MBProgressHUDUtil showMessage:@"如果选择企业支付，请选择企业" toView:self.view];
+    
+//    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
+//        if ([self.invoiceInfo isEqualToString:@"请选择企业"]) {
+//            [MBProgressHUDUtil showMessage:@"如果选择企业支付，请选择企业" toView:self.view];
+//            return;
+//        }
+//    } else
+        if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+        
+        NSInteger bookstationInter = [self.bookSationTime integerValue];
+        if ([self.judgmentTime compareDate:self.reservationStationStartDate withDate:self.reservationStationEndDate]) {
+            [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
             return;
         }
-    } else if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
-        NSInteger bookstationInter = [self.bookSationTime integerValue];
-        if (!( bookstationInter> 0)) {
-            [MBProgressHUDUtil showMessage:@"该用户下没有工位时间，请购买礼包" toView:self.view];
-            SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
+        if (!( bookstationInter> 0)) {            
+            [[WOTConfigThemeUitls shared] showAlert:self message:@"您的工位使用时间不足，请购买礼包" okBlock:^{
+                SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            } cancel:^{
+                return ;
+            }];
             return;
         }
     }
@@ -342,13 +350,18 @@
         NSInteger difference = (self.meetingEndTime-self.meetingBeginTime)*60;
         NSInteger meetInteger = [self.meetingTime integerValue];
         if (difference > meetInteger) {
-            [MBProgressHUDUtil showMessage:@"该用户下会议室时间剩余不足，请购买礼包" toView:self.view];
-            SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
+            [[WOTConfigThemeUitls shared] showAlert:self message:@"您的会议室使用时间不足，请购买礼包" okBlock:^{
+                SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            } cancel:^{
+                return ;
+            }];
+            
+            
             return;
         }
     }
-    self.dealMode = @"微信支付";
+    self.dealMode = @"剩余时间";
     //self.payObject= [[WOTUserSingleton shareUser].userInfo.userId stringValue];
     
     switch ([WOTSingtleton shared].orderType) {
@@ -357,9 +370,13 @@
             if (![self verifyBookStation]) {
                 return;
             };
+            NSArray *arr = [self.spaceModel.spacePicture componentsSeparatedByString:@","];
             self.spaceId = self.spaceModel.spaceId;
-            self.commodityNum = self.spaceModel.spaceId;
+            self.company = @"工位";
+            self.commodityName = @"工位";
+            self.commodityNum  = self.spaceModel.spaceId;
             self.commodityKind = @"工位";
+            self.imageSite=arr.lastObject;
             self.productNum = @(self.reservationStationNumber);
             self.starTime = self.reservationStationStartDate;
             self.endTime =  self.reservationStationEndDate;
@@ -401,13 +418,14 @@
             self.contractMode = @(1);
             self.facilitator = @"1006";
             self.carrieroperator = @"1006";
-            self.body = @"场地/会议室预定";
+            self.body  = [WOTSingtleton shared].orderType == ORDER_TYPE_MEETING ?@"会议室预定": @"场地预定";
             self.total_fee = @"1";// self.money.floatValue * 100;
             self.trade_type = @"APP";
+            NSArray *imageArr = [self.meetingModel.conferencePicture componentsSeparatedByString:@","];
+            self.imageSite = imageArr.firstObject;
             if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
                 [self reservationsMeeting];
-            }else
-            {
+            } else {
                 [self reservationsSite];
             }
         }
@@ -941,62 +959,93 @@
     __weak typeof(self) weakSelf = self;
     //会议室先预定，然后支付。
     NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
-    [WOTHTTPNetwork  siteReservationsWithSpaceId:self.spaceModel.spaceId
-                                      conferenceId:self.meetingModel.conferenceId startTime:arr.firstObject
-                                           endTime:arr.lastObject
-                                         spaceName:self.spaceModel.spaceName
-                                       meetingName:self.meetingModel.conferenceName
-                                            userId:[WOTUserSingleton shareUser].userInfo.userId
-                                              body:self.body
-                                          response:^(id bean, NSError *error) {
-                                              WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
-                                              if ([model.code isEqualToString:@"200"]) {
-                                                  self.conferenceDetailsId = model.msg.conferenceDetailsId;
-                                                  if ([self.payWayStr isEqualToString:@"支付宝"]) {
-                                                      [weakSelf commitAliOrder];
-                                                  }else
-                                                  {
-                                                      [weakSelf commitOrder];
-                                                  }
-                                              }
-                                              else {
-                                                  [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
-                                              }
-                                          }];
+    NSDictionary *dic = @{
+                          @"spaceId":self.spaceModel.spaceId,
+                          @"conferenceId":self.meetingModel.conferenceId,
+                          @"startTime":arr.firstObject,
+                          @"endTime":arr.lastObject,
+                          @"spaceName":self.spaceModel.spaceName,
+                          @"company":self.meetingModel.conferenceName,
+                          @"commodityName":self.meetingModel.conferenceName,
+                          @"commodityNum":self.meetingModel.conferenceId,
+                          @"commodityKind":self.commodityKind,
+                          @"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                          @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                          @"userTel" :[WOTUserSingleton shareUser].userInfo.tel,
+                          @"imageSite":self.imageSite,
+                          @"body":self.body,
+                          @"companyName":[[WOTUserSingleton shareUser].userInfo.companyName componentsSeparatedByString:@","].firstObject,
+                          @"source":@"APP客户端",
+                          @"stage":@"客户订单"
+                          };
+    
+    
+    [WOTHTTPNetwork  siteReservationsWithParams:dic response:^(id bean, NSError *error) {
+        WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
+          if ([model.code isEqualToString:@"200"]) {
+              self.conferenceDetailsId = model.msg.conferenceDetailsId;
+//              [[MBProgressHUDUtil showMessage:@ toView:self.view];]
+              [[WOTConfigThemeUitls shared] showAlert:self message:@"您的预定已提交，稍后我们会与您联系，沟通具体事宜。您也可以在\"我的\">>\"场地订单\"中查看本次预定记录" okBlock:^{
+                  
+              }];
+              
+//              if ([self.payWayStr isEqualToString:@"支付宝"]) {
+//                  [weakSelf commitAliOrder];
+//              }else
+//              {
+//                  [weakSelf commitOrder];
+//              }
+          }
+          else {
+              [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
+          }
+    }];
 }
 
 #pragma mark - 预定会议室
 -(void)reservationsMeeting
 {
     __weak typeof(self) weakSelf = self;
-    //会议室先预定，然后支付。
+    //会议室预定。
     NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
-    [WOTHTTPNetwork meetingReservationsWithSpaceId:self.spaceModel.spaceId
-                                      conferenceId:self.meetingModel.conferenceId startTime:arr.firstObject
-                                           endTime:arr.lastObject
-                                         spaceName:self.spaceModel.spaceName
-                                       meetingName:self.meetingModel.conferenceName
-                                            userId:[WOTUserSingleton shareUser].userInfo.userId
-                                          response:^(id bean, NSError *error) {
-                                            WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
-                                            if ([model.code isEqualToString:@"200"]) {
-                                                self.conferenceDetailsId = model.msg.conferenceDetailsId;
-                                                StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
-                                                vc.orderNum = model.msg.orderNum;
-                                                vc.nameStr = self.meetingModel.conferenceName;
-                                                vc.startTime = model.msg.starTime;
-                                                vc.endTime = model.msg.endTime;
-                                                vc.productNum = self.productNum;
-                                                //vc.orderString = model.msg;
-                                                vc.payType = self.payType;
-                                                vc.money = self.money;
-                                                vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
-                                                [weakSelf.navigationController pushViewController:vc animated:YES];
-                                            }
-                                            else {
-                                                [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
-                                            }
-                                          }];
+    
+    
+    NSDictionary *dic = @{
+                          @"spaceId":self.spaceModel.spaceId,
+                          @"spaceName":self.spaceModel.spaceName,
+                          @"conferenceId":self.meetingModel.conferenceId,
+                          @"conferenceName":self.meetingModel.conferenceName,
+                          @"commodityNum":self.meetingModel.conferenceId,
+                          @"commodityName":self.meetingModel.conferenceName,
+                          @"startTime":arr.firstObject,
+                          @"endTime":arr.lastObject,
+                          @"company":self.meetingModel.conferenceName,
+                          @"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                          @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                          @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                          @"imageSite":self.imageSite,
+                          };
+    
+    [WOTHTTPNetwork meetingReservationsWithParams:dic response:^(id bean, NSError *error) {
+        WOTReservationsResponseModel_msg *model = (WOTReservationsResponseModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            self.conferenceDetailsId = model.msg.conferenceDetailsId;
+            StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
+            vc.orderNum = model.msg.orderNum;
+            vc.nameStr = self.meetingModel.conferenceName;
+            vc.startTime = model.msg.starTime;
+            vc.endTime = model.msg.endTime;
+            vc.productNum = self.productNum;
+            //vc.orderString = model.msg;
+            vc.payType = self.payType;
+            vc.money = self.money;
+            vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }
+        else {
+            [MBProgressHUDUtil showMessage:[NSString stringWithFormat:@"预定失败:%@", model.result] toView:weakSelf.view];
+        }
+  }];
 }
 #pragma mark - 验证工位
 -(BOOL)verifyBookStation
@@ -1089,14 +1138,18 @@
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
                                  @"facilitator":self.facilitator,
-                                 @"carrieroperator":self.carrieroperator,
                                  @"body":self.body,
                                  @"total_fee":self.total_fee,
                                  @"trade_type":self.trade_type,
                                  @"spaceId":self.spaceId,
                                  @"spaceName":self.spaceModel.spaceName,
+                                 @"carrieroperator":self.carrieroperator,
+                                 @"commodityName":self.commodityName,
                                  @"commodityNum":self.commodityNum,
                                  @"commodityKind":self.commodityKind,
+                                 @"contractMode":self.contractMode,
+                                 @"conferenceDetailsId":self.conferenceDetailsId,
+                                 @"imageSite":self.imageSite,
                                  @"productNum":self.productNum,//,@500
                                  @"starTime":self.starTime,
                                  @"endTime":self.endTime,
@@ -1105,8 +1158,6 @@
                                  @"payType":self.payType,
                                  @"payObject":self.payObject,
                                  @"payMode":self.payMode,
-                                 @"contractMode":self.contractMode,
-                                 @"conferenceDetailsId":self.conferenceDetailsId,
                                  @"invoiceInfo":self.invoiceInfo,
                                  };
     __weak typeof(self) weakSelf = self;
@@ -1130,7 +1181,7 @@
         {
             NSArray <SKBookStationOrderModel_array *>*objectArray = model.Array;
             NSMutableArray *infoArray = [[NSMutableArray alloc] init];
-            [infoArray addObject:@"以下日期不能预约："];
+            [infoArray addObject:@"以下日期工位已预约满额："];
             for (SKBookStationOrderModel_array *infoObject in objectArray) {
                 
                 [infoArray addObject:[infoObject.time substringToIndex:11]];
@@ -1277,7 +1328,6 @@
         if ([model_msg.code isEqualToString:@"200"]) {
             self.bookSationTime = model.workHours;
             self.meetingTime = model.meetingHours;
-            self.userId = model.userId;
         } else {
             [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
         }

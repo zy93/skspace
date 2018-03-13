@@ -125,11 +125,10 @@
 -(void)creatSpace
 {
     [WOTHTTPNetwork getSpaceFromSpaceID:self.spaceId bolock:^(id bean, NSError *error) {
-        if (error) {
-            return ;
+        if (bean) {
+            WOTSpaceModel *model = (WOTSpaceModel *)bean;
+            self.spaceModel = model;
         }
-        WOTSpaceModel *model = (WOTSpaceModel *)bean;
-        self.spaceModel = model;
     }];
 }
 

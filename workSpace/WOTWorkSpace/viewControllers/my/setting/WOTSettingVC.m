@@ -364,7 +364,7 @@
 #pragma mark - 退出方法
 -(void)quitButtonMethod
 {
-    [[WOTConfigThemeUitls shared] showRemindingAlert:self message:@"确定退出当前帐号?" okBlock:^{
+    [[WOTConfigThemeUitls shared] showAlert:self message:@"确定退出当前帐号?" okBlock:^{
         [WOTSingtleton shared].isuserLogin = NO;
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
         [[WOTUserSingleton shareUser] deletePlistFile];

@@ -8,14 +8,34 @@
 
 #import "WOTMyOrderCell.h"
 #import "WOTConstants.h"
-@interface WOTMyOrderCell()
 
-@property (weak, nonatomic) IBOutlet UIView *mettingroomView;
 
-@property (weak, nonatomic) IBOutlet UIButton *bookStationButton;
 
+@implementation WOTOrderButton
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    // 更改image的中心坐标
+    CGPoint imageCenter = self.imageView.center;
+    imageCenter.x = self.frame.size.width/2;
+    imageCenter.y = (self.frame.size.height-self.imageView.frame.size.height)/2+5 ;
+    self.imageView.center = imageCenter;
+    
+    // 更改label的中心坐标
+    CGRect labelFrame = self.titleLabel.frame;
+    labelFrame.origin.x = 0;
+    labelFrame.origin.y = CGRectGetMaxY(self.imageView.frame) + 5;
+    labelFrame.size.width = self.frame.size.width;
+    
+    self.titleLabel.frame = labelFrame;
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+}
 
 @end
+
 
 @implementation WOTMyOrderCell
 
@@ -23,12 +43,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-//    self.viewWidth.constant = SCREEN_WIDTH/2;
-//    self.mettingroomView.backgroundColor = CLEARCOLOR;
-//    self.stationView.backgroundColor = CLEARCOLOR;
-//    self.mettingroomLabel.textColor = UICOLOR_GRAY_99;
-//    self.stationLabel.textColor = UICOLOR_GRAY_99;
-    // Initialization code
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -37,39 +52,19 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)showMettingroomVC:(id)sender {
-    if (_celldelegate) {
-       
-        [self.celldelegate showMettingRoomOrderList];
-    }
-    
-    
-}
 
-- (IBAction)showStationVC:(id)sender {
-    
-    if (_celldelegate) {
-        [self.celldelegate showStationOrderList];
-    }
-    
-    
-}
-
-- (IBAction)showSiteVC:(id)sender {
-    if (_celldelegate) {
-        [self.celldelegate showSiteOrderList];
+- (IBAction)allBtn:(id)sender {
+    if ([_delegate respondsToSelector:@selector(myOrderCell:showOrder:)]) {
+        [_delegate myOrderCell:self showOrder:((UIButton *)sender).titleLabel.text];
     }
 }
 
-
-
-- (IBAction)showAllOrderVC:(id)sender {
-    
-    
-    if (_celldelegate) {
-        [self.celldelegate showAllOrderList];
+- (IBAction)btn:(id)sender {
+    if ([_delegate respondsToSelector:@selector(myOrderCell:showOrder:)]) {
+        [_delegate myOrderCell:self showOrder:((UIButton *)sender).titleLabel.text];
     }
 }
+
 
 
 @end
