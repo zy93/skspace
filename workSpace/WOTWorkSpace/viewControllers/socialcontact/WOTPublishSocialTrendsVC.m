@@ -320,22 +320,6 @@
 
 #pragma mark - UIImagePickerControllerDelegate
 
-// 拍照完成回调
-
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo NS_DEPRECATED_IOS(2_0, 3_0)
-//{
-//    if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)
-//    {
-//        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-//    }
-//    [self.photosArray removeAllObjects];
-//    //[self.photosArray addObject:[self createAddImage]];
-//    [self.photosArray addObject:image];
-//    [self.collectionView reloadData];
-//    [self viewWillLayoutSubviews];
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//
-//}
 
 #pragma mark - TZImagePickerController
 - (void)pushTZImagePickerController {
@@ -343,16 +327,15 @@
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
     imagePickerVc.selectedAssets = self.selectedAssets; // 目前已经选中的图片数组
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-
+        
     }];
-    
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
-
+#pragma mark - 拍照回调
 - (void)imagePickerController:(UIImagePickerController *)aPicker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [aPicker dismissViewControllerAnimated:YES completion:nil];
-    __block UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
     PHFetchOptions*options = [[PHFetchOptions alloc]init];
     options.sortDescriptors=@[[NSSortDescriptor sortDescriptorWithKey:@"creationDate"ascending:NO]];
     PHFetchResult *assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];

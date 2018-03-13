@@ -280,6 +280,7 @@
                                  @"body":self.commodityDescribeStr,
                                  @"total_fee":@(self.payNumber),//self.payNumber
                                  @"trade_type":@"APP",
+                                 @"commodityNum":self.giftBagModel.giftId,
                                  @"commodityName":self.giftBagModel.giftName,
                                  @"imageSite":self.giftBagModel.picture,
                                  @"commodityKind":self.commodityDescribeStr,
@@ -314,8 +315,9 @@
                                  @"commodityName":self.giftBagModel.giftName,
                                  @"commodityKind":self.commodityDescribeStr,
                                  @"productNum":@1,
+                                 @"commodityNum":self.giftBagModel.giftId,
                                  @"imageSite":self.giftBagModel.picture,
-                                 @"money":@0.01,//self.paySumNumber
+                                 @"money":@(self.paySumNumber),//self.paySumNumber
                                  @"payType":@1,
                                  @"payObject":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"body":self.commodityDescribeStr

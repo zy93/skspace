@@ -569,6 +569,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     //[self.view addSubview:maskview];
     [[UIApplication sharedApplication].keyWindow addSubview:maskview];
     YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:maskview.bounds byClick:clickTag appendArray:imageViews];
+    
     ymImageV.delegate = self;
     [ymImageV show:maskview didFinish:^(){
         [UIView animateWithDuration:0.5f animations:^{
@@ -693,6 +694,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             }];
             [self createRequest];
 
+        }else if([baseModel.code isEqualToString:@"501"])
+        {
+            [MBProgressHUDUtil showMessage:@"此条朋友圈已删除" toView:self.view];
+            return ;
         }else
         {
             //清空属性数组。否则会重复添加

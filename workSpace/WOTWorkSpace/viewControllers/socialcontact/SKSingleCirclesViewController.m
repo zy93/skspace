@@ -384,32 +384,35 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     NSLog(@"加关注");
     YMTextData *ymData = (YMTextData *)[_tableDataSource objectAtIndex:_selectedIndexPath.row];
     WFMessageBody *m = ymData.messageBody;
-    if (!m.isFavour) {
-        //执行加关注方法
-        m.isFavour = YES;
-        [WOTHTTPNetwork addFocusWithfocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId befocusPeopleid:m.issueId response:^(id bean, NSError *error) {
-            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
-            if ([baseModel.code isEqualToString:@"200"]) {
-                [MBProgressHUDUtil showMessage:@"关注成功！" toView:self.view];
-               // [self createRequest];
-            } else {
-                [MBProgressHUDUtil showMessage:@"关注失败！" toView:self.view];
-                
-            }
-        }];
-    } else {
-        //执行取消关注方法
-        m.isFavour = NO;
-        [WOTHTTPNetwork deleteFocusWithFocusId:m.focusId response:^(id bean, NSError *error) {
-            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
-            if ([baseModel.code isEqualToString:@"200"]) {
-                [MBProgressHUDUtil showMessage:@"取消成功！" toView:self.view];
-               // [self createRequest];
-            } else {
-                [MBProgressHUDUtil showMessage:@"取消失败！" toView:self.view];
-            }
-        }];
-    }
+    [WOTHTTPNetwork querySingleCircleofFriendsWithFriendId:ymData.messageBody.friendId userid:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+        QuerySingleCircleofFriendModel *model = (QuerySingleCircleofFriendModel*)bean;
+        if ([model.msg.focus isEqualToNumber:@0]) {
+            //执行加关注方法
+            m.isFavour = YES;
+            [WOTHTTPNetwork addFocusWithfocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId befocusPeopleid:m.issueId response:^(id bean, NSError *error) {
+                WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+                if ([baseModel.code isEqualToString:@"200"]) {
+                    [MBProgressHUDUtil showMessage:@"关注成功！" toView:self.view];
+                    //[self createRequest];
+                } else {
+                    [MBProgressHUDUtil showMessage:@"关注失败！" toView:self.view];
+                    
+                }
+            }];
+        } else {
+            //执行取消关注方法
+            m.isFavour = NO;
+            [WOTHTTPNetwork deleteFocusWithFocusId:model.msg.focusId response:^(id bean, NSError *error) {
+                WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+                if ([baseModel.code isEqualToString:@"200"]) {
+                    [MBProgressHUDUtil showMessage:@"取消成功！" toView:self.view];
+                    // [self createRequest];
+                } else {
+                    [MBProgressHUDUtil showMessage:@"取消失败！" toView:self.view];
+                }
+            }];
+        }
+    }];
     
     ymData.messageBody = m;
     [ymData.attributedDataFavour removeAllObjects];
