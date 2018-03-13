@@ -579,6 +579,14 @@ typedef void(^response)(id bean,NSError *error);
 +(void)queryAllCircleofFriendsWithFocusPeopleid:(NSNumber *)focusPeopleid pageNo:(NSNumber *)pageNo pageSize:(NSNumber *)pageSize response:(response)response;
 
 /**
+ 删除朋友圈
+
+ @param friendId 朋友圈id
+ @param response 结果回调
+ */
++(void)deleteCircleofFriendsWithFriendId:(NSNumber *)friendId response:(response)response;
+
+/**
  添加评论，回复评论接口
 
  @param friendId 朋友圈id
@@ -610,7 +618,7 @@ typedef void(^response)(id bean,NSError *error);
  @param focusId 关注信息id
  @param response 结果回调
  */
-+(void)deleteFocusWithFocusId:(NSNumber *)focusId response:(response)response;
++(void)deleteFocusWithFocusId:(NSNumber *)friendId response:(response)response;
 
 
 /**

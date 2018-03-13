@@ -25,6 +25,7 @@
 #import "IQKeyboardManager.h"
 #import "SKAddReply.h"
 #import "SKSingleCirclesViewController.h"
+#import "QuerySingleCircleofFriendModel.h"
 //#import "CircleofFriendsInfoModel.h"
 //#import "ReplyModel.h"
 
@@ -65,6 +66,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 @property (nonatomic,strong) NSMutableArray<CircleofFriendsInfoModel *> *circleofFriendsList;
 @property (nonatomic,strong) NSString *replyState;
 @property (nonatomic,assign) int pageNum;
+@property (nonatomic,assign) BOOL isAttention;
 @end
 
 @implementation WOTNearCirclesVC
@@ -145,16 +147,15 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64-48-40)];
     mainTable.backgroundColor = [UIColor clearColor];
     [mainTable registerClass:[YMTableViewCell class] forCellReuseIdentifier:@"ILTableViewCell"];
-    // mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(StartRefresh)];
     mainTable.mj_header.automaticallyChangeAlpha = YES;
-    
+    [mainTable.mj_header beginRefreshing];
     mainTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopic)];
+    [mainTable setTableFooterView:[UIView new]];
     mainTable.delegate = self;
     mainTable.dataSource = self;
     mainTable.estimatedRowHeight = 0;
     [self.view addSubview:mainTable];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -229,18 +230,18 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 #pragma mark - 请求数据
 -(void)createRequest
 {
+    __weak typeof(self) weakSelf = self;
     //先判断是否已经登录
     [self.circleofFriendsList removeAllObjects];
     if ([WOTUserSingleton shareUser].userInfo.spaceId) {
         [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@10 response:^(id bean, NSError *error) {
-            [self StopRefresh];
+            [weakSelf StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
             if ([model.code isEqualToString:@"200"]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self configData];
-                    [self loadTextData];
-                    [mainTable reloadData];
+                    [weakSelf configData];
+                    [weakSelf loadTextData];
                 });
             }
             else
@@ -275,6 +276,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 #pragma mark - 下拉刷新
 - (void)StartRefresh
 {
+    __weak typeof(self) weakSelf = self;
     self.pageNum = 1;
     if (mainTable.mj_footer != nil && [mainTable.mj_footer isRefreshing])
     {
@@ -283,15 +285,15 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     [self.circleofFriendsList removeAllObjects];
     if ([WOTUserSingleton shareUser].userInfo.spaceId) {
         [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:[NSNumber numberWithInt:self.pageNum] pageSize:@10 response:^(id bean, NSError *error) {
-            [self StopRefresh];
+            [weakSelf StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
-            self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
+            weakSelf.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
             if ([model.code isEqualToString:@"200"]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self configData];
-                    [self loadTextData];
+                    [weakSelf configData];
+                    [weakSelf loadTextData];
                     [mainTable reloadData];
-                    [self StopRefresh];
+                    [weakSelf StopRefresh];
                 });
             }
             else
@@ -332,27 +334,18 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 #pragma mark - 上拉刷新
 -(void)loadMoreTopic
 {
+    __weak typeof(self) weakSelf = self;
     self.pageNum++;
     if ([WOTUserSingleton shareUser].userInfo.spaceId) {
         [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:[NSNumber numberWithInt:self.pageNum] pageSize:@10 response:^(id bean, NSError *error) {
-            [self StopRefresh];
+            [weakSelf StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             
             
             if ([model.code isEqualToString:@"200"]) {
-                //dispatch_async(dispatch_get_main_queue(), ^{
-                
-//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                        [self.circleofFriendsList addObjectsFromArray:model.msg.list];
-//                        [self configData];
-//                        [self loadTextData];
-//                        [mainTable reloadData];
-//                    });
-//
-//                    [self stoploadMoreTopic];
-                [self.circleofFriendsList addObjectsFromArray:model.msg.list];
-                [self configData];
-                [self loadTextData];
+                [weakSelf.circleofFriendsList addObjectsFromArray:model.msg.list];
+                [weakSelf configData];
+                [weakSelf loadTextData];
                 __weak UITableView *tableView = mainTable;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     
@@ -425,9 +418,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     }
 }
 
-#pragma mark - 按钮动画
+#pragma mark - 评论和关注按钮
 - (void)replyAction:(YMButton *)sender{
-    
+    //先通过朋友圈id请求这条朋友圈数据
+    __weak typeof(self) weakSelf = self;
     CGRect rectInTableView = [mainTable rectForRowAtIndexPath:sender.appendIndexPath];
     CGFloat origin_Y = rectInTableView.origin.y + sender.frame.origin.y;
     CGRect targetRect = CGRectMake(CGRectGetMinX(sender.frame), origin_Y, CGRectGetWidth(sender.bounds), CGRectGetHeight(sender.bounds));
@@ -437,8 +431,18 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     }
     _selectedIndexPath = sender.appendIndexPath;
     YMTextData *ym = [_tableDataSource objectAtIndex:_selectedIndexPath.row];
-    //self.selectMessage = ym.messageBody;
-    [self.operationView showAtView:mainTable rect:targetRect isFavour:ym.hasFavour];
+    [WOTHTTPNetwork querySingleCircleofFriendsWithFriendId:ym.messageBody.friendId userid:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+        QuerySingleCircleofFriendModel *model = (QuerySingleCircleofFriendModel*)bean;
+        if ([model.msg.focus isEqualToNumber:@0]) {
+            weakSelf.isAttention = NO;
+        }else
+        {
+            weakSelf.isAttention = YES;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.operationView showAtView:mainTable rect:targetRect isFavour:self.isAttention];
+        });
+    }];
 }
 
 - (WFPopView *)operationView {
@@ -465,34 +469,40 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 #pragma mark - 加关注
 - (void)addLike{
     NSLog(@"加关注");
+   // [self createRequest];
     YMTextData *ymData = (YMTextData *)[_tableDataSource objectAtIndex:_selectedIndexPath.row];
     WFMessageBody *m = ymData.messageBody;
-    if (!m.isFavour) {
-        //执行加关注方法
-        m.isFavour = YES;
-        [WOTHTTPNetwork addFocusWithfocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId befocusPeopleid:m.issueId response:^(id bean, NSError *error) {
-            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
-            if ([baseModel.code isEqualToString:@"200"]) {
-                [MBProgressHUDUtil showMessage:@"关注成功！" toView:self.view];
-                [self createRequest];
-            } else {
-                [MBProgressHUDUtil showMessage:@"关注失败！" toView:self.view];
-               
-            }
-        }];
-    } else {
-        //执行取消关注方法
-        m.isFavour = NO;
-        [WOTHTTPNetwork deleteFocusWithFocusId:m.focusId response:^(id bean, NSError *error) {
-            WOTBaseModel *baseModel = (WOTBaseModel *)bean;
-            if ([baseModel.code isEqualToString:@"200"]) {
-                [MBProgressHUDUtil showMessage:@"取消成功！" toView:self.view];
-                 [self createRequest];
-            } else {
-                [MBProgressHUDUtil showMessage:@"取消失败！" toView:self.view];
-            }
-        }];
-    }
+    [WOTHTTPNetwork querySingleCircleofFriendsWithFriendId:ymData.messageBody.friendId userid:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+        QuerySingleCircleofFriendModel *model = (QuerySingleCircleofFriendModel*)bean;
+        if ([model.msg.focus isEqualToNumber:@0]) {
+                //执行加关注方法
+            m.isFavour = YES;
+            [WOTHTTPNetwork addFocusWithfocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId befocusPeopleid:m.issueId response:^(id bean, NSError *error) {
+                WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+                if ([baseModel.code isEqualToString:@"200"]) {
+                    [MBProgressHUDUtil showMessage:@"关注成功！" toView:self.view];
+                    //[self createRequest];
+                } else {
+                    [MBProgressHUDUtil showMessage:@"关注失败！" toView:self.view];
+                    
+                }
+            }];
+        } else {
+            //执行取消关注方法
+            m.isFavour = NO;
+            [WOTHTTPNetwork deleteFocusWithFocusId:model.msg.focusId response:^(id bean, NSError *error) {
+                WOTBaseModel *baseModel = (WOTBaseModel *)bean;
+                if ([baseModel.code isEqualToString:@"200"]) {
+                    [MBProgressHUDUtil showMessage:@"取消成功！" toView:self.view];
+                    // [self createRequest];
+                } else {
+                    [MBProgressHUDUtil showMessage:@"取消失败！" toView:self.view];
+                }
+            }];
+        }
+    }];
+    
+    
 
     ymData.messageBody = m;
     [ymData.attributedDataFavour removeAllObjects];
@@ -559,6 +569,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     //[self.view addSubview:maskview];
     [[UIApplication sharedApplication].keyWindow addSubview:maskview];
     YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:maskview.bounds byClick:clickTag appendArray:imageViews];
+    
     ymImageV.delegate = self;
     [ymImageV show:maskview didFinish:^(){
         [UIView animateWithDuration:0.5f animations:^{
@@ -596,8 +607,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         WFActionSheet *actionSheet = [[WFActionSheet alloc] initWithTitle:@"删除评论？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
         actionSheet.actionIndex = index;
         [actionSheet showInView:self.view];
-        
-        
         
     }else{
         //回复
@@ -685,6 +694,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             }];
             [self createRequest];
 
+        }else if([baseModel.code isEqualToString:@"501"])
+        {
+            [MBProgressHUDUtil showMessage:@"此条朋友圈已删除" toView:self.view];
+            return ;
         }else
         {
             //清空属性数组。否则会重复添加
@@ -755,13 +768,14 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 }
 
 
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self createRequest];
+    [self StartRefresh];
+    //[self createRequest];
 }
 
+#pragma mark - 点击更多评论进入单条朋友圈
 - (void)showCommentWith:(YMTextData *)ymD onCellRow:(NSInteger) cellStamp
 {
     //NSLog(@"打开评论");
@@ -769,7 +783,33 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     singleVC.hidesBottomBarWhenPushed = YES;
     singleVC.friendId = ymD.messageBody.friendId;
     [self.navigationController pushViewController:singleVC animated:YES];
-    
+}
+
+#pragma mark - 删除朋友圈
+-(void)deleteCircleofFriendsWith:(YMTextData *)ymD onCellRow:(NSInteger)cellStamp
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"是否删除此条朋友圈？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [WOTHTTPNetwork deleteCircleofFriendsWithFriendId:ymD.messageBody.friendId response:^(id bean, NSError *error) {
+            WOTBaseModel *model = (WOTBaseModel *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                [_tableDataSource removeObjectAtIndex:cellStamp];
+                [mainTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cellStamp inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                
+            }else
+            {
+                [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
+                return ;
+            }
+        }];
+   
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alert addAction:action];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - YMShowImageViewDelegate

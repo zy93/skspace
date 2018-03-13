@@ -14,7 +14,7 @@
 @property (nonatomic, strong)NSNumber *byReplyid;
 @property (nonatomic, strong)NSString *byReplyname;
 @property (nonatomic, strong)NSNumber *replyId;
-@property (nonatomic, strong)NSString *replyName;
+@property (nonatomic, copy)NSString *replyName;
 @property (nonatomic, strong)NSString *replyInfo;
 
 @end

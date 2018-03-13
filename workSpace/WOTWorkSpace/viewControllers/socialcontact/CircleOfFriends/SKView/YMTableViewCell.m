@@ -13,6 +13,7 @@
 #import "WFHudView.h"
 #import "UIImageView+WebCache.h"
 #import "UIColor+ColorChange.h"
+#import "WOTUserSingleton.h"
 
 #define kImageTag 9999
 
@@ -99,6 +100,13 @@
         _addTimeLabel.textColor = [UIColor colorWithHexString:@"999999"];
         [_addTimeLabel setFont:[UIFont systemFontOfSize:12]];
         [self.contentView addSubview:_addTimeLabel];
+        
+        _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
+        [_deleteButton setTitleColor:[UIColor colorWithHexString:@"6a7280"] forState:UIControlStateNormal];
+        _deleteButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
+        [_deleteButton addTarget:self action:@selector(deleteCircleOfFriends) forControlEvents:UIControlEventTouchDown];
+        [self.contentView addSubview:_deleteButton];
         
     }
     return self;
@@ -298,6 +306,12 @@
         showNum = ymData.replyDataSource.count;
     }
     
+    if ([[WOTUserSingleton shareUser].userInfo.userName isEqualToString:ymData.messageBody.posterName] ) {
+        _deleteButton.hidden = NO;
+    }else
+    {
+        _deleteButton.hidden = YES;
+    }
     
     for (int i = 0; i < showNum; i ++ ) {
         
@@ -349,8 +363,8 @@
     }
     
     if (ymData.replyDataSource.count == 0) {//没回复的时候
-        _addTimeLabel.frame = CGRectMake(self.userNameLbl.frame.origin.x, 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance - 24, 100, 20);
-        
+        _addTimeLabel.frame = CGRectMake(self.userNameLbl.frame.origin.x, 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance - 24, 70, 20);
+        _deleteButton.frame = CGRectMake(self.userNameLbl.frame.origin.x+70, 10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance - 24, 30, 20);
         _replyImageView.frame = CGRectMake(self.userNameLbl.frame.origin.x, backView_Y - 10 + balanceHeight + 5 + kReplyBtnDistance, 0, 0);
         
         _replyBtn.frame = CGRectMake(screenWidth - offSet_X - 40 + 6,10 + ShowNewImage_H + (ShowNewImage_H + 10)*(scale_Y/3) + origin_Y + hhhh + kDistance + (ymData.islessLimit?0:30) + balanceHeight + kReplyBtnDistance - 24, 40, 18);
@@ -362,7 +376,8 @@
         
         _replyBtn.frame = CGRectMake(screenWidth - offSet_X - 40 + 6, _replyImageView.frame.origin.y - 24, 40, 18);
         NSLog(@"测试高度：%f",_replyImageView.frame.origin.y+backView_H+24);
-        _addTimeLabel.frame = CGRectMake(self.userNameLbl.frame.origin.x,_replyImageView.frame.origin.y - 24, 100, 18);
+        _addTimeLabel.frame = CGRectMake(self.userNameLbl.frame.origin.x,_replyImageView.frame.origin.y - 24, 70, 18);
+        _deleteButton.frame = CGRectMake(self.userNameLbl.frame.origin.x+70,_replyImageView.frame.origin.y - 24, 30, 18);
         _openCommentBtn.frame = CGRectMake(self.userNameLbl.frame.origin.x,_replyImageView.frame.origin.y+backView_H+18, 200, 20);
         //tempDate.foldOrNot?0:20
     }
@@ -431,6 +446,13 @@
     
 }
 
+#pragma mark - 删除朋友圈
+-(void)deleteCircleOfFriends
+{
+    if ([_delegate respondsToSelector:@selector(deleteCircleofFriendsWith:onCellRow:)]) {
+        [_delegate deleteCircleofFriendsWith:tempDate onCellRow:self.stamp];
+    }
+}
 
 #pragma mark - 截取字符串--保留年、月、日
 -(NSString *)cutOutString:(NSString *)timeString

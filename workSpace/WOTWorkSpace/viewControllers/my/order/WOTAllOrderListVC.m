@@ -48,9 +48,11 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.translucent = YES;
 }
+
 -(NSArray *)createTitles{
     return [[NSArray alloc]initWithObjects:@"全部",@"会议室", @"工位",@"场地", @"礼包", nil];
 }
+
 -(NSArray<__kindof UIViewController *> *)createViewControllers{
     WOTOrderLIstBaseVC *vc1 = [[WOTOrderLIstBaseVC alloc]init];
     vc1.orderlisttype = WOTPageMenuVCTypeAll;

@@ -41,8 +41,8 @@
 @property (nonatomic,strong)UILabel *paymentLabel;
 @property (nonatomic,strong)UILabel *moneyNumLabel;
 @property (nonatomic,strong)UIButton *payButton;
-@property (nonatomic,strong)NSNumber *paySumNumber;
-@property (nonatomic,strong)NSNumber *payNumber;
+@property (nonatomic,assign)NSInteger paySumNumber;
+@property (nonatomic,assign)NSInteger payNumber;
 @property (nonatomic,strong)NSString *commodityDescribeStr;
 @property (nonatomic,assign)NSInteger price;
 
@@ -52,6 +52,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.title = self.giftBagModel.giftName;
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.giftBagScrollView];
@@ -219,9 +220,15 @@
 #pragma mark - 加载数据
 -(void)loadData
 {
-    self.paySumNumber = self.giftBagModel.price;
-    double giftBagPrice = [self.giftBagModel.price doubleValue]*100;
-    self.payNumber = [NSNumber numberWithDouble:giftBagPrice];
+//    self.payNumber = [[NSNumber alloc] init];
+//    self.paySumNumber = [[NSNumber alloc] init];
+//    NSLog(@"%@",self.giftBagModel.price);
+//    self.paySumNumber = self.giftBagModel.price;
+//    double giftBagPrice = [self.giftBagModel.price doubleValue]*100;
+//    self.payNumber = @(giftBagPrice);
+    
+    self.paySumNumber = [self.giftBagModel.price integerValue];
+    self.payNumber = [self.giftBagModel.price integerValue]*100;
     self.commodityDescribeStr = self.giftBagModel.giftName;
 }
 
@@ -271,13 +278,14 @@
                                  @"facilitator":@"1006",
                                  @"carrieroperator":@"1006",
                                  @"body":self.commodityDescribeStr,
-                                 @"total_fee":self.payNumber,//self.payNumber
+                                 @"total_fee":@(self.payNumber),//self.payNumber
                                  @"trade_type":@"APP",
+                                 @"commodityNum":self.giftBagModel.giftId,
                                  @"commodityName":self.giftBagModel.giftName,
                                  @"imageSite":self.giftBagModel.picture,
                                  @"commodityKind":@"礼包",
                                  @"productNum":@1,
-                                 @"money":self.paySumNumber,//self.paySumNumber
+                                 @"money":@(self.paySumNumber),//self.paySumNumber
                                  @"payType":@1,
                                  @"payObject":[WOTUserSingleton shareUser].userInfo.userName
                                  };
@@ -307,8 +315,9 @@
                                  @"commodityName":self.giftBagModel.giftName,
                                  @"commodityKind":@"礼包",
                                  @"productNum":@1,
+                                 @"commodityNum":self.giftBagModel.giftId,
                                  @"imageSite":self.giftBagModel.picture,
-                                 @"money":@0.01,//self.paySumNumber
+                                 @"money":@(self.paySumNumber),//self.paySumNumber
                                  @"payType":@1,
                                  @"payObject":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"body":self.commodityDescribeStr

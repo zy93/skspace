@@ -19,7 +19,7 @@
 - (void)clickRichText:(NSInteger)index replyIndex:(NSInteger)replyIndex;
 - (void)longClickRichText:(NSInteger)index replyIndex:(NSInteger)replyIndex;
 - (void)showCommentWith:(YMTextData *)ymD onCellRow:(NSInteger) cellStamp;
-
+- (void)deleteCircleofFriendsWith:(YMTextData *)ymD onCellRow:(NSInteger) cellStamp;
 @end
 
 @interface YMTableViewCell : UITableViewCell<WFCoretextDelegate>
@@ -39,7 +39,7 @@
 
 @property(nonatomic,strong)UIImageView *replyImageView;//评论背景图
 @property(nonatomic,strong)UIButton *openCommentBtn;//评论条数按钮
-
+@property(nonatomic,strong)UIButton *deleteButton;//删除朋友圈按钮
 @property (nonatomic,strong) UIImageView *favourImage;//点赞的图
 
 /**

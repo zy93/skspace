@@ -72,12 +72,14 @@
         imageScrollView.minimumZoomScale = 1;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-//        UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[appendArray objectAtIndex:i]]];
+//        UIImage *img = [UIImage imageNamed:[NSString strddingWithFormat:@"%@",[appendArray objectAtIndex:i]]];
 //        imageView.image = img;
         NSLog(@"测试：%@",appendArray);
         NSString *imageStr = [NSString stringWithFormat:@"%@",[appendArray  objectAtIndex:i]];
         [imageView sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+        //imageView.image = [UIImage imageNamed:@"placeholderImage"];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.clipsToBounds = YES;
         [imageScrollView addSubview:imageView];
         [_scrollView addSubview:imageScrollView];
         
