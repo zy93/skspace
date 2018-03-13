@@ -87,6 +87,7 @@
                         </connections>
                     </button>
                 </subviews>
+                <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="k1k-Rh-2hu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="20" id="0VV-Vd-N3I"/>
                     <constraint firstItem="GYC-fB-T5W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="DeQ-A6-fka"/>

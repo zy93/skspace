@@ -8,17 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
+@interface WOTOrderButton : UIButton
+
+@end
+
+@class WOTMyOrderCell;
 @protocol WOTOrderCellDelegate <NSObject>
 
 
 @required
--(void)showSiteOrderList;
--(void)showMettingRoomOrderList;
--(void)showStationOrderList;
--(void)showAllOrderList;
+-(void)myOrderCell:(WOTMyOrderCell *)cell showOrder:(NSString *)type;
 @end
 @interface WOTMyOrderCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *allOrderBtn;
+@property (weak, nonatomic) IBOutlet UIView *orderTypeBGView;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+@property (weak, nonatomic) IBOutlet WOTOrderButton *meetingBtn;
+@property (weak, nonatomic) IBOutlet WOTOrderButton *stationBtn;
+@property (weak, nonatomic) IBOutlet WOTOrderButton *siteBtn;
+@property (weak, nonatomic) IBOutlet WOTOrderButton *giftBagBtn;
 
-@property(nonatomic,weak)id<WOTOrderCellDelegate> celldelegate;
+@property(nonatomic, strong) id <WOTOrderCellDelegate> delegate;
 
 @end

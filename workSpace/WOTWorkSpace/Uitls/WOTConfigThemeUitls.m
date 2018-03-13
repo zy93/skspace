@@ -85,16 +85,31 @@
     [persentVC.navigationController pushViewController:loginVC animated:YES];
 }
 
+
+-(void)showAlert:(UIViewController *)vc message:(NSString *)message okBlock:(void (^)())okBlock
+{
+    [self showAlert:vc title:@"提示" message:message okBlock:okBlock cancel:nil];
+}
+
+-(void)showAlert:(UIViewController *)vc message:(NSString *)message okBlock:(void (^)())okBlock cancel:(void (^)())cancelBlock
+{
+    [self showAlert:vc title:@"提示" message:message okBlock:okBlock cancel:cancelBlock];
+}
+
 //统一显示alertView
--(void)showRemindingAlert:(UIViewController *)vc message:(NSString *)message okBlock:(void(^)())okBlock cancel:(void(^)())cancelBlock{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+-(void)showAlert:(UIViewController *)vc title:(NSString *)title message:(NSString *)message okBlock:(void (^)())okBlock cancel:(void (^)())cancelBlock
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         okBlock();
     }]];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-     cancelBlock();
-    }]];
+    if (cancelBlock) {
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            cancelBlock();
+        }]];
+    }
+    
     [vc presentViewController:alert animated:YES completion:nil];
     
 }

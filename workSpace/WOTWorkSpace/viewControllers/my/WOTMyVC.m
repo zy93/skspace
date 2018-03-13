@@ -102,7 +102,7 @@
             return 270;
             break;
         case 1:
-            return 100;
+            return 95;
             break;
         case 2:
             return 50;
@@ -164,7 +164,7 @@
         commoncell = mycell;
     } else if (indexPath.section == 1){
         WOTMyOrderCell *ordercell = [tableView dequeueReusableCellWithIdentifier:@"myorderCellID" forIndexPath:indexPath];
-        ordercell.celldelegate = self;
+        ordercell.delegate = self;
         commoncell = ordercell;
     } else {
         WOTMycommonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycommonCellID" forIndexPath:indexPath];
@@ -238,46 +238,57 @@
 
 
 #pragma mark - cell delegate
--(void)showAllOrderList{
-    if ([WOTSingtleton shared].isuserLogin) {
-        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
-        station_ordervc.page = 0;
-        [self.navigationController pushViewController:station_ordervc animated:YES];
-    } else {
-        [[WOTConfigThemeUitls shared] showLoginVC:self];
-    }
-}
 
--(void)showStationOrderList{
-    if ([WOTSingtleton shared].isuserLogin) {
-        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
-        station_ordervc.page = 0;
-        [self.navigationController pushViewController:station_ordervc animated:YES];
-    } else {
-        [[WOTConfigThemeUitls shared] showLoginVC:self];
-    }
-}
-
--(void)showSiteOrderList
+-(void)myOrderCell:(WOTMyOrderCell *)cell showOrder:(NSString *)type
 {
+    NSArray *arr = @[@"全部订单", @"会议室", @"工位", @"场地", @"礼包"];
     if ([WOTSingtleton shared].isuserLogin) {
         WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
-        station_ordervc.page = 2;
+        station_ordervc.page = [arr indexOfObject:type];
         [self.navigationController pushViewController:station_ordervc animated:YES];
-    } else {
+    }
+    else {
         [[WOTConfigThemeUitls shared] showLoginVC:self];
     }
 }
 
--(void)showMettingRoomOrderList{
-    if ([WOTSingtleton shared].isuserLogin) {
-        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
-        station_ordervc.page = 1;
-        [self.navigationController pushViewController:station_ordervc animated:YES];
-    } else {
-        [[WOTConfigThemeUitls shared] showLoginVC:self];
-    }
-}
+//-(void)showAllOrderList{
+//    if ([WOTSingtleton shared].isuserLogin) {
+//
+//        station_ordervc.page = 0;
+//        [self.navigationController pushViewController:station_ordervc animated:YES];
+//    } else {
+//        [[WOTConfigThemeUitls shared] showLoginVC:self];
+//    }
+//}
+//
+//-(void)showStationOrderList{
+//        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
+//        station_ordervc.page = 0;
+//        [self.navigationController pushViewController:station_ordervc animated:YES];
+//
+//}
+//
+//-(void)showSiteOrderList
+//{
+//    if ([WOTSingtleton shared].isuserLogin) {
+//        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
+//        station_ordervc.page = 2;
+//        [self.navigationController pushViewController:station_ordervc animated:YES];
+//    } else {
+//        [[WOTConfigThemeUitls shared] showLoginVC:self];
+//    }
+//}
+//
+//-(void)showMettingRoomOrderList{
+//    if ([WOTSingtleton shared].isuserLogin) {
+//        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
+//        station_ordervc.page = 1;
+//        [self.navigationController pushViewController:station_ordervc animated:YES];
+//    } else {
+//        [[WOTConfigThemeUitls shared] showLoginVC:self];
+//    }
+//}
 
 -(void)showSettingVC{
     _settingvc =[[UIStoryboard storyboardWithName:@"My" bundle:[NSBundle mainBundle]]instantiateViewControllerWithIdentifier:@"WOTSettingVC"];

@@ -897,53 +897,20 @@
     } response:response];
 }
 
-+(void)meetingReservationsWithSpaceId:(NSNumber *)spaceid
-                         conferenceId:(NSNumber *)confid
-                            startTime:(NSString *)startTime
-                              endTime:(NSString *)endTime
-                            spaceName:(NSString *)spaceName
-                          meetingName:(NSString *)meetingName
-                               userId:(NSNumber *)userId
-                             response:(response)response
++(void)meetingReservationsWithParams:(NSDictionary *)params response:(response)response
 {
     NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conferencedetails/subscribyTime"];
-    NSDictionary *dic = @{
-                          @"spaceId":spaceid,
-                          @"conferenceId":confid,
-                          @"startTime":startTime,
-                          @"endTime":endTime,
-                          @"spaceName":spaceName,
-                          @"company":meetingName,
-                          @"userId":userId
-                          };
-    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
+    
+    [self doRequestWithParameters:params useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTReservationsResponseModel_msg *model = [[WOTReservationsResponseModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
 }
 
-+(void)siteReservationsWithSpaceId:(NSNumber *)spaceid
-                      conferenceId:(NSNumber *)confid
-                         startTime:(NSString *)startTime
-                           endTime:(NSString *)endTime
-                         spaceName:(NSString *)spaceName
-                       meetingName:(NSString *) meetingName
-                            userId:(NSNumber *)userId
-                              body:(NSString *)body
-                          response:(response)response
++(void)siteReservationsWithParams:(NSDictionary *)params response:(response)response
 {
-    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conferencedetails/subscribyTime1"];
-    NSDictionary *dic = @{
-                          @"spaceId":spaceid,
-                          @"conferenceId":confid,
-                          @"startTime":startTime,
-                          @"endTime":endTime,
-                          @"spaceName":spaceName,
-                          @"company":meetingName,
-                          @"userId":userId,
-                          @"body":body
-                          };
-    [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
+    NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conferencedetails/subscribyTime"];
+    [self doRequestWithParameters:params useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTReservationsResponseModel_msg *model = [[WOTReservationsResponseModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
@@ -1098,6 +1065,22 @@
     
     [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
         SKBookStationOrderModel_msg *model = [[SKBookStationOrderModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
++(void)getUserOrderWithType:(NSString *)type response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/find",HTTPBaseURL];
+    NSMutableDictionary *param = [@{@"pageNo":@(1),
+                                    @"pageSize":@(1000),
+                                    @"userId":[WOTUserSingleton shareUser].userInfo.userId
+                                    } mutableCopy];
+    if (!strIsEmpty(type)) {
+        [param setValue:type forKey:@"commodityKind"];
+    }
+    [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
+        WOTWorkStationHistoryModel_msg *model = [[WOTWorkStationHistoryModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  model;
     } response:response];
 }

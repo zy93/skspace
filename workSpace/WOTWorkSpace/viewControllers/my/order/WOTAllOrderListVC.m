@@ -19,7 +19,15 @@
     [super viewDidLoad];
     [self configNavi];
     // Do any additional setup after loading the view.
-    self.pageTabView.selectedTabIndex = self.page;
+//    [self.pageTabView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_offset(0);
+//        make.left.mas_offset(0);
+//        make.bottom.mas_offset(0);
+//        make.right.mas_offset(0);
+//    }];
+    self.pageTabView.maxNumberOfPageItems = 5;
+    [self.pageTabView setSelectedTabIndex:  self.page];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,29 +46,35 @@
 }
 
 -(NSArray *)createTitles{
-    return [[NSArray alloc]initWithObjects:@"工位订单",@"会议室订单",@"场地订单", nil];
+    return [[NSArray alloc]initWithObjects:@"全部",@"会议室", @"工位",@"场地", @"礼包", nil];
 }
 
 -(NSArray<__kindof UIViewController *> *)createViewControllers{
     WOTOrderLIstBaseVC *vc1 = [[WOTOrderLIstBaseVC alloc]init];
-    vc1.orderlisttype = WOTPageMenuVCTypeStation;
+    vc1.orderlisttype = WOTPageMenuVCTypeAll;
     WOTOrderLIstBaseVC *vc2 = [[WOTOrderLIstBaseVC alloc]init];
-    vc2.orderlisttype = WOTPageMenuVCTypeMetting;
+    vc2.orderlisttype = WOTPageMenuVCTypeMeeting;
     WOTOrderLIstBaseVC *vc3 = [[WOTOrderLIstBaseVC alloc]init];
-    vc3.orderlisttype = WOTPageMenuVCTypeSite;
+    vc3.orderlisttype = WOTPageMenuVCTypeStation;
+    WOTOrderLIstBaseVC *vc4 = [[WOTOrderLIstBaseVC alloc]init];
+    vc4.orderlisttype = WOTPageMenuVCTypeSite;
+    WOTOrderLIstBaseVC *vc5 = [[WOTOrderLIstBaseVC alloc]init];
+    vc5.orderlisttype = WOTPageMenuVCTypeGiftBag;
     
     [self addChildViewController:vc1];
     [self addChildViewController:vc2];
     [self addChildViewController:vc3];
+    [self addChildViewController:vc4];
+    [self addChildViewController:vc5];
     return self.childViewControllers;
 }
 
 
 
 -(void)configNavi{
-    [self configNaviBackItem];
+    [self configNaviBackItem];    
     self.navigationItem.title = @"我的订单";
-    [self configNaviRightItemWithImage:[UIImage imageNamed:@"search_icon"]];
+//    [self configNaviRightItemWithImage:[UIImage imageNamed:@"search_icon"]];
 }
 
 

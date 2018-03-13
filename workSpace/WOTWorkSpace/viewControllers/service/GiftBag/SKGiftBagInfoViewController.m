@@ -280,6 +280,8 @@
                                  @"body":self.commodityDescribeStr,
                                  @"total_fee":@(self.payNumber),//self.payNumber
                                  @"trade_type":@"APP",
+                                 @"commodityName":self.giftBagModel.giftName,
+                                 @"imageSite":self.giftBagModel.picture,
                                  @"commodityKind":self.commodityDescribeStr,
                                  @"productNum":@1,
                                  @"money":@(self.paySumNumber),//self.paySumNumber
@@ -309,8 +311,10 @@
     NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"commodityName":self.giftBagModel.giftName,
                                  @"commodityKind":self.commodityDescribeStr,
                                  @"productNum":@1,
+                                 @"imageSite":self.giftBagModel.picture,
                                  @"money":@0.01,//self.paySumNumber
                                  @"payType":@1,
                                  @"payObject":[WOTUserSingleton shareUser].userInfo.userName,
