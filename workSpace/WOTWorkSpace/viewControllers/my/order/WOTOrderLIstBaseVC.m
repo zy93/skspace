@@ -12,6 +12,7 @@
 #import "WOTOrderCell.h"
 #import "WOTMyOrderInfoCell.h"
 #import "WOTOrderDetailVC.h"
+#import "WOTAllOrderListVC.h"
 @interface WOTOrderLIstBaseVC () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSArray *tableList;
 @end
@@ -37,6 +38,12 @@
 {
     [super viewDidAppear:animated];
     [self StartRefresh];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    WOTAllOrderListVC *vc = self.supern;
 }
 
 #pragma mark -- Refresh method

@@ -19,13 +19,9 @@
     [super viewDidLoad];
     [self configNavi];
     // Do any additional setup after loading the view.
-//    [self.pageTabView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.mas_offset(0);
-//        make.left.mas_offset(0);
-//        make.bottom.mas_offset(0);
-//        make.right.mas_offset(0);
-//    }];
-    self.pageTabView.maxNumberOfPageItems = 5;
+    self.pageTabView.maxNumberOfPageItems = 3;
+    self.pageTabView.titleStyle = XXPageTabTitleStyleBlend;
+    self.pageTabView.selectedTabIndex = self.page;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,7 +37,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.pageTabView setSelectedTabIndex:self.page];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -76,17 +71,10 @@
 
 
 -(void)configNavi{
-    [self configNaviBackItem];    
+    [self configNaviBackItem];
     self.navigationItem.title = @"我的订单";
-//    [self configNaviRightItemWithImage:[UIImage imageNamed:@"search_icon"]];
 }
 
-
--(void)rightItemAction{
-
-    WOTSearchVC *searchvc = [[WOTSearchVC alloc]init];
-    [self.navigationController pushViewController:searchvc animated:YES];
-};
 
 /*
 #pragma mark - Navigation
