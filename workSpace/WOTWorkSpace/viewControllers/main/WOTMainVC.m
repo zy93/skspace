@@ -531,8 +531,7 @@ int a = 0;
     [bannerView.mainImageView sd_setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
     bannerView.indexLabel.text = [NSString stringWithFormat:@"%@",self.spaceData[index].spaceName];
     bannerView.spaceCityLabel.text = [NSString stringWithFormat:@"|%@|",self.spaceData[index].city];
-    //bannerView.numberLabel.text = [NSString stringWithFormat:@"|%@|",self.spaceData[index].city];
-    bannerView.numberLabel.text = @"0个工位";
+    bannerView.numberLabel.text = [NSString stringWithFormat:@"%@个工位",self.spaceData[index].stationNum];;
     return bannerView;
 }
 

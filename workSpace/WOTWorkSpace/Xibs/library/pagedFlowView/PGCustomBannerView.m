@@ -51,7 +51,7 @@
     [self.spaceCityLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.floorView);
         make.width.equalTo(self.floorView);
-        make.bottom.equalTo(self.indexLabel.mas_top);
+        make.bottom.equalTo(self.indexLabel.mas_top).with.offset(-5);
     }];
     
     [self.indexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -61,15 +61,14 @@
     [self.numberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.floorView);
         make.width.equalTo(self.floorView);
-        make.top.equalTo(self.indexLabel.mas_bottom);
+        make.top.equalTo(self.indexLabel.mas_bottom).with.offset(5);
     }];
 }
 
 - (UILabel *)indexLabel {
     if (_indexLabel == nil) {
         _indexLabel = [[UILabel alloc] init];
-        //_indexLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
-        _indexLabel.font = [UIFont systemFontOfSize:25.0];
+        _indexLabel.font = [UIFont systemFontOfSize:20.0];
         _indexLabel.textAlignment = NSTextAlignmentCenter;
         _indexLabel.textColor = [UIColor whiteColor];
     }
@@ -79,7 +78,6 @@
 - (UILabel *)spaceCityLabel {
     if (_spaceCityLabel == nil) {
         _spaceCityLabel = [[UILabel alloc] init];
-        //_spaceCityLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
         _spaceCityLabel.font = [UIFont systemFontOfSize:20.0];
         _spaceCityLabel.textAlignment = NSTextAlignmentCenter;
         _spaceCityLabel.textColor = [UIColor whiteColor];
@@ -90,7 +88,6 @@
 - (UILabel *)numberLabel {
     if (_numberLabel == nil) {
         _numberLabel = [[UILabel alloc] init];
-        //_numberLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
         _numberLabel.font = [UIFont systemFontOfSize:15.0];
         _numberLabel.textAlignment = NSTextAlignmentCenter;
         _numberLabel.textColor = [UIColor whiteColor];
