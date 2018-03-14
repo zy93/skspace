@@ -12,6 +12,7 @@
 #import "WOTEnterpriseModel.h"
 #import "NSString+Category.h"
 #import "WOTEnterpriseIntroduceVC.h"
+#import "WOTProvidersVC.h"
 
 @interface WOTEnterpriseLIstVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -118,9 +119,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
-    vc.model = self.tableList[indexPath.row];
-    vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
+    WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
+    vc.companyType = CompanyTypeEnterprise;
+    vc.enterpriseModel = self.tableList[indexPath.row];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

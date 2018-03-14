@@ -10,6 +10,7 @@
 #import "WOTFirstCell.h"
 #import "WOTSecondCell.h"
 #import "WOTThirdCell.h"
+#import "WOTApplyJoinEnterpriseModel.h"
 
 
 #define ssstr @"我们通过三方面打造共享办公：\n1、通过办公租赁、双创运营、办公服务、金融服务来打造企业共享办公生态圈；\n2、打造孵化器、产业园的升级版平台；通过社区内大企业带动小微企业的入驻模式给小型、小微型企业更多成长空间。另一方面通过线上做为入口，办理会员、注册、入驻，完善服务、聚集数据。通过智能信息化的手段来运营，在平台上完善客户、会员、门禁、监控、宽带、楼宇智能化等系统；\n3、实现社区平台的品牌化、服务标准化、共享化、社交化、智能化、数据化，完善企业办公生态圈服务体系。"
@@ -23,14 +24,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"服务商信息";
+    if (self.companyType == CompanyTypeFacilitator) {
+        self.navigationItem.title = @"服务商信息";
+    }else
+    {
+        self.navigationItem.title = @"企业信息";
+    }
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTFirstCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTFirstCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTSecondCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTSecondCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTThirdCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTThirdCell"];
     
     self.getProvidersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.getProvidersBtn setTitle:@"获取服务支持" forState:UIControlStateNormal];
+    if (self.companyType == CompanyTypeFacilitator) {
+        [self.getProvidersBtn setTitle:@"获取服务支持" forState:UIControlStateNormal];
+    }else
+    {
+        [self.getProvidersBtn setTitle:@"申请加入" forState:UIControlStateNormal];
+    }
+    
     [self.getProvidersBtn.layer setCornerRadius:5.f];
     [self.getProvidersBtn setBackgroundColor:UICOLOR_MAIN_ORANGE];
     [self.getProvidersBtn addTarget:self action:@selector(getProvidersBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -60,6 +73,18 @@
         return;
     }
     
+    if (self.companyType == CompanyTypeFacilitator) {
+        [self getServiceSupport];
+    }else
+    {
+        [self applyToJoin];
+    }
+    
+}
+
+#pragma mark - 获取服务支持
+-(void)getServiceSupport
+{
     NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId,
@@ -81,6 +106,26 @@
     }];
 }
 
+#pragma mark - 申请加入
+-(void)applyToJoin
+{
+    NSLog(@"公司id:%@",[WOTUserSingleton shareUser].userInfo.companyId);
+    if ([WOTUitls stringArrayContainsStringWithArrayStr:[WOTUserSingleton shareUser].userInfo.companyId string:self.enterpriseModel.companyId] ||
+        [WOTUitls stringArrayContainsStringWithArrayStr:[WOTUserSingleton shareUser].userInfo.companyIdAdmin string:self.enterpriseModel.companyId]) {
+        [MBProgressHUDUtil showMessage:@"已经是企业的员工！" toView:self.view];
+    }
+    else
+    {
+        [WOTHTTPNetwork applyJoinEnterpriseWithEnterpriseId:self.enterpriseModel.companyId enterpriseName:self.enterpriseModel.companyName response:^(id bean, NSError *error) {
+            WOTApplyJoinEnterpriseModel_msg *joinModel = bean;
+            if ([joinModel.code isEqualToString:@"200"]) {
+                [MBProgressHUDUtil showMessage:@"申请已提交，等待企业管理员审核!" toView:self.view];
+            }
+        }];
+        
+    }
+    
+}
 
 #pragma mark - table
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -127,10 +172,20 @@
         if (!cell) {
             cell = [[WOTFirstCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTFirstCell"];
         }
-        NSArray *arr = [self.facilitatorModel.firmLogo componentsSeparatedByString:@","];
-        [cell.iconIV setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@""]];
-        cell.titleLab.text = self.facilitatorModel.firmName;
-        arr = [self.facilitatorModel.businessScope componentsSeparatedByString:@","];
+        NSArray *arr;
+        if (self.companyType == CompanyTypeFacilitator) {
+            arr = [self.facilitatorModel.firmLogo componentsSeparatedByString:@","];
+            [cell.iconIV setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@""]];
+            cell.titleLab.text = self.facilitatorModel.firmName;
+            arr = [self.facilitatorModel.businessScope componentsSeparatedByString:@","];
+        }else
+        {
+            arr = [self.enterpriseModel.companyPicture componentsSeparatedByString:@","];
+            [cell.iconIV setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@""]];
+            cell.titleLab.text = self.enterpriseModel.companyName;
+            arr = [self.enterpriseModel.companyType componentsSeparatedByString:@","];
+        }
+        
         if (arr.count<=0) {
             cell.subtitle1Lab.hidden = YES;
             cell.subtitle2Lab.hidden = YES;
@@ -164,9 +219,15 @@
         if (!cell) {
             cell = [[WOTSecondCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTSecondCell"];
         }
-        cell.titleLab.text = @"服务商介绍";
-        NSString *str = strIsEmpty(self.facilitatorModel.facilitatorDescribe)?ssstr:self.facilitatorModel.facilitatorDescribe;
-
+        NSString *str;
+        if (self.companyType == CompanyTypeFacilitator) {
+            cell.titleLab.text = @"服务商介绍";
+            str = strIsEmpty(self.facilitatorModel.facilitatorDescribe)?ssstr:self.facilitatorModel.facilitatorDescribe;
+        }else
+        {
+            cell.titleLab.text = @"企业介绍";
+            str = strIsEmpty(self.enterpriseModel.companyProfile)?ssstr:self.enterpriseModel.companyProfile;
+        }
         cell.textView.text = str;
         return cell;
     }
@@ -176,9 +237,15 @@
             cell = [[WOTThirdCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTThirdCell"];
         }
         cell.titleLab.text = @"联系信息";
-        cell.nameValueLab.text = self.facilitatorModel.contacts;
+        if (self.companyType == CompanyTypeFacilitator) {
+            cell.nameValueLab.text = self.facilitatorModel.contacts;
+            cell.addrssValueLab.text = strIsEmpty(self.facilitatorModel.city)?@"暂无":self.facilitatorModel.city;
+        }else
+        {
+            cell.nameValueLab.text = self.enterpriseModel.contacts;
+            cell.addrssValueLab.text = @"暂无";
+        }
         cell.webValueLab.text = @"http://www.yiliangang.com";
-        cell.addrssValueLab.text = strIsEmpty(self.facilitatorModel.city)?@"暂无":self.facilitatorModel.city;
         return cell;
     }
     else {
@@ -193,14 +260,5 @@
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

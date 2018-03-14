@@ -578,8 +578,12 @@ int a = 0;
 #pragma mark - enterprise scrollview delegate
 -(void)enterpriseScroll:(WOTEnterpriseScrollView *)scroll didSelectWithIndex:(NSInteger)index
 {
-    self.enterpriseModel = self.enterpriseData[index];
-    [self pushToViewControllerWithStoryBoardName:nil viewControllerName:@"WOTEnterpriseIntroduceVC"];
+
+    WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
+    vc.companyType = CompanyTypeEnterprise;
+    vc.enterpriseModel = self.enterpriseData[index];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - SDCycleScrollView Delegate  点击轮播图显示详情
@@ -731,6 +735,7 @@ int a = 0;
 //    vc.facilitatorModel = self.facilitatorData[tapTag];
 //    vc.vcType = INTRODUCE_VC_TYPE_Providers;
     WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
+    vc.companyType = CompanyTypeFacilitator;
     vc.facilitatorModel = self.facilitatorData[tapTag];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
