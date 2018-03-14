@@ -30,9 +30,13 @@
 -(void)commonInit
 {
     self.topIV = [[UIImageView alloc] init];
+    self.topIV.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    self.topIV.layer.borderWidth =.5f;
     [self addSubview:self.topIV];
     
     self.iconIV = [[UIImageView alloc] init];
+    self.iconIV.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    self.iconIV.layer.borderWidth = .5f;
     [self addSubview:self.iconIV];
     
     self.titleLab = [[UILabel alloc] init];

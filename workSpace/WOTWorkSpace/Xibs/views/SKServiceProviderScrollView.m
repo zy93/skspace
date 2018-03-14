@@ -39,13 +39,8 @@
 //        view.backgroundColor = UICOLOR_GRAY_99;
         view.clipsToBounds = YES;
         SKFacilitatorInfoModel *infoModel = facilitatorArray[i];
-        //NSURL *image = [infoModel.firmLogo ToResourcesUrl];
-        NSArray *arr = [infoModel.firmLogo componentsSeparatedByString:@","];
-        
-        [view.iconIV sd_setImageWithURL:[arr.firstObject ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
-        if (arr.count>=2) {
-            [view.topIV setImageWithURL:[arr[1] ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"servcie_bg"]];
-        }
+        [view.iconIV sd_setImageWithURL:[infoModel.firmLogo ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
+        [view.topIV setImageWithURL:[infoModel.firmShow ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"servcie_bg"]];
         view.titleLab.text = infoModel.firmName;
         view.subtitleLab.text = infoModel.businessScope;
         view.tag = i;
