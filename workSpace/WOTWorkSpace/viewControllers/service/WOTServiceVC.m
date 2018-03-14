@@ -45,7 +45,6 @@
 //@property(nonatomic,strong)WOTRefreshControlUitls *refreshControl;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewConstraint;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bannerConstraint;
 
 @property (weak, nonatomic) IBOutlet SDCycleScrollView *autoScrollView;
@@ -68,21 +67,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"服务";
+
+    //解决状态栏空白问题
+    if (@available(iOS 11.0, *)) {
+        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     [self loadData];
-    [self configNav];
     [self addData];
     [self AddRefreshHeader];
     //[self StartRefresh];
-    CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? -44: 0;
     self.scrollViewConstraint.constant = 0;
-    self.bannerConstraint.constant = buff;
-    self.scrollView.clipsToBounds = NO;
- 
-//废弃
-//   _refreshControl = [[WOTRefreshControlUitls alloc]initWithScroll:self.table];
-//    [_refreshControl addTarget:self action:@selector(downLoadRefresh) forControlEvents:UIControlEventAllEvents];
     
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -105,9 +103,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
--(void)configNav{
-    self.navigationItem.title = @"服务";
-}
 #pragma mark -- Refresh method
 /**
  *  添加下拉刷新事件

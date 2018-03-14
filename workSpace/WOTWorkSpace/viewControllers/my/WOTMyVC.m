@@ -12,7 +12,7 @@
 #import "WOTMycommonCell.h"
 #import "WOTMyOrderCell.h"
 #import "WOTMyActivitiesVC.h"
-#import "WOTMyHistoryVC.h"
+#import "WOTMyRepairdListVC.h"
 #import "WOTLoginVC.h"
 #import "WOTReservationsMeetingVC.h"
 #import "LoginViewController.h"
@@ -33,21 +33,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self.tableView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
-//    //解决布局空白问题
-//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-//    if (is7Version) {
-//        self.edgesForExtendedLayout=UIRectEdgeNone;
-//    }
     
     [self.tableView registerClass:[WOTMycommonCell class] forCellReuseIdentifier:@"mycommonCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderCell" bundle:nil] forCellReuseIdentifier:@"myorderCellID"];
-    
-    CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? -45: 0;
+    //解决状态栏空白问题
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *maker){
-        maker.top.mas_equalTo(buff);
+        maker.top.mas_equalTo(NavigationHeight);
         maker.left.mas_equalTo(self.view);
         maker.right.mas_equalTo(self.view);
         maker.bottom.mas_equalTo(self.view);
@@ -203,7 +200,7 @@
                 }
                 else if (indexPath.row ==3) {
                     
-                    WOTMyHistoryVC *historyvc = [[WOTMyHistoryVC alloc]init];
+                    WOTMyRepairdListVC *historyvc = [[WOTMyRepairdListVC alloc]init];
                     historyvc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:historyvc animated:YES];
                 }

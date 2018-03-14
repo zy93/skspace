@@ -26,8 +26,6 @@
 //        make.right.mas_offset(0);
 //    }];
     self.pageTabView.maxNumberOfPageItems = 5;
-    [self.pageTabView setSelectedTabIndex:  self.page];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,6 +36,12 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.navigationController.navigationBar.translucent = NO;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.pageTabView setSelectedTabIndex:self.page];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

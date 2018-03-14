@@ -8,6 +8,6 @@
 
 #import "WOTTableViewBaseVC.h"
 
-@interface WOTSurplusTimeVC : WOTTableViewBaseVC
+@interface WOTSurplusTimeVC : UIViewController
 
 @end

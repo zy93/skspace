@@ -283,7 +283,7 @@
                                  @"commodityNum":self.giftBagModel.giftId,
                                  @"commodityName":self.giftBagModel.giftName,
                                  @"imageSite":self.giftBagModel.picture,
-                                 @"commodityKind":self.commodityDescribeStr,
+                                 @"commodityKind":@"礼包",
                                  @"productNum":@1,
                                  @"money":@(self.paySumNumber),//self.paySumNumber
                                  @"payType":@1,
@@ -313,7 +313,7 @@
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
                                  @"commodityName":self.giftBagModel.giftName,
-                                 @"commodityKind":self.commodityDescribeStr,
+                                 @"commodityKind":@"礼包",
                                  @"productNum":@1,
                                  @"commodityNum":self.giftBagModel.giftId,
                                  @"imageSite":self.giftBagModel.picture,

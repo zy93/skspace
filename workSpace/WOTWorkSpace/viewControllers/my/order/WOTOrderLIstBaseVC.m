@@ -25,7 +25,6 @@
 
     // Do any additional setup after loading the view.
     [self AddRefreshHeader];
-    [self StartRefresh];
     
 }
 
@@ -37,6 +36,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self StartRefresh];
 }
 
 #pragma mark -- Refresh method
@@ -116,6 +116,20 @@
     cell.titleLab.text = model.commodityKind;
     cell.subtitleLab.text = [NSString stringWithFormat:@"%@·%@",model.spaceName, model.commodityName];
     [cell.bgIV setImageWithURL:[model.imageSite ToResourcesUrl]];
+    
+    if ([model.commodityKind isEqualToString:@"会议室"]) {
+        [cell.iconIV setImage:[UIImage imageNamed:@"order_meeting"]];
+    }
+    else if ([model.commodityKind isEqualToString:@"场地"]) {
+        [cell.iconIV setImage:[UIImage imageNamed:@"order_site"]];
+    }
+    else if ([model.commodityKind isEqualToString:@"工位"]) {
+        [cell.iconIV setImage:[UIImage imageNamed:@"order_station"]];
+    }
+    else if ([model.commodityKind isEqualToString:@"礼包"]) {
+        [cell.iconIV setImage:[UIImage imageNamed:@"order_gift_bag"]];
+    }
+    
     [cell setupViews];
     return cell;
 }

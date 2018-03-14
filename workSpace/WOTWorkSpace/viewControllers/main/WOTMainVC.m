@@ -117,6 +117,13 @@
      // Do any additional setup after loading the view.
     CGFloat  buff = [[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58 ? -44: 0;
     self.bannerConstraint.constant = buff;
+    //解决状态栏空白问题
+    if (@available(iOS 11.0, *)) {
+        self.scrollVIew.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -139,6 +146,7 @@ int a = 0;
         [self loadLocationSpace];
     }
     [super viewDidAppear:animated];
+
     self.scrollVIew.contentSize = CGSizeMake(self.view.frame.size.width,self.autoScrollView.frame.size.height+self.ballView.frame.size.height+self.workspaceView.frame.size.height+self.activityView.frame.size.height+self.informationView.frame.size.height+self.enterpriseView.frame.size.height+70+self.serviceProvideView.frame.size.height);
     NSLog(@"========%lf",self.scrollVIew.contentSize.height);
 }
