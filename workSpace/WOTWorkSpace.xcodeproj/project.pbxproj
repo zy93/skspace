@@ -3116,7 +3116,7 @@
 				TargetAttributes = {
 					E85A85831F0201F30016FCA1 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 5EY377SJTX;
+						DevelopmentTeam = HU7B3MZ5C3;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -3888,9 +3888,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WOTWorkSpace/WOTWorkSpace.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing WOT Technology Development Co.,Ltd. (5EY377SJTX)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing GuoTouShangKe Technology Co., Ltd. (HU7B3MZ5C3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5EY377SJTX;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HU7B3MZ5C3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3913,7 +3914,7 @@
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/WXPay",
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/Alipay",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.WOTWorkSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skwork.gtsk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4050,10 +4051,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WOTWorkSpace/WOTWorkSpace.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing WOT Technology Development Co.,Ltd. (5EY377SJTX)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing GuoTouShangKe Technology Co., Ltd. (HU7B3MZ5C3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 5EY377SJTX;
+				DEVELOPMENT_TEAM = HU7B3MZ5C3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4076,7 +4078,7 @@
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/WXPay",
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/Alipay",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.WOTWorkSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skwork.gtsk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4094,9 +4096,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = WOTWorkSpace/WOTWorkSpace.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing WOT Technology Development Co.,Ltd. (5EY377SJTX)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing GuoTouShangKe Technology Co., Ltd. (HU7B3MZ5C3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5EY377SJTX;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HU7B3MZ5C3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4119,7 +4122,7 @@
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/WXPay",
 					"$(PROJECT_DIR)/WOTWorkSpace/librarys/Alipay",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.WOTWorkSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skwork.gtsk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
