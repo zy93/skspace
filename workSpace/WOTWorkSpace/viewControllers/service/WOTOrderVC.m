@@ -745,8 +745,8 @@
             case ORDER_TYPE_BOOKSTATION:
             {
                 cell.addressValueLab.text  = self.spaceModel.spaceSite;
-                cell.openTimeValueLab.text = @"全天";
-                cell.peopleValueLab.text   = @"100人";
+                cell.openTimeValueLab.text = self.spaceModel.openingHours;
+                cell.peopleValueLab.text   = [NSString stringWithFormat:@"%@",self.spaceModel.manNum];
             }
                 break;
             case ORDER_TYPE_MEETING:

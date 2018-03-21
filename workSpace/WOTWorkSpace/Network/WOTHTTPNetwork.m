@@ -361,7 +361,7 @@
 {
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Staff/find"];
     NSDictionary * parameters =@{@"spaceList":spaceId,
-                                 @"staffName":@"运营经理",
+                                 @"teamShow":@"是",
                                  @"pageNo":@(1),
                                  @"pageSize":@(10),
                                  };
