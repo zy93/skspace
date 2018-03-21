@@ -19,7 +19,7 @@
     [super viewDidLoad];
     [self configNavi];
     // Do any additional setup after loading the view.
-    self.pageTabView.maxNumberOfPageItems = 3;
+    self.pageTabView.maxNumberOfPageItems = 5;
     self.pageTabView.titleStyle = XXPageTabTitleStyleBlend;
     self.pageTabView.selectedTabIndex = self.page;
 }
