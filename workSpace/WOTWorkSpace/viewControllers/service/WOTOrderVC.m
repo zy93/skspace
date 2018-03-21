@@ -1367,14 +1367,30 @@
     }];
 }
 
+
+#pragma mark - 空间设备
 -(void)getSpaceFacility
 {
     [WOTHTTPNetwork getSpaceFacilitiesWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            WOTMeetingFacilityModel_msg *msg = bean;
-            self.spaceFacilityList = msg.msg;
-            [self.table reloadData];
-        });
+        WOTMeetingFacilityModel_msg *model = (WOTMeetingFacilityModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                WOTMeetingFacilityModel_msg *msg = bean;
+                self.spaceFacilityList = msg.msg;
+                [self.table reloadData];
+            });
+        }
+        
+        if ([model.code isEqualToString:@"202"]) {
+            [MBProgressHUDUtil showMessage:@"设备为空！" toView:self.view];
+            return ;
+        }
+        
+        if ([model.code isEqualToString:@"500"]) {
+            [MBProgressHUDUtil showMessage:@"设备查询失败！" toView:self.view];
+            return ;
+        }
+        
     }];
 }
 
@@ -1386,11 +1402,25 @@
         return;
     }
     [WOTHTTPNetwork getSpaceTeamWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            WOTStaffModel_msg *model = bean;
-            self.teamList = model.msg.list;
-            [self.table reloadData];
-        });
+        WOTStaffModel_msg *model = (WOTStaffModel_msg*)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                WOTStaffModel_msg *model = bean;
+                self.teamList = model.msg.list;
+                [self.table reloadData];
+            });
+        }
+        
+        if ([model.code isEqualToString:@"202"]) {
+            [MBProgressHUDUtil showMessage:@"没有社区团队" toView:self.view];
+            return ;
+        }
+        
+        if ([model.code isEqualToString:@"500"]) {
+            [MBProgressHUDUtil showMessage:@"查询失败！" toView:self.view];
+            return ;
+        }
+        
     }];
 }
 
