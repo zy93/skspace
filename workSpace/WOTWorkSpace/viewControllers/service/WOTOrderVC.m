@@ -103,7 +103,7 @@
 @property (nonatomic, strong) NSString *total_fee;        //总金额
 @property (nonatomic, strong) NSString *spbill_create_ip; //终端IP
 @property (nonatomic, strong) NSString *trade_type;       //交易类型
-@property (nonatomic, strong) NSString *invoiceInfo;      //发票信息
+@property (nonatomic, copy) NSString *invoiceInfo;      //发票信息
 @property (nonatomic, strong) NSNumber *bookSationTime;
 @property (nonatomic, strong) NSNumber *meetingTime;
 @property (nonatomic, strong) NSString *payWayStr;
@@ -124,7 +124,7 @@
     self.reservationStationStartDate = [NSDate getNewTimeZero];
     self.reservationStationEndDate = [NSDate getNewTimeZero];
     self.payType = @(0); //默认
-    self.invoiceInfo = @"请选择企业";
+    //self.invoiceInfo = @"请选择企业";
     self.reservationStationNumber = 1;
     self.confirmButton.backgroundColor = UICOLOR_MAIN_ORANGE;
     self.confirmButton.layer.cornerRadius = 5.f;
@@ -147,7 +147,7 @@
     }
     [self.table registerNib:[UINib nibWithNibName:scrollViewCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:scrollViewCell];
     [self.table registerNib:[UINib nibWithNibName:mapCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:mapCell];
-
+    [self queryMyCompany];
 }
 
 
@@ -163,6 +163,7 @@
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self creatDataPickerView];
     [self getTeam];
+    
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ||
         [WOTSingtleton shared].orderType == ORDER_TYPE_SPACE) {
         [self getSpaceFacility];
@@ -835,10 +836,10 @@
         if (cell == nil) {
             cell = [[WOTOrderForSelectCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForSelectCell"];
         }
-        if (indexPath.row==1) {
-            [cell.titleLab setText:@"发票信息"];
+//        if (indexPath.row==1) {
+            [cell.titleLab setText:@"选择企业"];
             [cell.subtitleLab setText:self.invoiceInfo];
-        }
+//        }
         return cell;
     }
     
@@ -876,6 +877,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSArray *list = tableList[indexPath.section];
     NSString *cellType = list[indexPath.row];
@@ -890,26 +892,26 @@
         mapVC.spaceModel = self.spaceModel;
         [self.navigationController pushViewController:mapVC animated:YES];
     }
-    
-//    if ([cellType isEqualToString:selectCell]) {
-//        //
-//        if ([self.payType isEqual:@(0)]) {
-//            //企业发票
-//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"My" bundle:[NSBundle mainBundle]];
-//            WOTMyEnterpriseVC *myenterprisevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTMyEnterpriseVC"];
-//            myenterprisevc.selectEnterprise = YES;
-//            [self.navigationController pushViewController:myenterprisevc animated:YES];
-//            myenterprisevc.selectEnterpriseBlock = ^(WOTEnterpriseModel *model) {
-//                self.payObject = model.companyId;
-//                self.invoiceInfo = model.companyName;
-//                NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-//                [self.table reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
-//            };
-//        }
-//        else {
-//            //个人发票
-//        }
-//    }
+    __weak typeof(self) weakSelf = self;
+    if ([cellType isEqualToString:selectCell]) {
+        //
+        if ([self.payType isEqual:@(0)]) {
+            //企业发票
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"My" bundle:[NSBundle mainBundle]];
+            WOTMyEnterpriseVC *myenterprisevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTMyEnterpriseVC"];
+            myenterprisevc.selectEnterprise = YES;
+            [self.navigationController pushViewController:myenterprisevc animated:YES];
+            myenterprisevc.selectEnterpriseBlock = ^(WOTEnterpriseModel *model) {
+                weakSelf.payObject = model.companyId;
+                weakSelf.invoiceInfo = model.companyName;
+                NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+                [weakSelf.table reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
+            };
+        }
+        else {
+            //个人发票
+        }
+    }
 }
 
 #pragma mark - WOTOrderForPaymentCellDelegate
@@ -1365,14 +1367,30 @@
     }];
 }
 
+
+#pragma mark - 空间设备
 -(void)getSpaceFacility
 {
     [WOTHTTPNetwork getSpaceFacilitiesWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            WOTMeetingFacilityModel_msg *msg = bean;
-            self.spaceFacilityList = msg.msg;
-            [self.table reloadData];
-        });
+        WOTMeetingFacilityModel_msg *model = (WOTMeetingFacilityModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                WOTMeetingFacilityModel_msg *msg = bean;
+                self.spaceFacilityList = msg.msg;
+                [self.table reloadData];
+            });
+        }
+        
+        if ([model.code isEqualToString:@"202"]) {
+            [MBProgressHUDUtil showMessage:@"设备为空！" toView:self.view];
+            return ;
+        }
+        
+        if ([model.code isEqualToString:@"500"]) {
+            [MBProgressHUDUtil showMessage:@"设备查询失败！" toView:self.view];
+            return ;
+        }
+        
     }];
 }
 
@@ -1384,12 +1402,55 @@
         return;
     }
     [WOTHTTPNetwork getSpaceTeamWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            WOTStaffModel_msg *model = bean;
-            self.teamList = model.msg.list;
-            [self.table reloadData];
-        });
+        WOTStaffModel_msg *model = (WOTStaffModel_msg*)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                WOTStaffModel_msg *model = bean;
+                self.teamList = model.msg.list;
+                [self.table reloadData];
+            });
+        }
+        
+        if ([model.code isEqualToString:@"202"]) {
+            [MBProgressHUDUtil showMessage:@"没有社区团队" toView:self.view];
+            return ;
+        }
+        
+        if ([model.code isEqualToString:@"500"]) {
+            [MBProgressHUDUtil showMessage:@"查询失败！" toView:self.view];
+            return ;
+        }
+        
     }];
+}
+
+#pragma mark - 查询我的企业
+-(void)queryMyCompany
+{
+    NSString *adminList = [WOTUserSingleton shareUser].userInfo.companyIdAdmin;
+    NSString *employees = [WOTUserSingleton shareUser].userInfo.companyId;
+    NSMutableString *result = [NSMutableString new];
+    if (!strIsEmpty(adminList)) {
+        result = [adminList mutableCopy];
+    }
+    if (!strIsEmpty(employees)) {
+        NSString *a =  [NSString stringWithFormat:@"%@%@",strIsEmpty(result)?@"":@",",employees];
+        [result appendString:a];
+    }
+    if (strIsEmpty(result)) {
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getUserEnterpriseWithCompanyId:result response:^(id bean, NSError *error) {
+        WOTEnterpriseModel_msg *model = bean;
+        if ([model.code isEqualToString:@"200"]) {
+            WOTEnterpriseModel *modelMsg = [model.msg.list firstObject];
+            weakSelf.invoiceInfo = modelMsg.companyName;
+
+        }
+    }];
+    
+    
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

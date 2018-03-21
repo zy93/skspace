@@ -8,7 +8,14 @@
 
 #import "WOTTableViewBaseVC.h"
 #import "SKFacilitatorModel.h"
-
+#import "WOTEnterpriseModel.h"
+typedef NS_ENUM(NSInteger, CompanyType)
+{
+    CompanyTypeFacilitator = 0,
+    CompanyTypeEnterprise = 1
+};
 @interface WOTProvidersVC : WOTTableViewBaseVC
 @property (nonatomic, strong) SKFacilitatorInfoModel *facilitatorModel;
+@property (nonatomic, strong) WOTEnterpriseModel *enterpriseModel;
+@property (nonatomic, assign) CompanyType companyType;
 @end

@@ -518,10 +518,13 @@
 +(void)getUserEnterpriseWithCompanyId:(NSString *)companyId response:(response)response{
     
     NSString *myenterpriseurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/CompanyInfo/find"];
-    NSDictionary *parameters = @{@"companyIdlist":companyId,
-                                 @"pageNo":@(1),
+   
+    NSMutableDictionary *parameters = [@{@"pageNo":@(1),
                                  @"pageSize":@(100),
-                                 };
+                                 } mutableCopy];
+    if (!strIsEmpty(companyId)) {
+        [parameters setValue:companyId forKey:@"companyIdlist"];
+    }
     [self doRequestWithParameters:parameters useUrl:myenterpriseurl complete:^JSONModel *(id responseobj) {
         WOTEnterpriseModel_msg * activitymodel = [[WOTEnterpriseModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  activitymodel;
