@@ -83,8 +83,17 @@
 
 - (IBAction)submitFeedbackInfo:(id)sender {
     
-    
-    
+    //判断是否登录
+    if (![WOTUserSingleton shareUser].userInfo.userId) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"未登录" message:@"请先登录用户" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"跳转到");
+            [[WOTConfigThemeUitls shared] showLoginVC:self];
+        }];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
     if (strIsEmpty(_textView.text) || [_textView.text isEqualToString:@"*您的意见，是我们前进的动力"]) {
         [MBProgressHUDUtil showMessage:@"请输入内容！" toView:self.view];
         return;
@@ -93,7 +102,7 @@
         [MBProgressHUDUtil showMessage:@"请选择空间！" toView:self.view];
         return;
     }
-    
+
     [WOTHTTPNetwork feedBackWithSapceName:self.spaceName spaceId:self.spaceId contentText:self.textView.text tel:self.phoneText.text response:^(id bean, NSError *error) {
         if (error) {
             [MBProgressHUDUtil showMessage:@"提交失败，请稍后再试!" toView:self.view];
