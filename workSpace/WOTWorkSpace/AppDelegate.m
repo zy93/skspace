@@ -36,7 +36,7 @@
     /* 打开调试日志 */
     [[UMSocialManager defaultManager] openLog:YES];
     /* 设置友盟appkey */
-    [[UMSocialManager defaultManager] setUmSocialAppkey:@"59642cfcc62dca6c850020c0"];
+    [[UMSocialManager defaultManager] setUmSocialAppkey:@"5ab325e5f29d9879fc000078"];
     [self ConfigUSharePlatforms];
     
     //配置高德地图key
@@ -53,7 +53,7 @@
         // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
     }
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-    [JPUSHService setupWithOption:launchOptions appKey:@"17c41ffb02dae0dcdaabaf8c" channel:@"Test" apsForProduction:NO];
+    [JPUSHService setupWithOption:launchOptions appKey:@"8bdbc681a979c6ae9fd9eb8c" channel:@"AppStore" apsForProduction:NO];
     [JPUSHService resetBadge];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 
@@ -153,11 +153,11 @@
     /* 设置分享到QQ互联的appID
      * U-Share SDK为了兼容大部分平台命名，统一用appKey和appSecret进行参数设置，而QQ平台仅需将appID作为U-Share的appKey参数传进即可。
      */
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"101415512"  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1106709450"  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
     
     
     /* 设置新浪的appKey和appSecret */
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"958434094"  appSecret:@"c8126f4af61b6287bd2ce86a54360e7f" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"901883294"  appSecret:@"48aae3766c075501adf6f0782f6adadc" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
 }
 
 //- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
