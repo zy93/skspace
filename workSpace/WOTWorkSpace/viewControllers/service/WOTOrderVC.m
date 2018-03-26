@@ -34,7 +34,7 @@
 #import "WOTMapCell.h"
 #import "MBProgressHUDUtil.h"
 #import "SKMapViewController.h"
-
+#import "WOTH5VC.h"
 
 #define infoCell @"WOTOrderForInfoCell"
 #define selectDateCell @"WOTOrderForSelectDateCell"
@@ -663,7 +663,13 @@
             case ORDER_TYPE_SPACE:
             {
                 cell.infoTitle.text = self.spaceModel.spaceName;
-                cell.dailyRentLabel.text = nil;
+                cell.dailyRentLabel.text = @"项目手册";
+                [cell.dailyRentLabel setFont:[UIFont systemFontOfSize:13]];
+                cell.dailyRentLabel.textColor = UICOLOR_MAIN_ORANGE;
+                UITapGestureRecognizer *tapRecognizerWeibo=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openURL)];
+                
+                cell.dailyRentLabel.userInteractionEnabled=YES;
+                [cell.dailyRentLabel addGestureRecognizer:tapRecognizerWeibo];
                 NSArray  *array = [_spaceModel.spacePicture componentsSeparatedByString:@","];
                 NSMutableArray *imageArr = [NSMutableArray new];
                 for (NSString *str in array) {
@@ -742,6 +748,7 @@
         }
 
         switch ([WOTSingtleton shared].orderType) {
+            case ORDER_TYPE_SPACE:
             case ORDER_TYPE_BOOKSTATION:
             {
                 cell.addressValueLab.text  = self.spaceModel.spaceSite;
@@ -1449,8 +1456,14 @@
 
         }
     }];
-    
-    
+}
+
+#pragma mark - 打开项目手册
+-(void)openURL
+{
+    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+    detailvc.url = [self.spaceModel.manualSite stringToUrl];
+    [self.navigationController pushViewController:detailvc animated:YES];
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

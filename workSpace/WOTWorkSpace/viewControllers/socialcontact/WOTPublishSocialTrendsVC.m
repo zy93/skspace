@@ -85,43 +85,6 @@
     _viewHeight.constant = (SCREEN_WIDTH-20)/3.5 * lineNum + 30;
 }
 
-//-(void)loadLoaction
-//{
-//    [[WOTMapManager shared].mapmanager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
-//        if (error)
-//        {
-//            NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
-//            if (error.code == AMapLocationErrorLocateFailed)
-//            {
-//                return;
-//            }
-//        }
-//        NSLog(@"location:%@", location);
-//        NSLog(@"纬度:%f,经度:%f",location.coordinate.latitude,location.coordinate.longitude);
-//        if (regeocode)
-//        {
-//            NSLog(@"reGeocode:%@", regeocode);
-//            self.locationLabel.text = [NSString stringWithFormat:@"%@%@",regeocode.street,regeocode.POIName];
-//        }
-//    }];
-//}
-
-//-(UIImage *)createAddImage{
-//    UIView *addView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
-//    addView.backgroundColor = RGB(242.0, 243.0, 244.0);
-//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 40, 40)];
-//    imageView.center = addView.center;
-//    
-//    imageView.image = [UIImage imageNamed:@"camera_icon"];
-//    [addView addSubview:imageView];
-//    UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(0,addView.center.y+20, 200, 30)];
-//    label.text = @"照片／视频";
-//    label.textAlignment = NSTextAlignmentCenter;
-//    label.font  = [UIFont systemFontOfSize:20];
-//    [addView addSubview:label];
-//     [addView toImage];
-//    return [UIImage imageNamed:@"addPhoto"];
-//}
 
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
@@ -197,7 +160,9 @@
 //item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+
     return _photosArray.count+1;
+
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
@@ -244,6 +209,10 @@
     
     __weak typeof(self) weakSelf = self;
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if (_photosArray.count == 9) {
+        [MBProgressHUDUtil showMessage:@"最多选择9张！" toView:self.view];
+        return;
+    }
     if (indexPath.row == _photosArray.count) {
         UIAlertController *alertController = [[UIAlertController alloc] init];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -251,34 +220,11 @@
         }];
         
         UIAlertAction *wxPayAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //[self wxPayMethod];
             [self openCamera];
         }];
         
         UIAlertAction *aliPayAction = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self pushTZImagePickerController];
-            //[self aliPayMethod];
-//            if (!actionSheet) {
-//                actionSheet = [[ZLPhotoActionSheet alloc] init];
-//                actionSheet.maxPreviewCount = 0;
-//                actionSheet.maxSelectCount = 9;
-//                actionSheet.sender = self;
-//                [actionSheet setSelectImageBlock:^(NSArray<UIImage *> *images, NSArray<PHAsset *> *assets, BOOL isOriginal){
-//                    [weakSelf.photosArray removeAllObjects];
-//                    [weakSelf.photosArray addObject:[weakSelf createAddImage]];
-//                    if (_photosArray.count<10) {
-//                        [weakSelf.photosArray addObjectsFromArray:images];
-//                    } else {
-//                        [MBProgressHUDUtil showMessage:@"最多选择9张照片" toView:weakSelf.view];
-//                    }
-//                    [weakSelf.collectionView reloadData];
-//                    [weakSelf viewWillLayoutSubviews];
-//                }];
-//
-//            }
-//            //[actionSheet showPreviewAnimated:YES];
-//            [actionSheet showPhotoLibrary];
-            
         }];
         //aliPayMethod
         //最后将这些按钮都添加到界面上去，显示界面
@@ -287,10 +233,6 @@
         [alertController addAction:cancelAction];
         [self presentViewController: alertController animated:YES completion:nil];
     }
-    
-    
-    
-    
 }
 
 - (void)openCamera
