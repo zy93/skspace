@@ -23,11 +23,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.workspace.yiliangang</string>
+			<string>skwork</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>workspace</string>
+				<string>sk1361955733</string>
 			</array>
 		</dict>
 		<dict>
@@ -47,7 +49,7 @@
 			<string>QQ</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>qq101415512</string>
+				<string>qq1106709450</string>
 			</array>
 		</dict>
 		<dict>
@@ -57,7 +59,7 @@
 			<string>Qzone</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tencent101415512</string>
+				<string>tencent1014155122</string>
 			</array>
 		</dict>
 		<dict>
@@ -67,7 +69,7 @@
 			<string>sina</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wb958434094</string>
+				<string>wb901883294</string>
 			</array>
 		</dict>
 		<dict>
@@ -77,7 +79,7 @@
 			<string>alipay</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>2017072707916012</string>
+				<string>ali20170727079160122</string>
 			</array>
 		</dict>
 	</array>
