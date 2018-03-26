@@ -195,6 +195,11 @@
             if (response) {
                 response(complete(responseDic),nil);
             }
+        }else if (statusCode == 203)
+        {
+            if (response) {
+                response(complete(responseDic),nil);
+            }
         }
         else {
             if (response) {

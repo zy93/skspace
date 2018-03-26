@@ -22,7 +22,7 @@
 @property(nonatomic,strong)NSNumber *lat;
 @property(nonatomic,strong)NSNumber *lng;
 @property(nonatomic,strong)NSNumber *manNum;
-@property(nonatomic,strong)NSString *manualSite;
+@property(nonatomic,strong)NSString *manualSite;//项目手册地址
 @property(nonatomic,strong)NSNumber *onlineLocationPrice;//线上预订工位价
 @property(nonatomic,strong)NSString *openingHours;
 @property(nonatomic,strong)NSString *relationName;//经理联系姓名

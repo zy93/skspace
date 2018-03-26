@@ -84,9 +84,8 @@
     [MBProgressHUDUtil showLoadingWithMessage:@"请稍后" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
         
         [WOTHTTPNetwork createEnterpriseWithEnterpriseName:self.enterpriseName enterpriseType:self.enterpriseType enterpriseLogo:self.enterpriseLogo contactsName:self.contactsName contactsTel:self.contactsTel contactsEmail:self.contactsEmail response:^(id bean, NSError *error) {
-            WOTBusinessModel*model = bean;
+            WOTBusinessModel*model =(WOTBusinessModel*) bean;
             if ([model.code isEqualToString:@"200"]) {
-                
                 [hud setLabelText:@"创建成功!"];
                 [hud hide:YES afterDelay:2.f complete:^{
                     [[WOTUserSingleton shareUser] updateUserInfo:^{
@@ -97,8 +96,13 @@
                     
                 }];
             }
-            else {
+            else if ([model.code isEqualToString:@"203"]) {
+                [hud setLabelText:strIsEmpty(model.result)?@"企业已经存在！": model.result];
+                [hud hide:YES];
+            }
+            else{
                 [hud setLabelText:strIsEmpty(model.result)?@"提交失败，请稍后再试！": model.result];
+                [hud hide:YES];
             }
 
         }];
