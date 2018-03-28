@@ -74,7 +74,7 @@
 {
     _url = url;
     if (!url) {
-        _url = @"http://219.143.170.98:10011/makerSpace/activity.html";
+        _url = @"http://101.200.32.180/makerSpace/activity.html";
     }
 }
 

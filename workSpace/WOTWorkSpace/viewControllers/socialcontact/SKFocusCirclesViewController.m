@@ -184,7 +184,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         
         NSLog(@"ok:%@",infoModel.circleMessage);
         messBody.posterContent = infoModel.circleMessage;
-        NSString *httpService = @"http://219.143.170.98:10011/SKwork";
+        NSString *httpService = [NSString stringWithFormat:@"%@/SKwork",HTTPBaseURL];
         NSMutableArray *pictureRULArray = [NSMutableArray new];
         NSArray *pictureStrArray = [infoModel.imageMessage componentsSeparatedByString:@","];
         for (NSString *pictureURL in pictureStrArray) {
