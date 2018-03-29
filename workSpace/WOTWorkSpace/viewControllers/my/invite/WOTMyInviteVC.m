@@ -83,7 +83,7 @@
 #pragma mark - action
 -(void)inviteBtnClick:(UIButton *)sender
 {
-    NSString *shareUrl = @"http://219.143.170.98:10011/SKwork/SKmaker/share/shareRegistration.html";
+    NSString *shareUrl = @"http://101.200.32.180/SKwork/SKmaker/share/shareRegistration.html";
     WOTShareVC *vc = [[WOTShareVC alloc] init];
     vc.shareUrl = [NSString stringWithFormat:@"%@?byInvitationCode=%@",shareUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
     [self.navigationController pushViewController:vc animated:YES];

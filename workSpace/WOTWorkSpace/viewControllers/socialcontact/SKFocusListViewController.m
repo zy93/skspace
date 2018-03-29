@@ -71,7 +71,7 @@
         cell = [[SKFocusListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.cancelFocusButton.appendIndexPath = indexPath;
-    NSString *httpService = @"http://219.143.170.98:10011/SKwork";
+    NSString *httpService = [NSString stringWithFormat:@"%@/SKwork",HTTPBaseURL];
     [cell.userHeadImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",httpService,self.foucusListArray[indexPath.row].heard]] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
     cell.userName.text = self.foucusListArray[indexPath.row].userName;
     cell.userCompany.text = self.foucusListArray[indexPath.row].companyName;

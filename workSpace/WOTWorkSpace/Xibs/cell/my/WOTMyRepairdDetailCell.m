@@ -49,7 +49,9 @@
         cell = [[UICollectionViewCell alloc] init];
     }
     UIImageView *iv = [[UIImageView alloc] init];
-    [iv setImageWithURL:[self.selectedPhotos[indexPath.row] ToResourcesUrl]];
+    iv.frame = cell.contentView.bounds;
+    //[iv setImageWithURL:[self.selectedPhotos[indexPath.row] ToResourcesUrl]];
+    [iv sd_setImageWithURL:[self.selectedPhotos[indexPath.row] ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
     [cell.contentView addSubview:iv];
     return cell;
 }

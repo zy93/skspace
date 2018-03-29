@@ -123,6 +123,7 @@
     cell.repairdTypeValueLab.text = model.type;
     cell.delegate = self;
     cell.index = indexPath;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

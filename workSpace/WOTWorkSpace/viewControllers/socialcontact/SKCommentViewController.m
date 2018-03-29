@@ -70,7 +70,7 @@
     if (!cell) {
         cell= (SKCommentTableViewCell *)[[[NSBundle  mainBundle]  loadNibNamed:@"SKCommentTableViewCell" owner:self options:nil]  lastObject];
     }
-    NSString *httpService = @"http://219.143.170.98:10011/SKwork";
+    NSString *httpService = [NSString stringWithFormat:@"%@/SKwork",HTTPBaseURL];
     [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",httpService,self.commentList[indexPath.row].userUrl]] placeholderImage:[UIImage imageNamed:@"defaultHeaderVIew"]];
     cell.commentatorLabel.text = self.commentList[indexPath.row].ReplyRecord.replyName;
     
