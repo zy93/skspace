@@ -84,7 +84,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqqOpensdkSSoLogin</string>
@@ -154,17 +154,17 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>使用蓝牙进行设备控制</string>
 	<key>NSCameraUsageDescription</key>
-	<string>应用请求访问您的相机</string>
+	<string>应用请求访问您的相机，进行扫描门禁二维码。</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>需要定位权限才可以正常使用，如果您需要使用后台定位功能请选择“始终允许”。</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>需要定位权限才可以使用</string>
+	<string>需要定位权限才可以使用，定位您最近的社区。</string>
 	<key>NSLocationUsageDescription</key>
 	<string>使用您的定位，获取你附近的空间信息。</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>使用您的定位，获取你附近的空间信息。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>应用请求访问您的照片库</string>
+	<string>应用请求访问您的照片库，进行相册二维码识别。</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
