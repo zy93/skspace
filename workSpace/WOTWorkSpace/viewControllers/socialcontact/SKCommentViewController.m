@@ -123,13 +123,14 @@
         if ([commentModel.code isEqualToString:@"200"]) {
             QueryCommentModel_msg *commentModel_msg = commentModel.msg;
             self.commentList = [[NSMutableArray alloc] initWithArray:commentModel_msg.list];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.commentTableView reloadData];
+            });
             if (self.commentList.count == 0) {
                 [MBProgressHUDUtil showMessage:@"没有评论！" toView:self.view];
                 return ;
             }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.commentTableView reloadData];
-            });
+            
         }else
         {
             
