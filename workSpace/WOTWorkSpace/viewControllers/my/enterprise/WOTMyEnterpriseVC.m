@@ -41,6 +41,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    //[self querySingleInfo];
 //    [self.tabBarController.tabBar setHidden:YES];
     [self createRequest];
 }
@@ -68,7 +69,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-//#pragma mark - 查询个人信息
+#pragma mark - 查询个人信息
 //-(void)querySingleInfo
 //{
 //    //querySingularManInfoWithUserId

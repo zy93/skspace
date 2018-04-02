@@ -114,15 +114,15 @@
         //分钟制转小时制
         long hours = [WOTUserSingleton shareUser].userInfo.meetingHours.integerValue/60;
         long minute= [WOTUserSingleton shareUser].userInfo.meetingHours.integerValue%60;
-        
-        cell.textLabel.text = @"剩余工位时长";
+        cell.textLabel.text = @"剩余会议室时长";
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%ld分钟",hours==0?@"":[NSString stringWithFormat:@"%ld小时",hours],minute];
         cell.textLabel.font = [UIFont systemFontOfSize:15.f];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:13.f];
     }
-    
     return cell;
 }
+
+
 
 /*
 #pragma mark - Navigation
