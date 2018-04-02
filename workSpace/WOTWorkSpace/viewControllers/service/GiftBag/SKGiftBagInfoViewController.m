@@ -444,12 +444,10 @@
         _giftBagInfoLabel = [[UILabel alloc] init];
         NSString *giftBagInfoStr =[NSString stringWithFormat:@"%@\n",self.giftBagModel.giftInfo];
         [_giftBagInfoLabel setFont:[UIFont systemFontOfSize:14]];
-        
         _giftBagInfoLabel.preferredMaxLayoutWidth = (self.view.frame.size.width -10.0 * 2);
         [_giftBagInfoLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
         _giftBagInfoLabel.numberOfLines =0;
         NSDictionary *dic = @{NSKernAttributeName:@1.f
-                              
                               };
         
         NSMutableAttributedString * attributedString = [[NSMutableAttributedString alloc] initWithString:giftBagInfoStr attributes:dic];

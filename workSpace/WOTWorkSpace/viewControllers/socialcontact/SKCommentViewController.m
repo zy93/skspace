@@ -130,10 +130,8 @@
                 [MBProgressHUDUtil showMessage:@"没有评论！" toView:self.view];
                 return ;
             }
-            
         }else
         {
-            
             [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
             return ;
         }

@@ -32,43 +32,49 @@
             [MBProgressHUDUtil showMessage:@"请先登录!" toView:self.view];
             return;
         }
-        [WOTHTTPNetwork getQRcodeInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
-            WOTBaseModel *model = (WOTBaseModel *)bean;
-            if ([model.code isEqualToString:@"200"]) {
-               // weakSelf.QRcodeStr = model.msg;
-                [WOTSingtleton shared].QRcodeStr = model.msg;
-                WOTOpenDoorView *view = [[WOTOpenDoorView alloc] init];
-                [view showWithController:self];
-                view.btnClick = ^(NSString *str) {
-                    CATransition *animation = [CATransition animation];
-                    animation.duration = 0.5;
-                    animation.timingFunction = UIViewAnimationCurveEaseInOut;
-                    animation.type = @"oglFlip";
-                    //animation.type = kCATransitionPush;
-                    animation.subtype = kCATransitionFromRight;
-                    [vc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-                    //            [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-                    [self.view.window.layer addAnimation:animation forKey:nil];
-                    [self presentViewController:vc animated:NO completion:^{
+        [MBProgressHUDUtil showLoadingWithMessage:@"" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
+            
+            [WOTHTTPNetwork getQRcodeInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+                WOTBaseModel *model = (WOTBaseModel *)bean;
+                if ([model.code isEqualToString:@"200"]) {
+                    // weakSelf.QRcodeStr = model.msg;
+                    [hud hide:YES];
+                    [WOTSingtleton shared].QRcodeStr = model.msg;
+                    WOTOpenDoorView *view = [[WOTOpenDoorView alloc] init];
+                    [view showWithController:self];
+                    view.btnClick = ^(NSString *str) {
+                        CATransition *animation = [CATransition animation];
+                        animation.duration = 0.5;
+                        animation.timingFunction = UIViewAnimationCurveEaseInOut;
+                        animation.type = @"oglFlip";
+                        //animation.type = kCATransitionPush;
+                        animation.subtype = kCATransitionFromRight;
+                        [vc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+                        //            [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+                        [self.view.window.layer addAnimation:animation forKey:nil];
+                        [self presentViewController:vc animated:NO completion:^{
+                            
+                        }];
+                        [vc successfulGetQRCodeInfo:^(NSString *QRCodeInfo) {
+                            NSLog(@"QR Info : %@", QRCodeInfo);
+                            [vc dismissViewControllerAnimated:YES completion:nil];
+                        }];
                         
-                    }];
-                    [vc successfulGetQRCodeInfo:^(NSString *QRCodeInfo) {
-                        NSLog(@"QR Info : %@", QRCodeInfo);
-                        [vc dismissViewControllerAnimated:YES completion:nil];
-                    }];
-                    
-                };
-            }
-            else
-            {
-                if ([model.code isEqualToString:@"202"]) {
-                    [MBProgressHUDUtil showMessage:@"请先进行访客预约！" toView:self.view];
+                    };
+                }
+                else
+                {
+                    [hud hide:YES];
+                    if ([model.code isEqualToString:@"202"]) {
+                        [MBProgressHUDUtil showMessage:@"请先进行访客预约！" toView:self.view];
+                        return ;
+                    }
+                    [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
                     return ;
                 }
-                [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
-                return ;
-            }
+            }];
         }];
+        
     };
     
     [self setValue:tabBar forKey:@"tabBar"];
