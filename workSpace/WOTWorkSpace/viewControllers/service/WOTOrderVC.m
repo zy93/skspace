@@ -1144,6 +1144,8 @@
 #pragma mark - 工位微信订单接口
 -(void)commitBookStationOrder
 {
+
+    self.endTime = [NSString stringWithFormat:@"%@ 23:59:59",[self cutOutString:self.endTime]];
     NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
@@ -1488,6 +1490,13 @@
         _conferenceDetailsId = @0;
     }
     return _conferenceDetailsId;
+}
+
+-(NSString *)cutOutString:(NSString *)timeString
+{
+    NSString *str = [timeString substringToIndex:11];
+    NSLog(@"截取的值为：%@",str);
+    return str;
 }
 
 @end
