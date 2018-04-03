@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     FDSimulatedCacheModeCacheByKey
 };
 
-@interface SKFocusCirclesViewController ()<UITableViewDelegate,UITableViewDataSource,cellDelegate,InputDelegate,UIActionSheetDelegate>{
+@interface SKFocusCirclesViewController ()<UITableViewDelegate,UITableViewDataSource,cellDelegate,InputDelegate,UIActionSheetDelegate,YMShowImageViewDelegate>{
     NSMutableArray *_imageDataSource;
     
     NSMutableArray *_contentDataSource;//模拟接口给的数据
@@ -92,9 +92,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         NSMutableArray * ymDataArray =[[NSMutableArray alloc]init];
         
         for (int i = 0 ; i < _contentDataSource.count; i ++) {
-            
             WFMessageBody *messBody = [_contentDataSource objectAtIndex:i];
-            
             YMTextData *ymData = [[YMTextData alloc] init ];
             ymData.messageBody = messBody;
             
@@ -201,6 +199,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             body.repliedUser = replyModel.byReplyname;
             body.replyInfo = replyModel.replyInfo;
             body.replyUserId = replyModel.replyId;
+            body.recordId = replyModel.recordId;
             [replyModelList addObject:body];
         }
         messBody.posterReplies = replyModelList;
@@ -454,6 +453,11 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             [WOTHTTPNetwork addFocusWithfocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId befocusPeopleid:m.issueId response:^(id bean, NSError *error) {
                 WOTBaseModel *baseModel = (WOTBaseModel *)bean;
                 if ([baseModel.code isEqualToString:@"200"]) {
+                    ymData.messageBody = m;
+                    [ymData.attributedDataFavour removeAllObjects];
+                    //[_tableDataSource replaceObjectAtIndex:_selectedIndexPath.row withObject:ymData];
+                    [mainTable reloadSections:[NSIndexSet indexSetWithIndex:0]withRowAnimation:UITableViewRowAnimationNone];
+
                     [MBProgressHUDUtil showMessage:@"关注成功！" toView:self.view];
                     //[self createRequest];
                 } else {
@@ -467,6 +471,11 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             [WOTHTTPNetwork deleteFocusWithFocusId:model.msg.focusId response:^(id bean, NSError *error) {
                 WOTBaseModel *baseModel = (WOTBaseModel *)bean;
                 if ([baseModel.code isEqualToString:@"200"]) {
+                        ymData.messageBody = m;
+                        [ymData.attributedDataFavour removeAllObjects];
+                        //[_tableDataSource replaceObjectAtIndex:_selectedIndexPath.row withObject:ymData];
+                        [mainTable reloadSections:[NSIndexSet indexSetWithIndex:0]withRowAnimation:UITableViewRowAnimationNone];
+
                     [MBProgressHUDUtil showMessage:@"取消成功！" toView:self.view];
                     // [self createRequest];
                 } else {
@@ -476,10 +485,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         }
     }];
     
-    ymData.messageBody = m;
-    [ymData.attributedDataFavour removeAllObjects];
-    [_tableDataSource replaceObjectAtIndex:_selectedIndexPath.row withObject:ymData];
-    
+//    ymData.messageBody = m;
+//    [ymData.attributedDataFavour removeAllObjects];
+//    //[_tableDataSource replaceObjectAtIndex:_selectedIndexPath.row withObject:ymData];
+//    [mainTable reloadSections:[NSIndexSet indexSetWithIndex:0]withRowAnimation:UITableViewRowAnimationNone];
     //NSIndexPath *indexPath=[NSIndexPath indexPathForRow:inputTag inSection:0];
     //    [UIView animateWithDuration:0 animations:^{
     //        [mainTable performBatchUpdates:^{
@@ -665,7 +674,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                                             [mainTable reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
                                             
                                         }];
+                                        [self createRequest];
                                         
+                                    }else if([baseModel.code isEqualToString:@"501"])
+                                    {
+                                        [MBProgressHUDUtil showMessage:@"此条朋友圈已删除" toView:self.view];
+                                        return ;
                                     }else
                                     {
                                         //清空属性数组。否则会重复添加
@@ -717,9 +731,9 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         
         
     }else{
-        
+        _replyIndex = -1;
     }
-    _replyIndex = -1;
+    
 }
 
 - (void)showCommentWith:(YMTextData *)ymD onCellRow:(NSInteger) cellStamp
@@ -737,6 +751,34 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     [super viewWillDisappear:animated];
     //[self.tabBarController.tabBar setHidden:NO];
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
+}
+
+
+#pragma mark - 删除朋友圈
+-(void)deleteCircleofFriendsWith:(YMTextData *)ymD onCellRow:(NSInteger)cellStamp
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"是否删除此条朋友圈？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [WOTHTTPNetwork deleteCircleofFriendsWithFriendId:ymD.messageBody.friendId response:^(id bean, NSError *error) {
+            WOTBaseModel *model = (WOTBaseModel *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                [_tableDataSource removeObjectAtIndex:cellStamp];
+                [mainTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cellStamp inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                
+            }else
+            {
+                [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
+                return ;
+            }
+        }];
+        
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alert addAction:action];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 

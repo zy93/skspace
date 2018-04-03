@@ -132,8 +132,6 @@
         [MBProgressHUDUtil showMessage:@"请填写需求内容后再提交！" toView:self.view];
         return;
     }
-
-
     NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId,

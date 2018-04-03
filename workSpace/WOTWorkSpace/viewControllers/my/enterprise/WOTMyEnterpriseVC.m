@@ -13,6 +13,7 @@
 #import "WOTEnterpriseApplyVC.h"
 #import "WOTMyEnterPriseCell.h"
 #import "WOTEnterpriseModel.h"
+#import "WOTProvidersVC.h"
 
 @interface WOTMyEnterpriseVC ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -41,6 +42,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    //[self querySingleInfo];
 //    [self.tabBarController.tabBar setHidden:YES];
     [self createRequest];
 }
@@ -68,7 +70,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-//#pragma mark - 查询个人信息
+#pragma mark - 查询个人信息
 //-(void)querySingleInfo
 //{
 //    //querySingularManInfoWithUserId
@@ -161,10 +163,16 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
     else {
-        WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
-        vc.model = self.tableList[indexPath.row];
-        vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
+        WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
+        vc.companyType = CompanyTypeEnterprise;
+        vc.enterpriseModel = self.tableList[indexPath.row];
+        vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
+        
+//        WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+//        vc.model = self.tableList[indexPath.row];
+//        vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
+//        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

@@ -310,7 +310,10 @@
 - (void)pushTZImagePickerController {
     
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 columnNumber:3 delegate:self pushPhotoPickerVc:YES];
-    
+    imagePickerVc.allowCrop = YES;
+    imagePickerVc.showSelectBtn = NO;
+    imagePickerVc.needCircleCrop = NO;
+    imagePickerVc.cropRect = CGRectMake(0, SCREEN_WIDTH/2-40, SCREEN_WIDTH, SCREEN_WIDTH);
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         
     }];

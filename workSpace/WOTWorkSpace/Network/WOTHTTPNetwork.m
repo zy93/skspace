@@ -77,7 +77,6 @@
 {
    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
                          @"text/html",
                          @"image/jpeg",

@@ -51,6 +51,7 @@
         
     }];
     
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,7 +65,7 @@
     [self.tabBarController.tabBar setHidden:NO];
      self.tabBarController.tabBar.translucent = NO;
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-
+    [self updataUserInfo];
     [self.tableView reloadData];
     
 }
@@ -171,7 +172,6 @@
         cell.cellImage.image = [UIImage imageNamed:imageNameArray[indexPath.row]];
         commoncell = cell;
     }
-    
     return commoncell;
 }
 
@@ -313,6 +313,15 @@
    */
 }
 
+#pragma mark - 更新用户信息
+-(void)updataUserInfo
+{
+    if ([WOTUserSingleton shareUser].userInfo.userId) {
+        [[WOTUserSingleton shareUser] updateUserInfo:^{
+        }];
+    }
+    
+}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     if ([touch.view isKindOfClass:[UIButton class]]){

@@ -18,7 +18,6 @@
     [self performSelector:@selector(hideDelayedAndComplete:) withObject:dic afterDelay:delay];
 }
 
-
 - (void)hideDelayedAndComplete:(NSDictionary *)userInfo {
     [self hide:[userInfo[@"animated"] boolValue]];
     Complete com = userInfo[@"complete"];
