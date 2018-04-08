@@ -82,7 +82,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     }
     self.view.backgroundColor = [UIColor whiteColor];
     [self initTableview];
-    
+    self.circleofFriendsList = [[NSMutableArray alloc] init];
+
     //[self configData];
 }
 
@@ -233,12 +234,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 {
     __weak typeof(self) weakSelf = self;
     //先判断是否已经登录
-    [self.circleofFriendsList removeAllObjects];
     if ([WOTUserSingleton shareUser].userInfo.spaceId) {
         [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@10 response:^(id bean, NSError *error) {
             [weakSelf StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
-            self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
+            [self.circleofFriendsList removeAllObjects];
+            [self.circleofFriendsList addObjectsFromArray:model.msg.list];
             if ([model.code isEqualToString:@"200"]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf configData];
