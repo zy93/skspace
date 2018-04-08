@@ -229,14 +229,8 @@
         image.tag = kImageTag + i;
         image.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[ymData.showImageArray objectAtIndex:i]]];
         NSString *imageStr = [NSString stringWithFormat:@"%@",[ymData.showImageArray objectAtIndex:i]];
-        [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
         [image sd_cancelCurrentImageLoad];
-//        if (self.isShow) {
-//            [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
-//        }else
-//        {
-//            image.image = [UIImage imageNamed:@"placeholder_comm"];
-//        }
+        [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
         
         [self.contentView addSubview:image];
         [_imageArray addObject:image];
