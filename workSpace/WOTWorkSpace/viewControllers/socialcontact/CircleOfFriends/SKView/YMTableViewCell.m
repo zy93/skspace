@@ -104,8 +104,9 @@
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
         [_deleteButton setTitleColor:[UIColor colorWithHexString:@"6a7280"] forState:UIControlStateNormal];
+        _deleteButton.tag = self.stamp;
         _deleteButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
-        [_deleteButton addTarget:self action:@selector(deleteCircleOfFriends) forControlEvents:UIControlEventTouchDown];
+        [_deleteButton addTarget:self action:@selector(deleteCircleOfFriends:) forControlEvents:UIControlEventTouchDown];
         [self.contentView addSubview:_deleteButton];
         
     }
@@ -137,6 +138,7 @@
   
     tempDate = ymData;
 #pragma mark -  //头像 昵称 简介
+    _deleteButton.tag = self.stamp;
     //_userHeaderImage.image = [UIImage imageNamed:tempDate.messageBody.posterImgstr];
     [_userHeaderImage sd_setImageWithURL:[tempDate.messageBody.posterImgstr ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
     _userNameLbl.text = tempDate.messageBody.posterName;
@@ -455,10 +457,11 @@
 }
 
 #pragma mark - 删除朋友圈
--(void)deleteCircleOfFriends
+-(void)deleteCircleOfFriends:(UIButton *)button
 {
+    NSLog(@"button-tag:%ld",button.tag);
     if ([_delegate respondsToSelector:@selector(deleteCircleofFriendsWith:onCellRow:)]) {
-        [_delegate deleteCircleofFriendsWith:tempDate onCellRow:self.stamp];
+        [_delegate deleteCircleofFriendsWith:tempDate onCellRow:button.tag];
     }
 }
 

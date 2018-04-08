@@ -100,7 +100,7 @@
 #pragma mark - 发布消息
 -(void)rightItemAction{
   //TODO:调用接口发布动态消息
-    
+    [self.view endEditing:YES];
     if ([_textView.text isEqualToString:TextViewPlaceholder] || [_textView.text isEqualToString:@""]) {
         [MBProgressHUDUtil showMessage:@"请填写发布内容！" toView:self.view];
         return;

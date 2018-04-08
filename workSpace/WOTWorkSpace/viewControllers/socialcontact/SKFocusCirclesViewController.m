@@ -763,7 +763,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             WOTBaseModel *model = (WOTBaseModel *)bean;
             if ([model.code isEqualToString:@"200"]) {
                 [_tableDataSource removeObjectAtIndex:cellStamp];
-                [mainTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cellStamp inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                [mainTable reloadData];
                 
             }else
             {

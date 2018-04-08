@@ -394,16 +394,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         cell = [[YMTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-//    if (!cell) {
-//        cell = [[YMTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//        cell.accessoryType  = UITableViewCellAccessoryNone;
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    }
-//    else{  //重要，释放cell,防止闪退方法，其他CustomCell 均可沿用
-//        while ([cell.contentView.subviews lastObject] != nil) {
-//            [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
-//        }
-//    }
     
     cell.stamp = indexPath.row;
     cell.replyBtn.appendIndexPath = indexPath;
@@ -810,11 +800,14 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"是否删除此条朋友圈？" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"删除的朋友圈id:%@,%ld",ymD.messageBody.friendId,cellStamp);
         [WOTHTTPNetwork deleteCircleofFriendsWithFriendId:ymD.messageBody.friendId response:^(id bean, NSError *error) {
             WOTBaseModel *model = (WOTBaseModel *)bean;
             if ([model.code isEqualToString:@"200"]) {
+                [MBProgressHUDUtil showMessage:@"删除成功！" toView:self.view];
                 [_tableDataSource removeObjectAtIndex:cellStamp];
-                [mainTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cellStamp inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+//                [mainTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cellStamp inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                [mainTable reloadData];
             }else
             {
                 [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
