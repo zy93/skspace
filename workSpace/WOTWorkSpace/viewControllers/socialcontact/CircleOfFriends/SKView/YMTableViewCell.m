@@ -14,7 +14,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIColor+ColorChange.h"
 #import "WOTUserSingleton.h"
-
+#import "UIView+WebCache.h"
 #define kImageTag 9999
 
 
@@ -138,7 +138,7 @@
     tempDate = ymData;
 #pragma mark -  //头像 昵称 简介
     //_userHeaderImage.image = [UIImage imageNamed:tempDate.messageBody.posterImgstr];
-    [_userHeaderImage sd_setImageWithURL:[tempDate.messageBody.posterImgstr ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    [_userHeaderImage sd_setImageWithURL:[tempDate.messageBody.posterImgstr ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
     _userNameLbl.text = tempDate.messageBody.posterName;
     _userIntroLbl.text = tempDate.messageBody.posterIntro;
     _addTimeLabel.text = [self cutOutString:tempDate.messageBody.friendTime];
@@ -227,7 +227,15 @@
         image.tag = kImageTag + i;
         image.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[ymData.showImageArray objectAtIndex:i]]];
         NSString *imageStr = [NSString stringWithFormat:@"%@",[ymData.showImageArray objectAtIndex:i]];
-        [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+        [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
+        [image sd_cancelCurrentImageLoad];
+//        if (self.isShow) {
+//            [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
+//        }else
+//        {
+//            image.image = [UIImage imageNamed:@"placeholder_comm"];
+//        }
+        
         [self.contentView addSubview:image];
         [_imageArray addObject:image];
         

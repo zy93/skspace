@@ -592,7 +592,7 @@ int a = 0;
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     detailvc.url = self.bannerData[index].webpageUrl;
     //如果是分享注册页面，需要加邀请码,//跳转原生页面
-    if ([detailvc.url isEqualToString:@"http://101.200.32.180/SKwork/SKmaker/share/shareRegistration.html"]) {
+    if ([detailvc.url containsString:@"/share/shareRegistration.html"]) {
         WOTShareVC *vc = [[WOTShareVC alloc] init];
         vc.shareUrl = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
         vc.hidesBottomBarWhenPushed = YES;

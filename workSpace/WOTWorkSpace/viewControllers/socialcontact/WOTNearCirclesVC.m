@@ -67,6 +67,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 @property (nonatomic,strong) NSString *replyState;
 @property (nonatomic,assign) int pageNum;
 @property (nonatomic,assign) BOOL isAttention;
+@property (nonatomic,strong) NSMutableArray *arrDLed;
 @end
 
 @implementation WOTNearCirclesVC
@@ -95,17 +96,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         NSMutableArray * ymDataArray =[[NSMutableArray alloc]init];
         
         for (int i = 0 ; i < _contentDataSource.count; i ++) {
-            
             WFMessageBody *messBody = [_contentDataSource objectAtIndex:i];
-            
             YMTextData *ymData = [[YMTextData alloc] init ];
             ymData.messageBody = messBody;
-            
             [ymDataArray addObject:ymData];
-            
         }
         [self calculateHeight:ymDataArray];
-        
     });
 }
 
@@ -162,6 +158,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [[SDImageCache sharedImageCache] clearMemory];
+//    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+//        
+//    }];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -284,7 +284,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     {
         [mainTable.mj_footer endRefreshing];
     }
-    [self.circleofFriendsList removeAllObjects];
+    [weakSelf.circleofFriendsList removeAllObjects];
     if ([WOTUserSingleton shareUser].userInfo.spaceId) {
         [WOTHTTPNetwork queryAllCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:[NSNumber numberWithInt:self.pageNum] pageSize:@10 response:^(id bean, NSError *error) {
             [weakSelf StopRefresh];
@@ -393,11 +393,29 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     if (cell == nil) {
         cell = [[YMTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
+//    if (!cell) {
+//        cell = [[YMTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//        cell.accessoryType  = UITableViewCellAccessoryNone;
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    }
+//    else{  //重要，释放cell,防止闪退方法，其他CustomCell 均可沿用
+//        while ([cell.contentView.subviews lastObject] != nil) {
+//            [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
+//        }
+//    }
+    
     cell.stamp = indexPath.row;
     cell.replyBtn.appendIndexPath = indexPath;
     [cell.replyBtn addTarget:self action:@selector(replyAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.delegate = self;
-    [cell setYMViewWith:[_tableDataSource objectAtIndex:indexPath.row]];
+//    if ((mainTable.isDragging || mainTable.isDecelerating) && ![self.arrDLed containsObject:indexPath]) {
+//        cell.isShow = NO;
+//    }else
+//    {
+//        cell.isShow = YES;
+//    }
+    [cell setYMViewWith:[_tableDataSource objectAtIndex:indexPath.row]];//报错有问题
     
     return cell;
 }
@@ -797,7 +815,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             if ([model.code isEqualToString:@"200"]) {
                 [_tableDataSource removeObjectAtIndex:cellStamp];
                 [mainTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cellStamp inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-                
             }else
             {
                 [MBProgressHUDUtil showMessage:@"删除失败！" toView:self.view];
@@ -819,5 +836,38 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 {
     [self.tabBarController.tabBar setHidden:NO];
 }
+
+//************************优化图片start***********************
+//-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//{
+//    if (!decelerate) {
+//        [self reload];
+//    }
+//}
+//
+//-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+//{
+//    [self reload];
+//}
+//
+//-(void)reload
+//{
+//    NSArray *arr = [mainTable indexPathsForVisibleRows];
+//    NSMutableArray *arrToReload = [NSMutableArray array];
+//    for (NSIndexPath *indexPath in  arr) {
+//        if (![self.arrDLed containsObject:indexPath]) {
+//            [arrToReload addObject:indexPath];
+//        }
+//    }
+//    [mainTable reloadRowsAtIndexPaths:arrToReload withRowAnimation:UITableViewRowAnimationFade];
+//}
+//-(NSMutableArray *)arrDLed
+//{
+//    if (_arrDLed == nil) {
+//        _arrDLed = [[NSMutableArray alloc] init];
+//    }
+//    return _arrDLed;
+//}
+//************************优化图片end***********************
 
 @end

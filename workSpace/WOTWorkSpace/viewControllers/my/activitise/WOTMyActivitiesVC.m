@@ -63,7 +63,7 @@
     if (cell == nil) {
         cell = [[SKMyActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    [cell.myActivityImageView sd_setImageWithURL:[self.myActivityList[indexPath.row].content.pictureSite ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    [cell.myActivityImageView sd_setImageWithURL:[self.myActivityList[indexPath.row].content.pictureSite ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
     cell.infoLabel.text = self.myActivityList[indexPath.row].content.activityDescribe;
     cell.spaceNameLabel.text = self.myActivityList[indexPath.row].content.spaceName;
     cell.startTimeLabel.text = [self.myActivityList[indexPath.row].content.startTime substringToIndex:11];

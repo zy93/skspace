@@ -41,6 +41,7 @@
 @property(nonatomic,strong)UIButton *openCommentBtn;//评论条数按钮
 @property(nonatomic,strong)UIButton *deleteButton;//删除朋友圈按钮
 @property (nonatomic,strong) UIImageView *favourImage;//点赞的图
+@property (nonatomic,assign) BOOL isShow;
 
 /**
  *  用户头像imageview

@@ -1144,7 +1144,9 @@
 #pragma mark - 工位微信订单接口
 -(void)commitBookStationOrder
 {
-    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+    
+    self.endTime = [NSString stringWithFormat:@"%@ 23:59:59",[self cutOutString:self.endTime]];
+NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                  @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                                  @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
                                  @"facilitator":self.facilitator,
@@ -1167,8 +1169,7 @@
                                  @"dealMode":self.dealMode,
                                  @"payType":self.payType,
                                  @"payObject":self.payObject,
-                                 @"payMode":self.payMode,
-                                 @"invoiceInfo":self.invoiceInfo,
+                                 @"payMode":self.payMode
                                  };
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork generateBookStationOrderWithParam:parameters response:^(id bean, NSError *error) {
@@ -1488,6 +1489,13 @@
         _conferenceDetailsId = @0;
     }
     return _conferenceDetailsId;
+}
+
+-(NSString *)cutOutString:(NSString *)timeString
+{
+    NSString *str = [timeString substringToIndex:11];
+    NSLog(@"截取的值为：%@",str);
+    return str;
 }
 
 @end

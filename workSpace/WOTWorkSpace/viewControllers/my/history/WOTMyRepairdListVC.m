@@ -47,13 +47,14 @@
 
 - (void)StartRefresh
 {
+    [self createRequest];
     __weak UIScrollView *_scrollView = self.tableView;
     if (_scrollView.mj_footer != nil && [_scrollView.mj_footer isRefreshing])
     {
         [_scrollView.mj_footer endRefreshing];
     }
     
-    [self createRequest];
+    
 }
 
 - (void)StopRefresh
