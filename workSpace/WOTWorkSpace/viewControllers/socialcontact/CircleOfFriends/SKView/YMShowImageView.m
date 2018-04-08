@@ -76,7 +76,7 @@
 //        imageView.image = img;
         NSLog(@"测试：%@",appendArray);
         NSString *imageStr = [NSString stringWithFormat:@"%@",[appendArray  objectAtIndex:i]];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
         //imageView.image = [UIImage imageNamed:@"placeholderImage"];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.clipsToBounds = YES;
