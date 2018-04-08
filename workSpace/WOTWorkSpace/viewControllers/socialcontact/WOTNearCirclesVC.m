@@ -44,11 +44,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     NSMutableArray *_imageDataSource;
     
     NSMutableArray *_contentDataSource;//模拟接口给的数据
-    
     NSMutableArray *_tableDataSource;//tableview数据源
-    
     NSMutableArray *_shuoshuoDatasSource;//说说数据源
-    
     UITableView *mainTable;
     
     UIView *popView;
@@ -84,53 +81,33 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     self.view.backgroundColor = [UIColor whiteColor];
     [self initTableview];
     self.circleofFriendsList = [[NSMutableArray alloc] init];
-
+    _tableDataSource = [[NSMutableArray alloc] init];
+    _contentDataSource = [[NSMutableArray alloc] init];
     //[self configData];
 }
 
 #pragma mark -加载数据
 - (void)loadTextData{
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        NSMutableArray * ymDataArray =[[NSMutableArray alloc]init];
-        
-        for (int i = 0 ; i < _contentDataSource.count; i ++) {
-            WFMessageBody *messBody = [_contentDataSource objectAtIndex:i];
-            YMTextData *ymData = [[YMTextData alloc] init ];
-            ymData.messageBody = messBody;
-            [ymDataArray addObject:ymData];
-        }
-        [self calculateHeight:ymDataArray];
-    });
+    NSMutableArray * ymDataArray =[[NSMutableArray alloc]init];
+    for (int i = 0 ; i < _contentDataSource.count; i ++) {
+        WFMessageBody *messBody = [_contentDataSource objectAtIndex:i];
+        YMTextData *ymData = [[YMTextData alloc] init ];
+        ymData.messageBody = messBody;
+        [ymDataArray addObject:ymData];
+    }
+    [self calculateHeight:ymDataArray];
 }
 
 #pragma mark - 计算高度
 - (void)calculateHeight:(NSMutableArray *)dataArray{
-    
-    
-    NSDate* tmpStartData = [NSDate date];
-    
     for (YMTextData *ymData in dataArray) {
-        
         ymData.shuoshuoHeight = [ymData calculateShuoshuoHeightWithWidth:self.view.frame.size.width withUnFoldState:NO];//折叠
-        
         ymData.unFoldShuoHeight = [ymData calculateShuoshuoHeightWithWidth:self.view.frame.size.width withUnFoldState:YES];//展开
-        
         ymData.replyHeight = [ymData calculateReplyHeightWithWidth:self.view.frame.size.width];
-        
         ymData.favourHeight = [ymData calculateFavourHeightWithWidth:self.view.frame.size.width];
-        
         [_tableDataSource addObject:ymData];
-        
     }
-    
-    double deltaTime = [[NSDate date] timeIntervalSinceDate:tmpStartData];
-    NSLog(@"cost time = %f", deltaTime);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [mainTable reloadData];
-    });
 }
 
 - (void)backToPre{
@@ -174,9 +151,9 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 
 #pragma mark - 数据源
-- (void)configData{
-    _tableDataSource = [[NSMutableArray alloc] init];
-    _contentDataSource = [[NSMutableArray alloc] init];
+- (void)configData {
+    [_tableDataSource removeAllObjects];
+    [_contentDataSource removeAllObjects];
     _replyIndex = -1;//代表是直接评论
     for (CircleofFriendsInfoModel *infoModel in self.circleofFriendsList) {
         WFMessageBody *messBody = [[WFMessageBody alloc] init];
@@ -244,6 +221,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf configData];
                     [weakSelf loadTextData];
+                    [weakSelf stoploadMoreTopic];
+                    [mainTable reloadData];
                 });
             }
             else
@@ -294,8 +273,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf configData];
                     [weakSelf loadTextData];
-                    [mainTable reloadData];
                     [weakSelf StopRefresh];
+                    [mainTable reloadData];
                 });
             }
             else
@@ -345,17 +324,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             
             
             if ([model.code isEqualToString:@"200"]) {
-                [weakSelf.circleofFriendsList addObjectsFromArray:model.msg.list];
-                [weakSelf configData];
-                [weakSelf loadTextData];
-                __weak UITableView *tableView = mainTable;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                    // 刷新表格
-                    [tableView reloadData];
-                    
-                    // 拿到当前的上拉刷新控件，结束刷新状态
-                    [tableView.mj_footer endRefreshing];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.circleofFriendsList addObjectsFromArray:model.msg.list];
+                    [weakSelf configData];
+                    [weakSelf loadTextData];
+                    [weakSelf stoploadMoreTopic];
+                    [mainTable reloadData];
                 });
             }
             else
