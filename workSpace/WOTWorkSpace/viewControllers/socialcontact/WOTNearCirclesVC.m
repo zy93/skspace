@@ -108,6 +108,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         ymData.favourHeight = [ymData calculateFavourHeightWithWidth:self.view.frame.size.width];
         [_tableDataSource addObject:ymData];
     }
+    
 }
 
 - (void)backToPre{
@@ -135,7 +136,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    [[SDImageCache sharedImageCache] clearMemory];
+    //[[SDImageCache sharedImageCache] clearMemory];
+    [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
 //    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
 //        
 //    }];
@@ -361,7 +363,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"ILTableViewCell";
+    static NSString *CellIdentifier = @"YMTableViewCell";
     
     YMTableViewCell *cell = (YMTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -373,12 +375,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     cell.replyBtn.appendIndexPath = indexPath;
     [cell.replyBtn addTarget:self action:@selector(replyAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.delegate = self;
-//    if ((mainTable.isDragging || mainTable.isDecelerating) && ![self.arrDLed containsObject:indexPath]) {
-//        cell.isShow = NO;
-//    }else
-//    {
-//        cell.isShow = YES;
-//    }
+
     [cell setYMViewWith:[_tableDataSource objectAtIndex:indexPath.row]];//报错有问题
     
     return cell;
@@ -389,8 +386,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     YMTableViewCell *cell = (YMTableViewCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     YMTextData *ym = [_tableDataSource objectAtIndex:indexPath.row];
-    BOOL unfold = ym.foldOrNot;
-    NSLog(@"行高：%f",TableHeader + kLocationToBottom + ym.replyHeight + ym.showImageHeight  + kDistance + (ym.islessLimit?0:30) + (unfold?ym.shuoshuoHeight:ym.unFoldShuoHeight) + kReplyBtnDistance + ym.favourHeight + (ym.favourHeight == 0?0:kReply_FavourDistance)+20);
     if (ym.replyDataSource.count == 0) {//没有评论，没有数量
         return cell.addTimeLabel.frame.origin.y+cell.addTimeLabel.frame.size.height+10;
     }else if (ym.replyDataSource.count >=  3 )
@@ -400,6 +395,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     {
         return cell.replyImageView.frame.origin.y+cell.replyImageView.frame.size.height+10;//replyImageView
     }
+
 }
 
 #pragma mark - 评论和关注按钮
@@ -803,6 +799,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 {
     [self.tabBarController.tabBar setHidden:NO];
 }
+
+
 
 //************************优化图片start***********************
 //-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
