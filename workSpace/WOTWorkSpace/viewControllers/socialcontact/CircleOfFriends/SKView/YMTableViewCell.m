@@ -231,7 +231,8 @@
         NSString *imageStr = [NSString stringWithFormat:@"%@",[ymData.showImageArray objectAtIndex:i]];
         [image sd_cancelCurrentImageLoad];
         [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
-        
+        image.contentMode = UIViewContentModeScaleAspectFill;
+        image.clipsToBounds = YES;
         [self.contentView addSubview:image];
         [_imageArray addObject:image];
         
