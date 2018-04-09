@@ -80,35 +80,30 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     self.view = scView;
     self.view.backgroundColor = [UIColor whiteColor];
     [self initTableview];
-    
+    self.circleofFriendsList = [[NSMutableArray alloc] init];
+    _tableDataSource = [[NSMutableArray alloc] init];
+    _contentDataSource = [[NSMutableArray alloc] init];
     //[self configData];
 }
 
 #pragma mark -加载数据
 - (void)loadTextData{
+
+    NSMutableArray * ymDataArray =[[NSMutableArray alloc]init];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    for (int i = 0 ; i < _contentDataSource.count; i ++) {
+        WFMessageBody *messBody = [_contentDataSource objectAtIndex:i];
+        YMTextData *ymData = [[YMTextData alloc] init ];
+        ymData.messageBody = messBody;
         
-        NSMutableArray * ymDataArray =[[NSMutableArray alloc]init];
+        [ymDataArray addObject:ymData];
         
-        for (int i = 0 ; i < _contentDataSource.count; i ++) {
-            WFMessageBody *messBody = [_contentDataSource objectAtIndex:i];
-            YMTextData *ymData = [[YMTextData alloc] init ];
-            ymData.messageBody = messBody;
-            
-            [ymDataArray addObject:ymData];
-            
-        }
-        [self calculateHeight:ymDataArray];
-        
-    });
+    }
+    [self calculateHeight:ymDataArray];
 }
 
 #pragma mark - 计算高度
 - (void)calculateHeight:(NSMutableArray *)dataArray{
-    
-    
-    NSDate* tmpStartData = [NSDate date];
     
     for (YMTextData *ymData in dataArray) {
         
@@ -123,13 +118,6 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         [_tableDataSource addObject:ymData];
         
     }
-    
-    double deltaTime = [[NSDate date] timeIntervalSinceDate:tmpStartData];
-    NSLog(@"cost time = %f", deltaTime);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [mainTable reloadData];
-    });
 }
 
 - (void)backToPre{
@@ -171,8 +159,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 #pragma mark - 数据源
 - (void)configData{
-    _tableDataSource = [[NSMutableArray alloc] init];
-    _contentDataSource = [[NSMutableArray alloc] init];
+    [_tableDataSource removeAllObjects];
+    [_contentDataSource removeAllObjects];
     _replyIndex = -1;//代表是直接评论
     for (CircleofFriendsInfoModel *infoModel in self.circleofFriendsList) {
         WFMessageBody *messBody = [[WFMessageBody alloc] init];
@@ -235,12 +223,27 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         [WOTHTTPNetwork querysingleCircleofFriendsWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@1000 userId:self.userIdNum response:^(id bean, NSError *error) {
             [weakSelf StopRefresh];
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
-            self.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf configData];
-                [weakSelf loadTextData];
-            });
+            [self.circleofFriendsList removeAllObjects];
+            [self.circleofFriendsList addObjectsFromArray:model.msg.list];
+            if ([model.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf configData];
+                    [weakSelf loadTextData];
+                    [weakSelf stoploadMoreTopic];
+                    [mainTable reloadData];
+                });
+            }
+            else
+            {
+                if ([model.code isEqualToString:@"202"]) {
+                    [MBProgressHUDUtil showMessage:@"没有数据！" toView:self.view];
+                    return ;
+                }else
+                {
+                    [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
+                    return ;
+                }
+            }
         }];
     } else {
         [MBProgressHUDUtil showMessage:@"请先登录后再查看！" toView:self.view];
@@ -275,11 +278,25 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             weakSelf.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
             weakSelf.pageNums = model.msg.totalPages;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf configData];
-                [weakSelf loadTextData];
-                [mainTable reloadData];
-            });
+            if ([model.code isEqualToString:@"200"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf configData];
+                    [weakSelf loadTextData];
+                    [weakSelf StopRefresh];
+                    [mainTable reloadData];
+                });
+            }
+            else
+            {
+                if ([model.code isEqualToString:@"202"]) {
+                    [MBProgressHUDUtil showMessage:@"没有数据！" toView:self.view];
+                    return ;
+                }else
+                {
+                    [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
+                    return ;
+                }
+            }
         }];
     } else {
         [MBProgressHUDUtil showMessage:@"请先登录后再查看！" toView:self.view];
@@ -319,17 +336,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             
             if ([model.code isEqualToString:@"200"]) {
-                [weakSelf.circleofFriendsList addObjectsFromArray:model.msg.list];
-                [weakSelf configData];
-                [weakSelf loadTextData];
-                __weak UITableView *tableView = mainTable;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                    // 刷新表格
-                    [tableView reloadData];
-                    
-                    // 拿到当前的上拉刷新控件，结束刷新状态
-                    [tableView.mj_footer endRefreshing];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.circleofFriendsList addObjectsFromArray:model.msg.list];
+                    [weakSelf configData];
+                    [weakSelf loadTextData];
+                    [weakSelf stoploadMoreTopic];
+                    [mainTable reloadData];
                 });
             }
             else
@@ -763,7 +775,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             WOTBaseModel *model = (WOTBaseModel *)bean;
             if ([model.code isEqualToString:@"200"]) {
                 [_tableDataSource removeObjectAtIndex:cellStamp];
-                [mainTable reloadData];
+                [mainTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:cellStamp inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                 
             }else
             {

@@ -231,7 +231,8 @@
         NSString *imageStr = [NSString stringWithFormat:@"%@",[ymData.showImageArray objectAtIndex:i]];
         [image sd_cancelCurrentImageLoad];
         [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
-        
+        //[image setImage:[UIImage imageNamed:@"placeholder_comm"]];
+        [image setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
         [self.contentView addSubview:image];
         [_imageArray addObject:image];
         
@@ -466,5 +467,6 @@
     NSLog(@"截取的值为：%@",str);
     return str;
 }
+
 
 @end
