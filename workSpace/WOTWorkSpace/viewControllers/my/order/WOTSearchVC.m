@@ -9,6 +9,8 @@
 #import "WOTSearchVC.h"
 #import "WOTMyEnterPriseCell.h"
 #import "WOTEnterpriseIntroduceVC.h"
+#import "WOTProvidersVC.h"
+
 @interface WOTSearchVC () <UITableViewDelegate>
 //@property (
 @end
@@ -90,10 +92,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
-    vc.model = self.dataSource[indexPath.row];
-    vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
+    WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
+    vc.companyType = CompanyTypeEnterprise;
+    vc.enterpriseModel = self.dataSource[indexPath.row];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
+//    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];
+//    vc.model = self.dataSource[indexPath.row];
+//    vc.vcType = INTRODUCE_VC_TYPE_Enterprise;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /*
