@@ -233,6 +233,7 @@
         [image sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"placeholder_comm"]];
         image.contentMode = UIViewContentModeScaleAspectFill;
         image.clipsToBounds = YES;
+        //[image setImage:[UIImage imageNamed:@"placeholder_comm"]];
         [self.contentView addSubview:image];
         [_imageArray addObject:image];
         

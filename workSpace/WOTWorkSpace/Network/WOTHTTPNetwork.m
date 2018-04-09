@@ -471,7 +471,8 @@
 +(void)getEnterprisesWithSpaceId:(NSNumber *)spaceid response:(response)response{
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/CompanyInfo/find"];
     NSDictionary * parameters = @{@"pageNo":@(1),
-                                  @"pageSize":@(100)
+                                  @"pageSize":@(100),
+                                  @"companyState":@(1),
                                   };
     
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {

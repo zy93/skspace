@@ -28,7 +28,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTEnterpriseListSytle2Cell" bundle:nil] forCellReuseIdentifier:@"WOTEnterpriseListSytle2Cell"];
     self.tableView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     [self createRequest];
-    self.navigationItem.title = @"友邻企业";
+    self.navigationItem.title = @"尚科企业";
     // Do any additional setup after loading the view.
 }
 
