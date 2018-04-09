@@ -73,7 +73,9 @@
 @property(nonatomic,strong)NSString* tatepayerNum ;
 @property(nonatomic,strong)NSString* tel ;
 @property(nonatomic,strong)NSString* typeEnterprise ;
-@property(nonatomic,strong)NSNumber* workNum ;
+@property(nonatomic,strong)NSNumber* workNum;
+@property(nonatomic,copy)NSString *website;
+@property(nonatomic,copy)NSString *companySite;
 
 @end
 

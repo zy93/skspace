@@ -25,6 +25,9 @@
 @property(nonatomic,strong)NSString *firmName;
 @property(nonatomic,strong)NSString *tel;
 @property(nonatomic,strong)NSString *facilitatorDescribe;
+@property(nonatomic,copy)NSString *introduce;
+@property(nonatomic,copy)NSString *website;
+@property(nonatomic,copy)NSString *site;
 
 @end
 

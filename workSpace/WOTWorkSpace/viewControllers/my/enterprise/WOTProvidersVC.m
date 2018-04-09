@@ -222,7 +222,7 @@
         NSString *str;
         if (self.companyType == CompanyTypeFacilitator) {
             cell.titleLab.text = @"服务商介绍";
-            str = strIsEmpty(self.facilitatorModel.facilitatorDescribe)?ssstr:self.facilitatorModel.facilitatorDescribe;
+            str = strIsEmpty(self.facilitatorModel.introduce)?ssstr:self.facilitatorModel.introduce;
         }else
         {
             cell.titleLab.text = @"企业介绍";
@@ -240,12 +240,14 @@
         if (self.companyType == CompanyTypeFacilitator) {
             cell.nameValueLab.text = self.facilitatorModel.contacts;
             cell.addrssValueLab.text = strIsEmpty(self.facilitatorModel.city)?@"暂无":self.facilitatorModel.city;
+            cell.webValueLab.text = strIsEmpty(self.facilitatorModel.website)?@"暂无":self.facilitatorModel.website;
         }else
         {
             cell.nameValueLab.text = self.enterpriseModel.contacts;
-            cell.addrssValueLab.text = @"暂无";
+            cell.addrssValueLab.text = strIsEmpty(self.enterpriseModel.companySite)?@"暂无":self.enterpriseModel.companySite;
+            cell.webValueLab.text = strIsEmpty(self.enterpriseModel.website)?@"暂无":self.enterpriseModel.website;;
         }
-        cell.webValueLab.text = @"http://www.yiliangang.com";
+        
         return cell;
     }
     else {
