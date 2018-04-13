@@ -549,12 +549,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     //[self.view addSubview:maskview];
     [[UIApplication sharedApplication].keyWindow addSubview:maskview];
     YMShowImageView *ymImageV = [[YMShowImageView alloc] initWithFrame:maskview.bounds byClick:clickTag appendArray:imageViews];
-    
+    ymImageV.backgroundColor = [UIColor blackColor];
     ymImageV.delegate = self;
     [ymImageV show:maskview didFinish:^(){
         [UIView animateWithDuration:0.5f animations:^{
-            ymImageV.alpha = 0.0f;
-            maskview.alpha = 0.0f;
+            ymImageV.alpha = 1.0f;
+            maskview.alpha = 1.0f;
         } completion:^(BOOL finished) {
             [ymImageV removeFromSuperview];
             [maskview removeFromSuperview];

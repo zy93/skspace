@@ -300,7 +300,9 @@
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/find"];
     //在原来的基础上添加集团id
    NSMutableDictionary * parameters = [@{@"pageNo":@1,
-                                         @"pageSize":@1000} mutableCopy];
+                                         @"pageSize":@1000,
+                                         @"spaceState":@0
+                                         } mutableCopy];
     if (city) {
         [parameters setValue:city forKey:@"city"];
     }
@@ -420,7 +422,8 @@
 {
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/find"];
     NSDictionary *parameters = @{@"pageNo":page,
-                                 @"pageSize":pageSize
+                                 @"pageSize":pageSize,
+                                 @"spaceState":@0
                                  };
     [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
         WOTSpaceModel_msg * spacemodel = [[WOTSpaceModel_msg alloc]initWithDictionary:responseobj error:nil];
@@ -591,6 +594,7 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Applyforcompany/find"];
     NSDictionary * parameters = @{@"companyIdlist":enterpriseIds,
+                                  @"applyForState":@"待处理",
                                   @"pageNo":@(1),
                                   @"pageSize":@(1000)
                                   };

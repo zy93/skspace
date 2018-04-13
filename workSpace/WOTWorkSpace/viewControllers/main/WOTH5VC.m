@@ -114,11 +114,11 @@
             break;
     }
     
-    NSString *pTitle = @"众创空间";
+    NSString *pTitle = @"尚科社区";
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     messageObject.text = pTitle;
     
-    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:@"众创空间" thumImage:[UIImage imageNamed:@"share_icon_image"]];
+    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:@"尚科社区" thumImage:[UIImage imageNamed:@"share_icon_image"]];
     pMessageObject.webpageUrl = self.url;
     messageObject.shareObject = pMessageObject;
     

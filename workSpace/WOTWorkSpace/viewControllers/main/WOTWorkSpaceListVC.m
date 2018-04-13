@@ -225,7 +225,7 @@
         spacecell.lineVIew.hidden = indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1 ? YES:NO;
         spacecell.workSpaceName.text = _dataSource[indexPath.row].spaceName;
         spacecell.workSpaceLocation.text = _dataSource[indexPath.row].spaceSite;
-        spacecell.stationNum.text = [_dataSource[indexPath.row].fixPhone stringByAppendingString:@"工位可预订"];
+        spacecell.stationNum.text = [NSString stringWithFormat:@"%@工位可预订",_dataSource[indexPath.row].stationNum];
         NSArray *arr = [_dataSource[indexPath.row].spacePicture componentsSeparatedByString:@","];
         [spacecell.workSpaceImage setImageWithURL:[arr.lastObject ToResourcesUrl]];
         cell = spacecell;

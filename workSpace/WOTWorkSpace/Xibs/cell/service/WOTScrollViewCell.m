@@ -88,13 +88,10 @@
             [view.subtitleLab setText:model.staffName];
             view.tel = model.tel;
             view.delegate = self;
-//            [view.]
             [self.scrollView addSubview:view];
             [self.scrollView setContentSize:CGSizeMake(data.count*teamViewWidth+ (data.count*(facilitiesViewGap)) + startX, 0)];
-            
         }
     }
-    
 }
 
 #pragma mark - delegate
