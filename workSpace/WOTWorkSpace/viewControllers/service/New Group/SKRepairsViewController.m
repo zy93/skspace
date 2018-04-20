@@ -319,6 +319,7 @@
         [MBProgressHUDUtil showMessage:@"请填写报修地址！" toView:self.view];
         return;
     }
+
     [MBProgressHUDUtil showLoadingWithMessage:@"提交中" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
         [WOTHTTPNetwork submitRepairsWithUserId:[WOTUserSingleton shareUser].userInfo.userId
                                         userTel:[WOTUserSingleton shareUser].userInfo.tel

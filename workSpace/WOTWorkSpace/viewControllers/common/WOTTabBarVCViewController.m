@@ -32,9 +32,15 @@
             [MBProgressHUDUtil showMessage:@"请先登录!" toView:self.view];
             return;
         }
+        NSString *companyId;
+        if (strIsEmpty([WOTUserSingleton shareUser].userInfo.companyId)) {
+            companyId = @"0";
+        } else {
+            companyId = [WOTUserSingleton shareUser].userInfo.companyId;
+        }
         [MBProgressHUDUtil showLoadingWithMessage:@"" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
             
-            [WOTHTTPNetwork getQRcodeInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+            [WOTHTTPNetwork getQRcodeInfoWithUserId:[WOTUserSingleton shareUser].userInfo.userId companyId:companyId response:^(id bean, NSError *error) {
                 WOTBaseModel *model = (WOTBaseModel *)bean;
                 if ([model.code isEqualToString:@"200"]) {
                     // weakSelf.QRcodeStr = model.msg;

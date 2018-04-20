@@ -847,6 +847,7 @@
             [cell.titleLab setText:@"选择企业"];
             [cell.subtitleLab setText:self.invoiceInfo];
 //        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     
@@ -1034,6 +1035,8 @@
                           @"userName":[WOTUserSingleton shareUser].userInfo.userName,
                           @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
                           @"imageSite":self.imageSite,
+                          @"payType":self.payType,
+                          @"payObject":self.payObject
                           };
     
     [WOTHTTPNetwork meetingReservationsWithParams:dic response:^(id bean, NSError *error) {
@@ -1454,7 +1457,7 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
         if ([model.code isEqualToString:@"200"]) {
             WOTEnterpriseModel *modelMsg = [model.msg.list firstObject];
             weakSelf.invoiceInfo = modelMsg.companyName;
-
+            weakSelf.payObject = modelMsg.companyId;
         }
     }];
 }

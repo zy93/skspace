@@ -439,7 +439,7 @@
     [self.bookNumInfoLabel   setText:[self.productNum stringValue]];
     [self.facilityInfoLabel setText:strIsEmpty(self.facilityStr)? @"无":self.facilityStr];
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
-        [self.payTypeInfoLabel setText:self.payType.intValue == 0? @"企业支付" : @"个人支付"];
+        [self.payTypeInfoLabel setText:self.payType.intValue == 0? @"企业预订" : @"个人预订"];
     }else
     {
         self.payTypeInfoLabel.text = @"礼包";

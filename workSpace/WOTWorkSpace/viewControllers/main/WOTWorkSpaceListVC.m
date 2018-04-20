@@ -235,9 +235,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
 //    [self.navigationController pushViewController:detailvc animated:YES];
+    
     [WOTSingtleton shared].orderType = ORDER_TYPE_SPACE;
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
-    vc.spaceModel = self.dataSource[indexPath.row];
+    
+    if (indexPath.section == 0) {
+        vc.spaceModel = [WOTSingtleton shared].nearbySpace;
+    }else
+    {
+        vc.spaceModel = self.dataSource[indexPath.row];
+    }
     [self.navigationController pushViewController:vc animated:YES];
 }
 

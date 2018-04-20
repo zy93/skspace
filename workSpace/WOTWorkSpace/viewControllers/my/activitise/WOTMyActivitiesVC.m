@@ -93,10 +93,19 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.myActivityTableView reloadData];
             });
-        }else
-        {
-            [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
+            return ;
         }
+            
+        if ([model_msg.code isEqualToString:@"202"])
+        {
+            [MBProgressHUDUtil showMessage:@"没有活动！" toView:self.view];
+            return;
+        }
+        
+        [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
+        
+        
+
     }];
 }
 

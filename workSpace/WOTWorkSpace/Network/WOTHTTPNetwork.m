@@ -625,6 +625,7 @@
                                   @"state":@"3"
                                   };
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
+        
         SKMyActivityModel_msg * activitymodel = [[SKMyActivityModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  activitymodel;
     } response:response];
@@ -1427,10 +1428,11 @@
     } response:response];
 }
 
-+(void)getQRcodeInfoWithUserId:(NSNumber *)userId  response:(response)response
++(void)getQRcodeInfoWithUserId:(NSNumber *)userId companyId:(NSString *)companyId response:(response)response
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/Make/addOwnerQrCode",HTTPBaseURL];
-    NSDictionary *parameters = @{@"userId":userId
+    NSDictionary *parameters = @{@"userId":userId,
+                                 @"companyId":companyId
                                  };
     [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model13 = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];

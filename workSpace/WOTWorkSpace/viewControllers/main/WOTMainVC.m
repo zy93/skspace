@@ -511,7 +511,8 @@ int a = 0;
 }
 
 - (NSInteger)numberOfPagesInFlowView:(NewPagedFlowView *)flowView {
-    return self.spaceData.count>5?5:self.spaceData.count;
+    //return self.spaceData.count>5?5:self.spaceData.count;
+    return self.spaceData.count;
 }
 
 - (PGIndexBannerSubiew *)flowView:(NewPagedFlowView *)flowView cellForPageAtIndex:(NSInteger)index{
@@ -654,11 +655,12 @@ int a = 0;
         if (bean) {
             SKNewSpaceModel *model = (SKNewSpaceModel *)bean;
             weakSelf.spaceData = model.msg;
-            if (self.spaceData.count>5) {
-                weakSelf.spaceData = [model.msg subarrayWithRange:NSMakeRange(0, 4)];
-            } else {
-                weakSelf.spaceData = model.msg;
-            }
+            //weakSelf.spaceData = model.msg;
+//            if (self.spaceData.count>5) {
+//                weakSelf.spaceData = [model.msg subarrayWithRange:NSMakeRange(0, 4)];
+//            } else {
+//                weakSelf.spaceData = model.msg;
+//            }
             loadViews();
         }
         if (error) {

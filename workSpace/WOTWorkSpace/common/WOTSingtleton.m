@@ -46,10 +46,10 @@
     return _isuserLogin;
 }
 
--(WOTLocationModel *)nearbySpace
+-(WOTSpaceModel *)nearbySpace
 {
     if (!_nearbySpace) {
-        _nearbySpace = [[WOTLocationModel alloc] init];
+        _nearbySpace = [[WOTSpaceModel alloc] init];
         _nearbySpace.spaceId = @(56);
     }
     return _nearbySpace;

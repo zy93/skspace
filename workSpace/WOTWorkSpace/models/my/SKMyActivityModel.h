@@ -45,7 +45,7 @@
 @end
 
 @interface SKMyActivityModel_msg : JSONModel
-@property(nonatomic,copy)NSString *code;
-@property(nonatomic,copy)NSArray <SKMyActivityModel_list>*msg;
-@property(nonatomic,copy)NSString *result;
+@property(nonatomic,strong)NSString *code;
+@property(nonatomic,strong)NSArray <SKMyActivityModel_list>*msg;
+@property(nonatomic,strong)NSString *result;
 @end

@@ -724,7 +724,7 @@ typedef void(^response)(id bean,NSError *error);
  @param photosArray 图片数组
  @param response 结果回调
  */
-+(void)submitRepairsWithUserId:(NSNumber *)userId userTel:(NSString *)phone userName:(NSString *)userName  spaceId:(NSNumber *)spaceId repairsType:(NSString *)type repairsInfo:(NSString *)info repairsAddress:(NSString *)address alias:(NSString *)alias photosArray:(NSArray *)photosArray response:(response)response;
++(void)submitRepairsWithUserId:(NSNumber *)userId userTel:(NSString *)phone  userName:(NSString *)userName  spaceId:(NSNumber *)spaceId repairsType:(NSString *)type repairsInfo:(NSString *)info repairsAddress:(NSString *)address alias:(NSString *)alias photosArray:(NSArray *)photosArray response:(response)response;
 
 
 /**
@@ -741,7 +741,7 @@ typedef void(^response)(id bean,NSError *error);
  @param userId 用户id
  @param response 结果回调
  */
-+(void)getQRcodeInfoWithUserId:(NSNumber *)userId  response:(response)response;
++(void)getQRcodeInfoWithUserId:(NSNumber *)userId companyId:(NSString *)companyId response:(response)response;
 
 
 

@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, BUTTON_TYPE) {
 
 @property (nonatomic, assign) PAY_TYPE payType;
 //距离最近的空间
-@property (nonatomic, strong) WOTLocationModel *nearbySpace;
+@property (nonatomic, strong) WOTSpaceModel *nearbySpace;
+
+
 
 @end
