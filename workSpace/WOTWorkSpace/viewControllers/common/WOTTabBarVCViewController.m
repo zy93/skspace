@@ -33,10 +33,10 @@
             return;
         }
         NSString *companyId;
-        if (strIsEmpty([WOTUserSingleton shareUser].userInfo.companyId)) {
+        if (strIsEmpty([WOTUserSingleton shareUser].userInfo.companyId) && strIsEmpty([WOTUserSingleton shareUser].userInfo.companyIdAdmin)) {
             companyId = @"0";
         } else {
-            companyId = [WOTUserSingleton shareUser].userInfo.companyId;
+            companyId = [NSString stringWithFormat:@"%@,%@",[WOTUserSingleton shareUser].userInfo.companyId,[WOTUserSingleton shareUser].userInfo.companyIdAdmin];
         }
         [MBProgressHUDUtil showLoadingWithMessage:@"" toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
             
