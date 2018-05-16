@@ -14,6 +14,11 @@
 #import "WOTSpaceModel.h"
 //#import ""
 
+typedef NS_ENUM(NSInteger,SPACE_SOURCE_TYPE) {
+    SPACE_SOURCE_TYPE_BANNER,
+    SPACE_SOURCE_TYPE_OTHER,
+};
+
 @interface WOTOrderVC : UIViewController
 
 @property (nonatomic, strong) WOTMeetingListModel *meetingModel;
@@ -24,5 +29,8 @@
 //已选时间记录
 @property (nonatomic,assign) CGFloat meetingBeginTime;
 @property (nonatomic,assign) CGFloat meetingEndTime;
+
+@property (nonatomic,strong)NSNumber *singleSpaceId;
+@property (nonatomic,assign)SPACE_SOURCE_TYPE spaceSourceType;
 
 @end

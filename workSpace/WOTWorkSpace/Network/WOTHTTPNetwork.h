@@ -60,6 +60,38 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getUserInviteResponse:(response)response;
 
+/**
+ 同意支付协议的接口
+
+ @param userId 用户id
+ @param agreementState 协议字段
+ @param response 结果回调
+ */
++(void)addUserPayDelegateWithUserId:(NSNumber *)userId agreementState:(NSString *)agreementState response:(response)response;
+
+
+/**
+ 查询消息列表
+
+ @param response 结果回调
+ */
++(void)queryNotifationInfoResponse:(response)response;
+
+
+/**
+ 修改通知状态
+ @param newsId 通知id
+ @param readState 通知状态
+ @param response 结果回调
+ */
++(void)modifyNotifationTypeWithNewsId:(NSNumber *)newsId readState:(NSString *)readState response:(response)response;
+
+/**
+ 查询我的需求
+
+ @param response 结果回调
+ */
++(void)queryMyDemandResponse:(response)response;
 
 #pragma mark- 空间
 
@@ -164,11 +196,21 @@ typedef void(^response)(id bean,NSError *error);
 
  @param response 回调
  */
-+(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName response:(response)response;
-
+//+(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName response:(response)response;
++(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId tel:(NSString *)tel appointmentTime:(NSString *)appointmentTime peopleNum:(NSNumber *)peopleNum remark:(NSString *)remark companyName:(NSString *)companyName contacts:(NSString *)contacts spaceName:(NSString *)spaceName response:(response)response;
 
 
 #pragma mark - 企业
+
+/**
+ 获取企业剩余时长
+
+ @param companyId 企业ID
+ @param response 回调
+ */
++(void)queryCompanyTimeRemainingWithId:(NSString *)companyId response:(response)response;
+
+
 /**
  * 获取空间下的友邻企业
  *@param spaceid  空间id
@@ -214,7 +256,7 @@ typedef void(^response)(id bean,NSError *error);
  @param applyId 申请id
  @param response 响应回调
  */
-+(void)disposeApplyJoinEnterprise:(NSNumber *)applyId response:(response)response;
++(void)disposeApplyJoinEnterprise:(NSNumber *)applyId  opinionStr:(NSString *)opinionStr response:(response)response;
 
 /**
  创建企业
@@ -259,6 +301,32 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getNewsWithPage:(NSNumber *)page response:(response)response;
 
+/**
+ 查询企业成员
+ 
+ @param companyId 公司id
+ @param response 返回响应
+ */
++(void)queryEnterpriseMemberWithCompanyId:(NSString *)companyId response:(response)response;
+
+
+/**
+ 删除企业成员
+
+ @param companyId 公司id
+ @param userId 用户id
+ @param response 返回响应
+ */
++(void)deleteEnterpriseMemberWithCompanyId:(NSString *)companyId userId:(NSNumber *)userId response:(response)response;
+
+
+/**
+ 查询我的申请入驻消息
+
+ @param response 返回响应
+ */
++(void)queryMyEnterInfoResponse:(response)response;
+
 #pragma mark - 轮播图
 /**
  *获取首页页面轮播图资源数据
@@ -289,6 +357,8 @@ typedef void(^response)(id bean,NSError *error);
  @param response 返回响应
  */
 +(void)searchMemberWithName:(NSString *)name spaceId:(NSNumber *)spaceId response:(response)response;
+
+
 
 
 #pragma mark - 服务商
@@ -344,6 +414,13 @@ typedef void(^response)(id bean,NSError *error);
 
 +(void)getFlexSliderSouceInfo:(response)response;
 
+/**
+ 查询单个服务商
+
+ @param facilitatorId 服务商id
+ @param response 结果回调
+ */
++(void)querySingleFacilitator:(NSNumber *)facilitatorId response:(response)response;
 
 #pragma mark - 访客
 /**
@@ -753,5 +830,12 @@ typedef void(^response)(id bean,NSError *error);
  @param response 返回
  */
 +(void)queryGiftBagListresponse:(response)response;
+ 
+/**
+ 获取支付协议
+
+ @param response 返回结果
+ */
++(void)getPayDelegateResponse:(response)response;
 
 @end

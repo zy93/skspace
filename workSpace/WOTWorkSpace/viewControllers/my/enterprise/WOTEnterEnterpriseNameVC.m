@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"输入企业名称";
+    self.navigationItem.title = self.titleStr;
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTEnterCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTEnterCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTMyEnterPriseCell"];
     [self configNaviRightItemWithTitle:@"保存" textColor:[UIColor blackColor]];
@@ -44,9 +44,17 @@
 -(void)rightItemAction{
     //跳转页面
     if (strIsEmpty(self.name)) {
-        [MBProgressHUDUtil showMessage:@"请填写企业名称" toView:self.view];
+        [MBProgressHUDUtil showMessage:@"请填写信息" toView:self.view];
         return;
     }
+    
+    if ([self.titleStr isEqualToString:@"输入电话号码"]) {
+        if (![NSString valiMobile:self.name]) {
+            [MBProgressHUDUtil showMessage:@"请按照正确的电话格式填写！" toView:self.view];
+            return;
+        }
+    }
+    
     if (self.enterpriseName) {
         self.enterpriseName(self.name);
     }
@@ -61,16 +69,19 @@
         return;
     }
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork searchEnterprisesWithName:searchText response:^(id bean, NSError *error) {
-        WOTEnterpriseModel_msg *model = (WOTEnterpriseModel_msg *)bean;
-        if (weakSelf.tableList.count>=2) {
-            [weakSelf.tableList removeObjectAtIndex:1];
-        }
-        if ([model.code isEqualToString:@"200"]) {
-            [weakSelf.tableList addObject:model.msg.list];
-            [weakSelf.tableView reloadData];
-        }
-    }];
+    if (self.isShow) {
+        [WOTHTTPNetwork searchEnterprisesWithName:searchText response:^(id bean, NSError *error) {
+            WOTEnterpriseModel_msg *model = (WOTEnterpriseModel_msg *)bean;
+            if (weakSelf.tableList.count>=2) {
+                [weakSelf.tableList removeObjectAtIndex:1];
+            }
+            if ([model.code isEqualToString:@"200"]) {
+                [weakSelf.tableList addObject:model.msg.list];
+                [weakSelf.tableView reloadData];
+            }
+        }];
+    }
+    
 }
 
 //- (void)resignTheFirstResponder {
@@ -119,7 +130,7 @@
         UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 30)];
         [lab setFont:[UIFont systemFontOfSize:12]];
         [lab setTextColor:UICOLOR_GRAY_99];
-        lab.text = @"公司名称不能是已存在的哦！";
+        lab.text = self.noticeStr;
         [view addSubview:lab];
         return view;
     }
@@ -137,8 +148,14 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         WOTEnterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTEnterCell"];
-        cell.textField.placeholder = @"请输入公司名称";
+        cell.textField.placeholder = self.titleStr;
         cell.delegate = self;
+        if ([self.titleStr isEqualToString:@"输入人数"] || [self.titleStr isEqualToString:@"输入电话号码"]) {
+            cell.textField.keyboardType = UIKeyboardTypePhonePad;
+        }else
+        {
+            cell.textField.keyboardType = UIKeyboardTypeDefault;
+        }
         [cell.textField becomeFirstResponder];
         return cell;
     }
@@ -171,7 +188,7 @@
 {
     if (!_tableList) {
         _tableList = [NSMutableArray new];
-        [_tableList addObject:@[@"请输入企业名称"]];
+        [_tableList addObject:@[self.titleStr]];
     }
     return _tableList;
 }

@@ -507,6 +507,7 @@ int a = 0;
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
     [WOTSingtleton shared].orderType = ORDER_TYPE_SPACE;
     vc.spaceModel = self.spaceData[subIndex];
+    vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -583,6 +584,7 @@ int a = 0;
     WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
     vc.companyType = CompanyTypeEnterprise;
     vc.enterpriseModel = self.enterpriseData[index];
+    vc.sourceType = SOURCE_TYPE_OTHER;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -590,22 +592,43 @@ int a = 0;
 #pragma mark - SDCycleScrollView Delegate  点击轮播图显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
-    WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
-    detailvc.url = self.bannerData[index].webpageUrl;
-    //如果是分享注册页面，需要加邀请码,//跳转原生页面
-    if ([detailvc.url containsString:@"/share/shareRegistration.html"]) {
-        WOTShareVC *vc = [[WOTShareVC alloc] init];
-        vc.shareUrl = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-
-        return;
+    if ([self.bannerData[index].proclamationType isEqualToString:@"服务企业"]) {
+        WOTProvidersVC *providersVC = [[WOTProvidersVC alloc] init];
+        providersVC.companyType = CompanyTypeFacilitator;
+        providersVC.sourceType = SOURCE_TYPE_BANNER;
+        providersVC.singleFacilitatorId = @([self.bannerData[index].objectId integerValue]);
+        providersVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:providersVC animated:YES];
     }
-    detailvc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detailvc animated:YES];
+    
+    if ([self.bannerData[index].proclamationType isEqualToString:@"空间"]) {
+       WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
+        [WOTSingtleton shared].orderType = ORDER_TYPE_SPACE;
+        vc.spaceSourceType = SPACE_SOURCE_TYPE_BANNER;
+        //vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
+        vc.singleSpaceId = @([self.bannerData[index].objectId integerValue]);
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+    if ([self.bannerData[index].proclamationType isEqualToString:@"活动"] || [self.bannerData[index].proclamationType isEqualToString:@"资讯"]) {
+        WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
+        detailvc.url = self.bannerData[index].webpageUrl;
+        //如果是分享注册页面，需要加邀请码,//跳转原生页面
+        if ([detailvc.url containsString:@"/share/shareRegistration.html"]) {
+            WOTShareVC *vc = [[WOTShareVC alloc] init];
+            vc.shareUrl = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+            return;
+        }
+        detailvc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detailvc animated:YES];
+    }
+    
 }
 
-#pragma mark -  Network
+#pragma mark -  Network- 获取企业
 -(void)getEnterpriseListDataFromWeb:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     
@@ -633,7 +656,7 @@ int a = 0;
 //    }];
 }
 
-
+#pragma mark - 获取首页banner
 -(void)getBannerDataSource:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getHomeSliderSouceInfo:^(id bean, NSError *error) {
@@ -647,7 +670,8 @@ int a = 0;
     }];
 }
 
-#pragma mark - 得到空间信息
+
+#pragma mark - 得到首页空间信息
 -(void)getDataSourceFromWebFWithCity:( NSString * __nullable )city complete:(void(^)())complete loadVIews:(void(^)())loadViews{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getNewSpaceDataBlock:^(id bean, NSError *error) {
@@ -670,6 +694,7 @@ int a = 0;
 }
 
 
+#pragma mark - 获取活动的列表
 -(void)getActivityDataFromWeb:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getActivitiesWithPage:@(1) response:^(id bean, NSError *error) {
@@ -691,7 +716,7 @@ int a = 0;
 }
 
 
-
+#pragma mark - 获取全部资讯
 -(void)getInfoDataFromWeb:(void(^)())complete{
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getNewsWithPage:@(1) response:^(id bean, NSError *error) {
@@ -739,6 +764,7 @@ int a = 0;
     WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
     vc.companyType = CompanyTypeFacilitator;
     vc.facilitatorModel = self.facilitatorData[tapTag];
+    vc.sourceType = SOURCE_TYPE_OTHER;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

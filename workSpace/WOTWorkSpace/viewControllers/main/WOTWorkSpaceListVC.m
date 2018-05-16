@@ -245,6 +245,7 @@
     {
         vc.spaceModel = self.dataSource[indexPath.row];
     }
+    vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

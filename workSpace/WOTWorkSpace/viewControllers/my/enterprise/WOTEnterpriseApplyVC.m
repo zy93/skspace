@@ -52,12 +52,28 @@
 
 
 #pragma mark - cell delegate
--(void)cell:(WOTApplyCell *)cell clickBtn:(UIButton *)sender
+-(void)cell:(WOTApplyCell *)cell clickAgreeBtn:(UIButton *)sender
 {
-    [WOTHTTPNetwork disposeApplyJoinEnterprise:cell.model.id response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork disposeApplyJoinEnterprise:cell.model.id  opinionStr:@"同意" response:^(id bean, NSError *error) {
         WOTApplyJoinEnterpriseModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"已同意" toView:self.view];
+            [self createRequest];
+        }
+        else
+        {
+            [MBProgressHUDUtil showMessage:@"操作失败" toView:self.view];
+            [self createRequest];
+        }
+    }];
+}
+
+-(void)cell:(WOTApplyCell *)cell clickRefuseBtn:(UIButton *)sender
+{
+    [WOTHTTPNetwork disposeApplyJoinEnterprise:cell.model.id  opinionStr:@"拒绝" response:^(id bean, NSError *error) {
+        WOTApplyJoinEnterpriseModel_msg *model = bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showMessage:@"已拒绝" toView:self.view];
             [self createRequest];
         }
         else
@@ -81,7 +97,8 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+//    return 60;
+    return 95;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

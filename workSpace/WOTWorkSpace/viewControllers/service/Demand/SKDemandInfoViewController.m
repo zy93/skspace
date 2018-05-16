@@ -31,7 +31,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:@"f9f9f9"];
-    self.navigationItem.title = @"获取支持";
+    if (self.interfaceType == DEMAND_INTERFACE_TYPE_SHOW) {
+        self.navigationItem.title = @"支持信息";
+        [self.demandInfoTextView setEditable:NO];
+        self.demandSubmitButton.hidden = YES;
+        self.imageView.hidden = YES;
+    } else {
+        self.navigationItem.title = @"获取支持";
+        [self.demandInfoTextView setEditable:YES];
+        self.demandSubmitButton.hidden = NO;
+        self.imageView.hidden = NO;
+    }
+    
     self.navigationItem.leftBarButtonItem = [self customLeftBackButton];
     [self.view addSubview:self.topview];
     [self.topview addSubview:self.typeLabel];
@@ -194,7 +205,12 @@
 - (void)backBarButtonItemAction
 {
     [self.typeView removeFromSuperview];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (self.interfaceType == DEMAND_INTERFACE_TYPE_SHOW) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
 }
 
 -(UIView *)topview
@@ -237,7 +253,11 @@
     if (_demandInfoTextView == nil) {
         _demandInfoTextView = [[UITextView alloc] init];
         _demandInfoTextView.delegate = self;
-        _demandInfoTextView.text = @"*请填写您的服务需求";
+        if (self.interfaceType == DEMAND_INTERFACE_TYPE_SHOW) {
+            _demandInfoTextView.text = self.contentString;
+        } else {
+            _demandInfoTextView.text = @"*请填写您的服务需求";
+        }
         _demandInfoTextView.textColor = [UIColor lightGrayColor];
         _demandInfoTextView.font = [UIFont systemFontOfSize:15];
     }

@@ -19,6 +19,12 @@
     self.agreeBtn.layer.cornerRadius = 2.f;
     self.agreeBtn.layer.borderWidth = 0.5f;
     self.agreeBtn.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    
+    self.refuseButton.layer.cornerRadius = 2.f;
+    self.refuseButton.layer.borderWidth = 0.5f;
+    self.refuseButton.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -27,8 +33,14 @@
     // Configure the view for the selected state
 }
 - (IBAction)clickBtn:(id)sender {
-    if ([_delegate respondsToSelector:@selector(cell:clickBtn:)]) {
-        [_delegate cell:self clickBtn:sender];
+    if ([_delegate respondsToSelector:@selector(cell:clickAgreeBtn:)]) {
+        [_delegate cell:self clickAgreeBtn:sender];
+    }
+}
+
+- (IBAction)refuseBtn:(id)sender {
+    if ([_delegate respondsToSelector:@selector(cell:clickRefuseBtn:)]) {
+        [_delegate cell:self clickRefuseBtn:sender];
     }
 }
 

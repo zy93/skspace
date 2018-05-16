@@ -14,7 +14,9 @@
 
 @protocol WOTApplyCellDelegate <NSObject>
 
--(void)cell:(WOTApplyCell *)cell clickBtn:(UIButton *)sender;
+-(void)cell:(WOTApplyCell *)cell clickAgreeBtn:(UIButton *)sender;
+
+-(void)cell:(WOTApplyCell *)cell clickRefuseBtn:(UIButton *)sender;
 
 @end
 
@@ -23,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLab;
 @property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *refuseButton;
 
 @property (nonatomic, strong) WOTApplyModel *model;
 @property (nonatomic, strong) id <WOTApplyCellDelegate> delegate;

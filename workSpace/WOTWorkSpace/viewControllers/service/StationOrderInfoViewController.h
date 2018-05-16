@@ -28,5 +28,6 @@
 @property (nonatomic, strong) NSString *facilityStr;
 @property (nonatomic, strong) NSNumber *money;
 @property (nonatomic, strong) NSNumber *payType;
-
+@property (nonatomic, copy) NSArray *facilitiesArray;
+@property (nonatomic, copy) NSString *companyNameStr;
 @end

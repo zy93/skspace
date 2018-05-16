@@ -37,8 +37,10 @@
 @property(nonatomic,strong)NSString *spaceUrl;
 @property(nonatomic,strong)NSString *valueAdded;//增值服务
 @property(nonatomic,strong)NSNumber *stationNum;
-
-
+@property(nonatomic,strong)NSNumber *storyHeight;
+@property(nonatomic,strong)NSNumber *lettableArea;
+@property(nonatomic,strong)NSNumber *coveredArea;
+@property(nonatomic,strong)NSNumber *totalFloors;
 @end
 
 @interface WOTSpaceModel_m : JSONModel

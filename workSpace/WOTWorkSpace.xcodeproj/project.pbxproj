@@ -247,10 +247,28 @@
 		C5B1EBA120300FF900586BAB /* SKNewFacilitatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B1EBA020300FF900586BAB /* SKNewFacilitatorModel.m */; };
 		C5B1EBA420301AD400586BAB /* SKNewSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B1EBA320301AD400586BAB /* SKNewSpaceModel.m */; };
 		C5B1EBA720301ECE00586BAB /* SKNewEnterpriseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B1EBA620301ECE00586BAB /* SKNewEnterpriseModel.m */; };
+		C5B2467120A5AE51005EFB91 /* SKReserveInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B2467020A5AE51005EFB91 /* SKReserveInfoTableViewController.m */; };
+		C5C9C7EE20A966D00075E449 /* SKPayDelegateView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C7ED20A966D00075E449 /* SKPayDelegateView.m */; };
+		C5C9C7F120A97FC60075E449 /* SKCompanyMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C7F020A97FC60075E449 /* SKCompanyMemberViewController.m */; };
+		C5C9C7F520A97FFC0075E449 /* SKMemberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C7F320A97FFC0075E449 /* SKMemberTableViewCell.m */; };
+		C5C9C7F620A97FFC0075E449 /* SKMemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9C7F420A97FFC0075E449 /* SKMemberTableViewCell.xib */; };
+		C5C9C7F920A9904A0075E449 /* SKCompanyMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C7F820A9904A0075E449 /* SKCompanyMemberModel.m */; };
+		C5C9C7FC20A9AAE50075E449 /* SKMyInfomationNotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C7FB20A9AAE50075E449 /* SKMyInfomationNotificationTableViewController.m */; };
+		C5C9C80020A9AB140075E449 /* SKInfoNotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C7FE20A9AB140075E449 /* SKInfoNotificationTableViewCell.m */; };
+		C5C9C80120A9AB140075E449 /* SKInfoNotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9C7FF20A9AB140075E449 /* SKInfoNotificationTableViewCell.xib */; };
+		C5C9C80420AA6FFA0075E449 /* SKInfoNotifationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C80320AA6FFA0075E449 /* SKInfoNotifationModel.m */; };
+		C5C9C80720AAA4DB0075E449 /* SKListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C80620AAA4DB0075E449 /* SKListTableViewController.m */; };
+		C5C9C80B20AAA4FB0075E449 /* SKListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C80920AAA4FB0075E449 /* SKListTableViewCell.m */; };
+		C5C9C80C20AAA4FB0075E449 /* SKListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9C80A20AAA4FB0075E449 /* SKListTableViewCell.xib */; };
+		C5C9C80F20AAAE010075E449 /* SKMyEnterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C80E20AAAE010075E449 /* SKMyEnterModel.m */; };
+		C5C9C81220AAB1A20075E449 /* SKMyDemandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C81120AAB1A20075E449 /* SKMyDemandModel.m */; };
+		C5C9C85320AAE6D70075E449 /* SKSingleFacilitatorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C85220AAE6D70075E449 /* SKSingleFacilitatorModel.m */; };
+		C5C9C85620ABCE360075E449 /* SKPayDelegateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C9C85520ABCE360075E449 /* SKPayDelegateModel.m */; };
 		C5CBA57F20106738002943EF /* SKAliPayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CBA57E20106738002943EF /* SKAliPayModel.m */; };
 		C5CBA582201073A8002943EF /* SKOrderStringModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CBA581201073A8002943EF /* SKOrderStringModel.m */; };
 		C5CBA58520109E56002943EF /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C5CBA58320109E56002943EF /* AlipaySDK.bundle */; };
 		C5CBA58620109E56002943EF /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CBA58420109E56002943EF /* AlipaySDK.framework */; };
+		C5D8B1AE2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D8B1AD2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m */; };
 		C5DB4D59202439D100806BC1 /* SKSpaceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */; };
 		C5DB4D5C202445F200806BC1 /* NSArray+ImageArray.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB4D5B202445F200806BC1 /* NSArray+ImageArray.m */; };
 		C5E4977E2048E550002C38C9 /* SKMyActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4977D2048E550002C38C9 /* SKMyActivityTableViewCell.m */; };
@@ -917,12 +935,45 @@
 		C5B1EBA320301AD400586BAB /* SKNewSpaceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKNewSpaceModel.m; sourceTree = "<group>"; };
 		C5B1EBA520301ECE00586BAB /* SKNewEnterpriseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKNewEnterpriseModel.h; sourceTree = "<group>"; };
 		C5B1EBA620301ECE00586BAB /* SKNewEnterpriseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKNewEnterpriseModel.m; sourceTree = "<group>"; };
+		C5B2466F20A5AE51005EFB91 /* SKReserveInfoTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKReserveInfoTableViewController.h; sourceTree = "<group>"; };
+		C5B2467020A5AE51005EFB91 /* SKReserveInfoTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKReserveInfoTableViewController.m; sourceTree = "<group>"; };
+		C5C9C7EC20A966D00075E449 /* SKPayDelegateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKPayDelegateView.h; sourceTree = "<group>"; };
+		C5C9C7ED20A966D00075E449 /* SKPayDelegateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKPayDelegateView.m; sourceTree = "<group>"; };
+		C5C9C7EF20A97FC60075E449 /* SKCompanyMemberViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCompanyMemberViewController.h; sourceTree = "<group>"; };
+		C5C9C7F020A97FC60075E449 /* SKCompanyMemberViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCompanyMemberViewController.m; sourceTree = "<group>"; };
+		C5C9C7F220A97FFC0075E449 /* SKMemberTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKMemberTableViewCell.h; sourceTree = "<group>"; };
+		C5C9C7F320A97FFC0075E449 /* SKMemberTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKMemberTableViewCell.m; sourceTree = "<group>"; };
+		C5C9C7F420A97FFC0075E449 /* SKMemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKMemberTableViewCell.xib; sourceTree = "<group>"; };
+		C5C9C7F720A9904A0075E449 /* SKCompanyMemberModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCompanyMemberModel.h; sourceTree = "<group>"; };
+		C5C9C7F820A9904A0075E449 /* SKCompanyMemberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCompanyMemberModel.m; sourceTree = "<group>"; };
+		C5C9C7FA20A9AAE50075E449 /* SKMyInfomationNotificationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKMyInfomationNotificationTableViewController.h; sourceTree = "<group>"; };
+		C5C9C7FB20A9AAE50075E449 /* SKMyInfomationNotificationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKMyInfomationNotificationTableViewController.m; sourceTree = "<group>"; };
+		C5C9C7FD20A9AB140075E449 /* SKInfoNotificationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKInfoNotificationTableViewCell.h; sourceTree = "<group>"; };
+		C5C9C7FE20A9AB140075E449 /* SKInfoNotificationTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKInfoNotificationTableViewCell.m; sourceTree = "<group>"; };
+		C5C9C7FF20A9AB140075E449 /* SKInfoNotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKInfoNotificationTableViewCell.xib; sourceTree = "<group>"; };
+		C5C9C80220AA6FFA0075E449 /* SKInfoNotifationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKInfoNotifationModel.h; sourceTree = "<group>"; };
+		C5C9C80320AA6FFA0075E449 /* SKInfoNotifationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKInfoNotifationModel.m; sourceTree = "<group>"; };
+		C5C9C80520AAA4DB0075E449 /* SKListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKListTableViewController.h; sourceTree = "<group>"; };
+		C5C9C80620AAA4DB0075E449 /* SKListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKListTableViewController.m; sourceTree = "<group>"; };
+		C5C9C80820AAA4FB0075E449 /* SKListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKListTableViewCell.h; sourceTree = "<group>"; };
+		C5C9C80920AAA4FB0075E449 /* SKListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKListTableViewCell.m; sourceTree = "<group>"; };
+		C5C9C80A20AAA4FB0075E449 /* SKListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKListTableViewCell.xib; sourceTree = "<group>"; };
+		C5C9C80D20AAAE010075E449 /* SKMyEnterModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKMyEnterModel.h; sourceTree = "<group>"; };
+		C5C9C80E20AAAE010075E449 /* SKMyEnterModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKMyEnterModel.m; sourceTree = "<group>"; };
+		C5C9C81020AAB1A20075E449 /* SKMyDemandModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKMyDemandModel.h; sourceTree = "<group>"; };
+		C5C9C81120AAB1A20075E449 /* SKMyDemandModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKMyDemandModel.m; sourceTree = "<group>"; };
+		C5C9C85120AAE6D70075E449 /* SKSingleFacilitatorModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSingleFacilitatorModel.h; sourceTree = "<group>"; };
+		C5C9C85220AAE6D70075E449 /* SKSingleFacilitatorModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSingleFacilitatorModel.m; sourceTree = "<group>"; };
+		C5C9C85420ABCE360075E449 /* SKPayDelegateModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKPayDelegateModel.h; sourceTree = "<group>"; };
+		C5C9C85520ABCE360075E449 /* SKPayDelegateModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKPayDelegateModel.m; sourceTree = "<group>"; };
 		C5CBA57D20106738002943EF /* SKAliPayModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKAliPayModel.h; sourceTree = "<group>"; };
 		C5CBA57E20106738002943EF /* SKAliPayModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKAliPayModel.m; sourceTree = "<group>"; };
 		C5CBA580201073A8002943EF /* SKOrderStringModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKOrderStringModel.h; sourceTree = "<group>"; };
 		C5CBA581201073A8002943EF /* SKOrderStringModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKOrderStringModel.m; sourceTree = "<group>"; };
 		C5CBA58320109E56002943EF /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		C5CBA58420109E56002943EF /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		C5D8B1AC2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCompanyRemainingTimeModel.h; sourceTree = "<group>"; };
+		C5D8B1AD2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCompanyRemainingTimeModel.m; sourceTree = "<group>"; };
 		C5DB4D57202439D100806BC1 /* SKSpaceInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceInfoModel.h; sourceTree = "<group>"; };
 		C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSpaceInfoModel.m; sourceTree = "<group>"; };
 		C5DB4D5A202445F100806BC1 /* NSArray+ImageArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ImageArray.h"; sourceTree = "<group>"; };
@@ -1653,6 +1704,8 @@
 				2A9E2C42202D718F0016E097 /* WOTFacilitiesView.m */,
 				2A9E2C44202D71AF0016E097 /* WOTTeamView.h */,
 				2A9E2C45202D71AF0016E097 /* WOTTeamView.m */,
+				C5C9C7EC20A966D00075E449 /* SKPayDelegateView.h */,
+				C5C9C7ED20A966D00075E449 /* SKPayDelegateView.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -1730,6 +1783,10 @@
 				C59BFDC02029BFBF00D45EC3 /* SKBookStationOrderModel.m */,
 				C5E4977F204920B2002C38C9 /* SKGiftBagModel.h */,
 				C5E49780204920B2002C38C9 /* SKGiftBagModel.m */,
+				C5D8B1AC2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.h */,
+				C5D8B1AD2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m */,
+				C5C9C85120AAE6D70075E449 /* SKSingleFacilitatorModel.h */,
+				C5C9C85220AAE6D70075E449 /* SKSingleFacilitatorModel.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -1909,6 +1966,23 @@
 				C5A125B21FE22A260058AA0C /* QueryCommentModel_msg.m */,
 			);
 			path = CommentModel;
+			sourceTree = "<group>";
+		};
+		C5C9C7EB20A94A770075E449 /* information */ = {
+			isa = PBXGroup;
+			children = (
+				C5C9C7FA20A9AAE50075E449 /* SKMyInfomationNotificationTableViewController.h */,
+				C5C9C7FB20A9AAE50075E449 /* SKMyInfomationNotificationTableViewController.m */,
+				C5C9C7FD20A9AB140075E449 /* SKInfoNotificationTableViewCell.h */,
+				C5C9C7FE20A9AB140075E449 /* SKInfoNotificationTableViewCell.m */,
+				C5C9C7FF20A9AB140075E449 /* SKInfoNotificationTableViewCell.xib */,
+				C5C9C80520AAA4DB0075E449 /* SKListTableViewController.h */,
+				C5C9C80620AAA4DB0075E449 /* SKListTableViewController.m */,
+				C5C9C80820AAA4FB0075E449 /* SKListTableViewCell.h */,
+				C5C9C80920AAA4FB0075E449 /* SKListTableViewCell.m */,
+				C5C9C80A20AAA4FB0075E449 /* SKListTableViewCell.xib */,
+			);
+			path = information;
 			sourceTree = "<group>";
 		};
 		C5FA65441FFDFCB900675A6A /* Repairs */ = {
@@ -2556,6 +2630,7 @@
 		E85A85E81F0202460016FCA1 /* my */ = {
 			isa = PBXGroup;
 			children = (
+				C5C9C7EB20A94A770075E449 /* information */,
 				2A7D877C2030487100CF4CCD /* invite */,
 				2A7D877B2030487100CF4CCD /* surplusTime */,
 				E8BA0D751F0CEB5800B81C3D /* activitise */,
@@ -2616,6 +2691,8 @@
 				C59DE16B2047CBFA002E127D /* SKMapViewController.m */,
 				C59DE1742047CD61002E127D /* GPSNaviViewController.h */,
 				C59DE1732047CD60002E127D /* GPSNaviViewController.m */,
+				C5B2466F20A5AE51005EFB91 /* SKReserveInfoTableViewController.h */,
+				C5B2467020A5AE51005EFB91 /* SKReserveInfoTableViewController.m */,
 				C59DE16E2047CCB1002E127D /* Map- */,
 				C5FA65491FFE0E7300675A6A /* GiftBag */,
 				C5FA65481FFE0E5400675A6A /* Demand */,
@@ -2834,6 +2911,11 @@
 				2AED7BE01FFB513700316588 /* WOTEnterpriseApplyVC.m */,
 				2A3F8018203075960016FAED /* WOTProvidersVC.h */,
 				2A3F8019203075960016FAED /* WOTProvidersVC.m */,
+				C5C9C7EF20A97FC60075E449 /* SKCompanyMemberViewController.h */,
+				C5C9C7F020A97FC60075E449 /* SKCompanyMemberViewController.m */,
+				C5C9C7F220A97FFC0075E449 /* SKMemberTableViewCell.h */,
+				C5C9C7F320A97FFC0075E449 /* SKMemberTableViewCell.m */,
+				C5C9C7F420A97FFC0075E449 /* SKMemberTableViewCell.xib */,
 			);
 			path = enterprise;
 			sourceTree = "<group>";
@@ -2970,6 +3052,16 @@
 				C59DE18A2047FD64002E127D /* SKMyActivityModel.m */,
 				2AD0AB622057D05F005B87D3 /* WOTRepairHistoryModel.h */,
 				2AD0AB632057D05F005B87D3 /* WOTRepairHistoryModel.m */,
+				C5C9C7F720A9904A0075E449 /* SKCompanyMemberModel.h */,
+				C5C9C7F820A9904A0075E449 /* SKCompanyMemberModel.m */,
+				C5C9C80220AA6FFA0075E449 /* SKInfoNotifationModel.h */,
+				C5C9C80320AA6FFA0075E449 /* SKInfoNotifationModel.m */,
+				C5C9C80D20AAAE010075E449 /* SKMyEnterModel.h */,
+				C5C9C80E20AAAE010075E449 /* SKMyEnterModel.m */,
+				C5C9C81020AAB1A20075E449 /* SKMyDemandModel.h */,
+				C5C9C81120AAB1A20075E449 /* SKMyDemandModel.m */,
+				C5C9C85420ABCE360075E449 /* SKPayDelegateModel.h */,
+				C5C9C85520ABCE360075E449 /* SKPayDelegateModel.m */,
 			);
 			path = my;
 			sourceTree = "<group>";
@@ -3192,6 +3284,7 @@
 				2A4214761F146A700010B003 /* share_qqkongjian_select@2x.png in Resources */,
 				2A42146B1F146A700010B003 /* share_icon_select@3x.png in Resources */,
 				2AA70E1720527EA00052277C /* WOTMyOrderInfoCell.xib in Resources */,
+				C5C9C7F620A97FFC0075E449 /* SKMemberTableViewCell.xib in Resources */,
 				E8693B0C1F04F47700772BC1 /* My.storyboard in Resources */,
 				2A7D878F2030655D00CF4CCD /* WOTSurplusTimeCell.xib in Resources */,
 				E8190DBB1F0F69660000B07C /* WOTPersionalInformationTagCell.xib in Resources */,
@@ -3227,6 +3320,7 @@
 				E8190DB71F0F69660000B07C /* WOTOrderCell.xib in Resources */,
 				2A4214691F146A700010B003 /* share_icon@3x.png in Resources */,
 				2A4214711F146A700010B003 /* share_qq@3x.png in Resources */,
+				C5C9C80C20AAA4FB0075E449 /* SKListTableViewCell.xib in Resources */,
 				2AF18A2C1F131DEA004681CE /* WOTReservationsMeetingCell.xib in Resources */,
 				2A4214491F14699B0010B003 /* UMSocialSDKResources.bundle in Resources */,
 				2A7D877720302A7D00CF4CCD /* WOTMapCell.xib in Resources */,
@@ -3251,6 +3345,7 @@
 				2A7AE8471FF62F80000CAC04 /* WOTTitleAndEnterCell.xib in Resources */,
 				E8DDCCD71F11D542007D001C /* WOTEnterpriseTypeCell.xib in Resources */,
 				E8190DAB1F0F69660000B07C /* WOTMyActivitiesCell.xib in Resources */,
+				C5C9C80120A9AB140075E449 /* SKInfoNotificationTableViewCell.xib in Resources */,
 				2A4214781F146A700010B003 /* share_sina@2x.png in Resources */,
 				2A3B55051FD961E200358B8A /* WOTCardViewItem.xib in Resources */,
 				E8190DD01F0F69660000B07C /* WOTCommonHeaderVIew.xib in Resources */,
@@ -3457,6 +3552,8 @@
 				2A2AA9E81FDB8A2C0099BABC /* WOTServiceForProvidersCell.m in Sources */,
 				E85033051F0B819A00E79257 /* WOTEnterpriseLIstVC.m in Sources */,
 				2AF78CDD1F09EA1100F7B56D /* WOTRegisterServiceProvidersVC.m in Sources */,
+				C5C9C7EE20A966D00075E449 /* SKPayDelegateView.m in Sources */,
+				C5D8B1AE2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m in Sources */,
 				E8A200191F1C8266003C8A86 /* WOTNewsModel.m in Sources */,
 				2AFAC8951F0FB796001BAB14 /* WOTRadioView.m in Sources */,
 				E8EACF931F035A990015535D /* WOTSettingVC.m in Sources */,
@@ -3464,6 +3561,7 @@
 				2AF78CF11F0A3B7000F7B56D /* WOTVisitorsAppointmentVC.m in Sources */,
 				E80F4C0F1F0F24AA008BF066 /* WOTUitls.m in Sources */,
 				E86FD1F71F207734009BE16A /* WOTMainAppleRepairVC.m in Sources */,
+				C5C9C80F20AAAE010075E449 /* SKMyEnterModel.m in Sources */,
 				E8BA0D791F0CEB9E00B81C3D /* WOTMyActivitiesVC.m in Sources */,
 				C59D56CB1FDA280C001870B2 /* YHWorkGroupButton.m in Sources */,
 				E85A85EF1F0202460016FCA1 /* MASConstraintMaker.m in Sources */,
@@ -3508,6 +3606,7 @@
 				E8190DAA1F0F69660000B07C /* WOTMyActivitiesCell.m in Sources */,
 				2AD0AB672057DD0B005B87D3 /* WOTRepairdHistoryDetailVC.m in Sources */,
 				2AB90BCA1FFF8EBC004AF372 /* WOTEnterpriseListSytle2Cell.m in Sources */,
+				C5C9C7F520A97FFC0075E449 /* SKMemberTableViewCell.m in Sources */,
 				2A69A84A1FE2282C00C0862A /* WOTEnterpriseScrollView.m in Sources */,
 				C5E565DB1FF246C600534546 /* SKGiftBagViewController.m in Sources */,
 				E8A2001A1F1C8266003C8A86 /* WOTSliderModel.m in Sources */,
@@ -3517,6 +3616,7 @@
 				E8190DA61F0F69660000B07C /* WOTCerateEnterpriseCell.m in Sources */,
 				2A3B600E1F2EFF4600AC9C8D /* WOTLocationManager.m in Sources */,
 				2AF18A271F131BEE004681CE /* WOTReservationsMeetingVC.m in Sources */,
+				C5C9C7FC20A9AAE50075E449 /* SKMyInfomationNotificationTableViewController.m in Sources */,
 				E8774BB81F41710F00168033 /* WOTOrderModel.m in Sources */,
 				C59DE1882047CD89002E127D /* SpeechSynthesizer.m in Sources */,
 				E85A85F81F0202460016FCA1 /* MBProgressHUDUtil.m in Sources */,
@@ -3616,6 +3716,7 @@
 				C5FA654C1FFE0EB000675A6A /* SKDemandViewController.m in Sources */,
 				E869E8401F1E15CA00DBDBB9 /* WOTPostImage.m in Sources */,
 				E8190DCD1F0F69660000B07C /* XXPageTabItemLable.m in Sources */,
+				C5C9C85620ABCE360075E449 /* SKPayDelegateModel.m in Sources */,
 				E8190DC31F0F69660000B07C /* WOTServiceProvidersCell.m in Sources */,
 				2AED7BDD1FFB4D7300316588 /* WOTApplyCell.m in Sources */,
 				2AD2BE201F2711BD00D4C3BC /* WOTCurtainCell.m in Sources */,
@@ -3672,6 +3773,7 @@
 				E85A85F51F0202460016FCA1 /* View+MASAdditions.m in Sources */,
 				C5A836B11FFF5744002E4CE1 /* SKUpdateInfoViewController.m in Sources */,
 				E86245621F3D4F4900CF0D9D /* SRIOConsumer.m in Sources */,
+				C5C9C7F920A9904A0075E449 /* SKCompanyMemberModel.m in Sources */,
 				E86594811F21C9260093B796 /* WOTSocialContactCell.m in Sources */,
 				E8190D991F0F69660000B07C /* WOTSpaceCityCollectionCell.m in Sources */,
 				C580842D1FD781C10091DCC4 /* StationOrderInfoViewController.m in Sources */,
@@ -3685,6 +3787,7 @@
 				C5B1EBA720301ECE00586BAB /* SKNewEnterpriseModel.m in Sources */,
 				2AB8A4A11FF4BC83008897CB /* WOTEnterEnterpriseNameVC.m in Sources */,
 				C5B1EB9E202FE76000586BAB /* SKSapceLocationView.m in Sources */,
+				C5C9C80020A9AB140075E449 /* SKInfoNotificationTableViewCell.m in Sources */,
 				E86245671F3D4F4900CF0D9D /* SRConstants.m in Sources */,
 				2A99FB791F26021000869732 /* WOTGetVerifyModel.m in Sources */,
 				2AE57C441F2ECB0600A1F149 /* WOTH5VC.m in Sources */,
@@ -3720,6 +3823,7 @@
 				E8190DC11F0F69660000B07C /* WOTServiceProvidersApplyCell.m in Sources */,
 				C59D56FD1FDA2D6A001870B2 /* YMButton.m in Sources */,
 				E8190DC21F0F69660000B07C /* WOTServiceProvidersCategoryCell.m in Sources */,
+				C5C9C80B20AAA4FB0075E449 /* SKListTableViewCell.m in Sources */,
 				2A3B54F31FD93C2F00358B8A /* HCCreateQRCode.m in Sources */,
 				E86245771F3D4FAB00CF0D9D /* WOTDeviceInfoModel.m in Sources */,
 				E8747AE61F26E1E400125CEB /* WOTAirconditioningCell.m in Sources */,
@@ -3742,12 +3846,16 @@
 				2A69A84D1FE2282C00C0862A /* CLTabBar.m in Sources */,
 				2A5B230E1F0F7DBE00466BEF /* WOTEnterTextVC.m in Sources */,
 				2A58E532203143F50035ACD4 /* SKServiceProvidersView.m in Sources */,
+				C5C9C80420AA6FFA0075E449 /* SKInfoNotifationModel.m in Sources */,
+				C5C9C81220AAB1A20075E449 /* SKMyDemandModel.m in Sources */,
 				2A3B600B1F2EF9D000AC9C8D /* WOTLocationModel.m in Sources */,
 				2A69A8501FE2282C00C0862A /* WOTButton.m in Sources */,
 				2A9E2C3D202D67850016E097 /* WOTOrderForDescribeCell.m in Sources */,
 				C59D57001FDA2D6A001870B2 /* YMShowImageView.m in Sources */,
+				C5C9C85320AAE6D70075E449 /* SKSingleFacilitatorModel.m in Sources */,
 				C59DE1832047CD89002E127D /* CommonUtility.m in Sources */,
 				E862456D1F3D4F4900CF0D9D /* SRRandom.m in Sources */,
+				C5C9C80720AAA4DB0075E449 /* SKListTableViewController.m in Sources */,
 				E8190DBF1F0F69660000B07C /* WOTRegisterServiceProvidersCell.m in Sources */,
 				2AC9EE96202FF8D30054EE6E /* WOTStaffModel.m in Sources */,
 				C7B4DD2D1F7A793C00009011 /* JXPopoverViewCell.m in Sources */,
@@ -3757,12 +3865,14 @@
 				2A69A8561FE27C9E00C0862A /* UIImage+Blur.m in Sources */,
 				2A99FB761F25F2C000869732 /* WOTAppointmentModel.m in Sources */,
 				E8190DCE1F0F69660000B07C /* XXPageTabView.m in Sources */,
+				C5B2467120A5AE51005EFB91 /* SKReserveInfoTableViewController.m in Sources */,
 				E862456F1F3D4F4900CF0D9D /* SRURLUtilities.m in Sources */,
 				2AD2BE191F26DC4F00D4C3BC /* WOTBusinessModel.m in Sources */,
 				C59D56E11FDA2C6D001870B2 /* ILRegularExpressionManager.m in Sources */,
 				2AD2BE281F271BE400D4C3BC /* WOTLightCell.m in Sources */,
 				E85A85ED1F0202460016FCA1 /* MASCompositeConstraint.m in Sources */,
 				E8190DB81F0F69660000B07C /* WOTPersionalInformationCommonCell.m in Sources */,
+				C5C9C7F120A97FC60075E449 /* SKCompanyMemberViewController.m in Sources */,
 				2A3F8011203070710016FAED /* WOTSecondCell.m in Sources */,
 				2A7AFABA1FF33D9F00038D26 /* WOTSearchMemberVC.m in Sources */,
 				E86FD1FD1F209723009BE16A /* WOTImageLookoverVC.m in Sources */,

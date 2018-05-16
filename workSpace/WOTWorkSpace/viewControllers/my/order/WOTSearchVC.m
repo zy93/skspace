@@ -95,6 +95,7 @@
     WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
     vc.companyType = CompanyTypeEnterprise;
     vc.enterpriseModel = self.dataSource[indexPath.row];
+    vc.sourceType = SOURCE_TYPE_OTHER;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 //    WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];

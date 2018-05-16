@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -81,6 +81,18 @@
                             <action selector="btnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bIL-V9-SuQ"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="报修状态" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rVN-Ip-XQi">
+                        <rect key="frame" x="20" y="132" width="62" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5n-Om-gMU">
+                        <rect key="frame" x="102" y="132" width="38" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="IFv-pK-Q3b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="1Nm-O5-94A"/>
@@ -89,16 +101,20 @@
                     <constraint firstItem="thf-z0-TE1" firstAttribute="leading" secondItem="cw1-ju-2Lx" secondAttribute="leading" id="9FD-hV-tvv"/>
                     <constraint firstItem="nkf-OP-0ja" firstAttribute="centerY" secondItem="Z5S-Hu-Ge3" secondAttribute="centerY" id="AOg-Qr-O8J"/>
                     <constraint firstItem="1c2-iZ-N76" firstAttribute="leading" secondItem="IFv-pK-Q3b" secondAttribute="leading" id="G5R-Er-CLd"/>
+                    <constraint firstItem="m5n-Om-gMU" firstAttribute="leading" secondItem="thf-z0-TE1" secondAttribute="leading" id="Jbb-av-D9w"/>
                     <constraint firstItem="2qi-LP-UgQ" firstAttribute="centerY" secondItem="jfJ-zk-Agh" secondAttribute="centerY" id="Log-9D-fjy"/>
                     <constraint firstItem="jfJ-zk-Agh" firstAttribute="top" secondItem="IFv-pK-Q3b" secondAttribute="bottom" constant="10" id="RFA-3G-LRo"/>
                     <constraint firstItem="cw1-ju-2Lx" firstAttribute="centerY" secondItem="IFv-pK-Q3b" secondAttribute="centerY" id="RmE-Ip-xiC"/>
                     <constraint firstItem="thf-z0-TE1" firstAttribute="centerY" secondItem="1c2-iZ-N76" secondAttribute="centerY" id="RtW-Sr-3op"/>
                     <constraint firstAttribute="bottom" secondItem="6oo-XS-gqM" secondAttribute="bottom" constant="10" id="Smn-qJ-jHG"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="thf-z0-TE1" secondAttribute="trailing" constant="20" id="XYE-6N-N2Q"/>
+                    <constraint firstItem="m5n-Om-gMU" firstAttribute="top" secondItem="rVN-Ip-XQi" secondAttribute="top" id="ZVT-ig-67w"/>
                     <constraint firstItem="1c2-iZ-N76" firstAttribute="top" secondItem="Z5S-Hu-Ge3" secondAttribute="bottom" constant="10" id="arg-tW-SmD"/>
                     <constraint firstItem="nkf-OP-0ja" firstAttribute="leading" secondItem="cw1-ju-2Lx" secondAttribute="leading" id="fpE-Mt-f5f"/>
+                    <constraint firstItem="rVN-Ip-XQi" firstAttribute="leading" secondItem="1c2-iZ-N76" secondAttribute="leading" id="g2S-Hf-AfO"/>
                     <constraint firstItem="IFv-pK-Q3b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="jgT-nG-7P4"/>
                     <constraint firstItem="jfJ-zk-Agh" firstAttribute="leading" secondItem="IFv-pK-Q3b" secondAttribute="leading" id="mTp-xw-1GI"/>
+                    <constraint firstItem="rVN-Ip-XQi" firstAttribute="top" secondItem="1c2-iZ-N76" secondAttribute="bottom" constant="10" id="mir-jj-UP2"/>
                     <constraint firstItem="2qi-LP-UgQ" firstAttribute="leading" secondItem="cw1-ju-2Lx" secondAttribute="leading" id="mkM-9N-Gwt"/>
                     <constraint firstItem="cw1-ju-2Lx" firstAttribute="leading" secondItem="IFv-pK-Q3b" secondAttribute="trailing" constant="20" id="tqb-6a-U1F"/>
                     <constraint firstAttribute="trailing" secondItem="6oo-XS-gqM" secondAttribute="trailing" constant="10" id="vbH-pg-jsh"/>
@@ -110,6 +126,7 @@
                 <outlet property="repairdAddrValueLab" destination="2qi-LP-UgQ" id="kaW-hf-ZCv"/>
                 <outlet property="repairdContentLab" destination="1c2-iZ-N76" id="edj-wj-Io8"/>
                 <outlet property="repairdContentValueLab" destination="thf-z0-TE1" id="A37-Yr-xyD"/>
+                <outlet property="repairdStateLab" destination="m5n-Om-gMU" id="hCE-uM-cqa"/>
                 <outlet property="repairdTimeLab" destination="Z5S-Hu-Ge3" id="89M-Gx-Qrt"/>
                 <outlet property="repairdTimeValueLab" destination="nkf-OP-0ja" id="cfp-zx-IIO"/>
                 <outlet property="repairdTypeLab" destination="IFv-pK-Q3b" id="dsi-eE-BUo"/>

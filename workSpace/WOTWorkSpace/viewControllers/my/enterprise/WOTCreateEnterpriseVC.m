@@ -181,6 +181,9 @@
         [photo showSelectedPhotoSheet];
     } else if (indexPath.row == 1) {
         WOTEnterEnterpriseNameVC *vc = [[WOTEnterEnterpriseNameVC alloc] init];
+        vc.titleStr = @"输入企业名称";
+        vc.noticeStr = @"公司名称不能是已存在的哦！";
+        vc.isShow = YES;
         vc.enterpriseName = ^(NSString *enterpriseName) {
             _enterpriseName = enterpriseName;
             [weakSelf.tableView reloadData];

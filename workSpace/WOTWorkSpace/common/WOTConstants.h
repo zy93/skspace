@@ -51,7 +51,7 @@
 #define UICOLOR_GRAY_99     UIColorFromRGB(0x999999) //灰色 低等标题，深色底纹文字。
 #define UICOLOR_GRAY_CC     UIColorFromRGB(0xcccccc) //灰色 最不明显使用。
 #define UICOLOR_GRAY_DD     UIColorFromRGB(0xdddddd) //灰色 最不明显使用。
-#define UICOLOR_GRAY_E1     UIColorFromRGB(0xe1e1e1) //灰色
+#define UICOLOR_GRAY_E1     UIColorFromRGB(0xe1e1e1) //灰色、
 #define UICOLOR_GRAY_F1     UIColorFromRGB(0xf1f1f1) //灰色、
 #define UICOLOR_GRAY_b4     UIColorFromRGB(0xf1f1f1) //灰色
 #define UICOLOR_MAIN_TEXT_PLACEHOLDER  RGBA(0,0,31,0.22) //输入框底纹颜色
@@ -67,11 +67,11 @@
 #define YLGTEST_APPID @"c81e728d9d4c2f636f067f89cc14862c"//海航集团
 #define QTWORK_APPID  @"eccbc87e4b5ce2fe28308fd9f2a7baf3"//青藤办公
 
-//支付宝支付
-#define AliPayAPPID @"2017072707916012"
-
+//支付宝支付2018031602387753
+//#define AliPayAPPID @"2017072707916012"
+#define AliPayAPPID @"2018031602387753"
 //微信支付
-#define APPID @"wxa41b37164b2030d6"
+#define APPID @"wxb0441ff570e0c9e0"
 #define PaySERVER_URL [NSString stringWithFormat:@"http://219.143.170.98:10011/payment/Payment/placeAnOrder"]
 
 #define NOTIFY_URL [NSString stringWithFormat:@"%@/rmb/third_pay/weixin", HTTPBaseURL]

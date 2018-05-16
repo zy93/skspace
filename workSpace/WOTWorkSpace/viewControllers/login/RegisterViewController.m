@@ -24,6 +24,11 @@
 
 @property (nonatomic, strong)UIView *registerLineView1;
 
+@property (nonatomic, strong)UIImageView *registerUserNameImageView;
+@property (nonatomic, strong)UITextField *registerUserNameTextField;
+
+@property (nonatomic, strong)UIView *registerLineView5;
+
 @property (nonatomic, strong)UIImageView *registerPWImageView;
 @property (nonatomic, strong)UITextField *registerPWText;
 
@@ -71,9 +76,22 @@
     self.registerTelTextField.placeholder = @"请输入您的手机号码";
     [self.registerView addSubview:self.registerTelTextField];
     
+    
     self.registerLineView1 = [UIView new];
     self.registerLineView1.backgroundColor = UICOLOR_MAIN_LINE;
     [self.registerView addSubview:self.registerLineView1];
+    
+    self.registerUserNameImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"userName"]];
+    self.registerUserNameImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.registerView addSubview:self.registerUserNameImageView];
+    
+    self.registerUserNameTextField= [[UITextField alloc] init];
+    self.registerUserNameTextField.placeholder = @"请输入您的用户名";
+    [self.registerView addSubview:self.registerUserNameTextField];
+    
+    self.registerLineView5 = [UIView new];
+    self.registerLineView5.backgroundColor = UICOLOR_MAIN_LINE;
+    [self.registerView addSubview:self.registerLineView5];
     
     self.registerPWImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwdicon"]];
     self.registerPWImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -156,10 +174,10 @@
     }];
     
     [self.registerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.registerLogoView.mas_bottom).with.offset(40);
+        make.top.equalTo(self.registerLogoView.mas_bottom);//.with.offset(40)
         make.left.equalTo(self.view.mas_left).with.offset(30);
         make.right.equalTo(self.view.mas_right).with.offset(-30);
-        make.height.mas_equalTo(250);
+        make.height.mas_equalTo(290);
     }];
     
     [self.registerTelImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -181,10 +199,32 @@
         make.right.equalTo(self.registerView).with.offset(-20);
         make.height.mas_offset(1);
     }];
+    //
+    [self.registerUserNameImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.registerView).with.offset(10);
+        make.top.equalTo(self.registerLineView1).with.offset(15);
+        make.width.mas_equalTo(42);
+        make.height.mas_equalTo(21);
+    }];
+    
+    [self.registerUserNameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.registerUserNameImageView);
+        make.left.equalTo(self.registerUserNameImageView.mas_right);
+        make.width.mas_equalTo(150);
+        //make.right.equalTo(self.registerView);
+    }];
+    
+    [self.registerLineView5 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.registerUserNameTextField.mas_bottom).with.offset(10);
+        make.left.equalTo(self.registerView).with.offset(20);
+        make.right.equalTo(self.registerView).with.offset(-20);
+        make.height.mas_offset(1);
+    }];
+    //
     
     [self.registerVCodeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.registerView).with.offset(10);
-        make.top.equalTo(self.registerLineView1).with.offset(15);
+        make.top.equalTo(self.registerLineView5).with.offset(15);
         make.width.mas_equalTo(42);
         make.height.mas_equalTo(21);
     }];
@@ -303,7 +343,8 @@
     BOOL isPassWord = strIsEmpty(self.registerPWText.text);
     BOOL isVerifyCode = strIsEmpty(self.registerVCodeText.text);
     BOOL isAgainPassWord = strIsEmpty(self.registerAgainPWText.text);
-    if (isTel || isVerifyCode || isPassWord || isAgainPassWord) {
+    BOOL isUserName = strIsEmpty(self.registerUserNameTextField.text);
+    if (isTel || isVerifyCode || isPassWord || isAgainPassWord || isUserName) {
         [MBProgressHUDUtil showMessage:@"请输入完整信息！" toView:self.view];
         return;
     }

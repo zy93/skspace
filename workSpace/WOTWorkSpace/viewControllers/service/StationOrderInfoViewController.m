@@ -12,6 +12,7 @@
 #import "UIColor+ColorChange.h"
 #import "WOTSingtleton.h"
 #import <AlipaySDK/AlipaySDK.h>
+#import "WOTMeetingFacilityModel.h"
 
 @interface StationOrderInfoViewController ()
 @property (nonatomic, strong)UIScrollView *bookStationScrollView;
@@ -329,6 +330,7 @@
     [self.facilityInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.facilityLabel);
         make.left.equalTo(self.facilityLabel.mas_right);
+        make.right.equalTo(self.facilityView).with.offset(-10);
     }];
     
     [self.payTypeView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -437,12 +439,33 @@
     [self.startTimeInfoLabel setText:[self.startTime substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
     [self.endTimeInfoLabel   setText:[self.self.endTime substringToIndex:[WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ? 10 : 16]];
     [self.bookNumInfoLabel   setText:[self.productNum stringValue]];
-    [self.facilityInfoLabel setText:strIsEmpty(self.facilityStr)? @"无":self.facilityStr];
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SITE) {
-        [self.payTypeInfoLabel setText:self.payType.intValue == 0? @"企业预订" : @"个人预订"];
+    NSString *facilitiesStr;
+    if (self.facilitiesArray.count == 0) {
+        facilitiesStr = @"无";
     }else
     {
-        self.payTypeInfoLabel.text = @"礼包";
+        NSMutableArray *facilitiesStrArray = [[NSMutableArray alloc] init];
+        for (int i = 0; i<self.facilitiesArray.count; i++) {
+            WOTMeetingFacilityModel *model = self.facilitiesArray[i];
+            [facilitiesStrArray addObject:model.facilities];
+        }
+        facilitiesStr = [facilitiesStrArray componentsJoinedByString:@","];
+    }
+    
+    [self.facilityInfoLabel setText:facilitiesStr];
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+//        [self.payTypeInfoLabel setText:self.payType.intValue == 0? @"企业预订" : @"个人预订"];
+        self.payTypeInfoLabel.text = @"个人预订";
+    }else
+    {
+        if ([self.companyNameStr isEqualToString:@"个人"]) {
+            self.payTypeInfoLabel.text = [self.companyNameStr stringByAppendingString:@"预订"];
+        }else
+        {
+            self.payTypeInfoLabel.text = self.companyNameStr;
+        }
+        
     }
     
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {

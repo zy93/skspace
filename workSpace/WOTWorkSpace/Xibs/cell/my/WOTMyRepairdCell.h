@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *repairdTimeValueLab;
 @property (weak, nonatomic) IBOutlet UILabel *repairdContentValueLab;
 @property (weak, nonatomic) IBOutlet UIButton *btn;
+@property (weak, nonatomic) IBOutlet UILabel *repairdStateLab;
+
 @property (nonatomic, strong) NSIndexPath * index;
 @property (nonatomic, strong) id <WOTMyRepairdCellDelegate> delegate;
 

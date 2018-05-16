@@ -14,6 +14,7 @@
 #import "WOTMyEnterPriseCell.h"
 #import "WOTEnterpriseModel.h"
 #import "WOTProvidersVC.h"
+#import "SKCompanyMemberViewController.h"
 
 @interface WOTMyEnterpriseVC ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -163,10 +164,13 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
     else {
-        WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
-        vc.companyType = CompanyTypeEnterprise;
+//        WOTProvidersVC *vc = [[WOTProvidersVC alloc] init];
+//        vc.companyType = CompanyTypeEnterprise;
+//        vc.enterpriseModel = self.tableList[indexPath.row];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:vc animated:YES];
+        SKCompanyMemberViewController *vc = [[SKCompanyMemberViewController alloc] init];
         vc.enterpriseModel = self.tableList[indexPath.row];
-        vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         
 //        WOTEnterpriseIntroduceVC *vc = [[WOTEnterpriseIntroduceVC alloc] init];

@@ -14,5 +14,7 @@
 @interface WOTEnterEnterpriseNameVC : WOTTableViewBaseVC
 
 @property (nonatomic, strong) void (^enterpriseName)(NSString *enterpriseName);
-
+@property (nonatomic, copy)NSString *titleStr;//Notice
+@property (nonatomic, copy)NSString *noticeStr;
+@property (nonatomic, assign)BOOL isShow;
 @end

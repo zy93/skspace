@@ -15,6 +15,8 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "SKOrderStringModel.h"
 #import "UILabel+ChangeLineSpaceAndWordSpace.h"
+#import "SKPayDelegateView.h"
+#import "SKPayDelegateModel.h"
 
 @interface SKGiftBagInfoViewController ()
 @property (nonatomic,strong)UIScrollView *giftBagScrollView;
@@ -45,7 +47,9 @@
 @property (nonatomic,assign)NSInteger payNumber;
 @property (nonatomic,strong)NSString *commodityDescribeStr;
 @property (nonatomic,assign)NSInteger price;
-
+@property (nonatomic,strong)UIView *translucentView;
+@property (nonatomic,strong)SKPayDelegateView *payDelegateView;
+@property (nonatomic,copy)NSString *payDelegateStr;
 @end
 
 @implementation SKGiftBagInfoViewController
@@ -84,6 +88,10 @@
 //    [UILabel changeWordSpaceForLabel:_explainLabel WithSpace:3.0];
     [self layoutSubviews];
     [self loadData];
+    if ([[WOTUserSingleton shareUser].userInfo.agreementState isEqualToString:@"是"]) {
+   
+    }
+    [self getPayDelegate];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -239,12 +247,27 @@
         return;
     }
     
+    //判断是否同意支付协议
+    if ([[WOTUserSingleton shareUser].userInfo.agreementState isEqualToString:@"是"]) {
+        [self showSheet];
+    }else
+    {
+        [self showDelegateAction];
+    }
+    
+    
 //    UIAlertController *alertController=[UIAlertController alertControllerWithTitle: nil message:message preferredStyle:UIAlertControllerStyleAlert];//创建界面
+    
+}
+
+#pragma mark - 弹出微信、支付宝、取消对话框
+-(void)showSheet
+{
     UIAlertController *alertController = [[UIAlertController alloc] init];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
-
+    
     UIAlertAction *wxPayAction = [UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self wxPayMethod];
     }];
@@ -258,7 +281,53 @@
     [alertController addAction:wxPayAction];
     [alertController addAction:cancelAction];
     [self presentViewController: alertController animated:YES completion:nil];
+}
+
+#pragma mark - 弹出协议通知
+-(void)showDelegateAction
+{
+    self.translucentView = [[UIView alloc] initWithFrame:CGRectMake(0, 20,SCREEN_WIDTH, SCREEN_HEIGHT)];
+    self.translucentView.backgroundColor = [UIColor blackColor];
+    self.translucentView.alpha = 0.7f;
+    [self.view addSubview:self.translucentView];
     
+    self.payDelegateView = [[SKPayDelegateView alloc] init];
+    self.payDelegateView.backgroundColor = [UIColor whiteColor];
+    self.payDelegateView.layer.cornerRadius = 5.f;
+    self.payDelegateView.layer.borderWidth = 1.f;
+    self.payDelegateView.layer.borderColor = [UIColor whiteColor].CGColor;
+    [self.payDelegateView.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.payDelegateStr]]];
+    [self.payDelegateView.agreeButton addTarget:self action:@selector(agreeButtonMethod) forControlEvents:UIControlEventTouchDown];
+    [self.payDelegateView.cancleButton addTarget:self action:@selector(cancleButtonMethod) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.payDelegateView];
+    [self.payDelegateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.view);
+        make.width.mas_offset(SCREEN_WIDTH-80);
+        make.height.mas_offset(SCREEN_HEIGHT-200);
+    }];
+}
+
+-(void)agreeButtonMethod
+{
+    
+    [WOTHTTPNetwork addUserPayDelegateWithUserId:[WOTUserSingleton shareUser].userInfo.userId agreementState:@"是" response:^(id bean, NSError *error) {
+        WOTBaseModel * model = bean;
+        if ([model.code isEqualToString:@"200"]) {
+            
+            [[WOTUserSingleton shareUser] updateUserInfo:^{
+                [self.translucentView removeFromSuperview];
+                [self.self.payDelegateView removeFromSuperview];
+//                [MBProgressHUDUtil showMessage:@"发送成功！" toView:self.view];
+                [self showSheet];
+            }];
+        }
+    }];
+}
+
+-(void)cancleButtonMethod
+{
+    [self.translucentView removeFromSuperview];
+    [self.self.payDelegateView removeFromSuperview];
 }
 
 #pragma mark - 微信支付接口
@@ -351,6 +420,18 @@
 - (void)InfoNotificationAction:(NSNotification *)notification{
     [self.navigationController popToRootViewControllerAnimated:YES];
     NSLog(@"---接收到通知---");
+}
+
+#pragma mark - 得到支付协议
+-(void)getPayDelegate
+{
+    [WOTHTTPNetwork getPayDelegateResponse:^(id bean, NSError *error) {
+        SKPayDelegateModel_msg *model = (SKPayDelegateModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            self.payDelegateStr = [model.msg.agreementAdress stringToUrl];
+            NSLog(@"支付协议：%@",_payDelegateStr);
+        }
+    }];
 }
 
 -(UIScrollView *)giftBagScrollView

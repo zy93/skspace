@@ -47,6 +47,7 @@
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSNumber *userType;
 @property (nonatomic, strong) NSNumber *workHours;
+@property (nonatomic, copy)   NSString *agreementState;
 
 @end
 

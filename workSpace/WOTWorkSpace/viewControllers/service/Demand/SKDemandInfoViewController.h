@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger,DEMAND_INTERFACE_TYPE) {
+    DEMAND_INTERFACE_TYPE_SHOW,
+    DEMAND_INTERFACE_TYPE_EDIT,
+};
+
 @interface SKDemandInfoViewController : UIViewController
 
 @property(nonatomic,strong)NSString *typeString;
-
+@property(nonatomic,strong)NSString *contentString;
+@property(nonatomic,assign)DEMAND_INTERFACE_TYPE interfaceType;
 @end

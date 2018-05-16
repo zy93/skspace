@@ -35,6 +35,9 @@
 #import "MBProgressHUDUtil.h"
 #import "SKMapViewController.h"
 #import "WOTH5VC.h"
+#import "SKCompanyRemainingTimeModel.h"
+
+#import "SKReserveInfoTableViewController.h"
 
 #define infoCell @"WOTOrderForInfoCell"
 #define selectDateCell @"WOTOrderForSelectDateCell"
@@ -106,6 +109,7 @@
 @property (nonatomic, copy) NSString *invoiceInfo;      //发票信息
 @property (nonatomic, strong) NSNumber *bookSationTime;
 @property (nonatomic, strong) NSNumber *meetingTime;
+@property (nonatomic, strong) NSNumber *remainingTime;//企业剩余时间
 @property (nonatomic, strong) NSString *payWayStr;
 @property (nonatomic, strong) NSString *imageSite;
 @property (nonatomic, strong) NSNumber *conferenceDetailsId;//预定场地的id
@@ -116,6 +120,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.spaceSourceType == SPACE_SOURCE_TYPE_BANNER) {
+        [self querySingleSpace];
+    }
     
    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(backMainView:)
@@ -162,15 +170,23 @@
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self creatDataPickerView];
-    [self getTeam];
+    if (self.spaceSourceType == SPACE_SOURCE_TYPE_OTHER) {
+        [self getTeam];
+    }
     
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ||
         [WOTSingtleton shared].orderType == ORDER_TYPE_SPACE) {
-        [self getSpaceFacility];
+        if (self.spaceSourceType == SPACE_SOURCE_TYPE_OTHER) {
+            [self getSpaceFacility];
+        }
+        
 
     }
     else {
-        [self getmeetingFacility];
+
+         [self getmeetingFacility];
+        
+       
 
     }
 }
@@ -348,19 +364,34 @@
         }
     }
     else if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
-        NSInteger difference = (self.meetingEndTime-self.meetingBeginTime)*60;
-        NSInteger meetInteger = [self.meetingTime integerValue];
-        if (difference > meetInteger) {
-            [[WOTConfigThemeUitls shared] showAlert:self message:@"您的会议室使用时间不足，请购买礼包" okBlock:^{
-                SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
-            } cancel:^{
-                return ;
-            }];
-            
-            
-            return;
+        if ([self.payType isEqualToNumber:@0]) {
+            NSInteger difference = (self.meetingEndTime-self.meetingBeginTime)*60;
+            NSInteger meetInteger = [self.remainingTime  integerValue];
+            if (difference > meetInteger) {
+                NSString *message = [NSString stringWithFormat:@"会议室使用时间不足,\n企业会议室的剩余时间仅为%ld分钟",meetInteger];
+//              [MBProgressHUDUtil showMessage:message toView:self.view];
+                MBProgressHUD * HUD = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+                HUD.mode = MBProgressHUDModeText;
+                HUD.detailsLabelText = message;
+                HUD.labelFont = [UIFont systemFontOfSize:15]; //Johnkui - added
+                [HUD hide:YES afterDelay:1.5];
+                return;
+            }
+        }else
+        {
+            NSInteger difference = (self.meetingEndTime-self.meetingBeginTime)*60;
+            NSInteger meetInteger = [self.meetingTime integerValue];
+            if (difference > meetInteger) {
+                [[WOTConfigThemeUitls shared] showAlert:self message:@"您的会议室使用时间不足，请购买礼包" okBlock:^{
+                    SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                } cancel:^{
+                    return ;
+                }];
+                return;
+            }
         }
+        
     }
     self.dealMode = @"剩余时间";
     //self.payObject= [[WOTUserSingleton shareUser].userInfo.userId stringValue];
@@ -425,6 +456,10 @@
             NSArray *imageArr = [self.meetingModel.conferencePicture componentsSeparatedByString:@","];
             self.imageSite = imageArr.firstObject;
             if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+                if (strIsEmpty(self.invoiceInfo)) {
+                    [MBProgressHUDUtil showMessage:@"没有加入企业，无法进行企业支付！" toView:self.view];
+                    return;
+                }
                 [self reservationsMeeting];
             } else {
                 [self reservationsSite];
@@ -433,15 +468,20 @@
             break;
         case ORDER_TYPE_SPACE:
         {
-            [WOTHTTPNetwork appointmentSettledWithSpaceId:self.spaceModel.spaceId spaceName:self.spaceModel.spaceName response:^(id bean, NSError *error) {
-                if (!error) {
-                    WOTBaseModel *model = bean;
-                    if ([model.code isEqualToString:@"200"]) {
-                        //预定成功
-                        [MBProgressHUDUtil showMessage:@"预订成功，我们将安排服务人员尽快与您联系！" toView:self.view];
-                    }
-                }
-            }];
+            //跳转到别的接口
+            SKReserveInfoTableViewController *reserveInfoTVC = [[SKReserveInfoTableViewController alloc] init];
+            reserveInfoTVC.spaceModel = self.spaceModel;
+            reserveInfoTVC.enterInterfaceType = ENTER_INTERFACE_TYPE_EDIT;
+            [self.navigationController pushViewController:reserveInfoTVC animated:YES];
+//            [WOTHTTPNetwork appointmentSettledWithSpaceId:self.spaceModel.spaceId spaceName:self.spaceModel.spaceName response:^(id bean, NSError *error) {
+//                if (!error) {
+//                    WOTBaseModel *model = bean;
+//                    if ([model.code isEqualToString:@"200"]) {
+//                        //预定成功
+//                        [MBProgressHUDUtil showMessage:@"预订成功，我们将安排服务人员尽快与您联系！" toView:self.view];
+//                    }
+//                }
+//            }];
         }
             break;
         default:
@@ -646,12 +686,26 @@
             }
                 break;
             case ORDER_TYPE_SITE:
+            {
+                NSArray  *array = [_meetingModel.conferencePicture componentsSeparatedByString:@","];
+                //                NSString *imageUrl = [array firstObject];
+                cell.infoTitle.text = _meetingModel.conferenceName;
+                cell.dailyRentLabel.textColor = UICOLOR_MAIN_ORANGE;
+                cell.dailyRentLabel.text = [NSString stringWithFormat:@"¥%@",_meetingModel.conferencePrice];
+                NSMutableArray *imageArr = [NSMutableArray new];
+                for (NSString *str in array) {
+                    [imageArr addObject:[str ToResourcesUrl]];
+                }
+                cell.scrollview.imageURLStringsGroup = imageArr;
+                
+            }
+                break;
             case ORDER_TYPE_MEETING:
             {
                 NSArray  *array = [_meetingModel.conferencePicture componentsSeparatedByString:@","];
 //                NSString *imageUrl = [array firstObject];
                 cell.infoTitle.text = _meetingModel.conferenceName;
-                cell.dailyRentLabel.text = _meetingModel.location;
+                cell.dailyRentLabel.hidden = YES;
                 NSMutableArray *imageArr = [NSMutableArray new];
                 for (NSString *str in array) {
                     [imageArr addObject:[str ToResourcesUrl]];
@@ -912,6 +966,7 @@
             myenterprisevc.selectEnterpriseBlock = ^(WOTEnterpriseModel *model) {
                 weakSelf.payObject = model.companyId;
                 weakSelf.invoiceInfo = model.companyName;
+                [weakSelf queryCompanyTimeWithCompanyId:model.companyId];
                 NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
                 [weakSelf.table reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
             };
@@ -986,7 +1041,8 @@
                           @"body":self.body,
                           @"companyName":[[WOTUserSingleton shareUser].userInfo.companyName componentsSeparatedByString:@","].firstObject,
                           @"source":@"APP客户端",
-                          @"stage":@"客户订单"
+                          @"stage":@"客户订单",
+                          @"companyId":@"个人"
                           };
     
     
@@ -1018,8 +1074,13 @@
     __weak typeof(self) weakSelf = self;
     //会议室预定。
     NSArray *arr = [NSString getReservationsTimesWithDate:self.reservationDate StartTime:self.meetingBeginTime  endTime:self.meetingEndTime];
-    
-    
+    NSString *companyId;
+    if ([self.payType isEqualToNumber:@0]) {
+        companyId = self.payObject;
+    }else
+    {
+        companyId = @"个人";
+    }
     NSDictionary *dic = @{
                           @"spaceId":self.spaceModel.spaceId,
                           @"spaceName":self.spaceModel.spaceName,
@@ -1036,7 +1097,8 @@
                           @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
                           @"imageSite":self.imageSite,
                           @"payType":self.payType,
-                          @"payObject":self.payObject
+                          @"payObject":self.payObject,
+                          @"companyId":companyId
                           };
     
     [WOTHTTPNetwork meetingReservationsWithParams:dic response:^(id bean, NSError *error) {
@@ -1052,6 +1114,8 @@
             //vc.orderString = model.msg;
             vc.payType = self.payType;
             vc.money = self.money;
+            vc.facilitiesArray = self.meetingFacilityList;
+            vc.companyNameStr = self.invoiceInfo;
             vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }
@@ -1134,6 +1198,8 @@
             vc.orderString = model.msg;
             vc.payType = self.payType;
             vc.money = self.money;
+            vc.facilitiesArray = self.meetingFacilityList;
+            vc.companyNameStr = self.invoiceInfo;
             vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }else
@@ -1189,6 +1255,8 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
             vc.productNum = self.productNum;
             vc.payType = self.payType;
             vc.money = self.money;
+            vc.facilitiesArray = self.spaceFacilityList;
+            vc.companyNameStr = self.invoiceInfo;
             vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }else if ([model_msg.code isEqualToString:@"201"])
@@ -1265,6 +1333,8 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
                 vc.productNum = self.productNum;
                 vc.payType = self.payType;
                 vc.money = self.money;
+                vc.facilitiesArray = self.meetingFacilityList;
+                vc.companyNameStr = self.invoiceInfo;
                 vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
                 [weakSelf.navigationController pushViewController:vc animated:YES];
             }
@@ -1458,6 +1528,36 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
             WOTEnterpriseModel *modelMsg = [model.msg.list firstObject];
             weakSelf.invoiceInfo = modelMsg.companyName;
             weakSelf.payObject = modelMsg.companyId;
+            [weakSelf queryCompanyTimeWithCompanyId:modelMsg.companyId];
+        }
+    }];
+}
+
+#pragma mark - 查询选择的企业的会议室剩余时长
+-(void)queryCompanyTimeWithCompanyId:(NSString *)companyId
+{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork queryCompanyTimeRemainingWithId:companyId response:^(id bean, NSError *error) {
+        SKCompanyRemainingTimeModel_msg *model = (SKCompanyRemainingTimeModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            SKCompanyRemainingTimeModel *model_msg = model.msg;
+            weakSelf.remainingTime = model_msg.givingRemainingTime;
+        }
+    }];
+}
+
+#pragma mark - 查询单个空间
+-(void)querySingleSpace
+{
+    __weak typeof(self)weakSelf = self;
+    [WOTHTTPNetwork getSpaceFromSpaceID:self.singleSpaceId bolock:^(id bean, NSError *error) {
+        WOTSpaceModel *model = (WOTSpaceModel *)bean;
+        if (model.spaceId) {
+            weakSelf.spaceModel = model;
+            weakSelf.spaceId = model.spaceId;
+            [self getSpaceFacility];
+            [self getTeam];
+            [weakSelf.table reloadData];
         }
     }];
 }

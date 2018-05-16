@@ -95,6 +95,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SKDemandInfoViewController *demandInfoVC = [[SKDemandInfoViewController alloc] init];
     demandInfoVC.typeString = self.typeArray[indexPath.row];
+    demandInfoVC.interfaceType = DEMAND_INTERFACE_TYPE_EDIT;
     [self.navigationController pushViewController:demandInfoVC animated:YES];
 }
 

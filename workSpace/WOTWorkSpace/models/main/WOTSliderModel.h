@@ -18,11 +18,13 @@
 @property(nonatomic,strong)NSNumber *priority ;
 @property(nonatomic,strong)NSNumber *proclamationId ;
 @property(nonatomic,strong)NSString *proclamationTitle ;
-@property(nonatomic,strong)NSNumber *proclamationType;
+@property(nonatomic,strong)NSString *proclamationType;
 @property(nonatomic,strong)NSString *spaceId;
 @property(nonatomic,strong)NSString *spaceList;
 @property(nonatomic,strong)NSString *webpageUrl ;
-
+@property(nonatomic,strong)NSString *objectId;
+@property(nonatomic,strong)NSString *objectName;
+@property(nonatomic,strong)NSString *time;
 @end
 
 @interface WOTSliderModel_list:JSONModel

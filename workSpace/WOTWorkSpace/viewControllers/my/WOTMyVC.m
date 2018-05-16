@@ -20,7 +20,7 @@
 #import "UIDevice+Resolutions.h"
 #import "WOTMyInviteVC.h"
 #import "WOTSurplusTimeVC.h"
-
+#import "SKMyInfomationNotificationTableViewController.h"
 
 @interface WOTMyVC ()<WOTOrderCellDelegate,WOTOMyCellDelegate, UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic,strong)WOTSettingVC *settingvc;
@@ -85,7 +85,7 @@
             return 1;
             break;
         case 2:
-            return 6;
+            return 7;
             break;
         default:
             break;
@@ -141,12 +141,18 @@
            
             NSString *numberString = [[WOTUserSingleton shareUser].userInfo.tel stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
             mycell.userName.text = numberString;
-            if ([[WOTUserSingleton shareUser].userInfo.userType isEqualToNumber:@0]) {
-                mycell.memberLabel.text = @"普通用户";
+            if (strIsEmpty([WOTUserSingleton shareUser].userInfo.companyName)) {
+                mycell.memberLabel.text = @"未加入任何企业";
             }else
             {
-                mycell.memberLabel.text = @"会员用户";
+                mycell.memberLabel.text = [WOTUserSingleton shareUser].userInfo.companyName;
             }
+//            if ([[WOTUserSingleton shareUser].userInfo.userType isEqualToNumber:@0]) {
+//                mycell.memberLabel.text = @"普通用户";
+//            }else
+//            {
+//                mycell.memberLabel.text = @"会员用户";
+//            }
         }else
         {
             mycell.topButton.hidden = NO;
@@ -166,8 +172,8 @@
         commoncell = ordercell;
     } else {
         WOTMycommonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycommonCellID" forIndexPath:indexPath];
-        NSArray *titlearray = [NSArray arrayWithObjects:@"我的企业",@"我的活动",@"我的预约", @"我的维修", @"我的邀请",@"剩余时长",nil];
-        NSArray *imageNameArray = [NSArray arrayWithObjects:@"enterprise",@"activities",@"history", @"repairs_history",@"my_invite", @"my_time",nil];
+        NSArray *titlearray = [NSArray arrayWithObjects:@"我的企业",@"我的活动",@"我的预约", @"我的维修", @"我的邀请",@"剩余时长",@"我的消息",nil];
+        NSArray *imageNameArray = [NSArray arrayWithObjects:@"enterprise",@"activities",@"history", @"repairs_history",@"my_invite", @"my_time",@"myinfo",nil];
         cell.nameLabel.text = titlearray[indexPath.row];
         cell.cellImage.image = [UIImage imageNamed:imageNameArray[indexPath.row]];
         commoncell = cell;
@@ -215,6 +221,12 @@
                     WOTSurplusTimeVC *vc = [[WOTSurplusTimeVC alloc]init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
+                }
+                else if (indexPath.row == 6)
+                {
+                    SKMyInfomationNotificationTableViewController *infoTVC = [[SKMyInfomationNotificationTableViewController alloc] init];
+                    infoTVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:infoTVC animated:YES];
                 }
                 
             default:

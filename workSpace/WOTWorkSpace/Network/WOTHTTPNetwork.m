@@ -54,6 +54,13 @@
 #import "SKMyActivityModel.h"
 #import "SKGiftBagModel.h"
 #import "WOTRepairHistoryModel.h"
+#import "SKCompanyRemainingTimeModel.h"
+#import "SKCompanyMemberModel.h"
+#import "SKInfoNotifationModel.h"
+#import "SKMyEnterModel.h"
+#import "SKMyDemandModel.h"
+#import "SKSingleFacilitatorModel.h"
+#import "SKPayDelegateModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -273,6 +280,58 @@
     } response:response];
 }
 
++(void)addUserPayDelegateWithUserId:(NSNumber *)userId agreementState:(NSString *)agreementState response:(response)response
+{
+    NSDictionary *dic = @{@"userId":userId,
+                          @"agreementState":agreementState};
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/addUserInfo"];
+    
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)queryNotifationInfoResponse:(response)response
+{
+    NSDictionary *dic = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                          @"pageNo":@1,
+                          @"pageSize":@1000
+                          };
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Newslists/find"];
+    
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        SKInfoNotifationModel_msg *model = [[SKInfoNotifationModel_msg alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)modifyNotifationTypeWithNewsId:(NSNumber *)newsId readState:(NSString *)readState response:(response)response
+{
+    NSDictionary *dic = @{@"newsId":newsId,
+                          @"readState":readState};
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Newslists/add"];
+    
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)queryMyDemandResponse:(response)response
+{
+    NSDictionary *dic = @{@"pageNo":@(1),
+                           @"pageSize":@(1000),
+                           @"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                           };
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Demand/find"];
+    
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        SKMyDemandModel_msg *model = [[SKMyDemandModel_msg alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
 +(void)getUserInviteResponse:(response)response
 {
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/findByByInvitationCode"];
@@ -379,20 +438,19 @@
 
 +(void)getSpaceFacilitiesWithSpaceId:(NSNumber *)spaceId response:(response)response
 {
-    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findfac"];
-    NSDictionary * parameters =@{@"spaceId":spaceId,
-                                 };
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findById"];
+    NSDictionary * parameters =@{@"spaceId":spaceId};
     [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
         WOTMeetingFacilityModel_msg * stationNumberModel = [[WOTMeetingFacilityModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  stationNumberModel;
     } response:response];
 }
 
-+(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName response:(response)response
++(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId tel:(NSString *)tel appointmentTime:(NSString *)appointmentTime peopleNum:(NSNumber *)peopleNum remark:(NSString *)remark companyName:(NSString *)companyName contacts:(NSString *)contacts spaceName:(NSString *)spaceName response:(response)response
 {
     NSMutableDictionary *params = [@{@"clientName":[WOTUserSingleton shareUser].userInfo.realName,
-                                     @"contacts":[WOTUserSingleton shareUser].userInfo.realName,
-                                     @"tel":[WOTUserSingleton shareUser].userInfo.tel,
+                                     @"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                     @"tel":tel,
                                      @"source":@"客户端",
                                      @"specificSource":@"APP客户端",
                                      @"will":@"一般意愿",
@@ -400,7 +458,12 @@
                                      @"spaceId":spaceId,
                                      @"spaceName":spaceName,
                                      @"leaderId":@(0),
-                                     @"state":@"进行中"
+                                     @"state":@"进行中",
+                                     @"appointmentTime":appointmentTime,
+                                     @"peopleNum":peopleNum,
+                                         @"remark":remark,
+                                         @"companyName":companyName,
+                                         @"contacts":contacts
                                      } mutableCopy];
 
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Sell/clientAddSell"];
@@ -409,6 +472,16 @@
         return  model;
     } response:response];
 
+}
+
++(void)queryCompanyTimeRemainingWithId:(NSString *)companyId response:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/CompanyInfo/findById"];
+    NSDictionary *parameters = @{@"companyId":companyId};
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        SKCompanyRemainingTimeModel_msg * model = [[SKCompanyRemainingTimeModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
 }
 
 #pragma mark - 获取所有的空间列表
@@ -556,13 +629,13 @@
     } response:response];
 }
 
-+(void)disposeApplyJoinEnterprise:(NSNumber *)applyId response:(response)response
++(void)disposeApplyJoinEnterprise:(NSNumber *)applyId opinionStr:(NSString *)opinionStr response:(response)response
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Applyforcompany/AddApplyforcompany"];
     NSDictionary * parameters = @{@"id":applyId,
                                   @"handlerId":[WOTUserSingleton shareUser].userInfo.userId,
                                   @"handlerName":[WOTUserSingleton shareUser].userInfo.userName,
-                                  @"applyForState":@"同意",
+                                  @"applyForState":opinionStr,
                                   };
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
         WOTApplyJoinEnterpriseModel_msg *model = [[WOTApplyJoinEnterpriseModel_msg alloc] initWithDictionary:responseobj error:nil];
@@ -607,7 +680,7 @@
 
 +(void)getActivitiesWithPage:(NSNumber *)page response:(response)response
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findforApp"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findBysorting"];
     NSDictionary * parameters = @{@"pageNo":page,
                                   @"pageSize":@(100)
                                   };
@@ -633,7 +706,8 @@
 
 +(void)getNewsWithPage:(NSNumber *)page response:(response)response
 {
-    NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Message/findforApp"];
+    //NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Message/findforApp"];
+    NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Message/findBysorting"];
     NSDictionary * parameters = @{@"pageNo":page,
                                   @"pageSize":@(10)
                                   };
@@ -697,6 +771,44 @@
     } response:response];
 }
 
++(void)queryEnterpriseMemberWithCompanyId:(NSString *)companyId response:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/User/find"];
+    NSDictionary * parameters = @{@"companyId":companyId,
+                                  @"pageNo":@(1),
+                                  @"pageSize":@(1000)
+                                  };
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        SKCompanyMemberModel_msg *model = [[SKCompanyMemberModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
+
++(void)deleteEnterpriseMemberWithCompanyId:(NSString *)companyId userId:(NSNumber *)userId response:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/User/updateCompanyId"];
+    NSDictionary * parameters = @{@"companyId":companyId,
+                                  @"userId":userId
+                                  };
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)queryMyEnterInfoResponse:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Sell/find"];
+    NSDictionary * parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                  @"pageNo":@1,
+                                  @"pageSize":@1000
+                                  };
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        SKMyEnterModel_msg *model = [[SKMyEnterModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
 
 #pragma mark - 服务商
 
@@ -976,7 +1088,18 @@
 }
 
 
-
++(void)querySingleFacilitator:(NSNumber *)facilitatorId response:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Facilitator/findById"];
+    //添加的参数字段待修改
+    NSDictionary *dic = @{@"facilitatorId":facilitatorId};
+    
+    [self doRequestWithParameters:dic useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        
+        SKSingleFacilitatorModel *model = [[SKSingleFacilitatorModel alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
 
 #pragma mark - bookstation
 +(void)bookStationReservationsWithSpaceId:(NSNumber *)spaceId
@@ -1220,7 +1343,8 @@
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/find",HTTPBaseURL];
     NSDictionary *parameters = @{@"pageNo":pageNo,
                                  @"pageSize":pageSize,
-                                 @"focusPeopleid":focusPeopleid
+                                 @"focusPeopleid":focusPeopleid,
+                                 @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId
                                  };
     
     [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
@@ -1292,7 +1416,8 @@
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/addCircleFriends",HTTPBaseURL];
     NSDictionary *parameters = @{@"userId":userId,
                                  @"userName":userName,
-                                 @"circleMessage":circleMessage
+                                 @"circleMessage":circleMessage,
+                                 @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId
                                  };
     [self doFileRequestWithParameters:parameters useUrl:url image:photosArray complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
@@ -1446,6 +1571,15 @@
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/GiftBag/findAll",HTTPBaseURL];
     [WOTHTTPNetwork doRequestWithParameters:nil useUrl:url complete:^JSONModel *(id responseobj) {
         SKGiftBagModel_msg *model13 = [[SKGiftBagModel_msg alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
+}
+
++(void)getPayDelegateResponse:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Agreement/findAll",HTTPBaseURL];
+    [WOTHTTPNetwork doRequestWithParameters:nil useUrl:url complete:^JSONModel *(id responseobj) {
+        SKPayDelegateModel_msg *model13 = [[SKPayDelegateModel_msg alloc] initWithDictionary:responseobj error:nil];
         return model13;
     } response:response];
 }

@@ -229,6 +229,10 @@
     }
    
     id model = tableList[indexPath.row];
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+        cell.meetingPriceLab.hidden = YES;
+    }
     [cell setMeetingModel:model];
     return cell;
 }
@@ -240,6 +244,7 @@
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
     vc.spaceModel = self.spaceModel;
     vc.meetingModel = cell.meetingModel;
+    vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

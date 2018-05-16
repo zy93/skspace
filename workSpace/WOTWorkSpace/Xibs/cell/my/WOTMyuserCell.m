@@ -22,6 +22,7 @@
     self.headView.layer.cornerRadius = 5.f;
     self.headView.layer.borderWidth = 1.f;
     self.headView.layer.borderColor = [UIColor whiteColor].CGColor;
+    
     [self.headerImage setCorenerRadius:self.headerImage.frame.size.width/2 borderColor:UICOLOR_WHITE];
     [[WOTConfigThemeUitls shared] setLabelColorss:[NSArray arrayWithObjects:self.userName,self.memberLabel, nil] withColor:[UIColor blackColor]];
     // Initialization code

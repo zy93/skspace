@@ -11,6 +11,7 @@
 #import "WOTRepairHistoryModel.h"
 #import "WOTRepairdHistoryDetailVC.h"
 
+
 @interface WOTMyRepairdListVC () <UITableViewDataSource, UITableViewDelegate, WOTMyRepairdCellDelegate>
 @property (nonatomic, strong) NSArray * tableList;
 @end
@@ -122,6 +123,7 @@
     cell.repairdAddrValueLab.text = model.address;
     cell.repairdContentValueLab.text = model.info;
     cell.repairdTypeValueLab.text = model.type;
+    cell.repairdStateLab.text = model.state;
     cell.delegate = self;
     cell.index = indexPath;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

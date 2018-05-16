@@ -11,7 +11,7 @@
 #import "WOTSecondCell.h"
 #import "WOTThirdCell.h"
 #import "WOTApplyJoinEnterpriseModel.h"
-
+#import "SKSingleFacilitatorModel.h"
 
 #define ssstr @"我们通过三方面打造共享办公：\n1、通过办公租赁、双创运营、办公服务、金融服务来打造企业共享办公生态圈；\n2、打造孵化器、产业园的升级版平台；通过社区内大企业带动小微企业的入驻模式给小型、小微型企业更多成长空间。另一方面通过线上做为入口，办理会员、注册、入驻，完善服务、聚集数据。通过智能信息化的手段来运营，在平台上完善客户、会员、门禁、监控、宽带、楼宇智能化等系统；\n3、实现社区平台的品牌化、服务标准化、共享化、社交化、智能化、数据化，完善企业办公生态圈服务体系。"
 
@@ -29,6 +29,10 @@
     }else
     {
         self.navigationItem.title = @"企业信息";
+    }
+    
+    if (self.sourceType == SOURCE_TYPE_BANNER) {
+        [self querySingleServiceProvider];
     }
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -260,6 +264,22 @@
         cell.textView.text = @"全部社区";
         return cell;
     }
+}
+
+#pragma mark - 请求当个服务商
+-(void)querySingleServiceProvider
+{
+    __weak typeof(self)weakSelf = self;
+    [WOTHTTPNetwork querySingleFacilitator:self.singleFacilitatorId response:^(id bean, NSError *error) {
+        SKSingleFacilitatorModel *model = (SKSingleFacilitatorModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            weakSelf.facilitatorModel = model.msg;
+            [weakSelf.tableView reloadData];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"请求失败！" toView:self.view];
+        }
+    }];
 }
 
 

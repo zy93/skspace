@@ -14,8 +14,16 @@ typedef NS_ENUM(NSInteger, CompanyType)
     CompanyTypeFacilitator = 0,
     CompanyTypeEnterprise = 1
 };
+
+typedef NS_ENUM(NSInteger,SOURCE_TYPE) {
+    SOURCE_TYPE_BANNER,
+    SOURCE_TYPE_OTHER,
+};
+
 @interface WOTProvidersVC : WOTTableViewBaseVC
 @property (nonatomic, strong) SKFacilitatorInfoModel *facilitatorModel;
 @property (nonatomic, strong) WOTEnterpriseModel *enterpriseModel;
 @property (nonatomic, assign) CompanyType companyType;
+@property (nonatomic, assign) SOURCE_TYPE sourceType;
+@property (nonatomic, strong) NSNumber *singleFacilitatorId;
 @end

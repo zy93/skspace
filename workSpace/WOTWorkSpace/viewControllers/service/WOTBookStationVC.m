@@ -212,6 +212,7 @@
     WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
     [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
     vc.spaceModel = cell.model;
+    vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -250,6 +251,7 @@
         NSString *imageUrl = [array firstObject];
         [bookcell.spaceImage sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
         bookcell.stationNum.text  = [NSString stringWithFormat:@"地址：%@",model.spaceSite]; //@"23个工位可以预定";
+        bookcell.stationPrice.hidden = YES;
         bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",model.onlineLocationPrice];//@"¥123元／天";
         bookcell.delegate = self;
         bookcell.model = model;
@@ -267,6 +269,7 @@
     WOTSpaceModel *model = self.tableList[indexPath.row];
     [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
     vc.spaceModel = model;
+    vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

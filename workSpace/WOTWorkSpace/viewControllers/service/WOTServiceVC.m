@@ -232,12 +232,15 @@
     }
     else if ([vc isKindOfClass:[SKDemandInfoViewController class]]) {
         ((SKDemandInfoViewController *)vc).typeString = object;
+        ((SKDemandInfoViewController *)vc).interfaceType = DEMAND_INTERFACE_TYPE_EDIT;
     }
     else if ([vc isKindOfClass:[WOTProvidersVC class]]) {
         ((WOTProvidersVC *)vc).facilitatorModel = object;
+        ((WOTProvidersVC *)vc).sourceType = SOURCE_TYPE_OTHER;
     }
     else if ([vc isKindOfClass:[WOTProvidersVC class]]) {
         ((WOTProvidersVC *)vc).facilitatorModel = object;
+        ((WOTProvidersVC *)vc).sourceType = SOURCE_TYPE_OTHER;
     }
 
     [self.tabBarController.tabBar setHidden:YES];
@@ -267,7 +270,7 @@
             [self pushToViewControllerWithStoryBoardName:@"Service" viewControllerName:@"WOTVisitorsAppointmentVC" object:nil];
         }
     } else if ([serviceName isEqualToString:@"问题报修"]) {
-        if (![[WOTUserSingleton shareUser].userInfo.spaceId isEqualToNumber:@0]) {
+        if (![[WOTUserSingleton shareUser].userInfo.spaceId isEqualToNumber:@(-1)]) {
            [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKRepairsViewController" object:nil];
         }else
         {
@@ -275,7 +278,13 @@
         }
         
     } else if ([serviceName isEqualToString:@"发布需求"]) {
-        [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController" object:nil];
+       // if (![[WOTUserSingleton shareUser].userInfo.spaceId isEqualToNumber:@(-1)]) {
+            [self pushToViewControllerWithStoryBoardName:@"" viewControllerName:@"SKDemandViewController" object:nil];
+//        }else
+//        {
+//            [MBProgressHUDUtil showMessage:@"请先加入企业！" toView:self.view];
+//        }
+        
     }
 }
 
