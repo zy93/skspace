@@ -78,6 +78,10 @@
         WOTApplyJoinEnterpriseModel_msg *joinModel = bean;
         if ([joinModel.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"申请已提交，等待企业管理员审核!" toView:self.view];
+            NSString *summary = [NSString stringWithFormat:@"%@申请加入您管理的%@企业",[WOTUserSingleton shareUser].userInfo.userName,self.model.companyName];
+            [WOTHTTPNetwork sendMessageWithUserId:self.model.contactsUserId type:@"企业申请" summary:summary response:^(id bean, NSError *error) {
+                
+            }];
         }
     }];
 }

@@ -332,6 +332,20 @@
     } response:response];
 }
 
++(void)sendMessageWithUserId:(NSNumber *)userId type:(NSString *)type summary:(NSString*)summary response:(response)response
+{
+    NSDictionary *dic = @{@"userId":userId,
+                          @"type":type,
+                          @"summary":summary,
+                          };
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Newslists/add"];
+    
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
 +(void)getUserInviteResponse:(response)response
 {
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/findByByInvitationCode"];
@@ -789,7 +803,8 @@
 {
     NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/User/updateCompanyId"];
     NSDictionary * parameters = @{@"companyId":companyId,
-                                  @"userId":userId
+                                  @"userId":userId,
+                                  @"adminUserId":[WOTUserSingleton shareUser].userInfo.userId
                                   };
     [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];

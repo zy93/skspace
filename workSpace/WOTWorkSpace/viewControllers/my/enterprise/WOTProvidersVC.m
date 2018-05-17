@@ -120,10 +120,22 @@
     }
     else
     {
+        if (!self.enterpriseModel.companyId) {
+            [MBProgressHUDUtil showMessage:@"企业已经被删除" toView:self.view];
+            return;
+        }
         [WOTHTTPNetwork applyJoinEnterpriseWithEnterpriseId:self.enterpriseModel.companyId enterpriseName:self.enterpriseModel.companyName response:^(id bean, NSError *error) {
             WOTApplyJoinEnterpriseModel_msg *joinModel = bean;
             if ([joinModel.code isEqualToString:@"200"]) {
                 [MBProgressHUDUtil showMessage:@"申请已提交，等待企业管理员审核!" toView:self.view];
+                NSString *summary = [NSString stringWithFormat:@"%@申请加入您管理的%@企业",[WOTUserSingleton shareUser].userInfo.userName,self.enterpriseModel.companyName];
+                [WOTHTTPNetwork sendMessageWithUserId:self.enterpriseModel.contactsUserId type:@"企业申请" summary:summary response:^(id bean, NSError *error) {
+                    
+                }];
+            }
+            if ([joinModel.code isEqualToString:@"206"]) {
+                [MBProgressHUDUtil showMessage:@"企业已经被删除" toView:self.view];
+                
             }
         }];
         

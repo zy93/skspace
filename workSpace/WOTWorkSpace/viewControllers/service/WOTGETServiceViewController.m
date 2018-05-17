@@ -98,10 +98,10 @@
 //        [WOTHTTPNetwork postServiceRequestWithDescribe:[self.describeText.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] spaceId:[@"55" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] userId:[[WOTUserSingleton shareUser].userInfo.userId stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] facilitatorType:[dd stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] facilitatorLabel:[dd stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] response:^(id bean, NSError *error) {
 //            
 //        }];
-        
+        NSString *userId = [NSString stringWithFormat:@"%@",[WOTUserSingleton shareUser].userInfo.userId];
                 [WOTHTTPNetwork postServiceRequestWithDescribe:self.describeText.text
                                                        spaceId:@"55"
-                                                        userId:[WOTUserSingleton shareUser].userInfo.userId
+                                                        userId:userId
                                                facilitatorType:dd
                                               facilitatorLabel:dd
                                                       response:^(id bean, NSError *error) {

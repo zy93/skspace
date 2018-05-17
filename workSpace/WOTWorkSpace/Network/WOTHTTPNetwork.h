@@ -93,6 +93,16 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)queryMyDemandResponse:(response)response;
 
+/**
+ 发送消息
+
+ @param userId 用户id
+ @param type 类型
+ @param summary 消息描述
+ @param response 结果回调
+ */
++(void)sendMessageWithUserId:(NSNumber *)userId type:(NSString *)type summary:(NSString*)summary response:(response)response;
+
 #pragma mark- 空间
 
 /**

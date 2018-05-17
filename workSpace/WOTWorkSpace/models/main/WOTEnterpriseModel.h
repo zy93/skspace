@@ -30,6 +30,7 @@
 @property(nonatomic,strong)NSNumber* companyState;
 @property(nonatomic,strong)NSString* companyType;
 @property(nonatomic,strong)NSString* contacts ;
+@property(nonatomic,strong)NSNumber* contactsUserId;
 @property(nonatomic,strong)NSString* creditNum ;
 @property(nonatomic,strong)NSString* dateApproval ;
 @property(nonatomic,strong)NSNumber* developmentExpenses ;

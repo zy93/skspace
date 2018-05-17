@@ -59,6 +59,10 @@
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"已同意" toView:self.view];
             [self createRequest];
+            NSString *result = [NSString stringWithFormat:@"您申请加入的%@企业已通过",cell.model.companyName];
+            [WOTHTTPNetwork sendMessageWithUserId:cell.model.userId type:@"企业申请结果" summary:result response:^(id bean, NSError *error) {
+                
+            }];
         }
         else
         {
@@ -74,6 +78,10 @@
         WOTApplyJoinEnterpriseModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"已拒绝" toView:self.view];
+            NSString *result = [NSString stringWithFormat:@"您申请加入的%@企业已拒绝",cell.model.companyName];
+            [WOTHTTPNetwork sendMessageWithUserId:cell.model.userId type:@"企业申请结果" summary:result response:^(id bean, NSError *error) {
+                
+            }];
             [self createRequest];
         }
         else
