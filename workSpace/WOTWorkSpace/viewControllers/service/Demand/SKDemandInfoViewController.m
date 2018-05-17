@@ -35,11 +35,13 @@
         self.navigationItem.title = @"支持信息";
         [self.demandInfoTextView setEditable:NO];
         self.demandSubmitButton.hidden = YES;
+        self.chooseTypeButton.hidden = YES;
         self.imageView.hidden = YES;
     } else {
         self.navigationItem.title = @"获取支持";
         [self.demandInfoTextView setEditable:YES];
         self.demandSubmitButton.hidden = NO;
+        self.chooseTypeButton.hidden = NO;
         self.imageView.hidden = NO;
     }
     

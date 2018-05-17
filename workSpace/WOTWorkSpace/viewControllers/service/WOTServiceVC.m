@@ -164,7 +164,8 @@
 //    tableIconList = [@[@"visitors_icon", @"maintenance_apply_icon", @"openDoor_icon", @"get_service_icon", @"feedback_icon"] mutableCopy];
 //    NSArray *section3 = @[@"可操控设备"];
 
-    tableList = [@[section1, section2, section3] mutableCopy];
+    //tableList = [@[section1, section2, section3] mutableCopy];
+    tableList = [@[section2,section3,section1] mutableCopy];
     [self.table reloadData];
 }
 
@@ -211,7 +212,7 @@
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    self.tableHeight.constant = 110+155+55+((((NSArray *)tableList[2]).count-1)*350*[WOTUitls GetLengthAdaptRate]);
+    self.tableHeight.constant = 110+155+55+((((NSArray *)tableList[1]).count-1)*350*[WOTUitls GetLengthAdaptRate]);
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetHeight(self.autoScrollView.frame)+ self.tableHeight.constant);
 }
 
@@ -436,7 +437,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section==2 && indexPath.row==0) {
+    if (indexPath.section==1 && indexPath.row==0) {
         [self joinButtonMethod];
     }
 }
@@ -473,8 +474,15 @@
             weakSelf.facilitatorData = model.msg;
             NSMutableArray *section3 = [@[providersTitle] mutableCopy];
             [section3 addObjectsFromArray:model.msg];
-            [tableList removeLastObject];
-            [tableList addObject:section3];
+//            [tableList removeObjectAtIndex:1];
+//            [tableList insertObject:section3 atIndex:1];
+            //[tableList addObject:section3];
+            
+            [tableList removeAllObjects];
+            NSArray *section1 = @[getService];
+            NSArray *section2 = @[getProviders];
+            tableList = [@[section2,section3,section1] mutableCopy];
+            [weakSelf.table reloadData];
         }else
         {
             [MBProgressHUDUtil showMessage:@"获取服务商失败！" toView:self.view];

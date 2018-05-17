@@ -79,7 +79,13 @@
 {
     
     [self.lineView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        if (@available(iOS 11.0, *)){
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        }else
+        {
+            make.top.equalTo(self.view);
+        }
+        
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.mas_offset(1);

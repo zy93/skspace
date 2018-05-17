@@ -26,90 +26,15 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUq-sb-SOy">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="900"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ua4-Zy-Yb3">
-                                        <rect key="frame" x="0.0" y="210" width="320" height="690"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ua4-Zy-Yb3">
+                                        <rect key="frame" x="0.0" y="210" width="320" height="550"/>
                                         <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="550" id="1Lf-1t-vbv"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTGETServiceCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTGETServiceCell" rowHeight="100" id="bq2-t6-AwD" customClass="WOTGETServiceCell">
-                                                <rect key="frame" x="0.0" y="28" width="320" height="100"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bq2-t6-AwD" id="aJn-kV-6D5">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGo-0d-bQt" customClass="WOTButton">
-                                                            <rect key="frame" x="90.5" y="15" width="69.5" height="77.5"/>
-                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="问题报修" image="lssue_repair">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="MqZ-me-xKn"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-ye-4yK" customClass="WOTButton">
-                                                            <rect key="frame" x="160" y="15" width="70" height="77.5"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="发布需求" image="release_requirements">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="IpF-WN-GWi"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88Q-nM-hD2" customClass="WOTButton">
-                                                            <rect key="frame" x="230" y="15" width="70" height="77.5"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="意见反馈" image="feedback">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="1gs-v4-sKX"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLt-lk-uLd" customClass="WOTButton">
-                                                            <rect key="frame" x="20" y="15" width="70.5" height="77.5"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <state key="normal" title="访客预约" image="visitors_appointment">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="Lg8-Iz-TMZ"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="01o-8W-FSf"/>
-                                                        <constraint firstItem="TLt-lk-uLd" firstAttribute="top" secondItem="aJn-kV-6D5" secondAttribute="top" constant="15" id="1jd-vy-pdO"/>
-                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="AUr-yd-KUF"/>
-                                                        <constraint firstAttribute="bottom" secondItem="TLt-lk-uLd" secondAttribute="bottom" constant="7" id="J8m-C5-GcC"/>
-                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="LaT-oO-Dqr"/>
-                                                        <constraint firstAttribute="trailing" secondItem="88Q-nM-hD2" secondAttribute="trailing" constant="20" id="Pld-CY-Do3"/>
-                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="SrI-ev-DV4"/>
-                                                        <constraint firstItem="TLt-lk-uLd" firstAttribute="leading" secondItem="aJn-kV-6D5" secondAttribute="leading" constant="20" id="WaU-KM-HrS"/>
-                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="Z1g-NX-fK8"/>
-                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="leading" secondItem="TLt-lk-uLd" secondAttribute="trailing" id="h8x-eg-Wcw"/>
-                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="height" secondItem="TLt-lk-uLd" secondAttribute="height" id="lUd-rJ-ONz"/>
-                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="oc6-FO-1Qv"/>
-                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="width" secondItem="TLt-lk-uLd" secondAttribute="width" id="q6B-1C-iY1"/>
-                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="leading" secondItem="LGo-0d-bQt" secondAttribute="trailing" id="shj-9u-u0d"/>
-                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="leading" secondItem="Oto-ye-4yK" secondAttribute="trailing" id="uHO-mg-Sb7"/>
-                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="centerY" secondItem="TLt-lk-uLd" secondAttribute="centerY" id="w67-Gm-i1r"/>
-                                                    </constraints>
-                                                </tableViewCellContentView>
-                                            </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTGetProvidersCell" rowHeight="145" id="vbB-vb-d5Z" customClass="WOTGetProvidersCell">
-                                                <rect key="frame" x="0.0" y="128" width="320" height="145"/>
+                                                <rect key="frame" x="0.0" y="28" width="320" height="145"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vbB-vb-d5Z" id="hPJ-PL-5Yb">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="144.5"/>
@@ -235,7 +160,7 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WOTFeaturedProvidersTitleCell" rowHeight="48" id="mEq-vs-D28" customClass="WOTFeaturedProvidersTitleCell">
-                                                <rect key="frame" x="0.0" y="273" width="320" height="48"/>
+                                                <rect key="frame" x="0.0" y="173" width="320" height="48"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mEq-vs-D28" id="nWV-Kt-MQ2">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="47.5"/>
@@ -267,7 +192,7 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTFeaturedProvidersCell" rowHeight="314" id="1Jj-f3-6AT" customClass="WOTFeaturedProvidersCell">
-                                                <rect key="frame" x="0.0" y="321" width="320" height="314"/>
+                                                <rect key="frame" x="0.0" y="221" width="320" height="314"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Jj-f3-6AT" id="5aQ-oB-J0e">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="313.5"/>
@@ -393,6 +318,61 @@
                                                     <outlet property="type3Lab" destination="jUI-jS-5e4" id="xq9-jh-L0p"/>
                                                     <outlet property="type4Lab" destination="f4F-lL-Qe6" id="Sdu-wu-n8W"/>
                                                 </connections>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTGETServiceCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTGETServiceCell" rowHeight="100" id="bq2-t6-AwD" customClass="WOTGETServiceCell">
+                                                <rect key="frame" x="0.0" y="535" width="320" height="100"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bq2-t6-AwD" id="aJn-kV-6D5">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGo-0d-bQt" customClass="WOTButton">
+                                                            <rect key="frame" x="1" y="22" width="106" height="56"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="问题报修" image="lssue_repair">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="MqZ-me-xKn"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oto-ye-4yK" customClass="WOTButton">
+                                                            <rect key="frame" x="107" y="22" width="106" height="56"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="发布需求" image="release_requirements">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="IpF-WN-GWi"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88Q-nM-hD2" customClass="WOTButton">
+                                                            <rect key="frame" x="213" y="22" width="106" height="56"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <state key="normal" title="意见反馈" image="feedback">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="clickGetServiceBtn:" destination="bq2-t6-AwD" eventType="touchUpInside" id="1gs-v4-sKX"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="centerY" secondItem="Oto-ye-4yK" secondAttribute="centerY" id="3PW-Qb-OXr"/>
+                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="width" secondItem="Oto-ye-4yK" secondAttribute="width" id="9eh-gN-5Ix"/>
+                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="width" secondItem="Oto-ye-4yK" secondAttribute="width" id="E9q-9t-Sae"/>
+                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="trailing" secondItem="Oto-ye-4yK" secondAttribute="leading" id="GLc-az-Pcd"/>
+                                                        <constraint firstItem="LGo-0d-bQt" firstAttribute="centerY" secondItem="Oto-ye-4yK" secondAttribute="centerY" id="Hs0-34-0NZ"/>
+                                                        <constraint firstItem="88Q-nM-hD2" firstAttribute="leading" secondItem="Oto-ye-4yK" secondAttribute="trailing" id="NZw-bU-udZ"/>
+                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="centerX" secondItem="aJn-kV-6D5" secondAttribute="centerX" id="Nt8-eN-255"/>
+                                                        <constraint firstItem="Oto-ye-4yK" firstAttribute="centerY" secondItem="aJn-kV-6D5" secondAttribute="centerY" id="dSG-o7-cy7"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
@@ -2462,7 +2442,7 @@
                                             <outlet property="contentText" destination="ksR-j5-TdS" id="WZr-9V-Ywx"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTPaymentTypeCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTPaymentTypeCell" rowHeight="50" id="KX9-Y8-fyT" customClass="WOTPaymentTypeCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="WOTPaymentTypeCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTPaymentTypeCell" rowHeight="50" id="KX9-Y8-fyT" customClass="WOTPaymentTypeCell">
                                         <rect key="frame" x="0.0" y="779" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KX9-Y8-fyT" id="QBr-g1-Moj">
@@ -3405,7 +3385,6 @@ AAAAAABBAAAAAAAAAAAAAAAAAAASNA
         <image name="release_requirements" width="56" height="56"/>
         <image name="select_blue" width="15" height="15"/>
         <image name="unselect_white" width="15" height="15"/>
-        <image name="visitors_appointment" width="56" height="56"/>
         <image name="visitors_heard" width="111" height="111"/>
         <image name="wechat_icon" width="23" height="23"/>
     </resources>

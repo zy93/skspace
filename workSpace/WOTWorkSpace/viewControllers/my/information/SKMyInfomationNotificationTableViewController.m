@@ -17,12 +17,14 @@
 @interface SKMyInfomationNotificationTableViewController ()
 @property(nonatomic,strong)NSMutableArray *notifationListArray;
 
+
 @end
 
 @implementation SKMyInfomationNotificationTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     self.notifationListArray = [[NSMutableArray alloc] init];
     self.navigationItem.title = @"消息通知";
