@@ -589,7 +589,8 @@
 //        return 65;
 //    }
     else if ([cellType isEqualToString:serviceCell]) {
-        return 96;
+        //return 96;
+        return 206;
     }
     else if ([cellType isEqualToString:mapCell]){
         return 160*[WOTUitls GetLengthAdaptRate];
@@ -808,6 +809,10 @@
                 cell.addressValueLab.text  = self.spaceModel.spaceSite;
                 cell.openTimeValueLab.text = self.spaceModel.openingHours;
                 cell.peopleValueLab.text   = [NSString stringWithFormat:@"%@",self.spaceModel.manNum];
+                cell.storeyHeightLabel.text = [NSString stringWithFormat:@"%@m",self.spaceModel.storyHeight];
+                cell.leaseAreaLabel.text = [NSString stringWithFormat:@"%@㎡",self.spaceModel.lettableArea];
+                cell.architectureAreaLabel.text = [NSString stringWithFormat:@"%@㎡",self.spaceModel.coveredArea];
+                cell.numberOfPliesLabel.text = [NSString stringWithFormat:@"%@层",self.spaceModel.totalFloors];
             }
                 break;
             case ORDER_TYPE_MEETING:

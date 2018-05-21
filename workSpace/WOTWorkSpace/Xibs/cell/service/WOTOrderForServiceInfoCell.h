@@ -15,5 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *peopleValueLab;
 @property (weak, nonatomic) IBOutlet UILabel *openTimeLab;
 @property (weak, nonatomic) IBOutlet UILabel *openTimeValueLab;
+@property (weak, nonatomic) IBOutlet UILabel *storeyHeightLabel;
+@property (weak, nonatomic) IBOutlet UILabel *leaseAreaLabel;
+@property (weak, nonatomic) IBOutlet UILabel *architectureAreaLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfPliesLabel;
 
 @end
