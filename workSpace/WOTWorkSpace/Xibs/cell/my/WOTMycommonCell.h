@@ -13,4 +13,5 @@
 @property(nonatomic,strong)UIImageView *nextImageView;
 @property(nonatomic,strong)UIView *lineview;
 @property(nonatomic,strong)UIImageView *cellImage;
+@property(nonatomic,strong)UIImageView *redDotImage;
 @end

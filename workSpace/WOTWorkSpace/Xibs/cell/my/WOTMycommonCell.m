@@ -27,6 +27,7 @@
     _nameLabel.font = [UIFont systemFontOfSize:14];
     _nameLabel.textColor = UICOLOR_MAIN_BLACK;
     _nextImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"backAcssory"]];
+    _redDotImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"redDot"]];
     _cellImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"enterprise"]];
     _cellImage.contentMode = UIViewContentModeScaleAspectFit;
     _lineview = [[UIView alloc]init];
@@ -35,6 +36,7 @@
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_nextImageView];
     [self.contentView addSubview:_cellImage];
+    [self.contentView addSubview:_redDotImage];
     
 }
 -(void)layoutSubviews{
@@ -46,6 +48,12 @@
         maker.centerY.mas_equalTo(self.contentView);
         maker.height.mas_equalTo(13);
         maker.width.mas_equalTo(7);
+    }];
+    
+    [_redDotImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_nextImageView);
+        make.width.height.mas_offset(6);
+        make.right.equalTo(_nextImageView.mas_left).with.offset(-5);
     }];
     
     [_lineview mas_makeConstraints:^(MASConstraintMaker *maker){

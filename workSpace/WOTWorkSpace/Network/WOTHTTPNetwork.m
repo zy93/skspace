@@ -292,12 +292,15 @@
     } response:response];
 }
 
-+(void)queryNotifationInfoResponse:(response)response
++(void)queryNotifationInfoWithReadState:(NSString *)readState response:(response)response
 {
-    NSDictionary *dic = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+    NSMutableDictionary *dic = [@{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
                           @"pageNo":@1,
                           @"pageSize":@1000
-                          };
+                          }mutableCopy];
+    if (readState) {
+        [dic setValue:readState forKey:@"readState"];
+    }
     NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Newslists/find"];
     
     [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {

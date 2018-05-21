@@ -140,11 +140,16 @@
 -(void)questInfolist
 {
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork queryNotifationInfoResponse:^(id bean, NSError *error) {
+
+    [WOTHTTPNetwork queryNotifationInfoWithReadState:nil response:^(id bean, NSError *error) {
         SKInfoNotifationModel_msg *model = (SKInfoNotifationModel_msg *)bean;
         if ([model.code isEqualToString:@"200"]) {
             weakSelf.notifationListArray = [model.msg.list mutableCopy];
             [weakSelf.tableView reloadData];
+        }else if ([model.code isEqualToString:@"202"])
+        {
+            [MBProgressHUDUtil showMessage:@"没有消息" toView:self.view];
+            return ;
         }else
         {
             [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];

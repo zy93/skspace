@@ -75,7 +75,8 @@ typedef void(^response)(id bean,NSError *error);
 
  @param response 结果回调
  */
-+(void)queryNotifationInfoResponse:(response)response;
++(void)queryNotifationInfoWithReadState:(NSString *)readState response:(response)response;
+
 
 
 /**

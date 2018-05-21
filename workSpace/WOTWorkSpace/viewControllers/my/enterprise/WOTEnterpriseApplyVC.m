@@ -43,9 +43,19 @@
         WOTApplyJoinEnterpriseModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
             weakSelf.tableList = model.msg.list;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.tableView reloadData];
-            });
+            [weakSelf.tableView reloadData];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//
+//            });
+        }
+        
+        if ([model.code isEqualToString:@"202"]) {
+            if (!weakSelf.tableList.count) {
+                [MBProgressHUDUtil showMessage:@"没有消息！" toView:self.view];
+            }
+            weakSelf.tableList = model.msg.list;
+            [weakSelf.tableView reloadData];
+            
         }
     }];
 }
@@ -54,11 +64,12 @@
 #pragma mark - cell delegate
 -(void)cell:(WOTApplyCell *)cell clickAgreeBtn:(UIButton *)sender
 {
+    __weak typeof(self) weakSelf =self;
     [WOTHTTPNetwork disposeApplyJoinEnterprise:cell.model.id  opinionStr:@"同意" response:^(id bean, NSError *error) {
         WOTApplyJoinEnterpriseModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
+            [weakSelf createRequest];
             [MBProgressHUDUtil showMessage:@"已同意" toView:self.view];
-            [self createRequest];
             NSString *result = [NSString stringWithFormat:@"您申请加入的%@企业已通过",cell.model.companyName];
             [WOTHTTPNetwork sendMessageWithUserId:cell.model.userId type:@"企业申请结果" summary:result response:^(id bean, NSError *error) {
                 

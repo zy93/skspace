@@ -26,10 +26,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ovr-7H-hv4">
-                        <rect key="frame" x="15" y="39" width="290" height="104"/>
+                        <rect key="frame" x="15" y="30" width="290" height="113"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redDot" translatesAutoresizingMaskIntoConstraints="NO" id="HRH-SU-Vtl">
-                                <rect key="frame" x="6" y="8" width="6" height="6"/>
+                                <rect key="frame" x="6" y="18" width="6" height="6"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="6" id="0xa-49-gUO"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="6" id="51a-DU-ZQb"/>
@@ -38,20 +38,20 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="通知类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prk-eX-fCf">
-                                <rect key="frame" x="17" y="0.0" width="70" height="21"/>
+                                <rect key="frame" x="17" y="10" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpe-v1-opx">
-                                <rect key="frame" x="17" y="21" width="263" height="43"/>
+                                <rect key="frame" x="17" y="31" width="263" height="42"/>
                                 <string key="text">LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.57045853140000002" green="0.57047235969999999" blue="0.57046490910000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LJc-Xg-SAK">
-                                <rect key="frame" x="200" y="64" width="80" height="30"/>
+                                <rect key="frame" x="200" y="73" width="80" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ayM-4B-5kb"/>
                                     <constraint firstAttribute="width" constant="80" id="gwI-gw-zEi"/>
@@ -78,7 +78,7 @@
                             <constraint firstAttribute="trailing" secondItem="LJc-Xg-SAK" secondAttribute="trailing" constant="10" id="ISL-Ug-wuo"/>
                             <constraint firstItem="rpe-v1-opx" firstAttribute="leading" secondItem="prk-eX-fCf" secondAttribute="leading" id="PNL-9L-t2F"/>
                             <constraint firstItem="HRH-SU-Vtl" firstAttribute="leading" secondItem="Ovr-7H-hv4" secondAttribute="leading" constant="6" id="RGz-OW-dkB"/>
-                            <constraint firstItem="prk-eX-fCf" firstAttribute="top" secondItem="Ovr-7H-hv4" secondAttribute="top" id="scc-RA-hi9"/>
+                            <constraint firstItem="prk-eX-fCf" firstAttribute="top" secondItem="Ovr-7H-hv4" secondAttribute="top" constant="10" id="scc-RA-hi9"/>
                             <constraint firstItem="HRH-SU-Vtl" firstAttribute="centerY" secondItem="prk-eX-fCf" secondAttribute="centerY" id="sqM-XY-Cud"/>
                             <constraint firstItem="rpe-v1-opx" firstAttribute="top" secondItem="prk-eX-fCf" secondAttribute="bottom" id="vc3-FY-3ZJ"/>
                         </constraints>
@@ -92,7 +92,7 @@
                 <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="NYO-TK-Ott" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="7T5-sl-wnF"/>
-                    <constraint firstItem="Ovr-7H-hv4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="39" id="B4L-t3-BhW"/>
+                    <constraint firstItem="Ovr-7H-hv4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="B4L-t3-BhW"/>
                     <constraint firstAttribute="bottom" secondItem="Ovr-7H-hv4" secondAttribute="bottom" constant="5" id="TKg-Qp-n0U"/>
                     <constraint firstItem="Ovr-7H-hv4" firstAttribute="centerX" secondItem="NYO-TK-Ott" secondAttribute="centerX" id="UF2-pV-Apc"/>
                     <constraint firstItem="Ovr-7H-hv4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="m3a-nb-z3T"/>

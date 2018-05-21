@@ -21,11 +21,12 @@
 #import "WOTMyInviteVC.h"
 #import "WOTSurplusTimeVC.h"
 #import "SKMyInfomationNotificationTableViewController.h"
+#import "SKInfoNotifationModel.h"
 
 @interface WOTMyVC ()<WOTOrderCellDelegate,WOTOMyCellDelegate, UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic,strong)WOTSettingVC *settingvc;
 @property(nonatomic,strong)WOTPersionalInformation *persionalVC;
-
+@property(nonatomic,assign)BOOL isShow;
 
 @end
 
@@ -66,6 +67,7 @@
      self.tabBarController.tabBar.translucent = NO;
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self updataUserInfo];
+    [self queryNewInfo];
     [self.tableView reloadData];
     
 }
@@ -174,6 +176,18 @@
         WOTMycommonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycommonCellID" forIndexPath:indexPath];
         NSArray *titlearray = [NSArray arrayWithObjects:@"我的企业",@"我的活动",@"我的预约", @"我的维修", @"我的邀请",@"剩余时长",@"我的消息",nil];
         NSArray *imageNameArray = [NSArray arrayWithObjects:@"enterprise",@"activities",@"history", @"repairs_history",@"my_invite", @"my_time",@"myinfo",nil];
+        if (indexPath.row == 6) {
+            if (_isShow) {
+               cell.redDotImage.hidden = NO;
+            }else
+            {
+                cell.redDotImage.hidden = YES;
+            }
+            
+        }else
+        {
+            cell.redDotImage.hidden = YES;
+        }
         cell.nameLabel.text = titlearray[indexPath.row];
         cell.cellImage.image = [UIImage imageNamed:imageNameArray[indexPath.row]];
         commoncell = cell;
@@ -323,6 +337,24 @@
         [[WOTConfigThemeUitls shared] showLoginVC:self];
     }
    */
+}
+
+-(void)queryNewInfo
+{
+    __weak typeof(self) weakSelf = self;
+    if ([WOTUserSingleton shareUser].userInfo.userId) {
+        [WOTHTTPNetwork queryNotifationInfoWithReadState:@"未读" response:^(id bean, NSError *error) {
+            SKInfoNotifationModel_msg *model = (SKInfoNotifationModel_msg *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                weakSelf.isShow = YES;
+            }else
+            {
+                weakSelf.isShow = NO;
+            }
+            [weakSelf.tableView reloadData];
+        }];
+    }
+    
 }
 
 #pragma mark - 更新用户信息

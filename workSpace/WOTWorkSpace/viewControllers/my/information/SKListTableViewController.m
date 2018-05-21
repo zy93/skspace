@@ -71,11 +71,21 @@
         cell.bottomInfoLabel.text = model.appointmentTime;
     }else
     {
+        
         SKMyDemandModel *model = self.infoListArray[indexPath.row];
         cell.topLabel.text = @"需求类型：";
-        cell.topInfoLabel.text = model.demandType;
         cell.bottomLabel.text = @"需求内容：";
-        cell.bottomInfoLabel.text = model.demandContent;
+        if ([model.needType isEqualToString:@"服务商"]) {
+            cell.topInfoLabel.text = @"获取服务商支持";
+            
+            cell.bottomInfoLabel.text = model.firmName;
+        }else
+        {
+            cell.topInfoLabel.text = model.demandType;
+            
+            cell.bottomInfoLabel.text = model.demandContent;
+        }
+        
     }
     cell.seeDetailsButton.tag = indexPath.row;
     [cell.seeDetailsButton addTarget:self action:@selector(clickSeeDetails:) forControlEvents:UIControlEventTouchDown];

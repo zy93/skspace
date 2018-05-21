@@ -133,6 +133,12 @@
                     
                 }];
             }
+            
+            if ([joinModel.code isEqualToString:@"205"]) {
+                [MBProgressHUDUtil showMessage:@"申请已提交" toView:self.view];
+                return ;
+            }
+            
             if ([joinModel.code isEqualToString:@"206"]) {
                 [MBProgressHUDUtil showMessage:@"企业已经被删除" toView:self.view];
                 
