@@ -119,7 +119,7 @@
     [imgV setImage:img];
     imgV.center = CGPointMake(buttonWidth*0.5, buttonHeight*0.5-15);
     
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imgV.frame)+10, buttonWidth, 20)];
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imgV.frame), buttonWidth, 20)];
     lab.text = title;
     //lab.textColor = UICOLOR_WHITE;
     //lab.textColor = RGBA(72,134,236,1);

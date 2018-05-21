@@ -465,7 +465,7 @@
 
 +(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId tel:(NSString *)tel appointmentTime:(NSString *)appointmentTime peopleNum:(NSNumber *)peopleNum remark:(NSString *)remark companyName:(NSString *)companyName contacts:(NSString *)contacts spaceName:(NSString *)spaceName response:(response)response
 {
-    NSMutableDictionary *params = [@{@"clientName":[WOTUserSingleton shareUser].userInfo.realName,
+    NSMutableDictionary *params = [@{@"clientName":contacts,
                                      @"userId":[WOTUserSingleton shareUser].userInfo.userId,
                                      @"tel":tel,
                                      @"source":@"客户端",
@@ -699,7 +699,7 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findBysorting"];
     NSDictionary * parameters = @{@"pageNo":page,
-                                  @"pageSize":@(100)
+                                  @"pageSize":@(1000)
                                   };
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
         WOTActivityModel_msg * activitymodel = [[WOTActivityModel_msg alloc]initWithDictionary:responseobj error:nil];
@@ -726,7 +726,7 @@
     //NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Message/findforApp"];
     NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Message/findBysorting"];
     NSDictionary * parameters = @{@"pageNo":page,
-                                  @"pageSize":@(10)
+                                  @"pageSize":@(1000)
                                   };
     [self doRequestWithParameters:parameters useUrl:infourl complete:^JSONModel *(id responseobj) {
         WOTNewsModel_msg *infomodel = [[WOTNewsModel_msg alloc]initWithDictionary:responseobj error:nil];
