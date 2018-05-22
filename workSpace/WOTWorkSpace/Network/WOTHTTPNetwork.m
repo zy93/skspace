@@ -455,8 +455,9 @@
 
 +(void)getSpaceFacilitiesWithSpaceId:(NSNumber *)spaceId response:(response)response
 {
-    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findById"];
-    NSDictionary * parameters =@{@"spaceId":spaceId};
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findfac"];
+    NSDictionary * parameters =@{@"spaceId":spaceId,
+                                 };
     [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
         WOTMeetingFacilityModel_msg * stationNumberModel = [[WOTMeetingFacilityModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  stationNumberModel;
@@ -478,9 +479,9 @@
                                      @"state":@"进行中",
                                      @"appointmentTime":appointmentTime,
                                      @"peopleNum":peopleNum,
-                                         @"remark":remark,
-                                         @"companyName":companyName,
-                                         @"contacts":contacts
+                                     @"remark":remark,
+                                     @"companyName":companyName,
+                                     @"contacts":contacts
                                      } mutableCopy];
 
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Sell/clientAddSell"];
@@ -1361,8 +1362,7 @@
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/find",HTTPBaseURL];
     NSDictionary *parameters = @{@"pageNo":pageNo,
                                  @"pageSize":pageSize,
-                                 @"focusPeopleid":focusPeopleid,
-                                 @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId
+                                 @"focusPeopleid":focusPeopleid
                                  };
     
     [WOTHTTPNetwork doRequestWithParameters:parameters useUrl:url complete:^JSONModel *(id responseobj) {
@@ -1434,8 +1434,7 @@
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/CircleFriends/addCircleFriends",HTTPBaseURL];
     NSDictionary *parameters = @{@"userId":userId,
                                  @"userName":userName,
-                                 @"circleMessage":circleMessage,
-                                 @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId
+                                 @"circleMessage":circleMessage
                                  };
     [self doFileRequestWithParameters:parameters useUrl:url image:photosArray complete:^JSONModel *(id responseobj) {
         WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];

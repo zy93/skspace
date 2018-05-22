@@ -703,7 +703,7 @@ typedef void(^response)(id bean,NSError *error);
 /**
  取消关注
 
- @param focusId 关注信息id
+ @param friendId 关注信息id
  @param response 结果回调
  */
 +(void)deleteFocusWithFocusId:(NSNumber *)friendId response:(response)response;
