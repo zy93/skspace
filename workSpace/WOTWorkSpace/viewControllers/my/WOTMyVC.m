@@ -38,14 +38,14 @@
     [self.tableView registerClass:[WOTMycommonCell class] forCellReuseIdentifier:@"mycommonCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderCell" bundle:nil] forCellReuseIdentifier:@"myorderCellID"];
     //解决状态栏空白问题
-    if (@available(iOS 11.0, *)) {
-        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+//    if (@available(iOS 11.0, *)) {
+//        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//    }else {
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *maker){
-        maker.top.mas_equalTo(NavigationHeight);
+        maker.top.mas_equalTo(self.view);
         maker.left.mas_equalTo(self.view);
         maker.right.mas_equalTo(self.view);
         maker.bottom.mas_equalTo(self.view);
@@ -69,7 +69,6 @@
     [self updataUserInfo];
     [self queryNewInfo];
     [self.tableView reloadData];
-    
 }
 
 #pragma mark - table delegate 

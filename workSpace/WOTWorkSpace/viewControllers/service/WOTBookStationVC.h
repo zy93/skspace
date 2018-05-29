@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "SDCycleScrollView.h"
 
+typedef NS_ENUM(NSInteger,SKTIMETYPE) {
+    SKTIMETYPE_SHORTPERIOD,
+    SKTIMETYPE_LONGTIME,
+};
+
 @interface WOTBookStationVC : UIViewController
 
 @property (nonatomic, strong) NSNumber *spaceId;
 @property (nonatomic, strong) NSString *spaceName;
+@property (nonatomic, assign) SKTIMETYPE skTimeType;
 @end

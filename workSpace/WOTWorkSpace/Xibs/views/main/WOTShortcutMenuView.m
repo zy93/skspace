@@ -55,12 +55,11 @@
 {
     //self.backgroundColor = UIColorFromRGB(0x8fc5f3);
     self.backgroundColor = [UIColor whiteColor];
-    sbNameList = @[@"",@"Service",@"Service",@"Service",@"",
+    sbNameList = @[@"",@"",@"Service",@"Service",@"",
                    @"spaceMain",@"spaceMain",@"Service",];
     
-    vcNameList = @[
-                   @"SKGiftBagViewController",
-                   @"WOTBookStationVCID",
+    vcNameList = @[ @"SKBookStationVC",
+                    @"SKGiftBagViewController",
                    @"WOTReservationsMeetingVC",
                    @"WOTReservationsMeetingVC",
                    @"WOTEnterpriseLIstVC",
@@ -70,9 +69,9 @@
                    ];
     
     
-    titleList = @[@"分时礼包", @"分时预定",@"订会议室",@"预订场地", @"入驻企业", @"尚科资讯", @"尚科活动", @"访客预约"];
-    imageNameList = @[@"shortcut_open_icon",
-                      @"shortcut_station_icon",
+    titleList = @[@"预定工位",@"分时礼包",@"订会议室",@"预订场地", @"入驻企业", @"尚科资讯", @"尚科活动", @"访客预约"];
+    imageNameList = @[@"shortcut_station_icon",
+                      @"shortcut_open_icon",
                       @"shortcut_meeting_icon",
                       @"shortcut_site_icon",
                       @"shortcut_finds_icon",
@@ -137,7 +136,7 @@
 {
     if ([_delegate respondsToSelector:@selector(shortcutMenu:pushToVCWithStoryBoardName:vcName:)]) {
         
-        if (sender.tag == 1) {
+        if (sender.tag == 0) {
             [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
         }
         else if (sender.tag == 2) {

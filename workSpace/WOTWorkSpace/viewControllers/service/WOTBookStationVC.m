@@ -29,12 +29,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *notInformationImageView;
 @property (weak, nonatomic) IBOutlet UILabel *notBookStationInformationLabel;
 @property (nonatomic, strong) NSMutableArray *menuArray;
-@property (nonatomic, strong)UIBarButtonItem *barButton;
+
 //@property (nonatomic, assign)CGFloat y;
 //@property (nonatomic, assign)CGFloat height;
 @property (nonatomic, strong)NSMutableArray *cityList;
 @property (nonatomic, strong)NSArray *tableList;
-@property (nonatomic, strong)UIButton *cityButton;
 @property (nonatomic, strong)WOTSpaceModel *spaceModel;
 
 
@@ -48,7 +47,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"订工位";
+    //self.navigationItem.title = @"订工位";
     
     //_spaceId = @(56);原来
     self.cityList = [NSMutableArray new];
@@ -79,26 +78,6 @@
 -(void)configNavi{
     
     ///需要更改的地方spaceName
-    
-    self.cityButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.cityButton addTarget:self action:@selector(selectSpace:) forControlEvents:UIControlEventTouchDown];
-    [self.cityButton setTitle:cityName forState:UIControlStateNormal];
-    self.cityButton.titleLabel.font = [UIFont systemFontOfSize:15];
-    [self.cityButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
-    UIImage *imageForButton = [UIImage imageNamed:@"Triangular"];
-    [self.cityButton setImage:imageForButton forState:UIControlStateNormal];
-    CGSize buttonTitleLabelSize = [cityName sizeWithAttributes:@{NSFontAttributeName:self.cityButton.titleLabel.font}]; //文本尺寸
-    CGSize buttonImageSize = imageForButton.size;   //图片尺寸
-    self.cityButton.frame = CGRectMake(0,0,
-                                       buttonImageSize.width + buttonTitleLabelSize.width,
-                                       buttonImageSize.height);
-    self.cityButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.cityButton.imageView.frame.size.width - self.cityButton.frame.size.width + self.cityButton.titleLabel.intrinsicContentSize.width, 0, 0);
-    
-    self.cityButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -self.cityButton.titleLabel.frame.size.width - self.cityButton.frame.size.width + self.cityButton.imageView.frame.size.width);
-    
-    self.barButton = [[UIBarButtonItem alloc]initWithCustomView:self.cityButton];
-    self.navigationItem.rightBarButtonItem = self.barButton;
     
     //解决布局空白问题--dong
     BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
