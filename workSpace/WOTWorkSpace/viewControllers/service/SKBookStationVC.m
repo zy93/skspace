@@ -8,6 +8,7 @@
 
 #import "SKBookStationVC.h"
 #import "WOTBookStationVC.h"
+#import "JXPopoverView.h"
 
 @interface SKBookStationVC ()<XXPageTabViewDelegate,UINavigationControllerDelegate>
 {
@@ -94,4 +95,27 @@
     
     return self.childViewControllers;
 }
+
+//#pragma mark - action
+//-(void)selectSpace:(UIButton *)sender
+//{
+//    
+//    if (self.cityList.count) {
+//        JXPopoverView *popoverView = [JXPopoverView popoverView];
+//        NSMutableArray *JXPopoverActionArray = [[NSMutableArray alloc] init];
+//        for (NSString *name in self.cityList) {
+//            JXPopoverAction *action1 = [JXPopoverAction actionWithTitle:name handler:^(JXPopoverAction *action) {
+//                cityName = name;
+//                [self configNavi];
+//                //[self.cityButton setTitle:cityName forState:UIControlStateNormal];
+//                [self createRequest];
+//                //NSLog(@"测试：%@",name);
+//                
+//            }];
+//            [JXPopoverActionArray addObject:action1];
+//        }
+//        [popoverView showToView:sender withActions:JXPopoverActionArray];
+//    }
+//}
+
 @end

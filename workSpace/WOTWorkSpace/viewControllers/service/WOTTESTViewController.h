@@ -1,5 +1,5 @@
 //
-//  SKBookStationVC.h
+//  WOTTESTViewController.h
 //  WOTWorkSpace
 //
 //  Created by wangxiaodong on 2018/5/29.
@@ -8,9 +8,6 @@
 
 #import "WOTPageMenuParentVC.h"
 
-@interface SKBookStationVC : WOTPageMenuParentVC
-
-
-
+@interface WOTTESTViewController : WOTPageMenuParentVC
 
 @end
