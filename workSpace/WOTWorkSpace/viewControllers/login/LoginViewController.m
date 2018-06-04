@@ -284,7 +284,13 @@
             WOTBaseModel *model = (WOTBaseModel *)bean;
             if ([model.code isEqualToString:@"202"]) {
                 AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:1];            }
+                [appDelegate.tabbar.tabBar showBadgeOnItemIndex:1];
+            }else
+            {
+                AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:1];
+                
+            }
         }];
     }
 }
@@ -296,9 +302,14 @@
         [WOTHTTPNetwork queryNotifationInfoWithReadState:@"未读" response:^(id bean, NSError *error) {
             SKInfoNotifationModel_msg *model = (SKInfoNotifationModel_msg *)bean;
             if ([model.code isEqualToString:@"200"]) {
-                //weakSelf.isShow = YES;
+                //weakSelf.isShow = YES
                 AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:1];            }
+                [appDelegate.tabbar.tabBar showBadgeOnItemIndex:4];
+            }else
+            {
+                AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:4];
+            }
         }];
     }
     

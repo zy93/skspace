@@ -50,6 +50,7 @@
 #define UICOLOR_GRAY_66     UIColorFromRGB(0x666666) //灰色 中等等级，副标题。
 #define UICOLOR_GRAY_99     UIColorFromRGB(0x999999) //灰色 低等标题，深色底纹文字。
 #define UICOLOR_GRAY_CC     UIColorFromRGB(0xcccccc) //灰色 最不明显使用。
+#define UICOLOR_Buttton_GRAY  UIColorFromRGB(0xbbbbbb) //按钮未选中背景
 #define UICOLOR_GRAY_DD     UIColorFromRGB(0xdddddd) //灰色 最不明显使用。
 #define UICOLOR_GRAY_E1     UIColorFromRGB(0xe1e1e1) //灰色、
 #define UICOLOR_GRAY_F1     UIColorFromRGB(0xf1f1f1) //灰色、

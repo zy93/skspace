@@ -347,10 +347,11 @@
             SKInfoNotifationModel_msg *model = (SKInfoNotifationModel_msg *)bean;
             if ([model.code isEqualToString:@"200"]) {
                 weakSelf.isShow = YES;
-                AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:4];
+                
             }else
             {
+                AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:4];
                 weakSelf.isShow = NO;
             }
             [weakSelf.tableView reloadData];

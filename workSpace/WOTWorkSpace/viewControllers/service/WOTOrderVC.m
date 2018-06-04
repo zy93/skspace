@@ -183,7 +183,7 @@
     if ([WOTSingtleton shared].orderType != ORDER_TYPE_LONGTIME_BOOKSTATION) {
         [self queryMyCompany];
     }
-    
+
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_SPACE) {
         [self getcommunityServiceInfo];
     }
@@ -235,7 +235,7 @@
         [self.confirmButton setTitle:@"预   定" forState:UIControlStateNormal];
         if ([WOTSingtleton shared].orderType == ORDER_TYPE_LONGTIME_BOOKSTATION) {
             
-            self.confirmButton.backgroundColor = UICOLOR_GRAY_CC;
+            self.confirmButton.backgroundColor = UICOLOR_Buttton_GRAY;
             [self.confirmButton setTitle:@"支付" forState:UIControlStateNormal];
             self.confirmButton.userInteractionEnabled = NO;
         }
@@ -1915,7 +1915,11 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
 #pragma mark - 获取社区服务信息
 -(void)getcommunityServiceInfo
 {
-    [WOTHTTPNetwork queryCommunityServiceInfoWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
+    if (!self.singleSpaceId) {
+        self.singleSpaceId = [[NSNumber alloc] init];
+        self.singleSpaceId = self.spaceModel.spaceId;
+    }
+    [WOTHTTPNetwork queryCommunityServiceInfoWithSpaceId:self.singleSpaceId response:^(id bean, NSError *error) {
         SKCommunityServiceModel_msg *model_msg = (SKCommunityServiceModel_msg *)bean;
         if ([model_msg.code isEqualToString:@"200"]) {
             self.communityServiceModel = model_msg.msg;

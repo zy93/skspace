@@ -71,8 +71,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:1];
+    
     self.pageNum = 1;
     UIScrollView *scView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.view = scView;
@@ -763,6 +762,7 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
 }
 
@@ -771,6 +771,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 {
     [super viewWillAppear:animated];
     [self StartRefresh];
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:1];
     //[self createRequest];
 }
 
