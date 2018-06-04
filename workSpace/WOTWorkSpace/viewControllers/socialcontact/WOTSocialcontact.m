@@ -44,9 +44,9 @@
 -(void)setpageMenu{
     NSArray<__kindof UIViewController *> *controllers = [self createViewControllers];
     self.pageTabView = [[XXPageTabView alloc] initWithChildControllers:controllers childTitles:[self createTitles]];
-    self.pageTabView.bottomOffLine = YES;
+    //self.pageTabView.bottomOffLine = YES;
     self.pageTabView.selectedColor = [UIColor colorWithHexString:@"ff7d3d"];
-    [self.pageTabView addIndicatorViewWithStyle];
+    //[self.pageTabView addIndicatorViewWithStyle];
     [self.pageTabView layoutSubviews];
     self.pageTabView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height-60);
     NSLog(@"ok:%f",self.view.frame.size.height-60);
@@ -54,7 +54,7 @@
     self.pageTabView.titleStyle = XXPageTabTitleStyleDefault;
     self.pageTabView.indicatorStyle = XXPageTabIndicatorStyleDefault;
     self.pageTabView.indicatorWidth = 20;
-
+    self.pageTabView.selectedTabIndex = 0;
     [self.view addSubview:self.pageTabView];
 }
 

@@ -39,18 +39,18 @@
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setTimeZone: [NSTimeZone timeZoneWithName:@"GMT"]];
-    [formatter setDateFormat:@"yyyy/MM/dd hh:mm:ss"];
+    [formatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
     NSDate *fromDate = [formatter dateFromString:aDate];
     NSDate *toDate = [formatter dateFromString:bDate];
     NSLog(@"%@,%@",fromDate,toDate);
     NSComparisonResult result = [fromDate compare:toDate];
-    if (result==NSOrderedSame)
+    if (result==NSOrderedSame)//相等
     {
         return NO;
-    }else if (result==NSOrderedAscending)
+    }else if (result==NSOrderedAscending)//开始时间比结束时间小
     {
         return NO;
-    }else if (result==NSOrderedDescending)
+    }else if (result==NSOrderedDescending)//开始时间比结束时间大
     {
         return YES;
     }
@@ -75,4 +75,48 @@
     return comp.day+1;
     
 }
+
+-(NSString *)activityStateWithStartTime:(NSString *)startTime endTime:(NSString *)endTime
+{
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+    NSString *DateTime = [formatter stringFromDate:date];//当前时间
+    if ([self compareDate:DateTime withDate:endTime]) {
+        return @"已结束";
+    }else if ([self compareDateWithStartTime:DateTime endTime:startTime] && (![self compareDate:DateTime withDate:endTime]))
+    {
+        return @"进行中";
+    }else
+    {
+        return @"未开始";
+    }
+}
+
+//比较两个日期的大小
+-(BOOL)compareDateWithStartTime:(NSString*)startTime endTime:(NSString*)endTime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setTimeZone: [NSTimeZone timeZoneWithName:@"GMT"]];
+    [formatter setDateFormat:@"yyyy/MM/dd hh:mm:ss"];
+    NSDate *fromDate = [formatter dateFromString:startTime];
+    NSDate *toDate = [formatter dateFromString:endTime];
+    NSLog(@"%@,%@",fromDate,toDate);
+    NSComparisonResult result = [fromDate compare:toDate];
+    if (result==NSOrderedSame)//相等
+    {
+        return YES;
+    }else if (result==NSOrderedAscending)//开始时间比结束时间小
+    {
+        return NO;
+    }else if (result==NSOrderedDescending)//开始时间比结束时间大
+    {
+        return YES;
+    }
+    return NO;
+}
+
+
 @end

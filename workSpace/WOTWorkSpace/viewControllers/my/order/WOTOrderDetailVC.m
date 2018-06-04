@@ -66,7 +66,12 @@
 
         [self.tableValueList insertObject:@[[NSString stringWithFormat:@"%@·%@",self.model.spaceName,self.model.commodityName], [NSString stringWithFormat:@"%@\n%@",[self.model.starTime substringToIndex:11],[self.model.endTime substringToIndex:11]]] atIndex:1];
     }
-    //礼包
+    else if ([self.model.commodityKind isEqualToString:@"长租工位"])
+    {
+        [self.tableList insertObject:@[@"预定房间", @"预定时间"] atIndex:1];
+        
+        [self.tableValueList insertObject:@[self.model.commodityName,self.model.commodityNumList] atIndex:1];
+    }
     else  {
         [self.tableList insertObject:@[@"礼包名称"] atIndex:1];
         [self.tableValueList insertObject:@[self.model.commodityName] atIndex:1];

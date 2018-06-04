@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString * commodityName;
 @property (nonatomic, strong) NSString * commodityKind;
 @property (nonatomic, strong) NSNumber * commodityNum ;
-@property (nonatomic, strong) NSString * commodityNumList;
+@property (nonatomic, strong) NSString * commodityNumList;//
 @property (nonatomic, strong) NSNumber * contractMode;
 @property (nonatomic, strong) NSString * dealMode;
 @property (nonatomic, strong) NSNumber * deduction ;

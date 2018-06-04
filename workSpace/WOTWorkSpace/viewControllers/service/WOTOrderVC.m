@@ -32,12 +32,21 @@
 #import "WOTMeetingFacilityModel.h"
 #import "WOTStaffModel.h"
 #import "WOTMapCell.h"
+#import "SKRoomListVC.h"
+#import "SKRoomDiscountsTableViewCell.h"
+#import "SKRoomDescribeTableViewCell.h"
+
 #import "MBProgressHUDUtil.h"
 #import "SKMapViewController.h"
 #import "WOTH5VC.h"
 #import "SKCompanyRemainingTimeModel.h"
-
+#import "SKCommunityServiceTableViewCell.h"
+#import "SKCommunityServiceModel.h"
 #import "SKReserveInfoTableViewController.h"
+#import "SKPayDelegateView.h"
+#import "SKPayDelegateModel.h"
+#import <AlipaySDK/AlipaySDK.h>
+
 
 #define infoCell @"WOTOrderForInfoCell"
 #define selectDateCell @"WOTOrderForSelectDateCell"
@@ -49,14 +58,16 @@
 #define paymentCell @"WOTPaymentTypeCell"
 #define selectCell @"WOTOrderForSelectCell"
 #define mapCell @"WOTMapCell"
-
+#define roomdiscountsCell @"SKRoomDiscountsTableViewCell"
+#define roomdescribeCell @"SKRoomDescribeTableViewCell"
+#define communityserviceCell @"SKCommunityServiceTableViewCell"
 
 //#define payTypeCell @"WOTOrderForSelectCell"
 //#define siteCell @"siteCell"
 //#define amountCell @"amountCell"
 //#define uitableCell @"uitableCell"
 
-@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,WOTPaymentTypeCellDelegate,SDCycleScrollViewDelegate,WOTScrollViewCellDelegate>
+@interface WOTOrderVC () <UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate,WOTOrderForBookStationCellDelegate, WOTOrderForSelectTimeCellDelegate,WOTOrderForPaymentCellDelegate,WOTPaymentTypeCellDelegate,SDCycleScrollViewDelegate,WOTScrollViewCellDelegate,SKRoomDiscountsTableViewCellDelegate,SKCommunityServiceTableViewCellDelegate>
 {
     NSArray *tableList;
     NSArray *mettingReservationList; //会议室已预订时间数组
@@ -66,6 +77,11 @@
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property (weak, nonatomic) IBOutlet UILabel *costLabel;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewHeight;
+
+
+
 
 @property (nonatomic, strong)WOTDatePickerView *datepickerview;
 @property (nonatomic, assign)BOOL isValidTime;
@@ -113,6 +129,14 @@
 @property (nonatomic, strong) NSString *payWayStr;
 @property (nonatomic, strong) NSString *imageSite;
 @property (nonatomic, strong) NSNumber *conferenceDetailsId;//预定场地的id
+@property (nonatomic, strong) SKCommunityServiceModel *communityServiceModel;
+@property (nonatomic,strong)UIView *translucentView;
+@property (nonatomic,strong)SKPayDelegateView *payDelegateView;
+@property (nonatomic,copy)NSString *payDelegateStr;
+
+@property (nonatomic,strong)NSNumber *payMoneyNum;
+@property (nonatomic,strong)NSString *productDescriptionStr;
+@property (nonatomic,strong)NSString *presetTimeStr;
 
 @end
 
@@ -155,7 +179,15 @@
     }
     [self.table registerNib:[UINib nibWithNibName:scrollViewCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:scrollViewCell];
     [self.table registerNib:[UINib nibWithNibName:mapCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:mapCell];
-    [self queryMyCompany];
+    //[self.table registerNib:[UINib nibWithNibName:roomdiscountsCell bundle:[NSBundle mainBundle]] forCellReuseIdentifier:roomdiscountsCell];
+    if ([WOTSingtleton shared].orderType != ORDER_TYPE_LONGTIME_BOOKSTATION) {
+        [self queryMyCompany];
+    }
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_SPACE) {
+        [self getcommunityServiceInfo];
+    }
+    [self getPayDelegate];
 }
 
 
@@ -173,21 +205,17 @@
     if (self.spaceSourceType == SPACE_SOURCE_TYPE_OTHER) {
         [self getTeam];
     }
-    
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ||
-        [WOTSingtleton shared].orderType == ORDER_TYPE_SPACE) {
-        if (self.spaceSourceType == SPACE_SOURCE_TYPE_OTHER) {
-            [self getSpaceFacility];
+    if ([WOTSingtleton shared].orderType != ORDER_TYPE_LONGTIME_BOOKSTATION) {
+        if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION ||
+            [WOTSingtleton shared].orderType == ORDER_TYPE_SPACE) {
+            if (self.spaceSourceType == SPACE_SOURCE_TYPE_OTHER) {
+                [self getSpaceFacility];
+            }
+
         }
-        
-
-    }
-    else {
-
-         [self getmeetingFacility];
-        
-       
-
+        else {
+            [self getmeetingFacility];
+        }
     }
 }
 
@@ -205,6 +233,12 @@
     else {
         self.navigationItem.title = @"预定";
         [self.confirmButton setTitle:@"预   定" forState:UIControlStateNormal];
+        if ([WOTSingtleton shared].orderType == ORDER_TYPE_LONGTIME_BOOKSTATION) {
+            
+            self.confirmButton.backgroundColor = UICOLOR_GRAY_CC;
+            [self.confirmButton setTitle:@"支付" forState:UIControlStateNormal];
+            self.confirmButton.userInteractionEnabled = NO;
+        }
     }
     self.navigationController.navigationBar.translucent = NO;
     //解决布局空白问题
@@ -299,12 +333,19 @@
             tableList = @[list1,@[mapCell], list2, list3, list4];
         }
             break;
+        case ORDER_TYPE_LONGTIME_BOOKSTATION:
+        {
+            list1 = @[infoCell,roomdiscountsCell,serviceCell, describeCell];
+            tableList = @[list1,@[mapCell],@[roomdescribeCell]];
+        }
+            break;
         case ORDER_TYPE_SPACE:
         {
             list1 = @[infoCell, serviceCell, describeCell];
             list2 = @[scrollViewCell]; //配套设施
+//            list3 = @[communityserviceCell];
             list4 = @[scrollViewCell]; //社区团队
-            tableList = @[list1,@[mapCell], list2, list4];
+            tableList = @[list1,@[mapCell], list2,@[communityserviceCell],list4];
         }
         default:
             break;
@@ -336,6 +377,17 @@
         }];
         [alert addAction:action];
         [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_LONGTIME_BOOKSTATION) {
+        //判断是否同意支付协议
+        if ([[WOTUserSingleton shareUser].userInfo.agreementState isEqualToString:@"是"]) {
+            [self showSheet];
+        }else
+        {
+            [self showDelegateAction];
+        }
         return;
     }
     
@@ -423,7 +475,6 @@
             self.payObject = [[WOTUserSingleton shareUser].userInfo.userId stringValue];
             self.payType = @1;
             [self commitBookStationOrder];
-            
         }
             break;
         case ORDER_TYPE_MEETING:
@@ -602,6 +653,7 @@
         NSString *str = nil;
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_BOOKSTATION:
+            case ORDER_TYPE_LONGTIME_BOOKSTATION:
             case ORDER_TYPE_SPACE:
             {
                 str = self.spaceModel.spaceDescribe;
@@ -648,6 +700,17 @@
 //    }
     else if ([cellType isEqualToString:paymentCell]) {
         return 50;
+    }else if ([cellType isEqualToString:roomdiscountsCell])
+    {
+        return 180;
+    }
+    else if ([cellType isEqualToString:roomdescribeCell])
+    {
+        return self.imageheight;
+    }
+    else if ([cellType isEqualToString:communityserviceCell])
+    {
+        return 250;
     }
     else // ([cellType isEqualToString:amountCell])
     {
@@ -710,6 +773,22 @@
                 NSMutableArray *imageArr = [NSMutableArray new];
                 for (NSString *str in array) {
                     [imageArr addObject:[str ToResourcesUrl]];
+                }
+                cell.scrollview.imageURLStringsGroup = imageArr;
+                
+            }
+                break;
+            case ORDER_TYPE_LONGTIME_BOOKSTATION:
+            {
+                NSArray  *array = [self.roomModel.showPicture componentsSeparatedByString:@","];
+                //                NSString *imageUrl = [array firstObject];
+                cell.infoTitle.text = self.roomModel.subareaName;
+                //cell.dailyRentLabel.hidden = YES;
+                cell.dailyRentLabel.text = [NSString stringWithFormat:@"%@个工位",self.roomModel.stationNum];
+                cell.dailyRentLabel.font = [UIFont systemFontOfSize:13];
+                NSMutableArray *imageArr = [NSMutableArray new];
+                for (NSString *str in array) {
+                    [imageArr addObject:str];
                 }
                 cell.scrollview.imageURLStringsGroup = imageArr;
                 
@@ -804,6 +883,7 @@
 
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_SPACE:
+            case ORDER_TYPE_LONGTIME_BOOKSTATION:
             case ORDER_TYPE_BOOKSTATION:
             {
                 cell.addressValueLab.text  = self.spaceModel.spaceSite;
@@ -836,6 +916,7 @@
         }
         switch ([WOTSingtleton shared].orderType) {
             case ORDER_TYPE_BOOKSTATION:
+            case ORDER_TYPE_LONGTIME_BOOKSTATION:
             case ORDER_TYPE_SPACE:
                 {
                     cell.contentText.text = self.spaceModel.spaceDescribe;
@@ -908,28 +989,60 @@
 //        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
+    }else if ([cellType isEqualToString:roomdiscountsCell])
+    {
+        SKRoomDiscountsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:roomdiscountsCell];
+        if (cell == nil) {
+            cell = [[SKRoomDiscountsTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:roomdiscountsCell];
+        }
+        cell.delegate = self;
+        NSAttributedString *attrStr =
+        [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@/月",self.roomModel.averagePrice]
+                                       attributes:
+         @{NSFontAttributeName:[UIFont systemFontOfSize:13.f],
+           NSForegroundColorAttributeName:UICOLOR_GRAY_66,
+           NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle|NSUnderlinePatternSolid),
+           NSStrikethroughColorAttributeName:UICOLOR_GRAY_66}];
+        cell.defaultPriceLabel1.attributedText = attrStr;
+        cell.defaultPriceLabel2.attributedText = attrStr;
+        cell.defaultPriceLabel3.attributedText = attrStr;
+        cell.defaultPriceLabel4.attributedText = attrStr;
+        cell.monthPriceLabel.text = [NSString stringWithFormat:@"¥%@/月",self.roomModel.mmprice];
+        cell.quarterPriceLabel.text = [NSString stringWithFormat:@"¥%@/月",self.roomModel.quarter];
+        cell.halfAYearPriceLabel.text = [NSString stringWithFormat:@"¥%@/月",self.roomModel.halfYyprice];
+        cell.yearPriceLabel.text = [NSString stringWithFormat:@"¥%@/月",self.roomModel.yyprice];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else if ([cellType isEqualToString:roomdescribeCell])
+    {
+        SKRoomDescribeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:roomdescribeCell];
+        if (cell == nil) {
+            cell = [[SKRoomDescribeTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:roomdescribeCell];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+      //  cell.describePictureView sd_setImageWithURL:<#(nullable NSURL *)#> placeholderImage:<#(nullable UIImage *)#>
+        [cell.describePictureView sd_setImageWithURL:[NSURL URLWithString:self.roomModel.particularsPicture] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+        return cell;
     }
-    
-//    else if ([cellType isEqualToString:uitableCell]) {
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCelll"];
-//        if (cell == nil) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCelll"];
-//        }
-//        [cell.textLabel setText:@"支付方式"];
-////        cell.separatorInset = UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0); // ViewWidth  [宏] 指的是手机屏幕的宽度
-//        cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
-//
-//        return cell;
-//    }
-//    else if ([cellType isEqualToString:paymentCell]) {
-//        WOTOrderForPaymentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTOrderForPaymentCell"];
-//        if (cell == nil) {
-//            cell = [[WOTOrderForPaymentCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTOrderForPaymentCell"];
-//        }
-//        cell.delegate = self;
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-//    }
+    else if ([cellType isEqualToString:communityserviceCell])
+    {
+        SKCommunityServiceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:communityserviceCell];
+        if (cell == nil) {
+            cell = [[SKCommunityServiceTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:communityserviceCell];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
+        cell.shortTimeBookStationNum.text = [NSString stringWithFormat:@"临时工位·%@个",self.communityServiceModel.shortStationNum];
+        cell.roomNum.text = [NSString stringWithFormat:@"办公室·%@个",self.communityServiceModel.longStationNum];
+        cell.monthPriceLabel.text = [NSString stringWithFormat:@"¥%@/月起",self.communityServiceModel.longStationPrice];
+        NSArray  *array = [self.communityServiceModel.shortStationPicture componentsSeparatedByString:@","];
+        NSString *imageUrl = [array firstObject];
+        [cell.shortTimeBookStationImage sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+        NSArray  *array1 = [self.communityServiceModel.longStationPicture componentsSeparatedByString:@","];
+        NSString *imageUrl1 = [array1 firstObject];
+        [cell.longTimeBookStationImage sd_setImageWithURL:[NSURL URLWithString:imageUrl1] placeholderImage:[UIImage imageNamed:@"bookStation"]];
+        return cell;
+    }
     
     else // ([cellType isEqualToString:amountCell])
     {
@@ -1182,38 +1295,38 @@
 }
 
 #pragma mark - 获取支付宝orderstring
--(void)getOrderString:(NSDictionary *)param orderParam:(NSDictionary *)orderParam
-{
-    __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getOrderString:param response:^(id bean, NSError *error) {
-        SKOrderStringModel *model = (SKOrderStringModel *)bean;
-        if ([model.code isEqualToString:@"200"]) {
-            StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
-            vc.orderNum = [param objectForKey:@"orderNum"];
-            if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
-                vc.nameStr = self.spaceModel.spaceName;
-            }
-            else
-            {
-                vc.nameStr = self.meetingModel.conferenceName;
-            }
-            vc.startTime = [orderParam objectForKey:@"starTime"];
-            vc.endTime = [orderParam objectForKey:@"endTime"];
-            vc.productNum = self.productNum;
-            vc.orderString = model.msg;
-            vc.payType = self.payType;
-            vc.money = self.money;
-            vc.facilitiesArray = self.meetingFacilityList;
-            vc.companyNameStr = self.invoiceInfo;
-            vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
-            [weakSelf.navigationController pushViewController:vc animated:YES];
-        }else
-        {
-            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
-            return ;
-        }
-    }];
-}
+//-(void)getOrderString:(NSDictionary *)param orderParam:(NSDictionary *)orderParam
+//{
+//    __weak typeof(self) weakSelf = self;
+//    [WOTHTTPNetwork getOrderString:param response:^(id bean, NSError *error) {
+//        SKOrderStringModel *model = (SKOrderStringModel *)bean;
+//        if ([model.code isEqualToString:@"200"]) {
+//            StationOrderInfoViewController *vc = [[StationOrderInfoViewController alloc] init];
+//            vc.orderNum = [param objectForKey:@"orderNum"];
+//            if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
+//                vc.nameStr = self.spaceModel.spaceName;
+//            }
+//            else
+//            {
+//                vc.nameStr = self.meetingModel.conferenceName;
+//            }
+//            vc.startTime = [orderParam objectForKey:@"starTime"];
+//            vc.endTime = [orderParam objectForKey:@"endTime"];
+//            vc.productNum = self.productNum;
+//            vc.orderString = model.msg;
+//            vc.payType = self.payType;
+//            vc.money = self.money;
+//            vc.facilitiesArray = self.meetingFacilityList;
+//            vc.companyNameStr = self.invoiceInfo;
+//            vc.durationTime = [NSString dateTimeDifferenceHoursWithStartTime:self.starTime endTime:self.endTime];
+//            [weakSelf.navigationController pushViewController:vc animated:YES];
+//        }else
+//        {
+//            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+//            return ;
+//        }
+//    }];
+//}
 
 #pragma mark - 工位微信订单接口
 -(void)commitBookStationOrder
@@ -1407,6 +1520,7 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
 #pragma mark - 查询个人信息
 -(void)requestQuerySingularMan
 {
+    __weak typeof(self) weakSelf = self;
     if ([WOTUserSingleton shareUser].userInfo.userId == nil) {
         [MBProgressHUDUtil showMessage:@"请先登录再进行其他操作" toView:self.view];
         return;
@@ -1417,6 +1531,7 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
         if ([model_msg.code isEqualToString:@"200"]) {
             self.bookSationTime = model.workHours;
             self.meetingTime = model.meetingHours;
+            [weakSelf.table reloadData];
         } else {
             [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
         }
@@ -1573,6 +1688,257 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     detailvc.url = [self.spaceModel.manualSite stringToUrl];
     [self.navigationController pushViewController:detailvc animated:YES];
+}
+//***********************************预定start*******************************
+#pragma mark - 预定按钮
+
+-(void)payDiscountsBag:(UIButton *)button
+{
+
+//    //先判断是否登录
+//    if (![WOTUserSingleton shareUser].userInfo.userId) {
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"未登录" message:@"请先登录用户" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            NSLog(@"跳转到");
+//            [[WOTConfigThemeUitls shared] showLoginVC:self];
+//        }];
+//        [alert addAction:action];
+//        [self presentViewController:alert animated:YES completion:nil];
+//        return;
+//    }
+    
+    
+    self.productDescriptionStr = [NSString stringWithFormat:@"%@.%@",self.spaceModel.spaceName,self.roomModel.subareaName];
+    if (button.tag == 0) {
+        self.payMoneyNum = self.roomModel.mmprice;
+        
+        self.presetTimeStr = @"1个月";
+    }
+    
+    if (button.tag == 1) {
+        //[NSNumber numberWithInteger:[self.roomModel.quarter integerValue]*3];
+        self.payMoneyNum = [NSNumber numberWithFloat:[self.roomModel.quarter floatValue]*3];
+        
+        self.presetTimeStr = @"3个月";
+    }
+    
+    if (button.tag == 2) {
+        self.payMoneyNum = [NSNumber numberWithFloat:[self.roomModel.halfYyprice floatValue]*6];
+        
+        self.presetTimeStr = @"6个月";
+    }
+    
+    if (button.tag == 3) {
+        self.payMoneyNum = [NSNumber numberWithFloat:[self.roomModel.yyprice floatValue]*12];
+        
+        self.presetTimeStr = @"12个月";
+    }
+    self.confirmButton.backgroundColor = UICOLOR_MAIN_ORANGE;
+    [self.confirmButton setTitle:[NSString stringWithFormat:@"支付(¥%@)",self.payMoneyNum] forState:UIControlStateNormal];
+    self.confirmButton.userInteractionEnabled = YES;
+    
+}
+
+#pragma mark - 弹出微信、支付宝、取消对话框
+-(void)showSheet
+{
+    UIAlertController *alertController = [[UIAlertController alloc] init];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    UIAlertAction *wxPayAction = [UIAlertAction actionWithTitle:@"微信" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self wxPayMethod];
+    }];
+    
+    UIAlertAction *aliPayAction = [UIAlertAction actionWithTitle:@"支付宝" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self aliPayMethod];
+    }];
+    //aliPayMethod
+    //最后将这些按钮都添加到界面上去，显示界面
+    [alertController addAction:aliPayAction];
+    [alertController addAction:wxPayAction];
+    [alertController addAction:cancelAction];
+    [self presentViewController: alertController animated:YES completion:nil];
+}
+
+#pragma mark - 弹出协议通知
+-(void)showDelegateAction
+{
+    self.translucentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,SCREEN_WIDTH, SCREEN_HEIGHT)];
+    self.translucentView.backgroundColor = [UIColor blackColor];
+    self.translucentView.alpha = 0.7f;
+    [self.view addSubview:self.translucentView];
+    
+    self.payDelegateView = [[SKPayDelegateView alloc] init];
+    self.payDelegateView.backgroundColor = [UIColor whiteColor];
+    self.payDelegateView.layer.cornerRadius = 5.f;
+    self.payDelegateView.layer.borderWidth = 1.f;
+    self.payDelegateView.layer.borderColor = [UIColor whiteColor].CGColor;
+    [self.payDelegateView.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.payDelegateStr]]];
+    [self.payDelegateView.agreeButton addTarget:self action:@selector(agreeButtonMethod) forControlEvents:UIControlEventTouchDown];
+    [self.payDelegateView.cancleButton addTarget:self action:@selector(cancleButtonMethod) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.payDelegateView];
+    [self.payDelegateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(self.view);
+        make.width.mas_offset(SCREEN_WIDTH-80);
+        make.height.mas_offset(SCREEN_HEIGHT-200);
+    }];
+}
+
+#pragma mark - 微信支付接口
+-(void)wxPayMethod
+{
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"facilitator":@"1006",
+                                 @"carrieroperator":@"1006",
+                                 @"body":@"长租工位购买",
+                                 @"trade_type":@"APP",
+                                 @"commodityNum":self.roomModel.subareaId,
+                                 @"commodityName":self.productDescriptionStr,
+                                 @"spaceId":self.spaceModel.spaceId,
+                                 @"imageSite":self.roomModel.showPicture,
+                                 @"commodityKind":@"长租工位",
+                                 @"productNum":@1,
+                                 @"money":self.payMoneyNum,//
+                                 @"payType":@1,
+                                 @"payObject":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"commodityNumList":self.presetTimeStr
+                                 };
+    //__weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork generateOrderWithParam:parameters response:^(id bean, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            WOTWXPayModel_msg *model = (WOTWXPayModel_msg *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                WOTWXPayModel_msg *model = (WOTWXPayModel_msg*)bean;
+                [WOTHTTPNetwork wxPayWithParameter:model.msg];
+            }else
+            {
+                [MBProgressHUDUtil showMessage:@"支付失败！" toView:self.view];
+                return ;
+            }
+
+        });
+    }];
+}
+
+#pragma mark - 支付宝支付接口
+-(void)aliPayMethod
+{
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"userTel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"commodityName":self.productDescriptionStr,
+                                 @"commodityKind":@"长租工位",
+                                 @"productNum":@1,
+                                 @"spaceId":self.spaceModel.spaceId,
+                                 @"commodityNum":self.roomModel.subareaId,
+                                 @"imageSite":self.roomModel.showPicture,
+                                 @"money":self.payMoneyNum,//self.paySumNumber
+                                 @"payType":@1,
+                                 @"payObject":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"body":@"长租工位购买",
+                                 @"commodityNumList":self.presetTimeStr
+                                 };
+    [WOTHTTPNetwork submitAlipayOrderWith:parameters response:^(id bean, NSError *error) {
+        SKAliPayModel_msg *model_msg = (SKAliPayModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            SKAliPayModel *model = model_msg.msg;
+            NSDictionary *parmDict = @{@"appid":AliPayAPPID,
+                                       @"body":model.body,
+                                       @"money":model.money,//model.money
+                                       @"orderNum":model.orderNum
+                                       };
+            [self getOrderString:parmDict orderParam:parameters];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+            return ;
+        }
+    }];
+}
+-(void)agreeButtonMethod
+{
+    
+    [WOTHTTPNetwork addUserPayDelegateWithUserId:[WOTUserSingleton shareUser].userInfo.userId agreementState:@"是" response:^(id bean, NSError *error) {
+        WOTBaseModel * model = bean;
+        if ([model.code isEqualToString:@"200"]) {
+            
+            [[WOTUserSingleton shareUser] updateUserInfo:^{
+                [self.translucentView removeFromSuperview];
+                [self.self.payDelegateView removeFromSuperview];
+                //                [MBProgressHUDUtil showMessage:@"发送成功！" toView:self.view];
+                [self showSheet];
+            }];
+        }
+    }];
+}
+
+-(void)cancleButtonMethod
+{
+    [self.translucentView removeFromSuperview];
+    [self.self.payDelegateView removeFromSuperview];
+}
+#pragma mark - 得到支付协议
+-(void)getPayDelegate
+{
+    [WOTHTTPNetwork getPayDelegateResponse:^(id bean, NSError *error) {
+        SKPayDelegateModel_msg *model = (SKPayDelegateModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            self.payDelegateStr = [model.msg.agreementAdress stringToUrl];
+            NSLog(@"支付协议：%@",_payDelegateStr);
+        }
+    }];
+}
+
+#pragma mark - 获取支付宝orderstring
+-(void)getOrderString:(NSDictionary *)param orderParam:(NSDictionary *)orderParam
+{
+    [WOTHTTPNetwork getOrderString:param response:^(id bean, NSError *error) {
+        SKOrderStringModel *model = (SKOrderStringModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [[AlipaySDK defaultService] payOrder:model.msg fromScheme:AliPayAPPID callback:^(NSDictionary *resultDic) {
+                NSLog(@"reslut ===>= %@",resultDic);
+            }];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
+            return ;
+        }
+    }];
+}
+
+//***********************************预定end*******************************
+
+#pragma mark - 获取社区服务信息
+-(void)getcommunityServiceInfo
+{
+    [WOTHTTPNetwork queryCommunityServiceInfoWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
+        SKCommunityServiceModel_msg *model_msg = (SKCommunityServiceModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            self.communityServiceModel = model_msg.msg;
+        }
+    }];
+}
+
+-(void)clickReserveButton:(UIButton *)button
+{
+    if (button.tag == 0) {
+        WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
+        
+        [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
+        vc.spaceModel = self.spaceModel;
+        vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+    if (button.tag == 1) {
+        SKRoomListVC *roomListVC = [[SKRoomListVC alloc] init];
+        roomListVC.spaceModel = self.spaceModel;
+        [self.navigationController pushViewController:roomListVC animated:YES];
+    }
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

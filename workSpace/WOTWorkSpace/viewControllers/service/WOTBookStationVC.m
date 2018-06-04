@@ -15,6 +15,9 @@
 #import "WOTOrderVC.h"
 #import "WOTSpaceModel.h"
 #import "WOTBookStationListModel.h"
+#import "SKBookStationVC.h"
+#import "SKRoomListVC.h"
+#import "JXPopoverView.h"
 
 @interface WOTBookStationVC ()<UITableViewDelegate,UITableViewDataSource, WOTBookStationCellDelegate>
 {
@@ -28,7 +31,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *notInformationImageView;
 @property (weak, nonatomic) IBOutlet UILabel *notBookStationInformationLabel;
 @property (nonatomic, strong) NSMutableArray *menuArray;
-
+@property (nonatomic, strong)UIButton *cityButton;
+@property (nonatomic, strong)UIBarButtonItem *barButton;
 //@property (nonatomic, assign)CGFloat y;
 //@property (nonatomic, assign)CGFloat height;
 @property (nonatomic, strong)NSMutableArray *cityList;
@@ -49,6 +53,7 @@
     //self.navigationItem.title = @"订工位";
     
     //_spaceId = @(56);原来
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookStationNotificationAction:) name:@"BookStationNotification" object:nil];
     self.cityList = [NSMutableArray new];
     inquireTime = [NSDate getNewTimeZero];
     cityName = [WOTSingtleton shared].cityName;
@@ -74,17 +79,43 @@
     
 }
 
+//-(void)configNavi{
+//
+//    ///需要更改的地方spaceName
+//
+//    //解决布局空白问题--dong
+//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
+//    if (is7Version) {
+//        self.edgesForExtendedLayout=UIRectEdgeNone;
+//    }
+//    self.navigationController.navigationBar.translucent = NO; //有个万恶的黑色
+//
+//}
 -(void)configNavi{
+    self.navigationItem.title = @"订工位";
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.rightBarButtonItem.customView.hidden=YES;
     
-    ///需要更改的地方spaceName
+    self.cityButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.cityButton addTarget:self action:@selector(selectSpace:) forControlEvents:UIControlEventTouchDown];
+    [self.cityButton setTitle:cityName forState:UIControlStateNormal];
+    self.cityButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.cityButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
-    //解决布局空白问题--dong
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
-    self.navigationController.navigationBar.translucent = NO; //有个万恶的黑色
+    UIImage *imageForButton = [UIImage imageNamed:@"Triangular"];
+    [self.cityButton setImage:imageForButton forState:UIControlStateNormal];
+    CGSize buttonTitleLabelSize = [cityName sizeWithAttributes:@{NSFontAttributeName:self.cityButton.titleLabel.font}]; //文本尺寸
+    CGSize buttonImageSize = imageForButton.size;   //图片尺寸
+    self.cityButton.frame = CGRectMake(0,0,
+                                       buttonImageSize.width + buttonTitleLabelSize.width,
+                                       buttonImageSize.height);
+    self.cityButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.cityButton.imageView.frame.size.width - self.cityButton.frame.size.width + self.cityButton.titleLabel.intrinsicContentSize.width, 0, 0);
     
+    self.cityButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -self.cityButton.titleLabel.frame.size.width - self.cityButton.frame.size.width + self.cityButton.imageView.frame.size.width);
+    
+    self.barButton = [[UIBarButtonItem alloc]initWithCustomView:self.cityButton];
+    self.navigationItem.rightBarButtonItem = self.barButton;
+    //[self configNaviRightItemWithImage:[UIImage imageNamed:@"publishSocial"]];
 }
 #pragma mark - request
 -(void)createRequest
@@ -126,13 +157,35 @@
     
 }
 
+#pragma mark - 选择城市
+-(void)selectSpace:(UIButton *)sender
+{
+    
+    if (self.cityList.count) {
+        JXPopoverView *popoverView = [JXPopoverView popoverView];
+        NSMutableArray *JXPopoverActionArray = [[NSMutableArray alloc] init];
+        for (NSString *name in self.cityList) {
+            JXPopoverAction *action1 = [JXPopoverAction actionWithTitle:name handler:^(JXPopoverAction *action) {
+                cityName = name;
+                [self configNavi];
+                //[self.cityButton setTitle:cityName forState:UIControlStateNormal];
+                //NSLog(@"测试：%@",name);
+                NSDictionary *dict =[[NSDictionary alloc] initWithObjectsAndKeys:name,@"name", nil];
+                NSNotification *notification =[NSNotification notificationWithName:@"BookStationNotification" object:nil userInfo:dict];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+            }];
+            [JXPopoverActionArray addObject:action1];
+        }
+        [popoverView showToView:sender withActions:JXPopoverActionArray];
+    }
+}
 
 
 
 #pragma mark - 请求城市列表
 -(void)createRequestCity
 {
-//    __weak typeof(self) weakSelf = self;
+    //    __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getSapaceFromGroupBlock:^(id bean, NSError *error) {
         if (error) {
             NSLog(@"error:%@",error);
@@ -223,15 +276,33 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
-    WOTSpaceModel *model = self.tableList[indexPath.row];
-    [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
-    vc.spaceModel = model;
-    vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
-    [self.navigationController pushViewController:vc animated:YES];
+     WOTSpaceModel *model = self.tableList[indexPath.row];
+    if ([WOTSingtleton shared].skTimeType == SKTIMETYPE_LONGTIME) {
+        NSLog(@"长租");
+        SKRoomListVC *roomListVC = [[SKRoomListVC alloc] init];
+        roomListVC.spaceModel = model;
+        [self.navigationController pushViewController:roomListVC animated:YES];
+    }else
+    {
+        WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
+       
+        [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
+        vc.spaceModel = model;
+        vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
+- (void)bookStationNotificationAction:(NSNotification *)notification{
+    cityName = [notification.userInfo objectForKey:@"name"];
+    [self createRequest];
+}
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:@"BookStationNotification"];
+}
 
 @end
 

@@ -61,6 +61,8 @@
 #import "SKMyDemandModel.h"
 #import "SKSingleFacilitatorModel.h"
 #import "SKPayDelegateModel.h"
+#import "SKRoomModel.h"
+#import "SKCommunityServiceModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -348,6 +350,15 @@
         return model;
     } response:response];
 }
++(void)queryUnreadWithUserId:(NSNumber *)userId response:(response)response
+{
+    NSDictionary *dic = @{@"userid":userId};
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/check/addcheck"];
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
 
 +(void)getUserInviteResponse:(response)response
 {
@@ -490,6 +501,32 @@
         return  model;
     } response:response];
 
+}
+
++(void)queryRoomListWithSpaceId:(NSNumber *)spaceId response:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/StationSubarea/find"];
+    NSDictionary *parameters = @{@"spaceId":spaceId,
+                                 @"subareaGrade":@2,
+                                 @"state":@"未租用",
+                                 @"onlineBooking":@"是",
+                                 @"pageNo":@1,
+                                 @"pageSize":@1000
+                                 };
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        SKRoomModel_msg * model = [[SKRoomModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
++(void)queryCommunityServiceInfoWithSpaceId:(NSNumber *)spaceId response:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/StationInfo/StationNum"];
+    NSDictionary *parameters = @{@"spaceId":spaceId};
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        SKCommunityServiceModel_msg * model = [[SKCommunityServiceModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
 }
 
 +(void)queryCompanyTimeRemainingWithId:(NSString *)companyId response:(response)response
@@ -1572,7 +1609,8 @@
 
 +(void)getQRcodeInfoWithUserId:(NSNumber *)userId companyId:(NSString *)companyId response:(response)response
 {
-    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Make/addOwnerQrCode",HTTPBaseURL];
+    //addOwnerQrCodeforApp
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Make/addOwnerQrCodeforApp",HTTPBaseURL];
     NSDictionary *parameters = @{@"userId":userId,
                                  @"companyId":companyId
                                  };

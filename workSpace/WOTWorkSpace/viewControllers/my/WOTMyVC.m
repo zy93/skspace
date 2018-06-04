@@ -266,6 +266,7 @@
     NSArray *arr = @[@"全部订单", @"会议室", @"工位", @"场地", @"礼包"];
     if ([WOTSingtleton shared].isuserLogin) {
         WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
+    
         station_ordervc.page = [arr indexOfObject:type];
         [self.navigationController pushViewController:station_ordervc animated:YES];
     }
@@ -346,6 +347,8 @@
             SKInfoNotifationModel_msg *model = (SKInfoNotifationModel_msg *)bean;
             if ([model.code isEqualToString:@"200"]) {
                 weakSelf.isShow = YES;
+                AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:4];
             }else
             {
                 weakSelf.isShow = NO;
@@ -353,7 +356,6 @@
             [weakSelf.tableView reloadData];
         }];
     }
-    
 }
 
 #pragma mark - 更新用户信息
@@ -361,6 +363,7 @@
 {
     if ([WOTUserSingleton shareUser].userInfo.userId) {
         [[WOTUserSingleton shareUser] updateUserInfo:^{
+            
         }];
     }
     

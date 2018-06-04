@@ -10,6 +10,7 @@
 #import "WOTFilterTypeModel.h"
 #import "WOTActivitiesListCell.h"
 #import "WOTH5VC.h"
+#import "JudgmentTime.h"
 
 @interface WOTActivitiesLIstVC ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -24,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *category_arrowdown;
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 
-
+@property (nonatomic, strong)JudgmentTime *judgmentTime;
 @end
 
 @implementation WOTActivitiesLIstVC
@@ -35,7 +36,7 @@ bool ismenu1 =  NO;
     self.tableVIew.backgroundColor = UICOLOR_CLEAR;
     [self configNav];
 
-    
+    self.judgmentTime = [[JudgmentTime alloc] init];
     [self makeMenuArrays];
     [self.tableVIew registerNib:[UINib nibWithNibName:@"WOTworkSpaceCommonCell" bundle:nil] forCellReuseIdentifier:@"WOTworkSpaceCommonCellID"];
     self.communityName.text = ((WOTFilterTypeModel *)self.menu1Array[0]).filterName;
@@ -182,10 +183,11 @@ bool ismenu1 =  NO;
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTActivitiesListCell *activitycell = [tableView dequeueReusableCellWithIdentifier:@"WOTActivitiesListCellID" forIndexPath:indexPath];
-    
+    NSLog(@"开始时间：%@，结束时间：%@",_dataSource[indexPath.row].starTime,_dataSource[indexPath.row].endTime);
     activitycell.activityTitle.text = _dataSource[indexPath.row].title;
     activitycell.activityLocation.text = _dataSource[indexPath.row].spaceName;
-    activitycell.activityState.text = [_dataSource[indexPath.row].starTime getDate];
+    //[_dataSource[indexPath.row].starTime getDate];
+    activitycell.activityState.text = [self.judgmentTime activityStateWithStartTime:_dataSource[indexPath.row].starTime endTime:_dataSource[indexPath.row].endTime];
     [activitycell.activityImage sd_setImageWithURL:[_dataSource[indexPath.row].pictureSite ToResourcesUrl]  placeholderImage:[UIImage imageNamed:@"placeholder_activity"]];
     
     return activitycell;

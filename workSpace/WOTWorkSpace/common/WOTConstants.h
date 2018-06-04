@@ -62,6 +62,7 @@
 //#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
 //#define HTTPBaseURL @"http://192.168.6.203:8080"//赵亮亮
 //#define HTTPBaseURL @"http://192.168.1.116:8080"//石宇驰
+//#define HTTPBaseURL @"http://192.168.35.155:8080"//石宇驰
 
 //集团的appid
 //#define YLGTEST_APPID @"c4ca4238a0b923820dcc509a6f75849b"//易联港测试

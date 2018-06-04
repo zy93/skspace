@@ -17,6 +17,12 @@ typedef NS_ENUM(NSInteger, ORDER_TYPE) {
     ORDER_TYPE_MEETING,
     ORDER_TYPE_SITE,
     ORDER_TYPE_SPACE, //空间详情
+    ORDER_TYPE_LONGTIME_BOOKSTATION,
+};
+
+typedef NS_ENUM(NSInteger,SKTIMETYPE) {
+    SKTIMETYPE_SHORTPERIOD,
+    SKTIMETYPE_LONGTIME,
 };
 
 typedef NS_ENUM(NSInteger,PAY_TYPE){
@@ -50,6 +56,8 @@ typedef NS_ENUM(NSInteger, BUTTON_TYPE) {
 @property (nonatomic, assign) PAY_TYPE payType;
 //距离最近的空间
 @property (nonatomic, strong) WOTSpaceModel *nearbySpace;
+
+@property (nonatomic, assign) SKTIMETYPE skTimeType;
 
 
 

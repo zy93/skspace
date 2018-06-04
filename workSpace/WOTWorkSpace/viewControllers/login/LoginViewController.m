@@ -12,6 +12,7 @@
 #import "RegisterViewController.h"
 #import "FindPassWordViewController.h"
 #import "JPUSHService.h"
+#import "SKInfoNotifationModel.h"
 
 
 @interface LoginViewController ()<UITextFieldDelegate>
@@ -244,6 +245,8 @@
                     [JPUSHService setAlias:[NSString stringWithFormat:@"%@C",self.userTelField.text] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
                         
                     } seq:1];
+                    [self queryUnreadFriendCircle];
+                    [self queryNewInfo];
                     [self.navigationController popViewControllerAnimated:YES];
                 });
             }
@@ -272,6 +275,33 @@
 {
     FindPassWordViewController *findVC = [[FindPassWordViewController alloc] init];
     [self.navigationController pushViewController:findVC animated:YES];
+}
+
+-(void)queryUnreadFriendCircle
+{
+    if ([WOTUserSingleton shareUser].userInfo.userId) {
+        [WOTHTTPNetwork queryUnreadWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+            WOTBaseModel *model = (WOTBaseModel *)bean;
+            if ([model.code isEqualToString:@"202"]) {
+                AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:1];            }
+        }];
+    }
+}
+
+-(void)queryNewInfo
+{
+    __weak typeof(self) weakSelf = self;
+    if ([WOTUserSingleton shareUser].userInfo.userId) {
+        [WOTHTTPNetwork queryNotifationInfoWithReadState:@"未读" response:^(id bean, NSError *error) {
+            SKInfoNotifationModel_msg *model = (SKInfoNotifationModel_msg *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                //weakSelf.isShow = YES;
+                AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.tabbar.tabBar hideBadgeOnItemIndex:1];            }
+        }];
+    }
+    
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField

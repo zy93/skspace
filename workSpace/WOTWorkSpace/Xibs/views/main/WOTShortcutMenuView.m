@@ -55,26 +55,26 @@
 {
     //self.backgroundColor = UIColorFromRGB(0x8fc5f3);
     self.backgroundColor = [UIColor whiteColor];
-    sbNameList = @[@"",@"",@"Service",@"Service",@"",
+    sbNameList = @[@"Service",@"Service",@"Service",@"Service",@"",
                    @"spaceMain",@"spaceMain",@"Service",];
     
-    vcNameList = @[ @"SKBookStationVC",
-                    @"SKGiftBagViewController",
+    vcNameList = @[ @"WOTBookStationVCID",
+                    @"WOTBookStationVCID",
                    @"WOTReservationsMeetingVC",
                    @"WOTReservationsMeetingVC",
-                   @"WOTEnterpriseLIstVC",
+                   @"SKGiftBagViewController",
                    @"WOTInformationListVC",
                    @"WOTActivitiesLIstVC",
                    @"WOTVisitorsAppointmentVC"
                    ];
     
     
-    titleList = @[@"预定工位",@"分时礼包",@"订会议室",@"预订场地", @"入驻企业", @"尚科资讯", @"尚科活动", @"访客预约"];
-    imageNameList = @[@"shortcut_station_icon",
-                      @"shortcut_open_icon",
+    titleList = @[@"分时预定",@"房间预定",@"订会议室",@"预订场地", @"礼包", @"尚科资讯", @"尚科活动", @"访客预约"];
+    imageNameList = @[@"shortcut_finds_icon",
+                      @"shortcut_station_icon",
                       @"shortcut_meeting_icon",
                       @"shortcut_site_icon",
-                      @"shortcut_finds_icon",
+                      @"shortcut_open_icon",
                       @"shortcut_news_icon",
                       @"shortcut_activity_icon",
                       @"shortcut_visitors_icon"];
@@ -138,6 +138,11 @@
         
         if (sender.tag == 0) {
             [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
+            [WOTSingtleton shared].skTimeType = SKTIMETYPE_SHORTPERIOD;
+        }else if (sender.tag == 1)
+        {
+            [WOTSingtleton shared].orderType = ORDER_TYPE_BOOKSTATION;
+            [WOTSingtleton shared].skTimeType = SKTIMETYPE_LONGTIME;
         }
         else if (sender.tag == 2) {
             [WOTSingtleton shared].orderType = ORDER_TYPE_MEETING;

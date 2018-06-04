@@ -39,4 +39,13 @@
  */
 -(NSInteger)numberOfDaysWithFromDate:(NSString *)fromDateString toDate:(NSString *)toDateString;
 
+/**
+ 活动状态
+
+ @param startTime 开始时间
+ @param endTime 结束时间
+ @return 返回活动状态
+ */
+-(NSString *)activityStateWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
+
 @end

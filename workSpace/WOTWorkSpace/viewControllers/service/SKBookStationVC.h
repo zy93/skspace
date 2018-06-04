@@ -8,9 +8,14 @@
 
 #import "WOTPageMenuParentVC.h"
 
+@protocol SKBookStationVCDelegate<NSObject>
+
+-(void)questSpaceList:(NSString *)name;
+
+@end
+
 @interface SKBookStationVC : WOTPageMenuParentVC
 
-
-
+@property(nonatomic,weak)id <SKBookStationVCDelegate> delegate;
 
 @end

@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "WXApi.h"
-
+#import "WOTTabBarVCViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,WXApiDelegate>
+
+@property (nonatomic, strong)WOTTabBarVCViewController *tabbar;
 
 @property (strong, nonatomic) UIWindow *window;
 

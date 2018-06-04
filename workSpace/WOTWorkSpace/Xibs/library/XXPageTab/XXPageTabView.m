@@ -9,7 +9,7 @@
 #import "XXPageTabView.h"
 #import "XXPageTabItemLable.h"
 
-#define kTabDefautHeight 40.0
+#define kTabDefautHeight 38.0
 #define kTabDefautFontSize 15.0
 #define kMaxNumberOfPageItems 4
 #define kIndicatorHeight 2.0
@@ -28,7 +28,8 @@
 //tab
 @property (nonatomic, strong) UIScrollView *tabView;
 @property (nonatomic, strong) UIView *indicatorView;
-@property (nonatomic, strong) UIView *lineView;
+@property (nonatomic, strong) UIView *separatorView;
+
 //body
 @property (nonatomic, strong) UIScrollView *bodyView;
 
@@ -69,7 +70,7 @@
         [self initBaseSettings];
         [self initTabView];
         [self initMainView];
-//        [self addIndicatorViewWithStyle];
+        [self addIndicatorViewWithStyle];
     }
     return self;
 }
@@ -85,6 +86,7 @@
                 _selectedTabIndex = [childTitles indexOfObject:childTitle];
             }
         }
+        
         //更新部分数据
         _childControllers = childControllers;
         _childTitles = childTitles;
@@ -117,32 +119,18 @@
         
         self.tabView.frame = CGRectMake(0, 0, _tabSize.width, _tabSize.height);
         self.tabView.contentSize = CGSizeMake(_tabItemWidth*_numberOfTabItems, 0);
-        self.lineView.frame = CGRectMake(0,_tabSize.height-_indicatorHeight, _tabSize.width, 1);
+        self.separatorView.frame = CGRectMake(0, _tabSize.height-0.5, _tabSize.width, 0.5);
         
         for(NSInteger i = 0; i < _tabItems.count; i++) {
             XXPageTabItemLable *tabItem = (XXPageTabItemLable *)_tabItems[i];
             tabItem.frame = CGRectMake(_tabItemWidth*i, 0, _tabItemWidth, _tabSize.height);
-            if (_cutOffLine) {
-                
-                    if (i < _tabItems.count-1) {
-                        UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(tabItem.frame.size.width-1, 10, 1, tabItem.frame.size.height-20)];
-                        lineview.backgroundColor = UICOLOR_GRAY_DD;
-                        [tabItem addSubview:lineview];
-                    }
-                
-                
-            }
-            
-            
-            
         }
         [self layoutIndicatorViewWithStyle];
 
         //body layout
         self.bodyView.frame = CGRectMake(0, _tabSize.height, WIDTH(self), HEIGHT(self)-_tabSize.height);
         self.bodyView.contentOffset = CGPointMake(self.frame.size.width*_selectedTabIndex, 0);
-        //self.bodyView.contentSize = CGSizeMake(WIDTH(self)*_numberOfTabItems, 0);
-        self.bodyView.contentSize = CGSizeMake(WIDTH(self), 0);
+        self.bodyView.contentSize = CGSizeMake(WIDTH(self)*_numberOfTabItems, 0);
         [self reviseTabContentOffsetBySelectedIndex:NO];
         
         for(NSInteger i = 0; i < _numberOfTabItems; i++) {
@@ -167,11 +155,13 @@
     _tabItems = [NSMutableArray array];
     _tabBackgroundColor = [UIColor whiteColor];
     _bodyBackgroundColor = [UIColor whiteColor];
-    _unSelectedColor = UICOLOR_MAIN_BLACK;
-    _selectedColor = UICOLOR_MAIN_ORANGE;
+    _unSelectedColor = [UIColor blackColor];
+    _selectedColor = [UIColor redColor];
+    _separatorColor = [UIColor clearColor];
     _isNeedRefreshLayout = YES;
     _isChangeByClick = NO;
     _bodyBounces = YES;
+    _bodyScrollEnabled = YES;
     _titleStyle = XXPageTabTitleStyleDefault;
     _indicatorStyle = XXPageTabIndicatorStyleDefault;
     _minScale = kMinScale;
@@ -192,6 +182,10 @@
         [self addSubview:self.tabView];
     }
     
+    if(!self.separatorView.superview) {
+        [self addSubview:self.separatorView];
+    }
+    
     for(NSInteger i = 0; i < _numberOfTabItems; i++) {
         XXPageTabItemLable *tabItem = [[XXPageTabItemLable alloc] init];
         tabItem.font = _tabItemFont;
@@ -200,16 +194,11 @@
         tabItem.textAlignment = NSTextAlignmentCenter;
         tabItem.userInteractionEnabled = YES;
         
-       
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeChildControllerOnClick:)];
         [tabItem addGestureRecognizer:tapRecognizer];
         [_tabItems addObject:tabItem];
         [self.tabView addSubview:tabItem];
     }
-    if (!self.lineView.superview) {
-        [self addSubview:_lineView];
-    }
-    
 }
 
 - (void)resetTabView {
@@ -244,10 +233,6 @@
  @param index 需要展示的child的索引
  */
 - (void)layoutChildViewWithIndex:(NSInteger)index {
-    for(UIView *view in [self.bodyView subviews])
-    {
-        [view removeFromSuperview];
-    }
     if(index >= 0 && index < _childControllers.count) {
         UIViewController *childController = _childControllers[index];
         if(childController.view.superview != self.bodyView) {
@@ -277,7 +262,6 @@
     }
     [self.tabView setContentOffset:CGPointMake(reviseX, 0) animated:isAnimate];
 }
-
 
 /**
  tabview修正完成后的操作，无论是点击还是滑动body，此方法都是真正意义上的最后一步
@@ -324,18 +308,15 @@
  根据不同风格添加相应下标
  */
 - (void)addIndicatorViewWithStyle {
-    if (_bottomOffLine) {
-        switch (_indicatorStyle) {
-            case XXPageTabIndicatorStyleDefault:
-            case XXPageTabIndicatorStyleFollowText:
-            case XXPageTabIndicatorStyleStretch:
-                [self addSubview:self.indicatorView];
-                break;
-            default:
-                break;
-        }
+    switch (_indicatorStyle) {
+        case XXPageTabIndicatorStyleDefault:
+        case XXPageTabIndicatorStyleFollowText:
+        case XXPageTabIndicatorStyleStretch:
+            [self addSubview:self.indicatorView];
+            break;
+        default:
+            break;
     }
-   
 }
 
 /**
@@ -394,7 +375,7 @@
         [self finishReviseTabContentOffset];
     }
 }
-//1
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if(scrollView == self.tabView) {
         _isNeedRefreshLayout = NO;
@@ -622,6 +603,14 @@
     return _tabView;
 }
 
+- (UIView *)separatorView {
+    if(!_separatorView) {
+        _separatorView = [UIView new];
+        _separatorView.backgroundColor = _separatorColor;
+    }
+    return _separatorView;
+}
+
 - (UIScrollView *)bodyView {
     if(!_bodyView) {
         _bodyView = [UIScrollView new];
@@ -631,6 +620,7 @@
         _bodyView.delegate = self;
         _bodyView.bounces = _bodyBounces;
         _bodyView.backgroundColor = _bodyBackgroundColor;
+        _bodyView.scrollEnabled = _bodyScrollEnabled;
     }
     return _bodyView;
 }
@@ -641,13 +631,6 @@
         _indicatorView.backgroundColor = _selectedColor;
     }
     return _indicatorView;
-}
-- (UIView *)lineView {
-    if(!_lineView) {
-        _lineView = [UIView new];
-        _lineView.backgroundColor = UICOLOR_GRAY_DD;
-    }
-    return _lineView;
 }
 
 - (void)setTabBackgroundColor:(UIColor *)tabBackgroundColor {
@@ -666,6 +649,8 @@
         _selectedTabIndex = selectedTabIndex;
         _lastSelectedTabIndex = selectedTabIndex;
         [self layoutIndicatorViewWithStyle];
+        [self resetMainView];
+        [self initMainView];
         self.bodyView.contentOffset = CGPointMake(WIDTH(self)*_selectedTabIndex, 0);
         
         if(_titleStyle == XXPageTabTitleStyleGradient) {
@@ -744,6 +729,16 @@
             [self resetTabItemScale];
         }
     }
+}
+
+- (void)setSeparatorColor:(UIColor *)separatorColor {
+    _separatorColor = separatorColor;
+    self.separatorView.backgroundColor = _separatorColor;
+}
+
+- (void)setBodyScrollEnabled:(BOOL)bodyScrollEnabled {
+    _bodyScrollEnabled = bodyScrollEnabled;
+    self.bodyView.scrollEnabled = _bodyScrollEnabled;
 }
 
 @end

@@ -19,8 +19,10 @@
     [super viewDidLoad];
     [self configNavi];
     // Do any additional setup after loading the view.
-    self.pageTabView.maxNumberOfPageItems = 5;
-    self.pageTabView.titleStyle = XXPageTabTitleStyleBlend;
+    //self.pageTabView.maxNumberOfPageItems = 6;
+
+    self.pageTabView.titleStyle = XXPageTabTitleStyleDefault;
+    self.pageTabView.indicatorStyle = XXPageTabIndicatorStyleDefault;
     self.pageTabView.selectedTabIndex = self.page;
 }
 
@@ -30,6 +32,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.navigationController.navigationBar.translucent = NO;
 }
@@ -45,26 +48,34 @@
 }
 
 -(NSArray *)createTitles{
-    return [[NSArray alloc]initWithObjects:@"全部",@"会议室", @"工位",@"场地", @"礼包", nil];
+    return [[NSArray alloc]initWithObjects:@"全部",@"会议室", @"工位",@"长租工位",@"场地", @"礼包", nil];
 }
 
 -(NSArray<__kindof UIViewController *> *)createViewControllers{
     WOTOrderLIstBaseVC *vc1 = [[WOTOrderLIstBaseVC alloc]init];
     vc1.orderlisttype = WOTPageMenuVCTypeAll;
+    [self addChildViewController:vc1];
+    
     WOTOrderLIstBaseVC *vc2 = [[WOTOrderLIstBaseVC alloc]init];
     vc2.orderlisttype = WOTPageMenuVCTypeMeeting;
+    [self addChildViewController:vc2];
+    
     WOTOrderLIstBaseVC *vc3 = [[WOTOrderLIstBaseVC alloc]init];
     vc3.orderlisttype = WOTPageMenuVCTypeStation;
-    WOTOrderLIstBaseVC *vc4 = [[WOTOrderLIstBaseVC alloc]init];
-    vc4.orderlisttype = WOTPageMenuVCTypeSite;
-    WOTOrderLIstBaseVC *vc5 = [[WOTOrderLIstBaseVC alloc]init];
-    vc5.orderlisttype = WOTPageMenuVCTypeGiftBag;
-    
-    [self addChildViewController:vc1];
-    [self addChildViewController:vc2];
     [self addChildViewController:vc3];
+    
+    WOTOrderLIstBaseVC *vc4 = [[WOTOrderLIstBaseVC alloc]init];
+    vc4.orderlisttype = WOTPageMenuVCTypeLongTimeStation;
     [self addChildViewController:vc4];
+    
+    WOTOrderLIstBaseVC *vc5 = [[WOTOrderLIstBaseVC alloc]init];
+    vc5.orderlisttype = WOTPageMenuVCTypeSite;
     [self addChildViewController:vc5];
+    
+    WOTOrderLIstBaseVC *vc6 = [[WOTOrderLIstBaseVC alloc]init];
+    vc6.orderlisttype = WOTPageMenuVCTypeGiftBag;
+    [self addChildViewController:vc6];
+    
     return self.childViewControllers;
 }
 

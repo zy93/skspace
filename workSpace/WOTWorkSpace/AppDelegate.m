@@ -14,12 +14,14 @@
 #import "JPUSHService.h"
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
+#import "UITabBar+badge.h"
+#import "SKInfoNotifationModel.h"
 #endif
 
 #define MAP_API_KEY @"d4ac301f3334bc74439bda2d81e41061"
 
 @interface AppDelegate () <JPUSHRegisterDelegate>
-@property (nonatomic, strong)WOTTabBarVCViewController *tabbar;
+
 @end
 
 @implementation AppDelegate
@@ -28,6 +30,8 @@
     // Override point for customization after application launch.
     [AMapServices sharedServices].apiKey =@"d4ac301f3334bc74439bda2d81e41061";
     self.tabbar = [[WOTTabBarVCViewController alloc]init];
+    //[self queryUnreadFriendCircle];
+    //[self.tabbar.tabBar showBadgeOnItemIndex:4];
     //self.tabbar.delegate = self;
     [self loadTabView];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
@@ -76,11 +80,14 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [self queryUnreadFriendCircle];
+    [self queryNewInfo];
 }
 
 
@@ -333,6 +340,33 @@
     
     // Required,For systems with less than or equal to iOS6
     [JPUSHService handleRemoteNotification:userInfo];
+}
+
+-(void)queryUnreadFriendCircle
+{
+    if ([WOTUserSingleton shareUser].userInfo.userId) {
+        [WOTHTTPNetwork queryUnreadWithUserId:[WOTUserSingleton shareUser].userInfo.userId response:^(id bean, NSError *error) {
+            WOTBaseModel *model = (WOTBaseModel *)bean;
+            if ([model.code isEqualToString:@"202"]) {
+                [self.tabbar.tabBar showBadgeOnItemIndex:1];
+            }
+        }];
+    }
+}
+
+-(void)queryNewInfo
+{
+    __weak typeof(self) weakSelf = self;
+    if ([WOTUserSingleton shareUser].userInfo.userId) {
+        [WOTHTTPNetwork queryNotifationInfoWithReadState:@"未读" response:^(id bean, NSError *error) {
+            SKInfoNotifationModel_msg *model = (SKInfoNotifationModel_msg *)bean;
+            if ([model.code isEqualToString:@"200"]) {
+                //weakSelf.isShow = YES;
+                [weakSelf.tabbar.tabBar showBadgeOnItemIndex:4 ];
+            }
+        }];
+    }
+    
 }
 
 @end

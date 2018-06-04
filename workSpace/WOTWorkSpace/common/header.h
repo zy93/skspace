@@ -29,7 +29,8 @@
 
 //Network
 #import "WOTHTTPNetwork.h"
-
+#import "AppDelegate.h"
+#import "UITabBar+badge.h"
 
 //viewControllers
 #import "WOTTabBarVCViewController.h"

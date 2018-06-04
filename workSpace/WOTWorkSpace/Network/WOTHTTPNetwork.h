@@ -104,6 +104,15 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)sendMessageWithUserId:(NSNumber *)userId type:(NSString *)type summary:(NSString*)summary response:(response)response;
 
+
+/**
+ 查询是否有未读朋友圈
+
+ @param userId 用户id
+ @param response 结果回调
+ */
++(void)queryUnreadWithUserId:(NSNumber *)userId response:(response)response;
+
 #pragma mark- 空间
 
 /**
@@ -210,6 +219,23 @@ typedef void(^response)(id bean,NSError *error);
 //+(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId spaceName:(NSString *)spaceName response:(response)response;
 +(void)appointmentSettledWithSpaceId:(NSNumber *)spaceId tel:(NSString *)tel appointmentTime:(NSString *)appointmentTime peopleNum:(NSNumber *)peopleNum remark:(NSString *)remark companyName:(NSString *)companyName contacts:(NSString *)contacts spaceName:(NSString *)spaceName response:(response)response;
 
+
+/**
+ 查询房间列表
+
+ @param spaceId 空间id
+ @param response 结果回调
+ */
++(void)queryRoomListWithSpaceId:(NSNumber *)spaceId response:(response)response;
+
+
+/**
+ 查询社区服务信息
+
+ @param spaceId 空间id
+ @param response 结果回调
+ */
++(void)queryCommunityServiceInfoWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
 #pragma mark - 企业
 

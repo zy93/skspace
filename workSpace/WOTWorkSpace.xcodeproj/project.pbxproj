@@ -188,10 +188,17 @@
 		59BB1AF86E21AC99D91DDCE6 /* libPods-WOTWorkSpace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D773A878FA3518662358C7A0 /* libPods-WOTWorkSpace.a */; };
 		97D06A114DB42F1134696656 /* libPods-WOTWorkSpaceUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFC264D6C897C120A10B700D /* libPods-WOTWorkSpaceUITests.a */; };
 		C5065F5220BD034D00AD9269 /* SKBookStationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F5020BD034C00AD9269 /* SKBookStationVC.m */; };
-		C5065F5520BD03C600AD9269 /* WOTTESTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F5420BD03C600AD9269 /* WOTTESTViewController.m */; };
+		C5065F5820BD215200AD9269 /* SKRoomListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F5720BD215200AD9269 /* SKRoomListVC.m */; };
+		C5065F5B20BD223F00AD9269 /* SKRoomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F5A20BD223F00AD9269 /* SKRoomTableViewCell.m */; };
+		C5065F5E20BD496500AD9269 /* SKRoomDiscountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F5D20BD496500AD9269 /* SKRoomDiscountsTableViewCell.m */; };
+		C5065F6120BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F6020BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.m */; };
+		C5065F6420BD4E2F00AD9269 /* SKRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F6320BD4E2F00AD9269 /* SKRoomModel.m */; };
 		C509611B2022EF68009A9D4F /* SKSpaceDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C509611A2022EF68009A9D4F /* SKSpaceDetailsVC.m */; };
 		C509611E2022F1B0009A9D4F /* SKSpaceSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = C509611D2022F1B0009A9D4F /* SKSpaceSiteView.m */; };
 		C50961212022FA18009A9D4F /* SKTtileView.m in Sources */ = {isa = PBXBuildFile; fileRef = C50961202022FA18009A9D4F /* SKTtileView.m */; };
+		C531ED3820C1314A00D8EC98 /* SKCommunityServiceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C531ED3720C1314A00D8EC98 /* SKCommunityServiceTableViewCell.m */; };
+		C531ED3B20C13BBB00D8EC98 /* SKCommunityServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C531ED3A20C13BBB00D8EC98 /* SKCommunityServiceModel.m */; };
+		C531ED3E20C14ED000D8EC98 /* UITabBar+badge.m in Sources */ = {isa = PBXBuildFile; fileRef = C531ED3D20C14ED000D8EC98 /* UITabBar+badge.m */; };
 		C55A29871FD6DFD9001E0DB7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29811FD6DFD8001E0DB7 /* LoginViewController.m */; };
 		C55A29881FD6DFD9001E0DB7 /* FindPassWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29821FD6DFD9001E0DB7 /* FindPassWordViewController.m */; };
 		C55A29891FD6DFD9001E0DB7 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55A29841FD6DFD9001E0DB7 /* RegisterViewController.m */; };
@@ -819,14 +826,28 @@
 		B06E1E0FEBF126912B787519 /* Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig"; path = "Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests.ad hoc distrbution.xcconfig"; sourceTree = "<group>"; };
 		C5065F5020BD034C00AD9269 /* SKBookStationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKBookStationVC.m; sourceTree = "<group>"; };
 		C5065F5120BD034D00AD9269 /* SKBookStationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKBookStationVC.h; sourceTree = "<group>"; };
-		C5065F5320BD03C600AD9269 /* WOTTESTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOTTESTViewController.h; sourceTree = "<group>"; };
-		C5065F5420BD03C600AD9269 /* WOTTESTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOTTESTViewController.m; sourceTree = "<group>"; };
+		C5065F5620BD215200AD9269 /* SKRoomListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRoomListVC.h; sourceTree = "<group>"; };
+		C5065F5720BD215200AD9269 /* SKRoomListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKRoomListVC.m; sourceTree = "<group>"; };
+		C5065F5920BD223F00AD9269 /* SKRoomTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRoomTableViewCell.h; sourceTree = "<group>"; };
+		C5065F5A20BD223F00AD9269 /* SKRoomTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKRoomTableViewCell.m; sourceTree = "<group>"; };
+		C5065F5C20BD496500AD9269 /* SKRoomDiscountsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRoomDiscountsTableViewCell.h; sourceTree = "<group>"; };
+		C5065F5D20BD496500AD9269 /* SKRoomDiscountsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKRoomDiscountsTableViewCell.m; sourceTree = "<group>"; };
+		C5065F5F20BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRoomDescribeTableViewCell.h; sourceTree = "<group>"; };
+		C5065F6020BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKRoomDescribeTableViewCell.m; sourceTree = "<group>"; };
+		C5065F6220BD4E2F00AD9269 /* SKRoomModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRoomModel.h; sourceTree = "<group>"; };
+		C5065F6320BD4E2F00AD9269 /* SKRoomModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKRoomModel.m; sourceTree = "<group>"; };
 		C50961192022EF68009A9D4F /* SKSpaceDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceDetailsVC.h; sourceTree = "<group>"; };
 		C509611A2022EF68009A9D4F /* SKSpaceDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSpaceDetailsVC.m; sourceTree = "<group>"; };
 		C509611C2022F1B0009A9D4F /* SKSpaceSiteView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceSiteView.h; sourceTree = "<group>"; };
 		C509611D2022F1B0009A9D4F /* SKSpaceSiteView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSpaceSiteView.m; sourceTree = "<group>"; };
 		C509611F2022FA18009A9D4F /* SKTtileView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTtileView.h; sourceTree = "<group>"; };
 		C50961202022FA18009A9D4F /* SKTtileView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKTtileView.m; sourceTree = "<group>"; };
+		C531ED3620C1314A00D8EC98 /* SKCommunityServiceTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCommunityServiceTableViewCell.h; sourceTree = "<group>"; };
+		C531ED3720C1314A00D8EC98 /* SKCommunityServiceTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCommunityServiceTableViewCell.m; sourceTree = "<group>"; };
+		C531ED3920C13BBB00D8EC98 /* SKCommunityServiceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCommunityServiceModel.h; sourceTree = "<group>"; };
+		C531ED3A20C13BBB00D8EC98 /* SKCommunityServiceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCommunityServiceModel.m; sourceTree = "<group>"; };
+		C531ED3C20C14ED000D8EC98 /* UITabBar+badge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITabBar+badge.h"; sourceTree = "<group>"; };
+		C531ED3D20C14ED000D8EC98 /* UITabBar+badge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+badge.m"; sourceTree = "<group>"; };
 		C55A29811FD6DFD8001E0DB7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		C55A29821FD6DFD9001E0DB7 /* FindPassWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPassWordViewController.m; sourceTree = "<group>"; };
 		C55A29831FD6DFD9001E0DB7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -1789,10 +1810,14 @@
 				C59BFDC02029BFBF00D45EC3 /* SKBookStationOrderModel.m */,
 				C5E4977F204920B2002C38C9 /* SKGiftBagModel.h */,
 				C5E49780204920B2002C38C9 /* SKGiftBagModel.m */,
+				C5065F6220BD4E2F00AD9269 /* SKRoomModel.h */,
+				C5065F6320BD4E2F00AD9269 /* SKRoomModel.m */,
 				C5D8B1AC2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.h */,
 				C5D8B1AD2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m */,
 				C5C9C85120AAE6D70075E449 /* SKSingleFacilitatorModel.h */,
 				C5C9C85220AAE6D70075E449 /* SKSingleFacilitatorModel.m */,
+				C531ED3920C13BBB00D8EC98 /* SKCommunityServiceModel.h */,
+				C531ED3A20C13BBB00D8EC98 /* SKCommunityServiceModel.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -2189,6 +2214,8 @@
 		E8190D5E1F0F69660000B07C /* service */ = {
 			isa = PBXGroup;
 			children = (
+				C5065F5920BD223F00AD9269 /* SKRoomTableViewCell.h */,
+				C5065F5A20BD223F00AD9269 /* SKRoomTableViewCell.m */,
 				E8190D5F1F0F69660000B07C /* WOTGETServiceCell.h */,
 				E8190D601F0F69660000B07C /* WOTGETServiceCell.m */,
 				E8190D611F0F69660000B07C /* WOTRegisterServiceProvidersCell.h */,
@@ -2225,6 +2252,12 @@
 				2AF18A341F136034004681CE /* WOTOrderForBookStationCell.m */,
 				2AF18A361F136074004681CE /* WOTOrderForSiteCell.h */,
 				2AF18A371F136074004681CE /* WOTOrderForSiteCell.m */,
+				C5065F5C20BD496500AD9269 /* SKRoomDiscountsTableViewCell.h */,
+				C5065F5D20BD496500AD9269 /* SKRoomDiscountsTableViewCell.m */,
+				C5065F5F20BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.h */,
+				C5065F6020BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.m */,
+				C531ED3620C1314A00D8EC98 /* SKCommunityServiceTableViewCell.h */,
+				C531ED3720C1314A00D8EC98 /* SKCommunityServiceTableViewCell.m */,
 				2AF18A391F1360EC004681CE /* WOTOrderForServiceInfoCell.h */,
 				2AF18A3A1F1360EC004681CE /* WOTOrderForServiceInfoCell.m */,
 				2A9E2C3B202D67850016E097 /* WOTOrderForDescribeCell.h */,
@@ -2685,10 +2718,10 @@
 				C580842B1FD781C10091DCC4 /* StationOrderInfoViewController.m */,
 				C5065F5120BD034D00AD9269 /* SKBookStationVC.h */,
 				C5065F5020BD034C00AD9269 /* SKBookStationVC.m */,
-				C5065F5320BD03C600AD9269 /* WOTTESTViewController.h */,
-				C5065F5420BD03C600AD9269 /* WOTTESTViewController.m */,
 				E8CF9FCC1F0F751B00EF0F46 /* WOTBookStationVC.h */,
 				E8CF9FCD1F0F751B00EF0F46 /* WOTBookStationVC.m */,
+				C5065F5620BD215200AD9269 /* SKRoomListVC.h */,
+				C5065F5720BD215200AD9269 /* SKRoomListVC.m */,
 				E86615661F1F2E12005E182A /* WOTOpenLockScanVC.h */,
 				E86615671F1F2E12005E182A /* WOTOpenLockScanVC.m */,
 				E86FD1F51F207734009BE16A /* WOTMainAppleRepairVC.h */,
@@ -2717,6 +2750,8 @@
 				C59DE1762047CD70002E127D /* MapPath */,
 				C55A298B1FD6E16B001E0DB7 /* UIColor+ColorChange.h */,
 				C55A298A1FD6E16B001E0DB7 /* UIColor+ColorChange.m */,
+				C531ED3C20C14ED000D8EC98 /* UITabBar+badge.h */,
+				C531ED3D20C14ED000D8EC98 /* UITabBar+badge.m */,
 				C5E4978220494244002C38C9 /* UILabel+ChangeLineSpaceAndWordSpace.h */,
 				C5E4978320494244002C38C9 /* UILabel+ChangeLineSpaceAndWordSpace.m */,
 				C7901EC41F789CF400692F02 /* JudgmentTime.h */,
@@ -3642,6 +3677,7 @@
 				2A6442BB1F5FE80100E84273 /* MBProgressHUD+Extension.m in Sources */,
 				C5CBA582201073A8002943EF /* SKOrderStringModel.m in Sources */,
 				2A0813B8205101FF0071D98F /* WOTFeaturedProvidersCell.m in Sources */,
+				C531ED3820C1314A00D8EC98 /* SKCommunityServiceTableViewCell.m in Sources */,
 				2A336A641F0CD26D00F5B0AF /* WOTBaseModel.m in Sources */,
 				E8CF9FCE1F0F751B00EF0F46 /* WOTBookStationVC.m in Sources */,
 				C5E565E11FF2486D00534546 /* SKGiftBagInfoViewController.m in Sources */,
@@ -3653,6 +3689,7 @@
 				2A345AA61F5E576500DC6B31 /* WOTSendFriendsModel.m in Sources */,
 				2A1624ED1F0E21CB00F216F9 /* WOTSelectCityCodeVC.m in Sources */,
 				C5A125B31FE22A260058AA0C /* QueryCommentModel_msg.m in Sources */,
+				C5065F6420BD4E2F00AD9269 /* SKRoomModel.m in Sources */,
 				E85032D41F0B477F00E79257 /* WOTSingtleton.m in Sources */,
 				C5E565DE1FF2474700534546 /* SKGiftBagTableViewCell.m in Sources */,
 				C59E27121FF09E9700791269 /* SKFocusListTableViewCell.m in Sources */,
@@ -3670,6 +3707,7 @@
 				E88A54461F039D4500AD3F57 /* WOTConfigThemeUitls.m in Sources */,
 				C79C2D3A1F7E36870052DF23 /* WOTBookStationReservationsModel.m in Sources */,
 				2AF18A3E1F13610E004681CE /* WOTOrderForSelectCell.m in Sources */,
+				C531ED3E20C14ED000D8EC98 /* UITabBar+badge.m in Sources */,
 				E86615681F1F2E12005E182A /* WOTOpenLockScanVC.m in Sources */,
 				E85A858C1F0201F30016FCA1 /* AppDelegate.m in Sources */,
 				E8588CEA1F0B27F900951105 /* NSString+URL.m in Sources */,
@@ -3696,6 +3734,7 @@
 				E85A861B1F0252F20016FCA1 /* WOTBaseNavigationController.m in Sources */,
 				E847E0981F1621DC003BAF6C /* WOTUserSingleton.m in Sources */,
 				2A69A84E1FE2282C00C0862A /* WOTServiceProvidersView.m in Sources */,
+				C5065F6120BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.m in Sources */,
 				2A7D877A20303A1B00CF4CCD /* WOTShareVC.m in Sources */,
 				C5E4977E2048E550002C38C9 /* SKMyActivityTableViewCell.m in Sources */,
 				E85A85FD1F0202B10016FCA1 /* WOTTabBarVCViewController.m in Sources */,
@@ -3707,6 +3746,7 @@
 				2AF18A2F1F135AE2004681CE /* WOTOrderVC.m in Sources */,
 				E8190DB61F0F69660000B07C /* WOTOrderCell.m in Sources */,
 				E86245741F3D4F4900CF0D9D /* SRWebSocket.m in Sources */,
+				C5065F5820BD215200AD9269 /* SKRoomListVC.m in Sources */,
 				E86FD1EF1F2056F6009BE16A /* UIScrollView+Touch.m in Sources */,
 				E862456B1F3D4F4900CF0D9D /* SRLog.m in Sources */,
 				E8693B0A1F04C45100772BC1 /* WOTCreateEnterpriseVC.m in Sources */,
@@ -3736,6 +3776,7 @@
 				E8190DBE1F0F69660000B07C /* WOTGETServiceCell.m in Sources */,
 				C59D56DF1FDA2C6D001870B2 /* YMTextData.m in Sources */,
 				E8190DC61F0F69660000B07C /* WOTVisitTypeCell.m in Sources */,
+				C531ED3B20C13BBB00D8EC98 /* SKCommunityServiceModel.m in Sources */,
 				E8EACF961F035ABA0015535D /* WOTOrderLIstBaseVC.m in Sources */,
 				C5DB4D5C202445F200806BC1 /* NSArray+ImageArray.m in Sources */,
 				E86245681F3D4F4900CF0D9D /* SRError.m in Sources */,
@@ -3812,6 +3853,7 @@
 				E85A85951F0201F30016FCA1 /* WOTWorkSpace.xcdatamodeld in Sources */,
 				C59DE1872047CD89002E127D /* MANaviPolyline.m in Sources */,
 				C59840481FDE3206009B49CE /* QueryCircleofFriendsModel_msg.m in Sources */,
+				C5065F5E20BD496500AD9269 /* SKRoomDiscountsTableViewCell.m in Sources */,
 				2AF78CEE1F0A39E800F7B56D /* WOTGETServiceViewController.m in Sources */,
 				2AF7B18F1FD6F3C4006E36F7 /* WOTOrderForSelectTimeCell.m in Sources */,
 				2AF18A321F136016004681CE /* WOTOrderForInfoCell.m in Sources */,
@@ -3826,6 +3868,7 @@
 				C598E9021FDFC4A300CBAD8E /* SKAddReply.m in Sources */,
 				E8190DCA1F0F69660000B07C /* PGIndexBannerSubiew.m in Sources */,
 				2AF18A241F131898004681CE /* WOTPickerView.m in Sources */,
+				C5065F5B20BD223F00AD9269 /* SKRoomTableViewCell.m in Sources */,
 				E86B81E81F38422B002AAC63 /* WOTWXApiManager.m in Sources */,
 				2A05F4711FFDD23700FE3B44 /* WOTMyAppointmentCell.m in Sources */,
 				E8693B1A1F05100800772BC1 /* WOTSocialcontactNaviController.m in Sources */,
@@ -3886,7 +3929,6 @@
 				C5C9C7F120A97FC60075E449 /* SKCompanyMemberViewController.m in Sources */,
 				2A3F8011203070710016FAED /* WOTSecondCell.m in Sources */,
 				2A7AFABA1FF33D9F00038D26 /* WOTSearchMemberVC.m in Sources */,
-				C5065F5520BD03C600AD9269 /* WOTTESTViewController.m in Sources */,
 				E86FD1FD1F209723009BE16A /* WOTImageLookoverVC.m in Sources */,
 				E8F42AC31F2F21EA0011C595 /* WOTPublishSocialTrendsVC.m in Sources */,
 				C59C89301FF5EB7400C358A1 /* SKRepairsViewController.m in Sources */,

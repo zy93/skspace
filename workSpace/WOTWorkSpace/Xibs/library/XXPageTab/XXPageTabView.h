@@ -41,16 +41,17 @@ typedef NS_ENUM(NSInteger, XXPageTabIndicatorStyle) {
 @property (nonatomic, strong) UIColor *unSelectedColor;
 /*当前选中颜色*/
 @property (nonatomic, strong) UIColor *selectedColor;
-/*tab背景色，默认UICOLOR_WHITE*/
+/*tab背景色，默认white*/
 @property (nonatomic, strong) UIColor *tabBackgroundColor;
-/*body背景色，默认UICOLOR_WHITE*/
+/*body背景色，默认white*/
 @property (nonatomic, strong) UIColor *bodyBackgroundColor;
-/*是否打开body的边界弹动效果*/
+/*底部分割线颜色，默认clear*/
+@property (nonatomic, strong) UIColor *separatorColor;
+/*是否打开body的边界弹动效果，默认YES*/
 @property (nonatomic, assign) BOOL bodyBounces;
-/*是否item之间添加分割线*/
-@property (nonatomic, assign) BOOL cutOffLine;
-/*是否在item下面添加分割线*/
-@property (nonatomic, assign) BOOL bottomOffLine;
+/*是否允许body滚动，默认YES*/
+@property (nonatomic, assign) BOOL bodyScrollEnabled;
+
 /*Title效果设置*/
 @property (nonatomic, assign) XXPageTabTitleStyle titleStyle;
 /*字体渐变，未选择的item的scale，默认是0.8（0~1）。仅XXPageTabTitleStyleScale生效*/
@@ -72,6 +73,5 @@ typedef NS_ENUM(NSInteger, XXPageTabIndicatorStyle) {
 
 /*用于外部设置selectedTabIndex时动画展示*/
 - (void)setSelectedTabIndexWithAnimation:(NSInteger)selectedTabIndex;
-//代码手动添加下划线
-- (void)addIndicatorViewWithStyle;
+
 @end

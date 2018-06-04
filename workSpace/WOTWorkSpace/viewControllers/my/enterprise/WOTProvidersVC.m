@@ -279,7 +279,7 @@
         }
         [cell.iconIV setImage:[UIImage imageNamed:@"shequ"]];
         cell.titleLab.text = @"服务社区";
-        cell.textView.text = @"全部社区";
+        cell.textView.text = self.facilitatorModel.spaceList;
         return cell;
     }
 }

@@ -28,6 +28,7 @@
 @property(nonatomic,copy)NSString *introduce;
 @property(nonatomic,copy)NSString *website;
 @property(nonatomic,copy)NSString *site;
+@property(nonatomic,copy)NSString *spaceList;
 
 @end
 

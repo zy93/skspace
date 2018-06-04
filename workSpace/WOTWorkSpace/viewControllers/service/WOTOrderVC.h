@@ -12,7 +12,7 @@
 #import "WOTBookStationListModel.h"
 #import "WOTMeetingListModel.h"
 #import "WOTSpaceModel.h"
-//#import ""
+#import "SKRoomModel.h"
 
 typedef NS_ENUM(NSInteger,SPACE_SOURCE_TYPE) {
     SPACE_SOURCE_TYPE_BANNER,
@@ -32,5 +32,9 @@ typedef NS_ENUM(NSInteger,SPACE_SOURCE_TYPE) {
 
 @property (nonatomic,strong)NSNumber *singleSpaceId;
 @property (nonatomic,assign)SPACE_SOURCE_TYPE spaceSourceType;
+
+@property (nonatomic,strong)SKRoomModel *roomModel;
+
+@property (nonatomic,assign)CGFloat imageheight;
 
 @end

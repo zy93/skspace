@@ -25,7 +25,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderInfoCell" bundle:nil] forCellReuseIdentifier:@"WOTMyOrderInfoCell"];
 
     // Do any additional setup after loading the view.
-    [self AddRefreshHeader];
+    
     
 }
 
@@ -37,13 +37,15 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self StartRefresh];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 //    WOTAllOrderListVC *vc = self.supern;
+//    [self AddRefreshHeader];
+    [self createRequest];
 }
 
 #pragma mark -- Refresh method
@@ -77,9 +79,12 @@
 #pragma mark - request
 -(void)createRequest
 {
-    NSArray *arr = @[@"全部订单", @"会议室", @"工位", @"场地", @"礼包"];
+    NSArray *arr = @[@"全部订单", @"会议室", @"工位",@"长租工位", @"场地", @"礼包"];
     __weak typeof(self) weakSelf = self;
-
+    if (self.tableView.mj_footer != nil && [self.tableView.mj_footer isRefreshing])
+    {
+        [self.tableView.mj_footer endRefreshing];
+    }
     [WOTHTTPNetwork getUserOrderWithType:self.orderlisttype==WOTPageMenuVCTypeAll?nil:arr[self.orderlisttype] response:^(id bean, NSError *error) {
             WOTWorkStationHistoryModel_msg *model = bean;
             [self StopRefresh];
