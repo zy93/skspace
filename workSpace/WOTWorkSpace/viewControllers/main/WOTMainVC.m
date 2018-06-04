@@ -706,7 +706,7 @@ int a = 0;
             WOTActivityModel *activModle= model.msg.list.firstObject;
             [weakSelf.activityIV setImageWithURL:[activModle.pictureSite ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_activity"]];
             [weakSelf.activityNameLab setText:activModle.title];
-            [weakSelf.activityDateLab setText:[activModle.starTime getDate]];
+            [weakSelf.activityDateLab setText:[activModle.startTime getDate]];
 
         }
         if (error) {

@@ -183,11 +183,10 @@ bool ismenu1 =  NO;
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTActivitiesListCell *activitycell = [tableView dequeueReusableCellWithIdentifier:@"WOTActivitiesListCellID" forIndexPath:indexPath];
-    NSLog(@"开始时间：%@，结束时间：%@",_dataSource[indexPath.row].starTime,_dataSource[indexPath.row].endTime);
+    NSLog(@"开始时间：%@，结束时间：%@",_dataSource[indexPath.row].startTime,_dataSource[indexPath.row].endTime);
     activitycell.activityTitle.text = _dataSource[indexPath.row].title;
     activitycell.activityLocation.text = _dataSource[indexPath.row].spaceName;
-    //[_dataSource[indexPath.row].starTime getDate];
-    activitycell.activityState.text = [self.judgmentTime activityStateWithStartTime:_dataSource[indexPath.row].starTime endTime:_dataSource[indexPath.row].endTime];
+    activitycell.activityState.text = [self.judgmentTime activityStateWithStartTime:_dataSource[indexPath.row].startTime endTime:_dataSource[indexPath.row].endTime];
     [activitycell.activityImage sd_setImageWithURL:[_dataSource[indexPath.row].pictureSite ToResourcesUrl]  placeholderImage:[UIImage imageNamed:@"placeholder_activity"]];
     
     return activitycell;

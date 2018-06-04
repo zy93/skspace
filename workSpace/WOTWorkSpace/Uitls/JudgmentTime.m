@@ -86,12 +86,12 @@
     NSString *DateTime = [formatter stringFromDate:date];//当前时间
     if ([self compareDate:DateTime withDate:endTime]) {
         return @"已结束";
-    }else if ([self compareDateWithStartTime:DateTime endTime:startTime] && (![self compareDate:DateTime withDate:endTime]))
-    {
-        return @"进行中";
-    }else
+    }else if (![self compareDateWithStartTime:DateTime endTime:startTime])
     {
         return @"未开始";
+    }else
+    {
+        return @"进行中";
     }
 }
 
@@ -99,8 +99,8 @@
 -(BOOL)compareDateWithStartTime:(NSString*)startTime endTime:(NSString*)endTime
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setTimeZone: [NSTimeZone timeZoneWithName:@"GMT"]];
-    [formatter setDateFormat:@"yyyy/MM/dd hh:mm:ss"];
+    //[formatter setTimeZone: [NSTimeZone timeZoneWithName:@"GMT"]];
+    [formatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
     NSDate *fromDate = [formatter dateFromString:startTime];
     NSDate *toDate = [formatter dateFromString:endTime];
     NSLog(@"%@,%@",fromDate,toDate);

@@ -32,7 +32,7 @@ static dispatch_once_t token;
 + (void)destroyInstance {
     
     shareUser=nil;
-    token=0l;
+    token=0;
 }
 -(void)setValues{
     NSDictionary *dic = [self readUserInfoFromPlist];

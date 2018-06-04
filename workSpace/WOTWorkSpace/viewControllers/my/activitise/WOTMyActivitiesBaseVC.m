@@ -60,12 +60,12 @@
     WOTMyActivitiesCell *activityCell = [tableView dequeueReusableCellWithIdentifier:@"WOTMyActivitiesCellID" forIndexPath:indexPath];
     if ([_vctype isEqualToString:@"0"]) {
         activityCell.activityTitle.text = dataSource0[indexPath.row].content.title;
-        activityCell.activityTime.text = [NSString stringWithFormat:@"%@---%@",dataSource0[indexPath.row].content.starTime,dataSource0[indexPath.row].content.endTime];
+        activityCell.activityTime.text = [NSString stringWithFormat:@"%@---%@",dataSource0[indexPath.row].content.startTime,dataSource0[indexPath.row].content.endTime];
         activityCell.activityLocation.text = dataSource0[indexPath.row].content.spared1;
         [activityCell.activityBtn setTitle:dataSource0[indexPath.row].state forState:UIControlStateNormal];
     } else {
         activityCell.activityTitle.text = dataSource1[indexPath.row].title;
-        activityCell.activityTime.text = [NSString stringWithFormat:@"%@---%@",dataSource1[indexPath.row].starTime,dataSource1[indexPath.row].endTime];
+        activityCell.activityTime.text = [NSString stringWithFormat:@"%@---%@",dataSource1[indexPath.row].startTime,dataSource1[indexPath.row].endTime];
         activityCell.activityLocation.text = dataSource1[indexPath.row].spared1;
         if ([_vctype isEqualToString:@"1"]) {
             [activityCell.activityBtn setTitle:@"未开始" forState:UIControlStateNormal];

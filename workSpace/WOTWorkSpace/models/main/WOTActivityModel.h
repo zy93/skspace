@@ -33,7 +33,7 @@
 @property(nonatomic,strong)NSString *spared1;
 @property(nonatomic,strong)NSString *spared2;
 @property(nonatomic,strong)NSString *spared3;
-@property(nonatomic,strong)NSString *starTime;
+@property(nonatomic,strong)NSString *startTime;
 @property(nonatomic,strong)NSString *title;
 
 @end
