@@ -27,11 +27,22 @@
 
 @end
 
+@interface SKGiftBagModel_list : JSONModel
+@property (nonatomic, strong) NSNumber * bottomPageNo;
+@property (nonatomic, strong) NSNumber * nextPageNo;
+@property (nonatomic, strong) NSNumber * pageNo;
+@property (nonatomic, strong) NSNumber * pageSize;
+@property (nonatomic, strong) NSNumber * previousPageNo;
+@property (nonatomic, strong) NSNumber * topPageNo;
+@property (nonatomic, strong) NSNumber * totalPages;
+@property (nonatomic, strong) NSNumber * totalRecords;
+@property (nonatomic, strong) NSArray <SKGiftBagModel> *list;
+@end
 
 @interface SKGiftBagModel_msg : JSONModel
 
 @property(nonatomic,copy)NSString *code;
-@property(nonatomic,copy)NSArray <SKGiftBagModel>*msg;
+@property(nonatomic,copy)SKGiftBagModel_list *msg;
 @property(nonatomic,copy)NSString *result;
 
 @end

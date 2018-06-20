@@ -867,6 +867,14 @@ typedef void(^response)(id bean,NSError *error);
  @param response 返回
  */
 +(void)queryGiftBagListresponse:(response)response;
+
+/**
+ 通过类型查询礼包列表
+
+ @param type 礼包类型
+ @param response  返回
+ */
++(void)queryGiftBagWithType:(NSString *)type response:(response)response;
  
 /**
  获取支付协议

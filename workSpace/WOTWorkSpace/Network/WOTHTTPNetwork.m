@@ -1046,18 +1046,19 @@
 +(void)getMeetingRoomListWithSpaceId:(NSNumber *)spaceid type:(NSNumber *)type response:(response)response
 {
     NSString *sliderurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Conference/find"];
-    NSDictionary *dic = @{@"spaceId":spaceid,
+    NSMutableDictionary *dic = [@{
                           @"conferenceType":type,
                           @"pageNo":@(1),
                           @"pageSize":@(100),
                           @"conferenceState":@(1)
-                          };
+                          } mutableCopy];//@"spaceId":spaceid,
+    if (spaceid) {
+        [dic setObject:spaceid forKey:@"spaceId"];
+    }
     [self doRequestWithParameters:dic useUrl:sliderurl complete:^JSONModel *(id responseobj) {
         WOTMeetingListModel_msg *model = [[WOTMeetingListModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
-    
-
 }
 
 +(void)getMeetingReservationsTimeWithSpaceId:(NSNumber *)spaceid conferenceId:(NSNumber *)confid startTime:(NSString *)strTime response:(response)response
@@ -1625,6 +1626,21 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/GiftBag/findAll",HTTPBaseURL];
     [WOTHTTPNetwork doRequestWithParameters:nil useUrl:url complete:^JSONModel *(id responseobj) {
+        SKGiftBagModel_msg *model13 = [[SKGiftBagModel_msg alloc] initWithDictionary:responseobj error:nil];
+        return model13;
+    } response:response];
+}
+
++(void)queryGiftBagWithType:(NSString *)type response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/GiftBag/find",HTTPBaseURL];
+    NSMutableDictionary *dict = [@{@"pageNo":@1,
+                           @"pageSize":@100,}mutableCopy];//@"type":type,
+    if (type) {
+        [dict setValue:type forKey:@"type"];
+    }
+    
+    [WOTHTTPNetwork doRequestWithParameters:dict useUrl:url complete:^JSONModel *(id responseobj) {
         SKGiftBagModel_msg *model13 = [[SKGiftBagModel_msg alloc] initWithDictionary:responseobj error:nil];
         return model13;
     } response:response];

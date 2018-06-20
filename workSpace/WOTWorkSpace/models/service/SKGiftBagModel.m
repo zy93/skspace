@@ -12,6 +12,9 @@
 
 @end
 
+@implementation SKGiftBagModel_list
+
+@end
 
 @implementation SKGiftBagModel_msg
 

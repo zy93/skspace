@@ -43,13 +43,21 @@
     [self creatSpace];
     WOTLocationModel *model = [WOTSingtleton shared].nearbySpace;
     NSLog(@"最近空间%@",model.spaceName);
-    if (model.spaceName) {
-        self.spaceName = model.spaceName;
-    }
-    else
+    
+    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+        self.spaceName = @"全部";
+    }else
     {
-        self.spaceName = @"未定位";
+        if (model.spaceName) {
+            
+            self.spaceName = model.spaceName;
+        }
+        else
+        {
+            self.spaceName = @"未定位";
+        }
     }
+   
 
 }
 
@@ -136,6 +144,9 @@
 -(void)createRequest
 {
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+        if ([self.spaceName isEqualToString:@"全部"]) {
+            self.spaceId = nil;
+        }
         [WOTHTTPNetwork getMeetingRoomListWithSpaceId:self.spaceId type:@(0) response:^(id bean, NSError *error) {
             if (error) {
                 NSLog(@"error:%@",error);
