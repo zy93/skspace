@@ -1624,7 +1624,7 @@
 #pragma mark - 礼包
 +(void)queryGiftBagListresponse:(response)response
 {
-    NSString *url = [NSString stringWithFormat:@"%@/SKwork/GiftBag/findAll",HTTPBaseURL];
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/GiftBag/findGroup",HTTPBaseURL];
     [WOTHTTPNetwork doRequestWithParameters:nil useUrl:url complete:^JSONModel *(id responseobj) {
         SKGiftBagModel_msg *model13 = [[SKGiftBagModel_msg alloc] initWithDictionary:responseobj error:nil];
         return model13;
