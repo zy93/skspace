@@ -30,46 +30,43 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    // Do any additional setup after loading the view.
-    //self.hidesBottomBarWhenPushed = YES;
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(giftNotificationAction:) name:@"GiftNotification" object:nil];
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(giftNotificationAction:) name:@"GiftNotification" object:nil];
     self.giftList = [[NSMutableArray alloc] init];
-    self.navigationItem.title = @"礼包";
     [self requestQueryGiftBag];
     self.giftBagTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     self.giftBagTableView.delegate = self;
     self.giftBagTableView.dataSource = self;
     self.giftBagTableView.separatorStyle = UITableViewCellEditingStyleNone;
     [self.view addSubview:self.giftBagTableView];
-    //[self configNavi];
+    [self configNavi];
 }
 
-//-(void)configNavi{
-//    self.navigationItem.title = @"礼包";
-//    self.navigationItem.hidesBackButton = YES;
-//    self.navigationItem.rightBarButtonItem.customView.hidden=YES;
-//
-//    self.giftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [self.giftButton addTarget:self action:@selector(selectSpace:) forControlEvents:UIControlEventTouchDown];
-//    [self.giftButton setTitle:self.giftType forState:UIControlStateNormal];
-//    self.giftButton.titleLabel.font = [UIFont systemFontOfSize:15];
-//    [self.giftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//
-//    UIImage *imageForButton = [UIImage imageNamed:@"Triangular"];
-//    [self.giftButton setImage:imageForButton forState:UIControlStateNormal];
-//    CGSize buttonTitleLabelSize = [self.giftType sizeWithAttributes:@{NSFontAttributeName:self.giftButton.titleLabel.font}]; //文本尺寸
-//    CGSize buttonImageSize = imageForButton.size;   //图片尺寸
-//    self.giftButton.frame = CGRectMake(0,0,
-//                                       buttonImageSize.width + buttonTitleLabelSize.width,
-//                                       buttonImageSize.height);
-//    self.giftButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.giftButton.imageView.frame.size.width - self.giftButton.frame.size.width + self.giftButton.titleLabel.intrinsicContentSize.width, 0, 0);
-//
-//    self.giftButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -self.giftButton.titleLabel.frame.size.width - self.giftButton.frame.size.width + self.giftButton.imageView.frame.size.width);
-//
-//    self.barButton = [[UIBarButtonItem alloc]initWithCustomView:self.giftButton];
-//    self.navigationItem.rightBarButtonItem = self.barButton;
-//    //[self configNaviRightItemWithImage:[UIImage imageNamed:@"publishSocial"]];
-//}
+-(void)configNavi{
+    self.navigationItem.title = @"礼包";
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.rightBarButtonItem.customView.hidden=YES;
+    
+    self.giftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.giftButton addTarget:self action:@selector(selectSpace:) forControlEvents:UIControlEventTouchDown];
+    [self.giftButton setTitle:self.giftType forState:UIControlStateNormal];
+    self.giftButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.giftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    UIImage *imageForButton = [UIImage imageNamed:@"Triangular"];
+    [self.giftButton setImage:imageForButton forState:UIControlStateNormal];
+    CGSize buttonTitleLabelSize = [self.giftType sizeWithAttributes:@{NSFontAttributeName:self.giftButton.titleLabel.font}]; //文本尺寸
+    CGSize buttonImageSize = imageForButton.size;   //图片尺寸
+    self.giftButton.frame = CGRectMake(0,0,
+                                       buttonImageSize.width + buttonTitleLabelSize.width,
+                                       buttonImageSize.height);
+    self.giftButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.giftButton.imageView.frame.size.width - self.giftButton.frame.size.width + self.giftButton.titleLabel.intrinsicContentSize.width, 0, 0);
+    
+    self.giftButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -self.giftButton.titleLabel.frame.size.width - self.giftButton.frame.size.width + self.giftButton.imageView.frame.size.width);
+    
+    self.barButton = [[UIBarButtonItem alloc]initWithCustomView:self.giftButton];
+    self.navigationItem.rightBarButtonItem = self.barButton;
+    //[self configNaviRightItemWithImage:[UIImage imageNamed:@"publishSocial"]];
+}
 
 
 -(void)viewDidLayoutSubviews
@@ -163,10 +160,11 @@
 #pragma mark - 查询礼包列表
 -(void)requestQueryGiftBag
 {
-    [WOTHTTPNetwork queryGiftBagListresponse:^(id bean, NSError *error) {
+    [WOTHTTPNetwork queryGiftBagListWithType:nil response:^(id bean, NSError *error) {
         SKGiftBagModel_msg *model_msg = (SKGiftBagModel_msg *)bean;
         if ([model_msg.code isEqualToString:@"200"]) {
             self.giftBagListArray = model_msg.msg;
+            [self queryGiftList:self.giftBagListArray];
             [self.giftBagTableView reloadData];
         }else
         {
@@ -174,88 +172,86 @@
             return ;
         }
     }];
-//    [WOTHTTPNetwork queryGiftBagWithType:nil response:^(id bean, NSError *error) {
-//        SKGiftBagModel_msg *model_msg = (SKGiftBagModel_msg *)bean;
-//        if ([model_msg.code isEqualToString:@"200"]) {
-////            self.giftBagListArray = model_msg.msg;
-//            //[self queryGiftList:model_msg.msg.list];
-//            NSLog(@"礼包%@",self.giftList);
-//        }
-//        else
-//        {
-//            [MBProgressHUDUtil showMessage:@"未查询到礼包" toView:self.view];
-//            return ;
-//        }
-//    }];
 }
 
-//#pragma mark - 查询礼包
-//-(void)queryGiftList:(NSArray *)array
-//{
-//    for (SKGiftBagModel *model in array) {
-//        //
-//        BOOL isHaveCity = NO;
-//        for (NSString *type in self.giftList) {
-//            if ([model.type isEqualToString:type]) {
-//                isHaveCity = YES;
-//                break;
-//            }
-//        }
-//        if (!isHaveCity) {
-//            [self.giftList addObject:model.type];
-//        }
-//    }
-//    if (self.giftList.count > 0) {
-//        self.giftType = [self.giftList firstObject];
-//        [self queryGigtBagWithType:self.giftType];
-//    }
-//}
-
-//#pragma mark - 选择礼包类型
-//-(void)selectSpace:(UIButton *)sender
-//{
-//
-//    if (self.giftList.count) {
-//        JXPopoverView *popoverView = [JXPopoverView popoverView];
-//        NSMutableArray *JXPopoverActionArray = [[NSMutableArray alloc] init];
-//        for (NSString *name in self.giftList) {
-//            JXPopoverAction *action1 = [JXPopoverAction actionWithTitle:name handler:^(JXPopoverAction *action) {
-//                self.giftType = name;
-//                [self configNavi];
-//                //[self.cityButton setTitle:cityName forState:UIControlStateNormal];
-//                NSLog(@"测试：%@",name);
-//                NSDictionary *dict =[[NSDictionary alloc] initWithObjectsAndKeys:name,@"type", nil];
-//                NSNotification *notification =[NSNotification notificationWithName:@"GiftNotification" object:nil userInfo:dict];
-//                [[NSNotificationCenter defaultCenter] postNotification:notification];
-//            }];
-//            [JXPopoverActionArray addObject:action1];
-//        }
-//        [popoverView showToView:sender withActions:JXPopoverActionArray];
-//    }
-//}
-
--(NSArray <SKGiftBagModel *>*)giftBagListArray
+#pragma mark - 查询礼包
+-(void)queryGiftList:(NSArray *)array
 {
-    if (_giftBagListArray == nil) {
-        _giftBagListArray = [[NSArray alloc] init];
-//        _giftBagImageArray = @[@"GiftBag1",@"GiftBag2",@"GiftBag3"];
+    for (SKGiftBagModel *model in array) {
+        //
+        BOOL isHaveCity = NO;
+        for (NSString *type in self.giftList) {
+            if ([model.type isEqualToString:type]) {
+                isHaveCity = YES;
+                break;
+            }
+        }
+        if (!isHaveCity) {
+            [self.giftList addObject:model.type];
+        }
     }
-    return _giftBagListArray;
+    [self.giftList insertObject:@"全部礼包" atIndex:0];
+    if (self.giftList.count > 0) {
+        self.giftType = [self.giftList firstObject];
+        [self configNavi];
+        //[self queryGigtBagWithType:self.giftType];
+    }
 }
 
-//- (void)giftNotificationAction:(NSNotification *)notification{
-//    self.giftType = [notification.userInfo objectForKey:@"type"];
-//    //[self createRequest];//按照礼包类型请求礼包列表
-//    [self queryGigtBagWithType:self.giftType];
-//}
+#pragma mark - 选择礼包类型
+-(void)selectSpace:(UIButton *)sender
+{
+    
+    if (self.giftList.count) {
+        JXPopoverView *popoverView = [JXPopoverView popoverView];
+        NSMutableArray *JXPopoverActionArray = [[NSMutableArray alloc] init];
+        for (NSString *name in self.giftList) {
+            JXPopoverAction *action1 = [JXPopoverAction actionWithTitle:name handler:^(JXPopoverAction *action) {
+                self.giftType = name;
+                [self configNavi];
+                //[self.cityButton setTitle:cityName forState:UIControlStateNormal];
+                NSLog(@"测试：%@",name);
+                NSDictionary *dict =[[NSDictionary alloc] initWithObjectsAndKeys:name,@"type", nil];
+                NSNotification *notification =[NSNotification notificationWithName:@"GiftNotification" object:nil userInfo:dict];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+            }];
+            [JXPopoverActionArray addObject:action1];
+        }
+        [popoverView showToView:sender withActions:JXPopoverActionArray];
+    }
+}
 
-//#pragma mark - 通过类型查看礼包列表
-//-(void)queryGigtBagWithType:(NSString *)type
-//{
+- (void)giftNotificationAction:(NSNotification *)notification{
+    self.giftType = [notification.userInfo objectForKey:@"type"];
+    [self queryGigtBagWithType:self.giftType];
+}
+
+#pragma mark - 通过类型查看礼包列表
+-(void)queryGigtBagWithType:(NSString *)type
+{
+    NSString *typeStr;
+    if ([type isEqualToString:@"全部礼包"]) {
+        typeStr = nil;
+    }else
+    {
+        typeStr = type;
+    }
+    [WOTHTTPNetwork queryGiftBagListWithType:typeStr response:^(id bean, NSError *error) {
+        SKGiftBagModel_msg *model_msg = (SKGiftBagModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            self.giftBagListArray = model_msg.msg;
+            [self configNavi];
+            [self.giftBagTableView reloadData];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"未查询到礼包" toView:self.view];
+            return ;
+        }
+    }];
 //    [WOTHTTPNetwork queryGiftBagWithType:type response:^(id bean, NSError *error) {
 //        SKGiftBagModel_msg *model_msg = (SKGiftBagModel_msg *)bean;
 //        if ([model_msg.code isEqualToString:@"200"]) {
-//            self.giftBagListArray = model_msg.msg.list;
+//            self.giftBagListArray = model_msg.msg;
 //
 //            dispatch_async(dispatch_get_main_queue(), ^{
 //                [self configNavi];
@@ -268,12 +264,19 @@
 //            return ;
 //        }
 //    }];
-//}
+}
 
-//-(void)dealloc
-//{
-//    [[NSNotificationCenter defaultCenter] removeObserver:@"GiftNotification"];
-//}
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:@"GiftNotification"];
+}
 
+-(NSArray <SKGiftBagModel *>*)giftBagListArray
+{
+    if (_giftBagListArray == nil) {
+        _giftBagListArray = [[NSArray alloc] init];
+    }
+    return _giftBagListArray;
+}
 
 @end

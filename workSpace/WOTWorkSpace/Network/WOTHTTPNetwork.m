@@ -63,6 +63,7 @@
 #import "SKPayDelegateModel.h"
 #import "SKRoomModel.h"
 #import "SKCommunityServiceModel.h"
+#import "SKServiceProductModel.h"
 
 #define kMaxRequestCount 3
 @interface WOTHTTPNetwork()
@@ -101,9 +102,9 @@
     [manager POST:Url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
 
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"request URL:%@",task.originalRequest.URL.absoluteString);
+       // NSLog(@"request URL:%@",task.originalRequest.URL.absoluteString);
         NSString *responseStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"responseStr:%@",responseStr);
+        //NSLog(@"responseStr:%@",responseStr);
         NSError *error = nil;
         NSData *jsonData = [responseStr dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *responseDic = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
@@ -737,7 +738,7 @@
 {
     NSString *urlString = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Activity/findBysorting"];
     NSDictionary * parameters = @{@"pageNo":page,
-                                  @"pageSize":@(1000)
+                                  @"pageSize":@(10)
                                   };
     [self doRequestWithParameters:parameters useUrl:urlString complete:^JSONModel *(id responseobj) {
         WOTActivityModel_msg * activitymodel = [[WOTActivityModel_msg alloc]initWithDictionary:responseobj error:nil];
@@ -764,7 +765,7 @@
     //NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Message/findforApp"];
     NSString *infourl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/Message/findBysorting"];
     NSDictionary * parameters = @{@"pageNo":page,
-                                  @"pageSize":@(1000)
+                                  @"pageSize":@(10)
                                   };
     [self doRequestWithParameters:parameters useUrl:infourl complete:^JSONModel *(id responseobj) {
         WOTNewsModel_msg *infomodel = [[WOTNewsModel_msg alloc]initWithDictionary:responseobj error:nil];
@@ -920,6 +921,17 @@
     [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
         
         SKNewFacilitatorModel *model = [[SKNewFacilitatorModel alloc]initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)getServiceProductWithFacilitatorId:(NSNumber *)facilitatorId response:(response)response
+{
+    NSString *feedbackurl = [NSString stringWithFormat:@"%@%@",HTTPBaseURL,@"/SKwork/FacilitatorProduct/findByFacilitatorId"];
+    NSDictionary *parameters = @{@"facilitatorId":facilitatorId};
+    [self doRequestWithParameters:parameters useUrl:feedbackurl complete:^JSONModel *(id responseobj) {
+        
+        SKServiceProductModel_msg *model = [[SKServiceProductModel_msg alloc]initWithDictionary:responseobj error:nil];
         return model;
     } response:response];
 }
@@ -1622,10 +1634,17 @@
 }
 
 #pragma mark - 礼包
-+(void)queryGiftBagListresponse:(response)response
++(void)queryGiftBagListWithType:(NSString *)type response:(response)response
 {
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/GiftBag/findGroup",HTTPBaseURL];
-    [WOTHTTPNetwork doRequestWithParameters:nil useUrl:url complete:^JSONModel *(id responseobj) {
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    if (type) {
+        [dict setValue:type forKey:@"type"];
+    }else
+    {
+        dict = nil;
+    }
+    [WOTHTTPNetwork doRequestWithParameters:dict useUrl:url complete:^JSONModel *(id responseobj) {
         SKGiftBagModel_msg *model13 = [[SKGiftBagModel_msg alloc] initWithDictionary:responseobj error:nil];
         return model13;
     } response:response];

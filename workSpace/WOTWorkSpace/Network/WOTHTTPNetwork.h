@@ -427,6 +427,14 @@ typedef void(^response)(id bean,NSError *error);
 +(void)getNewServiceProviders:(response)response;
 
 /**
+ 获取服务商产品
+
+ @param facilitatorId 服务商id
+ @param response 结果回调
+ */
++(void)getServiceProductWithFacilitatorId:(NSNumber *)facilitatorId response:(response)response;
+
+/**
  服务页获取服务商
  
  @param response 结果回调
@@ -863,10 +871,10 @@ typedef void(^response)(id bean,NSError *error);
 
 /**
  获取礼包信息
-
+ @param type 礼包类型
  @param response 返回
  */
-+(void)queryGiftBagListresponse:(response)response;
++(void)queryGiftBagListWithType:(NSString *)type response:(response)response;
 
 /**
  通过类型查询礼包列表

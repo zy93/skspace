@@ -35,20 +35,30 @@ bool ismenu1 =  NO;
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.tableVIew.backgroundColor = UICOLOR_CLEAR;
     [self configNav];
-
+    _dataSource = [[NSMutableArray alloc]init];
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self makeMenuArrays];
     [self.tableVIew registerNib:[UINib nibWithNibName:@"WOTworkSpaceCommonCell" bundle:nil] forCellReuseIdentifier:@"WOTworkSpaceCommonCellID"];
+    self.tableVIew.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopic)];
     self.communityName.text = ((WOTFilterTypeModel *)self.menu1Array[0]).filterName;
     self.categoryLabel.text = ((WOTFilterTypeModel *)self.menu2Array[0]).filterName;
-    page = 1;
+    page = 0;
     // Do any additional setup after loading the view.
+    [self crectRequest];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    [self crectRequest];
+    
+    
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+  //  page = 0;
+//    [self.dataSource removeAllObjects];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,18 +71,43 @@ bool ismenu1 =  NO;
     self.navigationItem.title = @"热门活动";
 }
 
+-(void)loadMoreTopic
+{
+    [self crectRequest];
+}
+
+#pragma mark - 停止刷新
+- (void)stoploadMoreTopic
+{
+    if (self.tableVIew.mj_footer != nil && [self.tableVIew.mj_footer isRefreshing])
+    {
+        [self.tableVIew.mj_footer endRefreshing];
+    }
+}
+
 
 #pragma mark - request
 -(void)crectRequest
 {
+//    if (page == 0 && self.dataSource.count) {
+//        [self.dataSource removeAllObjects];
+//    }
+    page ++;
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getActivitiesWithPage:@(page) response:^(id bean, NSError *error) {
-        if (bean) {
-            WOTActivityModel_msg *model = (WOTActivityModel_msg *)bean;
-            weakSelf.dataSource = model.msg.list;
+        WOTActivityModel_msg *model = (WOTActivityModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [weakSelf.dataSource addObjectsFromArray:model.msg.list];
+            [weakSelf stoploadMoreTopic];
+            [weakSelf.tableVIew reloadData];
+
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.tableVIew reloadData];
+                
             });
+        }else if ([model.code isEqualToString:@"202"]) {
+            [self stoploadMoreTopic];
+            [MBProgressHUDUtil showMessage:@"没有更多数据" toView:self.view];
+            return ;
         }
         else {
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
@@ -122,12 +157,12 @@ bool ismenu1 =  NO;
 }
 
 
--(NSArray <WOTActivityModel *> *)dataSource{
-    if (_dataSource == nil) {
-        _dataSource = [[NSArray alloc]init];
-    }
-    return  _dataSource;
-}
+//-(NSMutableArray <WOTActivityModel *> *)dataSource{
+//    if (_dataSource == nil) {
+//
+//    }
+//    return  _dataSource;
+//}
 
 -(void)makeMenuArrays{
     self.menu1Array = [NSMutableArray array];

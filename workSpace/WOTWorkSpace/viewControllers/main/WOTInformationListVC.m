@@ -23,10 +23,13 @@
     [super viewDidLoad];
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.tableView.backgroundColor = UICOLOR_CLEAR;
+    _dataSource = [[NSMutableArray alloc]init];
     [self configNav];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTInformationLIstCell" bundle:nil] forCellReuseIdentifier:@"WOTInformationLIstCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTCommonHeaderVIew" bundle:nil] forHeaderFooterViewReuseIdentifier:@"WOTCommonHeaderVIewID"];
-    page = 1;
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopic)];
+     page = 0;
+    [self createRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,29 +42,55 @@
     self.edgesForExtendedLayout = UIRectEdgeBottom;
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    [self createRequest];
+    
+    
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.translucent = YES;
+
 }
 -(void)configNav{
     [self configNaviBackItem];  
     self.navigationItem.title = @"最新资讯";
+}
+-(void)loadMoreTopic
+{
+    [self createRequest];
+}
+
+#pragma mark - 停止刷新
+- (void)stoploadMoreTopic
+{
+    if (self.tableView.mj_footer != nil && [self.tableView.mj_footer isRefreshing])
+    {
+        [self.tableView.mj_footer endRefreshing];
+    }
 }
 
 
 #pragma mark - request
 -(void)createRequest
 {
+//    if (page == 0 && self.dataSource.count) {
+//        [self.dataSource removeAllObjects];
+//    }
+    page ++;
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getNewsWithPage:@(page) response:^(id bean, NSError *error) {
-        if (bean) {
-            WOTNewsModel_msg *model = (WOTNewsModel_msg *)bean;
-            weakSelf.dataSource = [model.msg.list mutableCopy];
+        WOTNewsModel_msg *model = (WOTNewsModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            
             dispatch_async(dispatch_get_main_queue(), ^{
+
+                [weakSelf.dataSource addObjectsFromArray:model.msg.list];
+                [self stoploadMoreTopic];
                 [weakSelf.tableView reloadData];
             });
+        }else if ([model.code isEqualToString:@"202"]) {
+            [self stoploadMoreTopic];
+            [MBProgressHUDUtil showMessage:@"没有更多数据" toView:self.view];
+            return ;
         }
         else {
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];

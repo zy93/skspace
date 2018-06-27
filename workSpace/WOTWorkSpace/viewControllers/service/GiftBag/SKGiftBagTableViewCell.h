@@ -13,5 +13,6 @@
 @property (nonatomic,strong)UIImageView *giftBagImageView;
 @property (nonatomic,strong)UILabel *giftNameLabel;
 @property (nonatomic,strong)UILabel *giftPriceLabel;
+@property (nonatomic,strong)UIButton *buyButton;
 
 @end

@@ -11,5 +11,5 @@
 #import "WOTActivityModel.h"
 @interface WOTActivitiesLIstVC : WOTMenuViewParentVC
 
-@property (strong,nonatomic)NSArray<WOTActivityModel *> *dataSource;
+@property (strong,nonatomic)NSMutableArray<WOTActivityModel *> *dataSource;
 @end

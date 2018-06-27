@@ -12,11 +12,14 @@
 #import "WOTThirdCell.h"
 #import "WOTApplyJoinEnterpriseModel.h"
 #import "SKSingleFacilitatorModel.h"
+#import "SKProductCell.h"
+#import "SKServiceProductModel.h"
 
 #define ssstr @"我们通过三方面打造共享办公：\n1、通过办公租赁、双创运营、办公服务、金融服务来打造企业共享办公生态圈；\n2、打造孵化器、产业园的升级版平台；通过社区内大企业带动小微企业的入驻模式给小型、小微型企业更多成长空间。另一方面通过线上做为入口，办理会员、注册、入驻，完善服务、聚集数据。通过智能信息化的手段来运营，在平台上完善客户、会员、门禁、监控、宽带、楼宇智能化等系统；\n3、实现社区平台的品牌化、服务标准化、共享化、社交化、智能化、数据化，完善企业办公生态圈服务体系。"
 
 @interface WOTProvidersVC () <UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UIButton * getProvidersBtn;
+@property (nonatomic, copy)NSArray <SKServiceProductModel *>*productArray;
 @end
 
 @implementation WOTProvidersVC
@@ -24,8 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.productArray = [[NSArray alloc] init];
     if (self.companyType == CompanyTypeFacilitator) {
         self.navigationItem.title = @"服务商信息";
+        [self queryServiceProduct];//查询产品信息
     }else
     {
         self.navigationItem.title = @"企业信息";
@@ -39,7 +44,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTFirstCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTFirstCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTSecondCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTSecondCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTThirdCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTThirdCell"];
-    
+    [self.tableView registerNib:[UINib nibWithNibName:@"SKProductCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"SKProductCell"];
     self.getProvidersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     if (self.companyType == CompanyTypeFacilitator) {
         [self.getProvidersBtn setTitle:@"获取服务支持" forState:UIControlStateNormal];
@@ -157,7 +162,19 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+     if (self.companyType == CompanyTypeFacilitator) {
+         if (self.productArray.count > 0) {
+             return 5;
+         }else
+         {
+             return 4;
+         }
+         
+     }else
+     {
+         return 4;
+     }
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -174,8 +191,27 @@
         NSString *str = strIsEmpty(self.facilitatorModel.facilitatorDescribe)?ssstr:self.facilitatorModel.facilitatorDescribe;
         return 80+([str heightWithFont:[UIFont systemFontOfSize:13.f] maxWidth:SCREEN_WIDTH-40]);
     }
-    else if (indexPath.row==2) {
-        return 160;
+    else if (indexPath.row==3) {
+        if (self.companyType == CompanyTypeFacilitator && self.productArray.count >0) {
+            return 160;
+        } else {
+            return 95;
+        }
+        
+    }else if (indexPath.row == 2)
+    {
+        if (self.companyType == CompanyTypeFacilitator) {
+            if (self.productArray.count > 0) {
+                return 120;
+            }else
+            {
+                return 160;
+            }
+            
+        }else
+        {
+            return 160;
+        }
     }
     else {
         return 95;
@@ -253,24 +289,83 @@
         cell.textView.text = str;
         return cell;
     }
-    else if (indexPath.row==2) {
-        WOTThirdCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTThirdCell"];
-        if (!cell) {
-            cell = [[WOTThirdCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTThirdCell"];
-        }
-        cell.titleLab.text = @"联系信息";
-        if (self.companyType == CompanyTypeFacilitator) {
-            cell.nameValueLab.text = self.facilitatorModel.contacts;
-            cell.addrssValueLab.text = strIsEmpty(self.facilitatorModel.city)?@"暂无":self.facilitatorModel.city;
-            cell.webValueLab.text = strIsEmpty(self.facilitatorModel.website)?@"暂无":self.facilitatorModel.website;
-        }else
-        {
-            cell.nameValueLab.text = self.enterpriseModel.contacts;
-            cell.addrssValueLab.text = strIsEmpty(self.enterpriseModel.companySite)?@"暂无":self.enterpriseModel.companySite;
-            cell.webValueLab.text = strIsEmpty(self.enterpriseModel.website)?@"暂无":self.enterpriseModel.website;;
+    else if (indexPath.row==3) {
+        if (self.companyType == CompanyTypeFacilitator && self.productArray.count > 0) {
+            WOTThirdCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTThirdCell"];
+            if (!cell) {
+                cell = [[WOTThirdCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTThirdCell"];
+            }
+            cell.titleLab.text = @"联系信息";
+            if (self.companyType == CompanyTypeFacilitator) {
+                cell.nameValueLab.text = self.facilitatorModel.contacts;
+                cell.addrssValueLab.text = strIsEmpty(self.facilitatorModel.city)?@"暂无":self.facilitatorModel.city;
+                cell.webValueLab.text = strIsEmpty(self.facilitatorModel.website)?@"暂无":self.facilitatorModel.website;
+            }else
+            {
+                cell.nameValueLab.text = self.enterpriseModel.contacts;
+                cell.addrssValueLab.text = strIsEmpty(self.enterpriseModel.companySite)?@"暂无":self.enterpriseModel.companySite;
+                cell.webValueLab.text = strIsEmpty(self.enterpriseModel.website)?@"暂无":self.enterpriseModel.website;;
+            }
+            
+            return cell;
+        } else {
+            WOTSecondCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTSecondCell"];
+            if (!cell) {
+                cell = [[WOTSecondCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTSecondCell"];
+            }
+            [cell.iconIV setImage:[UIImage imageNamed:@"shequ"]];
+            cell.titleLab.text = @"服务社区";
+            cell.textView.text = self.facilitatorModel.spaceList;
+            return cell;
         }
         
-        return cell;
+    }else if (indexPath.row==2)
+    {
+        if (self.companyType == CompanyTypeFacilitator) {
+            if (self.productArray.count > 0) {
+                SKProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SKProductCell"];
+                cell.scrollView.typeStr = @"服务商产品";
+                [cell.scrollView setData:self.productArray];
+                return cell;
+            }else
+            {
+                WOTThirdCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTThirdCell"];
+                if (!cell) {
+                    cell = [[WOTThirdCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTThirdCell"];
+                }
+                cell.titleLab.text = @"联系信息";
+                if (self.companyType == CompanyTypeFacilitator) {
+                    cell.nameValueLab.text = self.facilitatorModel.contacts;
+                    cell.addrssValueLab.text = strIsEmpty(self.facilitatorModel.city)?@"暂无":self.facilitatorModel.city;
+                    cell.webValueLab.text = strIsEmpty(self.facilitatorModel.website)?@"暂无":self.facilitatorModel.website;
+                }else
+                {
+                    cell.nameValueLab.text = self.enterpriseModel.contacts;
+                    cell.addrssValueLab.text = strIsEmpty(self.enterpriseModel.companySite)?@"暂无":self.enterpriseModel.companySite;
+                    cell.webValueLab.text = strIsEmpty(self.enterpriseModel.website)?@"暂无":self.enterpriseModel.website;;
+                }
+                return cell;
+            }
+            
+        }else
+        {
+            WOTThirdCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTThirdCell"];
+            if (!cell) {
+                cell = [[WOTThirdCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTThirdCell"];
+            }
+            cell.titleLab.text = @"联系信息";
+            if (self.companyType == CompanyTypeFacilitator) {
+                cell.nameValueLab.text = self.facilitatorModel.contacts;
+                cell.addrssValueLab.text = strIsEmpty(self.facilitatorModel.city)?@"暂无":self.facilitatorModel.city;
+                cell.webValueLab.text = strIsEmpty(self.facilitatorModel.website)?@"暂无":self.facilitatorModel.website;
+            }else
+            {
+                cell.nameValueLab.text = self.enterpriseModel.contacts;
+                cell.addrssValueLab.text = strIsEmpty(self.enterpriseModel.companySite)?@"暂无":self.enterpriseModel.companySite;
+                cell.webValueLab.text = strIsEmpty(self.enterpriseModel.website)?@"暂无":self.enterpriseModel.website;;
+            }
+            return cell;
+        }
     }
     else {
         WOTSecondCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOTSecondCell"];
@@ -296,6 +391,21 @@
         }else
         {
             [MBProgressHUDUtil showMessage:@"请求失败！" toView:self.view];
+        }
+    }];
+}
+
+#pragma mark - 查询服务商产品
+-(void)queryServiceProduct
+{
+    if (!self.facilitatorModel.facilitatorId) {
+        return;
+    }
+    [WOTHTTPNetwork getServiceProductWithFacilitatorId:self.facilitatorModel.facilitatorId response:^(id bean, NSError *error) {
+        SKServiceProductModel_msg *model = (SKServiceProductModel_msg *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            self.productArray = model.msg;
+            [self.tableView reloadData];
         }
     }];
 }

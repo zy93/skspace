@@ -10,5 +10,7 @@
 typedef void(^ImageBlock)(NSInteger tap);
 @interface SKServiceProviderScrollView : UIScrollView
 @property (nonatomic,copy)  ImageBlock imageBlock;
+
+@property (nonatomic,strong)NSString *typeStr;
 -(void)setData:(NSArray *)facilitatorData;
 @end

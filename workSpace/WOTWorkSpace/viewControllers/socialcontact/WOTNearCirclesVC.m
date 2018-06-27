@@ -332,6 +332,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     }
 }
 
+
+
 #pragma mark - 上拉刷新
 -(void)loadMoreTopic
 {
@@ -355,10 +357,12 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             else
             {
                 if ([model.code isEqualToString:@"202"]) {
+                    [weakSelf stoploadMoreTopic];
                     [MBProgressHUDUtil showMessage:@"没有更多数据！" toView:self.view];
                     return ;
                 }else
                 {
+                    [weakSelf stoploadMoreTopic];
                     [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
                     return ;
                 }
@@ -368,6 +372,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
         [MBProgressHUDUtil showMessage:@"请先登录后再查看！" toView:self.view];
     }
 }
+
+
 
 
 #pragma mark - UITableViewDataSource
