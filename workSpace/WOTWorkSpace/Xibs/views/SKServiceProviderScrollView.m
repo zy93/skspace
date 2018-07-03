@@ -14,7 +14,7 @@
 #import "SKServiceProductModel.h"
 
 #define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 40)/2
-#define productViewWidth  ([[UIScreen mainScreen] bounds].size.width - 40)/3
+#define productViewWidth  ([[UIScreen mainScreen] bounds].size.width - 40)/2
 #define providersViewHeight ([[UIScreen mainScreen] bounds].size.width/350 * 180)
 #define providersViewGap  10
 #define providersStartX   20
@@ -37,19 +37,35 @@
         [vi removeFromSuperview];
     }
     CGFloat height = self.frame.size.height;
+    int numLine;
+    BOOL isLeft;
     if ([self.typeStr isEqualToString:@"服务商产品"]) {
         for (int i = 0; i<facilitatorArray.count; i++) {
-             SKProductView *view = [[SKProductView alloc] initWithFrame:CGRectMake(i==0? providersStartX: i*productViewWidth + ((i)*(providersViewGap)) + providersStartX, 0, productViewWidth, height)];
-            //https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530614256&di=ab8d7ce9fc4fd99d8544039853ebad7e&imgtype=jpg&er=1&src=http%3A%2F%2Fimg1.gtimg.com%2Fgd%2Fpics%2Fhv1%2F132%2F123%2F1613%2F104916822.png
+            // SKProductView *view = [[SKProductView alloc] initWithFrame:CGRectMake(i==0? providersStartX: i*productViewWidth + ((i)*(providersViewGap)) + providersStartX, 0, productViewWidth, 120)];
+            
+            if (i%2 == 1) {
+                //numLine = i/2 +1;
+                isLeft = NO;
+            }else
+            {
+                isLeft = YES;
+                //numLine = i/2;
+            }
+            numLine = i/2;
+            SKProductView *view = [[SKProductView alloc] initWithFrame:CGRectMake(isLeft?20:20+productViewWidth+providersViewGap,numLine *130, productViewWidth, 120)];
             SKServiceProductModel *infoModel = facilitatorArray[i];
             [view.iconIV sd_setImageWithURL:[infoModel.productImage ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
-//            [view.iconIV sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530614256&di=ab8d7ce9fc4fd99d8544039853ebad7e&imgtype=jpg&er=1&src=http%3A%2F%2Fimg1.gtimg.com%2Fgd%2Fpics%2Fhv1%2F132%2F123%2F1613%2F104916822.png"] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
             view.titleLab.text = infoModel.productName;
             view.priceLab.text = [NSString stringWithFormat:@"¥%@",infoModel.money];
             view.tag = i;
+            view.layer.cornerRadius = 5.f;
+            view.layer.borderColor = UICOLOR_GRAY_99.CGColor;
+            view.layer.borderWidth = 1.f;
             [self addSubview:view];
         }
-        self.contentSize = CGSizeMake(facilitatorArray.count*productViewWidth+ (facilitatorArray.count*(providersViewGap)) + providersStartX, self.frame.size.height);
+        //self.contentSize = CGSizeMake(facilitatorArray.count*productViewWidth+ (facilitatorArray.count*(providersViewGap)) + providersStartX, self.frame.size.height);
+//        numLine =(int)(facilitatorArray.count/2 +1);
+//        self.contentSize = CGSizeMake(self.frame.size.width,130*numLine);
     }else
     {
         for (int i = 0; i<facilitatorArray.count; i++) {

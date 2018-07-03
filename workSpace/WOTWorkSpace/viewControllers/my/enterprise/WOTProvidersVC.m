@@ -202,7 +202,15 @@
     {
         if (self.companyType == CompanyTypeFacilitator) {
             if (self.productArray.count > 0) {
-                return 120;
+                int numline;
+                if (self.productArray.count == 2) {
+                    numline = 1;
+                }else
+                {
+                    numline =(int)(self.productArray.count/2 + 1);
+                }
+               
+                return 43+130*numline;
             }else
             {
                 return 160;

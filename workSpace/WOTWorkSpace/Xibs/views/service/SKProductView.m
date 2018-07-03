@@ -26,7 +26,6 @@
     self.topIV.layer.borderWidth =.5f;
     [self addSubview:self.topIV];
     self.iconIV = [[UIImageView alloc] init];
-//    self.iconIV.layer.borderColor = UICOLOR_MAIN_LINE.CGColor;
     
     self.iconIV.size = CGSizeMake(60, 60);
     self.iconIV.layer.cornerRadius=30.f;
@@ -47,7 +46,6 @@
         make.top.mas_offset(0);
         make.left.mas_offset(0);
         make.right.mas_offset(0);
-        //        make.bottom.equalTo(self.iconIV.mas_top);
     }];
 
     

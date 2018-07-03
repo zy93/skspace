@@ -278,6 +278,10 @@
 		C5CBA58520109E56002943EF /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C5CBA58320109E56002943EF /* AlipaySDK.bundle */; };
 		C5CBA58620109E56002943EF /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CBA58420109E56002943EF /* AlipaySDK.framework */; };
 		C5D8B1AE2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D8B1AD2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m */; };
+		C5DB163B20EB1432008352D0 /* SKServiceProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB163A20EB1431008352D0 /* SKServiceProductModel.m */; };
+		C5DB163F20EB148C008352D0 /* SKProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5DB163D20EB148B008352D0 /* SKProductCell.xib */; };
+		C5DB164020EB148C008352D0 /* SKProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB163E20EB148B008352D0 /* SKProductCell.m */; };
+		C5DB164320EB149C008352D0 /* SKProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB164220EB149C008352D0 /* SKProductView.m */; };
 		C5DB4D59202439D100806BC1 /* SKSpaceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */; };
 		C5DB4D5C202445F200806BC1 /* NSArray+ImageArray.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB4D5B202445F200806BC1 /* NSArray+ImageArray.m */; };
 		C5E4977E2048E550002C38C9 /* SKMyActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4977D2048E550002C38C9 /* SKMyActivityTableViewCell.m */; };
@@ -1001,6 +1005,13 @@
 		C5CBA58420109E56002943EF /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		C5D8B1AC2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCompanyRemainingTimeModel.h; sourceTree = "<group>"; };
 		C5D8B1AD2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCompanyRemainingTimeModel.m; sourceTree = "<group>"; };
+		C5DB163920EB1431008352D0 /* SKServiceProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKServiceProductModel.h; sourceTree = "<group>"; };
+		C5DB163A20EB1431008352D0 /* SKServiceProductModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKServiceProductModel.m; sourceTree = "<group>"; };
+		C5DB163C20EB148B008352D0 /* SKProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKProductCell.h; sourceTree = "<group>"; };
+		C5DB163D20EB148B008352D0 /* SKProductCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SKProductCell.xib; sourceTree = "<group>"; };
+		C5DB163E20EB148B008352D0 /* SKProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKProductCell.m; sourceTree = "<group>"; };
+		C5DB164120EB149C008352D0 /* SKProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKProductView.h; sourceTree = "<group>"; };
+		C5DB164220EB149C008352D0 /* SKProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKProductView.m; sourceTree = "<group>"; };
 		C5DB4D57202439D100806BC1 /* SKSpaceInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceInfoModel.h; sourceTree = "<group>"; };
 		C5DB4D58202439D100806BC1 /* SKSpaceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSpaceInfoModel.m; sourceTree = "<group>"; };
 		C5DB4D5A202445F100806BC1 /* NSArray+ImageArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ImageArray.h"; sourceTree = "<group>"; };
@@ -1733,6 +1744,8 @@
 				2A9E2C45202D71AF0016E097 /* WOTTeamView.m */,
 				C5C9C7EC20A966D00075E449 /* SKPayDelegateView.h */,
 				C5C9C7ED20A966D00075E449 /* SKPayDelegateView.m */,
+				C5DB164120EB149C008352D0 /* SKProductView.h */,
+				C5DB164220EB149C008352D0 /* SKProductView.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -1818,6 +1831,8 @@
 				C5C9C85220AAE6D70075E449 /* SKSingleFacilitatorModel.m */,
 				C531ED3920C13BBB00D8EC98 /* SKCommunityServiceModel.h */,
 				C531ED3A20C13BBB00D8EC98 /* SKCommunityServiceModel.m */,
+				C5DB163920EB1431008352D0 /* SKServiceProductModel.h */,
+				C5DB163A20EB1431008352D0 /* SKServiceProductModel.m */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -2207,6 +2222,9 @@
 				2AD0AB682057DFBF005B87D3 /* WOTMyRepairdDetailCell.h */,
 				2AD0AB692057DFBF005B87D3 /* WOTMyRepairdDetailCell.m */,
 				2AD0AB6A2057DFBF005B87D3 /* WOTMyRepairdDetailCell.xib */,
+				C5DB163C20EB148B008352D0 /* SKProductCell.h */,
+				C5DB163E20EB148B008352D0 /* SKProductCell.m */,
+				C5DB163D20EB148B008352D0 /* SKProductCell.xib */,
 			);
 			path = my;
 			sourceTree = "<group>";
@@ -3356,6 +3374,7 @@
 				C5CBA58520109E56002943EF /* AlipaySDK.bundle in Resources */,
 				2AED7BDE1FFB4D7300316588 /* WOTApplyCell.xib in Resources */,
 				2A7D878420304A4600CF4CCD /* WOTMyInvityCell.xib in Resources */,
+				C5DB163F20EB148C008352D0 /* SKProductCell.xib in Resources */,
 				E86594821F21C9260093B796 /* WOTSocialContactCell.xib in Resources */,
 				2AD0AB6C2057DFBF005B87D3 /* WOTMyRepairdDetailCell.xib in Resources */,
 				E86FD1F41F20742A009BE16A /* WOTApplyRepairCell.xib in Resources */,
@@ -3708,6 +3727,7 @@
 				C79C2D3A1F7E36870052DF23 /* WOTBookStationReservationsModel.m in Sources */,
 				2AF18A3E1F13610E004681CE /* WOTOrderForSelectCell.m in Sources */,
 				C531ED3E20C14ED000D8EC98 /* UITabBar+badge.m in Sources */,
+				C5DB163B20EB1432008352D0 /* SKServiceProductModel.m in Sources */,
 				E86615681F1F2E12005E182A /* WOTOpenLockScanVC.m in Sources */,
 				E85A858C1F0201F30016FCA1 /* AppDelegate.m in Sources */,
 				E8588CEA1F0B27F900951105 /* NSString+URL.m in Sources */,
@@ -3824,6 +3844,7 @@
 				2AF7B18C1FD6F3A9006E36F7 /* WOTOrderForSelectDateCell.m in Sources */,
 				E85A85F51F0202460016FCA1 /* View+MASAdditions.m in Sources */,
 				C5A836B11FFF5744002E4CE1 /* SKUpdateInfoViewController.m in Sources */,
+				C5DB164020EB148C008352D0 /* SKProductCell.m in Sources */,
 				E86245621F3D4F4900CF0D9D /* SRIOConsumer.m in Sources */,
 				C5C9C7F920A9904A0075E449 /* SKCompanyMemberModel.m in Sources */,
 				E86594811F21C9260093B796 /* WOTSocialContactCell.m in Sources */,
@@ -3922,6 +3943,7 @@
 				C5B2467120A5AE51005EFB91 /* SKReserveInfoTableViewController.m in Sources */,
 				E862456F1F3D4F4900CF0D9D /* SRURLUtilities.m in Sources */,
 				2AD2BE191F26DC4F00D4C3BC /* WOTBusinessModel.m in Sources */,
+				C5DB164320EB149C008352D0 /* SKProductView.m in Sources */,
 				C59D56E11FDA2C6D001870B2 /* ILRegularExpressionManager.m in Sources */,
 				2AD2BE281F271BE400D4C3BC /* WOTLightCell.m in Sources */,
 				E85A85ED1F0202460016FCA1 /* MASCompositeConstraint.m in Sources */,
