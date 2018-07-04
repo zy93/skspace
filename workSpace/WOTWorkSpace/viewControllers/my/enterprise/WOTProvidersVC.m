@@ -210,7 +210,7 @@
                     numline =(int)(self.productArray.count/2 + 1);
                 }
                
-                return 43+130*numline;
+                return 43+(([[UIScreen mainScreen] bounds].size.width - 40)/2+5)*numline;
             }else
             {
                 return 160;

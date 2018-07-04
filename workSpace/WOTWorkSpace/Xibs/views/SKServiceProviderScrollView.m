@@ -16,7 +16,7 @@
 #define providersViewWidth  ([[UIScreen mainScreen] bounds].size.width - 40)/2
 #define productViewWidth  ([[UIScreen mainScreen] bounds].size.width - 40)/2
 #define providersViewHeight ([[UIScreen mainScreen] bounds].size.width/350 * 180)
-#define providersViewGap  10
+#define providersViewGap  7
 #define providersStartX   20
 
 @implementation SKServiceProviderScrollView
@@ -52,15 +52,20 @@
                 //numLine = i/2;
             }
             numLine = i/2;
-            SKProductView *view = [[SKProductView alloc] initWithFrame:CGRectMake(isLeft?20:20+productViewWidth+providersViewGap,numLine *130, productViewWidth, 120)];
+            SKProductView *view = [[SKProductView alloc] initWithFrame:CGRectMake(isLeft?20:20+productViewWidth+providersViewGap,numLine *(productViewWidth+5), productViewWidth, productViewWidth)];
             SKServiceProductModel *infoModel = facilitatorArray[i];
             [view.iconIV sd_setImageWithURL:[infoModel.productImage ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_logo"]];
+            view.backgroundColor = [UIColor whiteColor];
             view.titleLab.text = infoModel.productName;
             view.priceLab.text = [NSString stringWithFormat:@"¥%@",infoModel.money];
             view.tag = i;
             view.layer.cornerRadius = 5.f;
-            view.layer.borderColor = UICOLOR_GRAY_99.CGColor;
+            view.layer.borderColor = UICOLOR_E8.CGColor;
             view.layer.borderWidth = 1.f;
+            view.layer.shadowColor = UICOLOR_F5.CGColor;
+            view.layer.shadowOffset = CGSizeZero;
+            view.layer.shadowOpacity = 1;
+            view.layer.shadowRadius = 2;
             [self addSubview:view];
         }
         //self.contentSize = CGSizeMake(facilitatorArray.count*productViewWidth+ (facilitatorArray.count*(providersViewGap)) + providersStartX, self.frame.size.height);

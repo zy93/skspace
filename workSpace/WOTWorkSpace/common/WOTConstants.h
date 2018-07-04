@@ -58,10 +58,12 @@
 #define UICOLOR_gold     UIColorFromRGB(0xe9cf9a) //礼包立即购买金
 #define UICOLOR_blacK     UIColorFromRGB(0x2a2a2a) //礼包立即购买黑
 #define UICOLOR_MAIN_TEXT_PLACEHOLDER  RGBA(0,0,31,0.22) //输入框底纹颜色
+#define UICOLOR_E8  UIColorFromRGB(0xe8e8e8)
+#define UICOLOR_F5  UIColorFromRGB(0xf5f5f5)
 
 //#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
- #define HTTPBaseURL @"http://101.200.32.180" //尚科服务器
-//#define HTTPBaseURL @"http://api.skwork.cn" //尚科服务器
+//#define HTTPBaseURL @"http://101.200.32.180" //尚科服务器
+#define HTTPBaseURL @"http://api.skwork.cn" //尚科服务器
 //#define HTTPBaseURL @"http://192.168.34.80:8080"
 //#define HTTPBaseURL @"http://192.168.1.216:8080"//赵亮亮
 //#define HTTPBaseURL @"http://192.168.6.203:8080"//赵亮亮
