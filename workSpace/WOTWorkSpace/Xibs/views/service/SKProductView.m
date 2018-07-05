@@ -57,7 +57,7 @@
         make.centerX.equalTo(self);
         make.left.equalTo(self).with.offset(40);
         make.right.equalTo(self).with.offset(-40);
-        make.height.equalTo(self.iconIV.mas_width);
+        make.height.equalTo(self.iconIV.mas_width); 
     }];
     
     [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {

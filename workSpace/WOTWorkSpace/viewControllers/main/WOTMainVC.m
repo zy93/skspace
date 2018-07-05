@@ -590,7 +590,7 @@ int a = 0;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-#pragma mark - SDCycleScrollView Delegate  点击轮播图显示详情
+#pragma mark - SDCycleScrollView Delegate  点击首页banner显示详情
 -(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
     if ([self.bannerData[index].proclamationType isEqualToString:@"服务企业"]) {
