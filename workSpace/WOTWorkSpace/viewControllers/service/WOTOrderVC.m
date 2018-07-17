@@ -1799,6 +1799,7 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
                                  @"commodityNum":self.roomModel.subareaId,
                                  @"commodityName":self.productDescriptionStr,
                                  @"spaceId":self.spaceModel.spaceId,
+                                 @"spaceName":self.spaceModel.spaceName,
                                  @"imageSite":self.roomModel.showPicture,
                                  @"commodityKind":@"长租工位",
                                  @"productNum":@1,
@@ -1834,6 +1835,7 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
                                  @"commodityKind":@"长租工位",
                                  @"productNum":@1,
                                  @"spaceId":self.spaceModel.spaceId,
+                                 @"spaceName":self.spaceModel.spaceName,
                                  @"commodityNum":self.roomModel.subareaId,
                                  @"imageSite":self.roomModel.showPicture,
                                  @"money":self.payMoneyNum,//self.paySumNumber

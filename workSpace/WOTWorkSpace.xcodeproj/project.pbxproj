@@ -3265,7 +3265,7 @@
 		E85A857C1F0201F30016FCA1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = WOT;
+				CLASSPREFIX = SK;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "北京物联港科技发展有限公司";
 				TargetAttributes = {

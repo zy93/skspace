@@ -68,9 +68,9 @@
     }
     else if ([self.model.commodityKind isEqualToString:@"长租工位"])
     {
-        [self.tableList insertObject:@[@"预定房间", @"预定时间"] atIndex:1];
+        [self.tableList insertObject:@[@"预定房间", @"预定时间",@"预定价格"] atIndex:1];
         
-        [self.tableValueList insertObject:@[self.model.commodityName,self.model.commodityNumList] atIndex:1];
+        [self.tableValueList insertObject:@[self.model.commodityName,self.model.commodityNumList,[NSString stringWithFormat:@"%@",self.model.money]] atIndex:1];
     }
     else  {
         [self.tableList insertObject:@[@"礼包名称"] atIndex:1];

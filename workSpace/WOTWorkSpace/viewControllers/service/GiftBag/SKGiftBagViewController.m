@@ -112,7 +112,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SKGiftBagInfoViewController *giftBagInfoVC = [[SKGiftBagInfoViewController alloc] init];
-    giftBagInfoVC.giftBagModel = self.giftBagListArray[indexPath.row];
+    SKGiftBagModel_list *model_list = self.giftBagListArray[indexPath.section];
+    giftBagInfoVC.giftBagModel  = model_list.list[indexPath.row];
     [self.navigationController pushViewController:giftBagInfoVC animated:YES];
     
 }

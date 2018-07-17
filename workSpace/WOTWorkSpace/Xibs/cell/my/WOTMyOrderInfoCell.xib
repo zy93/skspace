@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,6 +21,10 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_banner" translatesAutoresizingMaskIntoConstraints="NO" id="gyK-HP-wM9">
                         <rect key="frame" x="20" y="10" width="315" height="132.5"/>
                     </imageView>
+                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TjT-c8-Ehq">
+                        <rect key="frame" x="20" y="10" width="315" height="132.5"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="order_gift_bag" translatesAutoresizingMaskIntoConstraints="NO" id="QDF-Jo-e6W">
                         <rect key="frame" x="30" y="20" width="25" height="25"/>
                     </imageView>
@@ -42,17 +46,22 @@
                     <constraint firstAttribute="trailing" secondItem="gyK-HP-wM9" secondAttribute="trailing" constant="20" id="2fU-ka-1sp"/>
                     <constraint firstItem="QDF-Jo-e6W" firstAttribute="top" secondItem="gyK-HP-wM9" secondAttribute="top" constant="10" id="QMP-9x-4XU"/>
                     <constraint firstAttribute="bottom" secondItem="gyK-HP-wM9" secondAttribute="bottom" id="W6T-oW-He5"/>
+                    <constraint firstItem="TjT-c8-Ehq" firstAttribute="trailing" secondItem="gyK-HP-wM9" secondAttribute="trailing" id="Zlb-Ek-Mmn"/>
                     <constraint firstItem="dIl-Cs-eJ8" firstAttribute="leading" secondItem="QDF-Jo-e6W" secondAttribute="trailing" constant="10" id="bLa-R2-h8N"/>
+                    <constraint firstItem="TjT-c8-Ehq" firstAttribute="top" secondItem="gyK-HP-wM9" secondAttribute="top" id="cpN-TN-U0z"/>
                     <constraint firstItem="gyK-HP-wM9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="dkp-Xf-Ccy"/>
                     <constraint firstItem="dS6-u8-CYF" firstAttribute="leading" secondItem="dIl-Cs-eJ8" secondAttribute="leading" id="fhw-vS-YdI"/>
                     <constraint firstItem="gyK-HP-wM9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="gms-4w-o1I"/>
                     <constraint firstItem="dIl-Cs-eJ8" firstAttribute="centerY" secondItem="QDF-Jo-e6W" secondAttribute="centerY" id="szh-qd-5pC"/>
                     <constraint firstItem="dS6-u8-CYF" firstAttribute="top" secondItem="dIl-Cs-eJ8" secondAttribute="bottom" constant="8" id="vY2-Ck-ZGp"/>
+                    <constraint firstItem="TjT-c8-Ehq" firstAttribute="bottom" secondItem="gyK-HP-wM9" secondAttribute="bottom" id="voS-Qp-U1e"/>
+                    <constraint firstItem="TjT-c8-Ehq" firstAttribute="leading" secondItem="gyK-HP-wM9" secondAttribute="leading" id="zIx-pD-I9W"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bgIV" destination="gyK-HP-wM9" id="rGX-kQ-aoA"/>
                 <outlet property="iconIV" destination="QDF-Jo-e6W" id="jK8-tP-gf0"/>
+                <outlet property="shadeView" destination="TjT-c8-Ehq" id="klP-cL-3Y9"/>
                 <outlet property="subtitleLab" destination="dS6-u8-CYF" id="Lin-Ii-ZBJ"/>
                 <outlet property="titleLab" destination="dIl-Cs-eJ8" id="E0m-Fc-pfz"/>
             </connections>

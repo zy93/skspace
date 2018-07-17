@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *iconIV;
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLab;
+@property (weak, nonatomic) IBOutlet UIView *shadeView;
 
 -(void)setupViews;
 
