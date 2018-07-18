@@ -1068,14 +1068,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXY-Wn-Y35">
-                                <rect key="frame" x="187" y="74" width="1" height="32"/>
-                                <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="1" id="Sht-f7-4ad"/>
-                                    <constraint firstAttribute="height" constant="32" id="cel-9o-wCP"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="251" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NbE-hx-9b3">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1168,18 +1160,36 @@
                                     <outlet property="delegate" destination="ajt-h4-zut" id="rBG-0P-LAu"/>
                                 </connections>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotInformation" translatesAutoresizingMaskIntoConstraints="NO" id="5C9-jx-qpZ">
+                                <rect key="frame" x="152" y="298" width="70" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="2D4-Js-3S2"/>
+                                    <constraint firstAttribute="height" constant="70" id="9Ia-MU-UEU"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="亲，暂时没有数据！" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DgS-sM-aoC">
+                                <rect key="frame" x="0.0" y="373" width="375" height="21"/>
+                                <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
+                                <color key="textColor" red="0.57045853140000002" green="0.57047235969999999" blue="0.57046490910000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="DgS-sM-aoC" firstAttribute="top" secondItem="5C9-jx-qpZ" secondAttribute="bottom" constant="5" id="BDu-iV-anX"/>
+                            <constraint firstItem="5C9-jx-qpZ" firstAttribute="centerY" secondItem="dOz-Vr-msG" secondAttribute="centerY" id="E7L-29-cIx"/>
+                            <constraint firstItem="DgS-sM-aoC" firstAttribute="leading" secondItem="dOz-Vr-msG" secondAttribute="leading" id="F6K-DJ-GPa"/>
+                            <constraint firstItem="5C9-jx-qpZ" firstAttribute="centerX" secondItem="dOz-Vr-msG" secondAttribute="centerX" id="QpR-JL-cTC"/>
                             <constraint firstAttribute="trailing" secondItem="NbE-hx-9b3" secondAttribute="trailing" id="WUM-AO-pRf"/>
                             <constraint firstItem="NbE-hx-9b3" firstAttribute="top" secondItem="hHy-QW-5L2" secondAttribute="bottom" id="X6e-ua-l5n"/>
-                            <constraint firstItem="LXY-Wn-Y35" firstAttribute="top" secondItem="dOz-Vr-msG" secondAttribute="top" constant="74" id="e4I-mX-qOV"/>
                             <constraint firstItem="GAM-Ps-tG3" firstAttribute="top" secondItem="NbE-hx-9b3" secondAttribute="bottom" id="le6-76-eiG"/>
+                            <constraint firstAttribute="trailing" secondItem="DgS-sM-aoC" secondAttribute="trailing" id="nko-JI-nXG"/>
                             <constraint firstItem="NbE-hx-9b3" firstAttribute="leading" secondItem="dOz-Vr-msG" secondAttribute="leading" id="qNq-KA-hz4"/>
-                            <constraint firstItem="LXY-Wn-Y35" firstAttribute="centerX" secondItem="dOz-Vr-msG" secondAttribute="centerX" id="tPM-GM-G7a"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="NotInformationView" destination="5C9-jx-qpZ" id="FI4-GM-Cgn"/>
+                        <outlet property="notInfoLabel" destination="DgS-sM-aoC" id="0Ra-va-KUv"/>
                         <outlet property="tableVIew" destination="NbE-hx-9b3" id="q6Q-Tb-dzY"/>
                     </connections>
                 </viewController>
@@ -1198,8 +1208,34 @@
                     <view key="view" contentMode="scaleToFill" id="WRq-9f-Evx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotInformation" translatesAutoresizingMaskIntoConstraints="NO" id="Uy9-QR-tx6">
+                                <rect key="frame" x="152" y="298.5" width="70" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="CVr-eN-iE3"/>
+                                    <constraint firstAttribute="width" constant="70" id="VYb-v7-B4B"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="亲，暂时没有数据" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHG-Ix-iUZ">
+                                <rect key="frame" x="16" y="378.5" width="343" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.57045853140000002" green="0.57047235969999999" blue="0.57046490910000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="GHG-Ix-iUZ" secondAttribute="trailing" id="7Dn-uo-7i5"/>
+                            <constraint firstItem="GHG-Ix-iUZ" firstAttribute="top" secondItem="Uy9-QR-tx6" secondAttribute="bottom" constant="10" id="CFf-dM-kuA"/>
+                            <constraint firstItem="Uy9-QR-tx6" firstAttribute="centerX" secondItem="WRq-9f-Evx" secondAttribute="centerX" id="I4Q-vo-7H2"/>
+                            <constraint firstItem="Uy9-QR-tx6" firstAttribute="centerY" secondItem="WRq-9f-Evx" secondAttribute="centerY" id="MAF-PO-DUq"/>
+                            <constraint firstItem="GHG-Ix-iUZ" firstAttribute="leading" secondItem="WRq-9f-Evx" secondAttribute="leadingMargin" id="znb-mj-Cha"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="notInfoLabel" destination="GHG-Ix-iUZ" id="EHH-NU-5tE"/>
+                        <outlet property="notInformationView" destination="Uy9-QR-tx6" id="npC-76-fOh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQ0-4R-bxF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1207,6 +1243,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NotInformation" width="139" height="134"/>
         <image name="backAcssory" width="7" height="13"/>
         <image name="clock_icon" width="18" height="18"/>
         <image name="commentStar" width="15" height="15"/>

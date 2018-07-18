@@ -289,6 +289,8 @@ int a = 0;
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     WOTActivityModel *model = self.activityData.firstObject;
     detailvc.url = [model.htmlLocation stringToUrl];
+    detailvc.titleStr = model.title;
+    detailvc.infoStr = model.activityDescribe;
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 //跳转新闻详情页
@@ -296,6 +298,8 @@ int a = 0;
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     WOTNewsModel *model = self.newsData.firstObject;
     detailvc.url = [model.htmlLocation stringToUrl];
+    detailvc.titleStr = model.title;
+    detailvc.infoStr = model.messageInfo;
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 
@@ -618,6 +622,8 @@ int a = 0;
         if ([detailvc.url containsString:@"/share/shareRegistration.html"]) {
             WOTShareVC *vc = [[WOTShareVC alloc] init];
             vc.shareUrl = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
+            vc.titleStr = [NSString stringWithFormat:@"%@",self.bannerData[index].proclamationTitle];
+            vc.infoStr = @"";
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
             

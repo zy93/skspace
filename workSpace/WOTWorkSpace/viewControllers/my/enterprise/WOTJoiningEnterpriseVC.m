@@ -140,6 +140,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     detailvc.url = @"http://www.yiliangang.net:8012/makerSpace/companyInfo.html";
+    
     [self.supervc.navigationController pushViewController:detailvc animated:YES];
 }
 -(void)getMyEnterpriseDataSourceFromWeb{

@@ -22,7 +22,9 @@
 @property (nonatomic,strong)NSMutableArray *giftList;
 @property (nonatomic,copy)NSString *giftType;
 @property (nonatomic,strong)UIButton *giftButton;
-@property (nonatomic, strong)UIBarButtonItem *barButton;
+@property (nonatomic,strong)UIBarButtonItem *barButton;
+@property (nonatomic,strong)UIImageView *notInfoImageView;
+@property (nonatomic,strong)UILabel *notInfoLabel;
 @end
 
 @implementation SKGiftBagViewController
@@ -38,6 +40,18 @@
     self.giftBagTableView.dataSource = self;
     self.giftBagTableView.separatorStyle = UITableViewCellEditingStyleNone;
     [self.view addSubview:self.giftBagTableView];
+    
+    self.notInfoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
+    self.notInfoImageView.hidden = YES;
+    [self.view addSubview:self.notInfoImageView];
+    
+    self.notInfoLabel = [[UILabel alloc] init];
+    self.notInfoLabel.hidden = YES;
+    self.notInfoLabel.text = @"亲,暂时没有礼包";
+    self.notInfoLabel.textColor = [UIColor colorWithRed:145/255.f green:145/255.f blue:145/255.f alpha:1.f];
+    self.notInfoLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.notInfoLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.notInfoLabel];
     [self configNavi];
 }
 
@@ -73,6 +87,17 @@
 {
     [self.giftBagTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
+    }];
+    
+    [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_offset(70);
+    }];
+    
+    [self.notInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.notInfoImageView.mas_bottom).with.offset(10);
+        
     }];
 }
 
@@ -164,11 +189,18 @@
     [WOTHTTPNetwork queryGiftBagListWithType:nil response:^(id bean, NSError *error) {
         SKGiftBagModel_msg *model_msg = (SKGiftBagModel_msg *)bean;
         if ([model_msg.code isEqualToString:@"200"]) {
-            self.giftBagListArray = model_msg.msg;
-            [self queryGiftList:self.giftBagListArray];
-            [self.giftBagTableView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.notInfoImageView.hidden = YES;
+                self.notInfoLabel.hidden = YES;
+                self.giftBagListArray = model_msg.msg;
+                [self queryGiftList:self.giftBagListArray];
+                [self.giftBagTableView reloadData];
+            });
+            
         }else
         {
+            self.notInfoImageView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [MBProgressHUDUtil showMessage:@"未查询到礼包" toView:self.view];
             return ;
         }
@@ -240,11 +272,15 @@
     [WOTHTTPNetwork queryGiftBagListWithType:typeStr response:^(id bean, NSError *error) {
         SKGiftBagModel_msg *model_msg = (SKGiftBagModel_msg *)bean;
         if ([model_msg.code isEqualToString:@"200"]) {
+            self.notInfoImageView.hidden = YES;
+            self.notInfoLabel.hidden = YES;
             self.giftBagListArray = model_msg.msg;
             [self configNavi];
             [self.giftBagTableView reloadData];
         }else
         {
+            self.notInfoImageView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [MBProgressHUDUtil showMessage:@"未查询到礼包" toView:self.view];
             return ;
         }

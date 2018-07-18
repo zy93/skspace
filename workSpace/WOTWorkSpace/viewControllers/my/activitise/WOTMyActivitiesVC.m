@@ -17,6 +17,9 @@
 @interface WOTMyActivitiesVC ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,copy)NSArray <SKMyActivityModel_list *>*myActivityList;
 @property(nonatomic,strong)UITableView *myActivityTableView;
+@property (nonatomic,strong)UIImageView *notInfoImageView;
+@property (nonatomic,strong)UILabel *notInfoLabel;
+
 @end
 
 @implementation WOTMyActivitiesVC
@@ -27,6 +30,18 @@
     [self requestWithMyActivity];
     [self configNavi];
     [self.view addSubview:self.myActivityTableView];
+    self.notInfoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
+    self.notInfoImageView.hidden = YES;
+    [self.view addSubview:self.notInfoImageView];
+    
+    self.notInfoLabel = [[UILabel alloc] init];
+    self.notInfoLabel.hidden = YES;
+    self.notInfoLabel.text = @"亲,暂时没有活动！";
+    self.notInfoLabel.textColor = [UIColor colorWithRed:145/255.f green:145/255.f blue:145/255.f alpha:1.f];
+    self.notInfoLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.notInfoLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.notInfoLabel];
+
     [self layoutSubviews];
 }
 
@@ -39,6 +54,18 @@
 {
     [self.myActivityTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
+    }];
+    
+    [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(-50);
+        make.height.width.mas_offset(70);
+    }];
+    
+    [self.notInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.notInfoImageView.mas_bottom).with.offset(10);
+        
     }];
 }
 
@@ -76,6 +103,8 @@
 {
     WOTH5VC *detailvc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     detailvc.url = [self.myActivityList[indexPath.row].content.htmlLocation stringToUrl];
+    detailvc.titleStr = self.myActivityList[indexPath.row].content.title;
+    detailvc.infoStr = self.myActivityList[indexPath.row].content.activityDescribe;
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 -(void)configNavi{
@@ -91,6 +120,8 @@
         if ([model_msg.code isEqualToString:@"200"]) {
             self.myActivityList = model_msg.msg;
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.notInfoImageView.hidden = YES;
+                self.notInfoLabel.hidden = YES;
                 [self.myActivityTableView reloadData];
             });
             return ;
@@ -98,10 +129,13 @@
             
         if ([model_msg.code isEqualToString:@"202"])
         {
+            self.notInfoImageView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [MBProgressHUDUtil showMessage:@"没有活动！" toView:self.view];
             return;
         }
-        
+        self.notInfoImageView.hidden = NO;
+        self.notInfoLabel.hidden = NO;
         [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
         
         

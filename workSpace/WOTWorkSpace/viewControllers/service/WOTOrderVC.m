@@ -523,6 +523,7 @@
             SKReserveInfoTableViewController *reserveInfoTVC = [[SKReserveInfoTableViewController alloc] init];
             reserveInfoTVC.spaceModel = self.spaceModel;
             reserveInfoTVC.enterInterfaceType = ENTER_INTERFACE_TYPE_EDIT;
+            reserveInfoTVC.typeInfo = TYPE_INFO_OTHER;
             [self.navigationController pushViewController:reserveInfoTVC animated:YES];
 //            [WOTHTTPNetwork appointmentSettledWithSpaceId:self.spaceModel.spaceId spaceName:self.spaceModel.spaceName response:^(id bean, NSError *error) {
 //                if (!error) {

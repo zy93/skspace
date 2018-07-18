@@ -12,7 +12,6 @@
 #import "WOTNearbySapceCell.h"
 #import "WOTworkSpaceCommonCell.h"
 #import "WOTSpaceCityScrollView.h"
-#import "WOTH5VC.h"
 #import "MJRefresh.h"
 #import "WOTCityModel.h"
 #import "WOTRefreshControlUitls.h"

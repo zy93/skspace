@@ -102,6 +102,7 @@
         SKReserveInfoTableViewController *enterVC = [[SKReserveInfoTableViewController alloc] init];
         enterVC.enterModel = model;
         enterVC.enterInterfaceType = ENTER_INTERFACE_TYPE_SHOW;
+        enterVC.typeInfo = TYPE_INFO_OTHER;
         [self.navigationController pushViewController:enterVC animated:YES];
     }else
     {

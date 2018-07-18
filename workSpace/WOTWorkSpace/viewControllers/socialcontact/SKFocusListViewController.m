@@ -21,6 +21,9 @@
 @property(nonatomic,strong)UITableView *focusListTableView;
 @property(nonatomic,strong)NSMutableArray <SKFocusListModel_msg *>*foucusListArray;
 
+@property (nonatomic,strong)UIImageView *notInfoImageView;
+@property (nonatomic,strong)UILabel *notInfoLabel;
+
 @end
 
 @implementation SKFocusListViewController
@@ -39,6 +42,18 @@
     [self.focusListTableView.mj_header beginRefreshing];
     [self.view addSubview:self.focusListTableView];
     
+    self.notInfoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
+    self.notInfoImageView.hidden = YES;
+    [self.view addSubview:self.notInfoImageView];
+    
+    self.notInfoLabel = [[UILabel alloc] init];
+    self.notInfoLabel.hidden = YES;
+    self.notInfoLabel.text = @"亲,暂时没有关注！";
+    self.notInfoLabel.textColor = [UIColor colorWithRed:145/255.f green:145/255.f blue:145/255.f alpha:1.f];
+    self.notInfoLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.notInfoLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.notInfoLabel];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -55,6 +70,18 @@
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view).with.offset(-48);
+    }];
+    
+    [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(-50);
+        make.height.width.mas_offset(70);
+    }];
+    
+    [self.notInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.notInfoImageView.mas_bottom).with.offset(10);
+        
     }];
 }
 
@@ -140,16 +167,22 @@
     [WOTHTTPNetwork queryFocusOnPeopleWithFocusPeopleid:[WOTUserSingleton shareUser].userInfo.userId  response:^(id bean, NSError *error) {
         SKFocusListModel *baseModel = (SKFocusListModel *)bean;
         if ([baseModel.code isEqualToString:@"200"]) {
+           
             self.foucusListArray = [[NSMutableArray alloc] initWithArray:baseModel.msg];
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.notInfoImageView.hidden = YES;
+                self.notInfoLabel.hidden = YES;
                [self.focusListTableView reloadData];
             });
         } else {
             if ([baseModel.code isEqualToString:@"202"]) {
+               
                 if (_foucusListArray.count>0) {
                     [self.foucusListArray removeAllObjects];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    self.notInfoImageView.hidden = NO;
+                    self.notInfoLabel.hidden = NO;
                     [self.focusListTableView reloadData];
                     [MBProgressHUDUtil showMessage:@"还未关注其他人！" toView:self.view];
                 });
@@ -157,6 +190,8 @@
             }
             else
             {
+                self.notInfoImageView.hidden = NO;
+                self.notInfoLabel.hidden = NO;
                 [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
                 return ;
             }

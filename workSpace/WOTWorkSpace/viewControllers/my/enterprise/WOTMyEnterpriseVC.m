@@ -25,6 +25,8 @@
 
 @property (nonatomic, strong) NSArray <WOTEnterpriseModel *>*tableList;
 
+@property (nonatomic,strong)UIImageView *notInfoImageView;
+@property (nonatomic,strong)UILabel *notInfoLabel;
 @end
 
 @implementation WOTMyEnterpriseVC
@@ -34,6 +36,33 @@
     [self configNavi];
     // Do any additional setup after loading the view.
     [self.table registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTMyEnterPriseCell"];
+    self.notInfoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
+    self.notInfoImageView.hidden = YES;
+    [self.view addSubview:self.notInfoImageView];
+    
+    self.notInfoLabel = [[UILabel alloc] init];
+    self.notInfoLabel.hidden = YES;
+    self.notInfoLabel.text = @"亲,暂时没有加入任何企业！";
+    self.notInfoLabel.textColor = [UIColor colorWithRed:145/255.f green:145/255.f blue:145/255.f alpha:1.f];
+    self.notInfoLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.notInfoLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.notInfoLabel];
+    [self layoutSubviews];
+}
+
+-(void)layoutSubviews
+{
+    [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(-50);
+        make.height.width.mas_offset(70);
+    }];
+    
+    [self.notInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.notInfoImageView.mas_bottom).with.offset(10);
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,11 +132,16 @@
     [WOTHTTPNetwork getUserEnterpriseWithCompanyId:result response:^(id bean, NSError *error) {
         WOTEnterpriseModel_msg *model = bean;
         if ([model.code isEqualToString:@"200"]) {
+            
             weakSelf.tableList = model.msg.list;
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.notInfoImageView.hidden = YES;
+                self.notInfoLabel.hidden = YES;
                 [weakSelf.table reloadData];
             });
         }
+        self.notInfoImageView.hidden = NO;
+        self.notInfoLabel.hidden = NO;
     }];
 }
 

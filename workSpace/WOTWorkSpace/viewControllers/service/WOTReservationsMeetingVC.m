@@ -41,24 +41,23 @@
     self.spaceId = [WOTSingtleton shared].nearbySpace.spaceId ;
    // _spaceSite = [WOTSingtleton shared].nearbySpace.spaceSite;
     [self creatSpace];
-    WOTLocationModel *model = [WOTSingtleton shared].nearbySpace;
-    NSLog(@"最近空间%@",model.spaceName);
-    
-    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
-        self.spaceName = @"全部";
-    }else
-    {
-        if (model.spaceName) {
-            
-            self.spaceName = model.spaceName;
-        }
-        else
-        {
-            self.spaceName = @"未定位";
-        }
-    }
+//    WOTLocationModel *model = [WOTSingtleton shared].nearbySpace;
+//    NSLog(@"最近空间%@",model.spaceName);
+    self.spaceName = @"全部";
+//    if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
+//        self.spaceName = @"全部";
+//    }else
+//    {
+//        if (model.spaceName) {
+//
+//            self.spaceName = model.spaceName;
+//        }
+//        else
+//        {
+//            self.spaceName = @"未定位";
+//        }
+//    }
    
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -150,6 +149,7 @@
         [WOTHTTPNetwork getMeetingRoomListWithSpaceId:self.spaceId type:@(0) response:^(id bean, NSError *error) {
             if (error) {
                 NSLog(@"error:%@",error);
+                 self.notInformationLabel.text = @"亲，暂时没有会议室哦！";
                 return ;
             }
             WOTMeetingListModel_msg *model = bean;
@@ -163,16 +163,19 @@
                     self.notInformationImageView.hidden = NO;
                     self.notInformationLabel.hidden = NO;
                     self.notInformationLabel.text = @"亲，暂时没有会议室哦！";
-                    NSLog(@"没有数据");
                 }
                 [self.table reloadData];
             });
         }];
     }
     else {
+        if ([self.spaceName isEqualToString:@"全部"]) {
+            self.spaceId = nil;
+        }
         [WOTHTTPNetwork getMeetingRoomListWithSpaceId:self.spaceId type:@(1) response:^(id bean, NSError *error) {
             if (error) {
                 NSLog(@"error:%@",error);
+                self.notInformationLabel.text = @"亲，暂时没有场地哦！";
                 return ;
             }
             WOTMeetingListModel_msg *model = bean;

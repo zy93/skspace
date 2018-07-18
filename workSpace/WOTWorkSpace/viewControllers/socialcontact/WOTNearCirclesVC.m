@@ -65,6 +65,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
 @property (nonatomic,assign) int pageNum;
 @property (nonatomic,assign) BOOL isAttention;
 @property (nonatomic,strong) NSMutableArray *arrDLed;
+
+@property (nonatomic,strong)UIImageView *notInfoImageView;
+@property (nonatomic,strong)UILabel *notInfoLabel;
+
 @end
 
 @implementation WOTNearCirclesVC
@@ -84,7 +88,35 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
     self.circleofFriendsList = [[NSMutableArray alloc] init];
     _tableDataSource = [[NSMutableArray alloc] init];
     _contentDataSource = [[NSMutableArray alloc] init];
+    
+    self.notInfoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
+    self.notInfoImageView.hidden = YES;
+    [self.view addSubview:self.notInfoImageView];
+    
+    self.notInfoLabel = [[UILabel alloc] init];
+    self.notInfoLabel.hidden = YES;
+    self.notInfoLabel.text = @"亲,暂时没有信息！";
+    self.notInfoLabel.textColor = [UIColor colorWithRed:145/255.f green:145/255.f blue:145/255.f alpha:1.f];
+    self.notInfoLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.notInfoLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.notInfoLabel];
+    [self layoutSubviews];
     //[self configData];
+}
+
+-(void)layoutSubviews
+{
+    [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(-50);
+        make.height.width.mas_offset(70);
+    }];
+    
+    [self.notInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.notInfoImageView.mas_bottom).with.offset(10);
+        
+    }];
 }
 
 #pragma mark -加载数据
@@ -221,7 +253,10 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             [self.circleofFriendsList removeAllObjects];
             [self.circleofFriendsList addObjectsFromArray:model.msg.list];
             if ([model.code isEqualToString:@"200"]) {
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    self.notInfoImageView.hidden = YES;
+                    self.notInfoLabel.hidden = YES;
                     [weakSelf configData];
                     [weakSelf loadTextData];
                     [weakSelf stoploadMoreTopic];
@@ -231,6 +266,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             else
             {
                 if ([model.code isEqualToString:@"202"]) {
+                    self.notInfoImageView.hidden = NO;
+                    self.notInfoLabel.hidden = NO;
                     [MBProgressHUDUtil showMessage:@"没有数据！" toView:self.view];
                     if (self.circleofFriendsList.count >0) {
                         [self.circleofFriendsList removeAllObjects];
@@ -244,6 +281,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                     return ;
                 }else
                 {
+                    self.notInfoImageView.hidden = NO;
+                    self.notInfoLabel.hidden = NO;
                     [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
                     return ;
                 }
@@ -282,6 +321,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             QueryCircleofFriendsModel *model = (QueryCircleofFriendsModel*)bean;
             weakSelf.circleofFriendsList = [[NSMutableArray alloc] initWithArray:model.msg.list];
             if ([model.code isEqualToString:@"200"]) {
+                self.notInfoImageView.hidden = YES;
+                self.notInfoLabel.hidden = YES;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf configData];
                     [weakSelf loadTextData];
@@ -292,6 +333,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
             else
             {
                 if ([model.code isEqualToString:@"202"]) {
+                    self.notInfoImageView.hidden = NO;
+                    self.notInfoLabel.hidden = NO;
                     [MBProgressHUDUtil showMessage:@"没有数据！" toView:self.view];
                     if (self.circleofFriendsList.count >0) {
                         [self.circleofFriendsList removeAllObjects];
@@ -304,6 +347,8 @@ typedef NS_ENUM(NSInteger, FDSimulatedCacheMode) {
                     return ;
                 }else
                 {
+                    self.notInfoImageView.hidden = NO;
+                    self.notInfoLabel.hidden = NO;
                     [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
                     return ;
                 }

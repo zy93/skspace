@@ -69,7 +69,7 @@
                    ];
     
     
-    titleList = @[@"分时预定",@"房间预定",@"订会议室",@"预订场地", @"礼包", @"尚科资讯", @"尚科活动", @"访客预约"];
+    titleList = @[@"分时预定",@"工位租赁",@"订会议室",@"预订场地", @"礼包", @"尚科资讯", @"尚科活动", @"访客预约"];
     imageNameList = @[@"shortcut_finds_icon",
                       @"shortcut_station_icon",
                       @"shortcut_meeting_icon",

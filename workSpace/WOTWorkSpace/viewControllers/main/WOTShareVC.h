@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface WOTShareVC : UIViewController
-@property (nonatomic, strong) NSString * shareUrl;
+@property (nonatomic,strong) NSString * shareUrl;
+@property (nonatomic,strong) NSString * titleStr;
+@property (nonatomic,strong) NSString * infoStr;
 @end

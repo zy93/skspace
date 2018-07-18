@@ -14,6 +14,10 @@
 {
     NSInteger page;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *notInformationView;
+@property (weak, nonatomic) IBOutlet UILabel *notInfoLabel;
+
+@property(nonatomic,strong)MBProgressHUD *HUD;
 
 @end
 
@@ -21,6 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.notInformationView.hidden = YES;
+    self.notInfoLabel.hidden = YES;
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.tableView.backgroundColor = UICOLOR_CLEAR;
     _dataSource = [[NSMutableArray alloc]init];
@@ -30,6 +36,12 @@
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopic)];
      page = 0;
     [self createRequest];
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.mode = MBProgressHUDModeText;
+    self.HUD.customView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_HUD];
+    _HUD.label.text = @"加载中,请稍等...";
+    [_HUD showAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,19 +92,24 @@
     [WOTHTTPNetwork getNewsWithPage:@(page) response:^(id bean, NSError *error) {
         WOTNewsModel_msg *model = (WOTNewsModel_msg *)bean;
         if ([model.code isEqualToString:@"200"]) {
-            
             dispatch_async(dispatch_get_main_queue(), ^{
-
+                [_HUD removeFromSuperview];
                 [weakSelf.dataSource addObjectsFromArray:model.msg.list];
                 [self stoploadMoreTopic];
                 [weakSelf.tableView reloadData];
             });
         }else if ([model.code isEqualToString:@"202"]) {
+            self.notInformationView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [self stoploadMoreTopic];
+            [_HUD removeFromSuperview];
             [MBProgressHUDUtil showMessage:@"没有更多数据" toView:self.view];
             return ;
         }
         else {
+            self.notInformationView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
+            [_HUD removeFromSuperview];
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
         }
     }];
@@ -141,6 +158,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTH5VC *detailvc = [WOTH5VC loadH5VC];
     detailvc.url = [_dataSource[indexPath.row].htmlLocation stringToUrl];
+    detailvc.titleStr = _dataSource[indexPath.row].title;
+    detailvc.infoStr = _dataSource[indexPath.row].messageInfo;
     [self.navigationController pushViewController:detailvc animated:YES];
 }
 //

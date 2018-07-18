@@ -12,7 +12,9 @@
 @property (weak, nonatomic) IBOutlet UIWebView *web;
 
 //H5地址
-@property (nonatomic, strong) NSString *url;
+@property (nonatomic,copy) NSString *url;
+@property (nonatomic,copy) NSString *titleStr;
+@property (nonatomic,copy) NSString *infoStr;
 
 +(WOTH5VC *)loadH5VC;
 

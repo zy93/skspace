@@ -12,10 +12,12 @@
 #import "MBProgressHUD+Extension.h"
 
 
-@interface WOTH5VC () <YYShareViewDelegate>
+@interface WOTH5VC () <YYShareViewDelegate,UIWebViewDelegate>
 {
     YYShareView *shareView;
 }
+
+@property(nonatomic,strong)MBProgressHUD *HUD;
 
 @end
 
@@ -31,12 +33,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self congigNav];
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.mode = MBProgressHUDModeText;
+    self.HUD.customView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_HUD];
+    _HUD.label.text = @"加载中,请稍等...";
+    [_HUD showAnimated:YES];
     self.web.opaque = NO;//dong
     self.web.backgroundColor = [UIColor clearColor];//dong
     if (self.url == nil) {
         self.url = @"http://www.yiliangang.net:8012/makerSpace/news1.html";
     }
-
+    self.web.delegate = self;
     [self.web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
 }
 
@@ -54,6 +62,12 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     self.navigationController.navigationBar.translucent = YES;
+}
+
+#pragma mark - 内容读入结束
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [_HUD removeFromSuperview];
 }
 
 
@@ -115,11 +129,18 @@
             break;
     }
     
-    NSString *pTitle = @"尚科社区";
+    NSString *pTitle;// = @"尚科区";
+    if (strIsEmpty(self.titleStr)) {
+        pTitle = @"尚科社区";
+    }else
+    {
+        pTitle = self.titleStr;
+    }
+    
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     messageObject.text = pTitle;
     
-    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:@"尚科社区" thumImage:[UIImage imageNamed:@"share_icon_image"]];
+    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:self.infoStr thumImage:[UIImage imageNamed:@"share_icon_image"]];
     pMessageObject.webpageUrl = self.url;
     messageObject.shareObject = pMessageObject;
     

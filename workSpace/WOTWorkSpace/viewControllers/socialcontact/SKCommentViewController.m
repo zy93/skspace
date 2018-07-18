@@ -24,6 +24,9 @@
 
 @property (nonatomic, strong) NSMutableArray <CommentModel *>*commentList;
 
+@property (nonatomic,strong)UIImageView *notInfoImageView;
+@property (nonatomic,strong)UILabel *notInfoLabel;
+
 @end
 
 @implementation SKCommentViewController
@@ -42,6 +45,18 @@
     self.commentTableView.tableFooterView = [UIView new] ;
     [self.view addSubview:self.commentTableView];
     //[self requestCommentData];
+    
+    self.notInfoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
+    self.notInfoImageView.hidden = YES;
+    [self.view addSubview:self.notInfoImageView];
+    
+    self.notInfoLabel = [[UILabel alloc] init];
+    self.notInfoLabel.hidden = YES;
+    self.notInfoLabel.text = @"亲,暂时没有评论！";
+    self.notInfoLabel.textColor = [UIColor colorWithRed:145/255.f green:145/255.f blue:145/255.f alpha:1.f];
+    self.notInfoLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.notInfoLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:self.notInfoLabel];
 }
 
 -(void)viewDidLayoutSubviews
@@ -51,6 +66,17 @@
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view).with.offset(-48);
+    }];
+    [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(-50);
+        make.height.width.mas_offset(70);
+    }];
+    
+    [self.notInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.notInfoImageView.mas_bottom).with.offset(10);
+        
     }];
 }
 
@@ -121,17 +147,23 @@
     [WOTHTTPNetwork queryMyCircleofFriendsCommentWithbyReplyid:[WOTUserSingleton shareUser].userInfo.userId pageNo:@1 pageSize:@1000 response:^(id bean, NSError *error) {
         QueryCommentModel *commentModel = (QueryCommentModel *)bean;
         if ([commentModel.code isEqualToString:@"200"]) {
+            self.notInfoImageView.hidden = YES;
+            self.notInfoLabel.hidden = YES;
             QueryCommentModel_msg *commentModel_msg = commentModel.msg;
             self.commentList = [[NSMutableArray alloc] initWithArray:commentModel_msg.list];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.commentTableView reloadData];
             });
             if (self.commentList.count == 0) {
+                self.notInfoImageView.hidden = NO;
+                self.notInfoLabel.hidden = NO;
                 [MBProgressHUDUtil showMessage:@"没有评论！" toView:self.view];
                 return ;
             }
         }else
         {
+            self.notInfoImageView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [MBProgressHUDUtil showMessage:@"网络错误！" toView:self.view];
             return ;
         }

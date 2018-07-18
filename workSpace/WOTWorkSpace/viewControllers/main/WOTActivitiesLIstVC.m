@@ -24,6 +24,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *category_arrowdown;
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
+@property (weak, nonatomic) IBOutlet UIImageView *NotInformationView;
+@property (weak, nonatomic) IBOutlet UILabel *notInfoLabel;
+
+@property(nonatomic,strong)MBProgressHUD *HUD;
 
 @property (nonatomic, strong)JudgmentTime *judgmentTime;
 @end
@@ -32,12 +36,23 @@
 bool ismenu1 =  NO;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.mode = MBProgressHUDModeText;
+    self.HUD.customView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_HUD];
+    _HUD.label.text = @"加载中,请稍等...";
+    [_HUD showAnimated:YES];
+    
+    self.NotInformationView.hidden = YES;
+    self.notInfoLabel.hidden = YES;
+    
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.tableVIew.backgroundColor = UICOLOR_CLEAR;
     [self configNav];
     _dataSource = [[NSMutableArray alloc]init];
     self.judgmentTime = [[JudgmentTime alloc] init];
     [self makeMenuArrays];
+    self.tableVIew.separatorStyle = UITableViewCellEditingStyleNone;
     [self.tableVIew registerNib:[UINib nibWithNibName:@"WOTworkSpaceCommonCell" bundle:nil] forCellReuseIdentifier:@"WOTworkSpaceCommonCellID"];
     self.tableVIew.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopic)];
     self.communityName.text = ((WOTFilterTypeModel *)self.menu1Array[0]).filterName;
@@ -45,6 +60,7 @@ bool ismenu1 =  NO;
     page = 0;
     // Do any additional setup after loading the view.
     [self crectRequest];
+    
     
 }
 
@@ -95,6 +111,7 @@ bool ismenu1 =  NO;
     page ++;
     __weak typeof(self) weakSelf = self;
     [WOTHTTPNetwork getActivitiesWithPage:@(page) response:^(id bean, NSError *error) {
+        [_HUD removeFromSuperview];
         WOTActivityModel_msg *model = (WOTActivityModel_msg *)bean;
         if ([model.code isEqualToString:@"200"]) {
             [weakSelf.dataSource addObjectsFromArray:model.msg.list];
@@ -105,11 +122,15 @@ bool ismenu1 =  NO;
                 
             });
         }else if ([model.code isEqualToString:@"202"]) {
+            self.NotInformationView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [self stoploadMoreTopic];
             [MBProgressHUDUtil showMessage:@"没有更多数据" toView:self.view];
             return ;
         }
         else {
+            self.NotInformationView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
         }
     }];
@@ -230,6 +251,8 @@ bool ismenu1 =  NO;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     WOTH5VC *h5vc = [[UIStoryboard storyboardWithName:@"spaceMain" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTworkSpaceDetailVC"];
     h5vc.url = [_dataSource[indexPath.row].htmlLocation stringToUrl];
+    h5vc.titleStr = _dataSource[indexPath.row].title;
+    h5vc.infoStr = _dataSource[indexPath.row].activityDescribe;
     [self.navigationController pushViewController:h5vc animated:YES];
 }
 

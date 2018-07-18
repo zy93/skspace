@@ -393,7 +393,6 @@
 		E85A85F31F0202460016FCA1 /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E85A85D11F0202450016FCA1 /* NSArray+MASAdditions.m */; };
 		E85A85F41F0202460016FCA1 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E85A85D41F0202460016FCA1 /* NSLayoutConstraint+MASDebugAdditions.m */; };
 		E85A85F51F0202460016FCA1 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E85A85D61F0202460016FCA1 /* View+MASAdditions.m */; };
-		E85A85F61F0202460016FCA1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E85A85DA1F0202460016FCA1 /* MBProgressHUD.m */; };
 		E85A85F71F0202460016FCA1 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = E85A85DE1F0202460016FCA1 /* MBProgressHUD+Add.m */; };
 		E85A85F81F0202460016FCA1 /* MBProgressHUDUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E85A85E01F0202460016FCA1 /* MBProgressHUDUtil.m */; };
 		E85A85FD1F0202B10016FCA1 /* WOTTabBarVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85A85FC1F0202B10016FCA1 /* WOTTabBarVCViewController.m */; };
@@ -1230,8 +1229,6 @@
 		E85A85D51F0202460016FCA1 /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
 		E85A85D61F0202460016FCA1 /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
 		E85A85D71F0202460016FCA1 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
-		E85A85D91F0202460016FCA1 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		E85A85DA1F0202460016FCA1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E85A85DD1F0202460016FCA1 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		E85A85DE1F0202460016FCA1 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
 		E85A85DF1F0202460016FCA1 /* MBProgressHUDUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUDUtil.h; sourceTree = "<group>"; };
@@ -2537,7 +2534,6 @@
 				E86FD1E71F2056F6009BE16A /* WOTImagePicker */,
 				2A42142E1F14699B0010B003 /* UMSocial */,
 				E85A85C01F0202450016FCA1 /* Masonry */,
-				E85A85D81F0202460016FCA1 /* MBProgressHUD */,
 			);
 			path = librarys;
 			sourceTree = "<group>";
@@ -2570,15 +2566,6 @@
 				E85A85D71F0202460016FCA1 /* View+MASShorthandAdditions.h */,
 			);
 			path = Masonry;
-			sourceTree = "<group>";
-		};
-		E85A85D81F0202460016FCA1 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				E85A85D91F0202460016FCA1 /* MBProgressHUD.h */,
-				E85A85DA1F0202460016FCA1 /* MBProgressHUD.m */,
-			);
-			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		E85A85DB1F0202460016FCA1 /* libs */ = {
@@ -3205,7 +3192,6 @@
 				E85A85801F0201F30016FCA1 /* Sources */,
 				E85A85811F0201F30016FCA1 /* Frameworks */,
 				E85A85821F0201F30016FCA1 /* Resources */,
-				CD490373BD6421CCE8FFF0C5 /* [CP] Embed Pods Frameworks */,
 				621724E8693AD8285FFA8298 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -3225,8 +3211,6 @@
 				E85A859C1F0201F30016FCA1 /* Sources */,
 				E85A859D1F0201F30016FCA1 /* Frameworks */,
 				E85A859E1F0201F30016FCA1 /* Resources */,
-				F98D269FA4B9E0DF3EA2930E /* [CP] Embed Pods Frameworks */,
-				9A63C7223633683843284F6A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3246,8 +3230,6 @@
 				E85A85A71F0201F30016FCA1 /* Sources */,
 				E85A85A81F0201F30016FCA1 /* Frameworks */,
 				E85A85A91F0201F30016FCA1 /* Resources */,
-				42BDC466C4598BD0A3DF1ED2 /* [CP] Embed Pods Frameworks */,
-				5B7B5ACE13B36BBAE756737D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3433,36 +3415,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		42BDC466C4598BD0A3DF1ED2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WOTWorkSpaceUITests/Pods-WOTWorkSpaceUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5B7B5ACE13B36BBAE756737D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WOTWorkSpaceUITests/Pods-WOTWorkSpaceUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		621724E8693AD8285FFA8298 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3498,7 +3450,31 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMap.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMapNavi.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TZImagePickerController.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_circle@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_circle@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_original_circle.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_original_circle@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_original_circle@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_selected.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_selected@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_selected@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_unselected.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_unselected@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_unselected@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/defaultphoto.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/lock.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/navBackBtn@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLCollectionCell.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLNoAuthorityViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLPhotoActionSheet.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLPhotoBrowserCell.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLThumbnailViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLPhotoBrowser.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3521,21 +3497,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9A63C7223633683843284F6A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AD9631E78060295ADD0AE575 /* [CP] Check Pods Manifest.lock */ = {
@@ -3572,36 +3533,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CD490373BD6421CCE8FFF0C5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WOTWorkSpace/Pods-WOTWorkSpace-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F98D269FA4B9E0DF3EA2930E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WOTWorkSpaceTests/Pods-WOTWorkSpaceTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3969,7 +3900,6 @@
 				2A69A8531FE2285E00C0862A /* WOTOpenDoorView.m in Sources */,
 				2A7AE8461FF62F80000CAC04 /* WOTTitleAndEnterCell.m in Sources */,
 				E82D5FB51F07DECE003EF0AE /* UIImage+Extension.m in Sources */,
-				E85A85F61F0202460016FCA1 /* MBProgressHUD.m in Sources */,
 				E85E63431F3B0B650050ABB6 /* WOTBueToothManager.m in Sources */,
 				E8605CD71F1356BF005C09F4 /* UISearchBar+JCSearchBarPlaceholder.m in Sources */,
 				C5FA65471FFDFCF800675A6A /* TZTestCell.m in Sources */,

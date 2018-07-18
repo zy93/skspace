@@ -118,11 +118,17 @@
             break;
     }
     
-    NSString *pTitle = @"尚科社区";
+    NSString *pTitle;// = @"尚科区";
+    if (strIsEmpty(self.titleStr)) {
+        pTitle = @"尚科社区";
+    }else
+    {
+        pTitle = self.titleStr;
+    }
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     messageObject.text = pTitle;
     
-    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:@"尚科社区" thumImage:[UIImage imageNamed:@"share_icon_image"]];
+    UMShareWebpageObject *pMessageObject = [UMShareWebpageObject shareObjectWithTitle:pTitle descr:self.infoStr thumImage:[UIImage imageNamed:@"share_icon_image"]];
     pMessageObject.webpageUrl = self.shareUrl;
     messageObject.shareObject = pMessageObject;
     

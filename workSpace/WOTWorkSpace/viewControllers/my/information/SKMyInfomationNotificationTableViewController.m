@@ -17,6 +17,8 @@
 @interface SKMyInfomationNotificationTableViewController ()
 @property(nonatomic,strong)NSMutableArray *notifationListArray;
 
+@property (nonatomic,strong)UIImageView *notInfoImageView;
+@property (nonatomic,strong)UILabel *notInfoLabel;
 
 @end
 
@@ -30,9 +32,36 @@
     self.navigationItem.title = @"消息通知";
     self.tableView.separatorStyle = UITableViewCellEditingStyleNone;
     [self.tableView registerNib:[UINib nibWithNibName:@"SKInfoNotificationTableViewCell" bundle:nil] forCellReuseIdentifier:@"SKInfoNotificationTableViewCell"];
+    self.notInfoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
+    self.notInfoImageView.hidden = YES;
+    [self.view addSubview:self.notInfoImageView];
     
+    self.notInfoLabel = [[UILabel alloc] init];
+    self.notInfoLabel.text = @"亲,暂时没有消息!";
+    self.notInfoLabel.textColor = [UIColor colorWithRed:145/255.f green:145/255.f blue:145/255.f alpha:1.f];
+    self.notInfoLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.notInfoLabel.textAlignment = NSTextAlignmentCenter;
+    self.notInfoLabel.hidden = YES;
+    [self.view addSubview:self.notInfoLabel];
+    
+    [self layoutSubviews];
+
 }
 
+-(void)layoutSubviews
+{
+    [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).with.offset(-50);
+        make.height.width.mas_offset(70);
+    }];
+    
+    [self.notInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+       // make.left.right.equalTo(self.view);
+        make.top.equalTo(self.notInfoImageView.mas_bottom).with.offset(10);
+        make.centerX.equalTo(self.view);
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -144,14 +173,23 @@
     [WOTHTTPNetwork queryNotifationInfoWithReadState:nil response:^(id bean, NSError *error) {
         SKInfoNotifationModel_msg *model = (SKInfoNotifationModel_msg *)bean;
         if ([model.code isEqualToString:@"200"]) {
-            weakSelf.notifationListArray = [model.msg.list mutableCopy];
-            [weakSelf.tableView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.notInfoImageView.hidden = YES;
+                self.notInfoLabel.hidden = YES;
+                weakSelf.notifationListArray = [model.msg.list mutableCopy];
+                [weakSelf.tableView reloadData];
+            });
+            
         }else if ([model.code isEqualToString:@"202"])
         {
+            self.notInfoImageView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [MBProgressHUDUtil showMessage:@"没有消息" toView:self.view];
             return ;
         }else
         {
+            self.notInfoImageView.hidden = NO;
+            self.notInfoLabel.hidden = NO;
             [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
             return ;
         }

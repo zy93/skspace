@@ -158,11 +158,13 @@
                 break;
             }
         }
+       
         if (!isHaveCity) {
             [self.cityList addObject:model.city];
         }
         //[self.cityList addObject:((NSDictionary *)model)[@"city"]];
     }
+     
     
 }
 

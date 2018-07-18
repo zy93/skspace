@@ -39,7 +39,7 @@
 @property (nonatomic, strong)NSArray *tableList;
 @property (nonatomic, strong)WOTSpaceModel *spaceModel;
 
-
+@property(nonatomic,strong)MBProgressHUD *HUD;
 
 //@property (nonatomic,strong) NSString *spaceNme;
 
@@ -51,16 +51,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.navigationItem.title = @"订工位";
-    
+    self.notInformationImageView.hidden = YES;
+    self.notBookStationInformationLabel.hidden = YES;
     //_spaceId = @(56);原来
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bookStationNotificationAction:) name:@"BookStationNotification" object:nil];
     self.cityList = [NSMutableArray new];
     inquireTime = [NSDate getNewTimeZero];
-    cityName = [WOTSingtleton shared].cityName;
-    if ((!cityName) || [cityName isEqualToString:@""]) {
-        cityName = @"未定位";
-    }
-   
+    cityName = @"全部";
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.mode = MBProgressHUDModeText;
+    self.HUD.customView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_HUD];
+    _HUD.label.text = @"加载中,请稍等...";
+    [_HUD showAnimated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,40 +124,38 @@
 #pragma mark - request
 -(void)createRequest
 {
-    
-    if ([cityName isEqualToString:@""]) {
-        self.notInformationImageView.hidden = NO;
-        self.notBookStationInformationLabel.hidden = NO;
-        self.notBookStationInformationLabel.text = @"亲，没有选择城市哦！";
-        [self.tableIView  reloadData];
-        //return;
+    NSString *cityNameStr;
+    if ([cityName isEqualToString:@"全部"]) {
+        cityNameStr = nil;
     }else
     {
-        __weak typeof(self) weakSelf = self;
-        [WOTHTTPNetwork getAllSpaceWithCity:cityName block:^(id bean, NSError *error) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (error) {
-                    NSLog(@"error:%@",error);
-                    return ;
-                }
-                WOTSpaceModel_msg *list = bean;
-                weakSelf.tableList = list.msg.list;
-                if (weakSelf.tableList.count) {
-                    self.notInformationImageView.hidden = YES;
-                    self.notBookStationInformationLabel.hidden = YES;
-                } else {
-                    self.notInformationImageView.hidden = NO;
-                    self.notBookStationInformationLabel.hidden = NO;
-                    self.notBookStationInformationLabel.text = @"亲，没有选择城市哦！";
-                    NSLog(@"没有数据");
-                }
-                //[self.table reloadData];
-                [weakSelf.tableIView  reloadData];
-            });
-        }];
-        
+        cityNameStr = cityName;
     }
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getAllSpaceWithCity:cityNameStr block:^(id bean, NSError *error) {
+         [_HUD removeFromSuperview];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                NSLog(@"error:%@",error);
+                return ;
+            }
+            WOTSpaceModel_msg *list = bean;
+            weakSelf.tableList = list.msg.list;
+            if (weakSelf.tableList.count) {
+                self.notInformationImageView.hidden = YES;
+                self.notBookStationInformationLabel.hidden = YES;
+            } else {
+                self.notInformationImageView.hidden = NO;
+                self.notBookStationInformationLabel.hidden = NO;
+                self.notBookStationInformationLabel.text = @"亲，没有选择城市哦！";
+                NSLog(@"没有数据");
+            }
+            //[self.table reloadData];
+            [weakSelf.tableIView  reloadData];
+        });
+    }];
+        
+    
     
 }
 
@@ -214,6 +216,7 @@
         }
         //[self.cityList addObject:((NSDictionary *)model)[@"city"]];
     }
+    [self.cityList insertObject:@"全部" atIndex:0];
     
 }
 

@@ -18,6 +18,7 @@
 
 @property(nonatomic,copy)NSArray *leftNameArray;
 @property(nonatomic,copy)NSArray *nameArray;
+@property(nonatomic,copy)NSArray *applyForNameArray;
 @property(nonatomic,strong)UIButton *orderButton;
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,copy)NSString *nameStr;
@@ -39,8 +40,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"预约信息";
-    self.nameArray = @[@"姓名",@"联系方式",@"公司名称",@"预约日期",@"预约人数",@"备注"];
+    
+    if (self.typeInfo == TYPE_INFO_FACILITATOR) {
+        self.title = @"填写信息";
+        self.nameArray = @[@"姓名",@"联系方式",@"公司名称",@"预约日期",@"备注"];
+    }else
+    {
+        self.title = @"预约信息";
+        self.nameArray = @[@"姓名",@"联系方式",@"公司名称",@"预约日期",@"预约人数",@"备注"];
+    }
+    
+    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     self.tableView.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.tableView.delegate = self;
@@ -302,6 +312,54 @@
     
 }
 
+#pragma mark - 获取服务支持
+-(void)getServiceSupport
+{
+    if (strIsEmpty(self.nameStr)) {
+        [MBProgressHUDUtil showMessage:@"请填写姓名" toView:self.view];
+        return;
+    }
+    if (strIsEmpty(self.telStr)) {
+        [MBProgressHUDUtil showMessage:@"请填写电话" toView:self.view];
+        return;
+    }
+    if (strIsEmpty(self.companyNameStr)) {
+        [MBProgressHUDUtil showMessage:@"请填写公司名字" toView:self.view];
+        return;
+    }
+    if (strIsEmpty(self.dateStr)) {
+        [MBProgressHUDUtil showMessage:@"请选择日期" toView:self.view];
+        return;
+    }
+
+    if (strIsEmpty(self.remarkStr)) {
+        self.remarkStr = @"";
+    }
+    
+    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId,
+                                 @"tel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"facilitatorId":self.facilitatorModel.facilitatorId,
+                                 @"firmName":self.facilitatorModel.firmName,
+                                 @"dealState":@"未处理",
+                                 @"needType":@"服务商",
+                                 };
+    [WOTHTTPNetwork obtainSupportWithParams:parameters response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showMessage:@"申请成功，我们将安排服务人员尽快与您联系！" toView:self.view];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            });
+        }
+        else
+        {
+            [MBProgressHUDUtil showMessage:@"申请失败！" toView:self.view];
+        }
+    }];
+}
+
 #pragma mark - 预约入驻接口
 -(void)applyForEnter
 {
@@ -349,15 +407,6 @@
                                                  [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
                                              }
                                          }];
-//    [WOTHTTPNetwork appointmentSettledWithSpaceId:self.spaceModel.spaceId spaceName:self.spaceModel.spaceName response:^(id bean, NSError *error) {
-//        if (!error) {
-//            WOTBaseModel *model = bean;
-//            if ([model.code isEqualToString:@"200"]) {
-//                //预定成功
-//                [MBProgressHUDUtil showMessage:@"预订成功，我们将安排服务人员尽快与您联系！" toView:self.view];
-//            }
-//        }
-//    }];
     
 }
 
@@ -365,9 +414,17 @@
 {
     if (_orderButton == nil) {
         _orderButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_orderButton setTitle:@"预约入驻" forState:UIControlStateNormal];
+        if (self.typeInfo == TYPE_INFO_FACILITATOR) {
+            [_orderButton setTitle:@"提交" forState:UIControlStateNormal];
+             [_orderButton addTarget:self action:@selector(getServiceSupport) forControlEvents:UIControlEventTouchDown];
+        }
+        else
+        {
+            [_orderButton setTitle:@"预约入驻" forState:UIControlStateNormal];
+             [_orderButton addTarget:self action:@selector(applyForEnter) forControlEvents:UIControlEventTouchDown];
+        }
         [_orderButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_orderButton addTarget:self action:@selector(applyForEnter) forControlEvents:UIControlEventTouchDown];
+       
         _orderButton.backgroundColor = UICOLOR_MAIN_ORANGE;
         _orderButton.layer.cornerRadius = 5.f;
         _orderButton.layer.borderWidth = 1.f;

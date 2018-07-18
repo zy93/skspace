@@ -14,7 +14,7 @@
 #import "SKSingleFacilitatorModel.h"
 #import "SKProductCell.h"
 #import "SKServiceProductModel.h"
-
+#import "SKReserveInfoTableViewController.h"
 #define ssstr @"我们通过三方面打造共享办公：\n1、通过办公租赁、双创运营、办公服务、金融服务来打造企业共享办公生态圈；\n2、打造孵化器、产业园的升级版平台；通过社区内大企业带动小微企业的入驻模式给小型、小微型企业更多成长空间。另一方面通过线上做为入口，办理会员、注册、入驻，完善服务、聚集数据。通过智能信息化的手段来运营，在平台上完善客户、会员、门禁、监控、宽带、楼宇智能化等系统；\n3、实现社区平台的品牌化、服务标准化、共享化、社交化、智能化、数据化，完善企业办公生态圈服务体系。"
 
 @interface WOTProvidersVC () <UITableViewDataSource,UITableViewDelegate>
@@ -94,25 +94,11 @@
 #pragma mark - 获取服务支持
 -(void)getServiceSupport
 {
-    NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
-                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
-                                 @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId,
-                                 @"tel":[WOTUserSingleton shareUser].userInfo.tel,
-                                 @"facilitatorId":self.facilitatorModel.facilitatorId,
-                                 @"firmName":self.facilitatorModel.firmName,
-                                 @"dealState":@"未处理",
-                                 @"needType":@"服务商",
-                                 };
-    [WOTHTTPNetwork obtainSupportWithParams:parameters response:^(id bean, NSError *error) {
-        WOTBaseModel *model = (WOTBaseModel *)bean;
-        if ([model.code isEqualToString:@"200"]) {
-            [MBProgressHUDUtil showMessage:@"申请成功，我们将安排服务人员尽快与您联系！" toView:self.view];
-        }
-        else
-        {
-            [MBProgressHUDUtil showMessage:@"申请失败！" toView:self.view];
-        }
-    }];
+    SKReserveInfoTableViewController *infoTableView = [[SKReserveInfoTableViewController alloc] init];
+    infoTableView.enterInterfaceType = ENTER_INTERFACE_TYPE_EDIT;
+    infoTableView.typeInfo = TYPE_INFO_FACILITATOR;
+    infoTableView.facilitatorModel = self.facilitatorModel;
+    [self.navigationController pushViewController:infoTableView animated:YES];
 }
 
 #pragma mark - 申请加入
