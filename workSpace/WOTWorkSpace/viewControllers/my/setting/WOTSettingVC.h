@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "WOTTableViewBaseVC.h"
 @interface WOTSettingVC : UIViewController
-
+@property(nonatomic,copy)NSString *firstString;
 
 @end

@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     self.navigationController.navigationBar.translucent=NO;
     // Do any additional setup after loading the view.
     self.navigationItem.title = self.titleStr;
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTEnterCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTEnterCell"];

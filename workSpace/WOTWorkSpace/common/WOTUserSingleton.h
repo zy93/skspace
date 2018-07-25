@@ -13,7 +13,7 @@
 
 //用户信息
 @property (nonatomic, strong) WOTLoginModel *userInfo;
-
+@property (nonatomic, assign) BOOL isFirst;
 
 +(instancetype)shareUser;
 -(void)saveUserInfoToPlistWithModel:(WOTLoginModel *)model;

@@ -36,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self configNaviBackItem];
     self.navigationItem.title = @"忘记密码";
     self.view.backgroundColor = [UIColor whiteColor];
     

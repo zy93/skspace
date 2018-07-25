@@ -13,7 +13,7 @@
 #import "FindPassWordViewController.h"
 #import "JPUSHService.h"
 #import "SKInfoNotifationModel.h"
-
+#import "WOTSettingVC.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 
@@ -40,7 +40,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+   
+    if ([self.firstString isEqualToString:@"firstLogin"]) {
+        NSLog(@"第一次登陆");
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightButton setTitle:@"跳过" forState:UIControlStateNormal];
+        [rightButton setTitleColor:UICOLOR_MAIN_ORANGE forState:UIControlStateNormal];
+        rightButton.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+        [rightButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        self.navigationItem.leftBarButtonItem.customView.hidden = YES;
+    }
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_ylg"]];
@@ -213,9 +224,14 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBar.translucent = NO;
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
 
 #pragma mark - 登录
 -(void)loginButtonMethod
@@ -247,7 +263,15 @@
                     } seq:1];
                     [self queryUnreadFriendCircle];
                     [self queryNewInfo];
-                    [self.navigationController popViewControllerAnimated:YES];
+                    if ([self.firstString isEqualToString:@"firstLogin"]) {
+                        WOTSettingVC *settingVC = [[WOTSettingVC alloc] init];
+                        settingVC.firstString = @"firstLogin";
+                        [self.navigationController pushViewController:settingVC animated:YES];
+                    }else
+                    {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                    
                 });
             }
             else {
@@ -258,7 +282,6 @@
         if (error) {
             [MBProgressHUDUtil showMessage:error.localizedDescription toView:self.view];
         }
-        
     }];
 }
 
@@ -293,6 +316,13 @@
             }
         }];
     }
+}
+
+#pragma mark - 跳过按钮
+-(void)skipAction
+{
+    NSNotification *notification = [NSNotification notificationWithName:@"SkipNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 -(void)queryNewInfo

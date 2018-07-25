@@ -12,7 +12,6 @@
 -(CGFloat)widthWithFont:(UIFont *)f
 {
     NSDictionary *attribute = @{NSFontAttributeName:f};
-    
     CGFloat stringWidth = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, f.lineHeight) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:attribute context:nil].size.width;
     return stringWidth;
     

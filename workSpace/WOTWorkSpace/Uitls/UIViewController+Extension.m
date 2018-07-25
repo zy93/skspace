@@ -16,10 +16,15 @@
     UIBarButtonItem *backitem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(goback)];
     
     [self.navigationItem.backBarButtonItem setBackButtonBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.tintColor = UICOLOR_65;
     [self.navigationItem setHidesBackButton:YES];
     [self.navigationItem setLeftBarButtonItem:backitem];
 //    [self.tabBarController.tabBar setHidden:YES];
- 
+//    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"跳过" style:UIBarButtonItemStyleBordered target:self action:@selector(clickEvent)];
+//    
+//    self.navigationItem.rightBarButtonItem = myButton;
+    
+    
 }
 
 

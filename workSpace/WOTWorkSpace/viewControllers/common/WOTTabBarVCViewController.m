@@ -21,7 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-   
     // 自定义TabBar
     CLTabBar *tabBar = [[CLTabBar alloc] init];
     HCScanQRViewController *vc = [[HCScanQRViewController alloc] init];

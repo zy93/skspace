@@ -60,6 +60,7 @@
 #define UICOLOR_MAIN_TEXT_PLACEHOLDER  RGBA(0,0,31,0.22) //输入框底纹颜色
 #define UICOLOR_E8  UIColorFromRGB(0xe8e8e8)
 #define UICOLOR_F5  UIColorFromRGB(0xf5f5f5)
+#define UICOLOR_65  UIColorFromRGB(0x656565)
 
 //#define HTTPBaseURL @"http://219.143.170.98:10011"//公网测试
 //#define HTTPBaseURL @"http://101.200.32.180" //尚科服务器

@@ -16,6 +16,7 @@
 #import <Photos/Photos.h>
 #import "SKUpdateInfoViewController.h"
 #import "WOTPickerView.h"
+#import "WOTMyEnterpriseVC.h"
 
 @interface WOTSettingVC ()<UITableViewDelegate,UITableViewDataSource,TZImagePickerControllerDelegate,UIImagePickerControllerDelegate,WOTPickerViewDelegate,WOTPickerViewDataSource>
 
@@ -33,6 +34,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
+    if ([self.firstString isEqualToString:@"firstLogin"]) {
+        NSLog(@"第一次登陆");
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightButton setTitle:@"跳过" forState:UIControlStateNormal];
+        [rightButton setTitleColor:UICOLOR_MAIN_ORANGE forState:UIControlStateNormal];
+        rightButton.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+        [rightButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        self.navigationItem.leftBarButtonItem.customView.hidden = YES;
+        self.navigationItem.hidesBackButton = YES;
+    }
     self.navigationItem.title = @"设置";
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.quitButton];
@@ -69,23 +82,36 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    if ([self.firstString isEqualToString:@"firstLogin"]) {
+      return 1;
+    }else
+    {
+      return 3;
+    }
+    
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    switch (section) {
-        case 0:
-            return 4;
-            break;
-        case 1:
-            return 2;
-            break;
-        case 2:
-            return 2;
-            break;
-        default:
-            break;
+    
+    if ([self.firstString isEqualToString:@"firstLogin"]) {
+        return 4;
+    }else
+    {
+        switch (section) {
+            case 0:
+                return 4;
+                break;
+            case 1:
+                return 2;
+                break;
+            case 2:
+                return 2;
+                break;
+            default:
+                break;
+        }
     }
+    
     return 0;
 }
 
@@ -365,16 +391,25 @@
 #pragma mark - 退出方法
 -(void)quitButtonMethod
 {
-    [[WOTConfigThemeUitls shared] showAlert:self message:@"确定退出当前帐号?" okBlock:^{
-        [WOTSingtleton shared].isuserLogin = NO;
-        [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
-        [[WOTUserSingleton shareUser] deletePlistFile];
-        [WOTUserSingleton destroyInstance];
-        [self.navigationController popViewControllerAnimated:YES];
-        
-    } cancel:^{
-        
-    }];
+    if ([self.firstString isEqualToString:@"firstLogin"]) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"My" bundle:[NSBundle mainBundle]];
+        WOTMyEnterpriseVC *myenterprisevc = [storyboard instantiateViewControllerWithIdentifier:@"WOTMyEnterpriseVC"];
+        myenterprisevc.firstString = @"firstLogin";
+        [self.navigationController pushViewController:myenterprisevc animated:YES];
+    }else
+    {
+        [[WOTConfigThemeUitls shared] showAlert:self message:@"确定退出当前帐号?" okBlock:^{
+            [WOTSingtleton shared].isuserLogin = NO;
+            [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
+            [[WOTUserSingleton shareUser] deletePlistFile];
+            [WOTUserSingleton destroyInstance];
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        } cancel:^{
+            
+        }];
+    }
+    
 }
 
 #pragma mark - 请求个人信息
@@ -412,11 +447,15 @@
             }else {
                 [MBProgressHUDUtil showMessage:@"网络出错！" toView:self.view];
             }
-            
         }];
     }];
-    
-    
+}
+
+#pragma mark - 跳过按钮
+-(void)skipAction
+{
+    NSNotification *notification = [NSNotification notificationWithName:@"SkipNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 -(UITableView *)tableView
@@ -435,7 +474,13 @@
     if (_quitButton == nil) {
         _quitButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_quitButton addTarget:self action:@selector(quitButtonMethod) forControlEvents:UIControlEventTouchDown];
-        [_quitButton setTitle:@"退出" forState:UIControlStateNormal];
+        if ([self.firstString isEqualToString:@"firstLogin"]) {
+            [_quitButton setTitle:@"下一步" forState:UIControlStateNormal];
+        }else
+        {
+            [_quitButton setTitle:@"退出" forState:UIControlStateNormal];
+        }
+       
         _quitButton.backgroundColor = [UIColor colorWithHexString:@"ff7f3d"];
         _quitButton.layer.cornerRadius = 5.f;
         _quitButton.layer.borderWidth = 1.f;

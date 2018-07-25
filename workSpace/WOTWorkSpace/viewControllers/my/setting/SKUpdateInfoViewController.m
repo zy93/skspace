@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self configNaviBackItem];
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.navigationController.navigationBar.backgroundColor = UICOLOR_MAIN_BACKGROUND;
     self.navigationItem.title = self.navigationStr;
@@ -33,13 +34,19 @@
 -(void)viewDidLayoutSubviews
 {
     [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).with.offset(64);
+        if (@available(iOS 11,*)) {
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        }else
+        {
+            make.top.equalTo(self.view).with.offset(64);
+        }
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.mas_offset(50);
     }];
     
     [self.importTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        
         make.edges.equalTo(self.topView);
     }];
 }

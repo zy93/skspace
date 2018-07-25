@@ -29,8 +29,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    [self configNaviBackItem];
     [self createDataSource];
+    self.navigationController.navigationBar.translucent=NO;
     self.navigationItem.title = @"创建企业";
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTCerateEnterpriseCell" bundle:nil] forCellReuseIdentifier:@"WOTCerateEnterpriseCellID"];
     

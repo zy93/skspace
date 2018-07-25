@@ -16,6 +16,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import "UITabBar+badge.h"
 #import "SKInfoNotifationModel.h"
+#import "LoginViewController.h"
 #endif
 
 #define MAP_API_KEY @"d4ac301f3334bc74439bda2d81e41061"
@@ -28,6 +29,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(skipMainInterface) name:@"SkipNotification" object:nil];
+    NSString *key = @"isFirst";
+    BOOL isFirst = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+    if (!isFirst) {
+        [[NSUserDefaults standardUserDefaults] setBool:@1 forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [WOTUserSingleton shareUser].isFirst = YES;
+        NSLog(@"是第一次登录");
+    } else {
+        [WOTUserSingleton shareUser].isFirst = NO;
+        NSLog(@"不是第一次登录");
+    }
+    
     [AMapServices sharedServices].apiKey =@"d4ac301f3334bc74439bda2d81e41061";
     self.tabbar = [[WOTTabBarVCViewController alloc]init];
     //[self queryUnreadFriendCircle];
@@ -97,6 +111,22 @@
     [self saveContext];
 }
 
+#pragma mark - 跳转到首页的方法
+-(void)skipMainInterface
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    UIViewController *vc = [[WOTTabBarVCViewController alloc] init];
+    
+    [UIView transitionFromView:self.window.rootViewController.view
+                        toView:vc.view
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    completion:^(BOOL finished)
+     {
+         self.window.rootViewController = vc;
+     }];
+}
+
 
 #pragma mark - Core Data stack
 
@@ -146,7 +176,20 @@
 
 -(void)loadTabView{
    // WOTTabBarVCViewController *tabbar = [[WOTTabBarVCViewController alloc]init];
-    self.window.rootViewController =self.tabbar ;
+//    LoginViewController *loginVC = [[LoginViewController alloc] init];
+//    loginVC.firstString = @"firstLogin";
+//    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:loginVC];
+//    self.window.rootViewController = navigation;
+    if ([WOTUserSingleton shareUser].isFirst) {
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        loginVC.firstString = @"firstLogin";
+        UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        self.window.rootViewController = navigation;
+    }else
+    {
+        self.window.rootViewController =self.tabbar ;
+    }
+    
 }
 
 #pragma mark - private methods

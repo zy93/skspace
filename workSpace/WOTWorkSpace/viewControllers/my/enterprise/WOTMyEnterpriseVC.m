@@ -15,6 +15,7 @@
 #import "WOTEnterpriseModel.h"
 #import "WOTProvidersVC.h"
 #import "SKCompanyMemberViewController.h"
+#import "UIColor+ColorChange.h"
 
 @interface WOTMyEnterpriseVC ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -27,12 +28,14 @@
 
 @property (nonatomic,strong)UIImageView *notInfoImageView;
 @property (nonatomic,strong)UILabel *notInfoLabel;
+@property (nonatomic,strong)UIButton *finishButton;
 @end
 
 @implementation WOTMyEnterpriseVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self configNavi];
     // Do any additional setup after loading the view.
     [self.table registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTMyEnterPriseCell"];
@@ -47,11 +50,31 @@
     self.notInfoLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
     self.notInfoLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.notInfoLabel];
+    if ([self.firstString isEqualToString:@"firstLogin"]) {
+        self.finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.finishButton setTitle:@"完成" forState:UIControlStateNormal];
+        [self.finishButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.finishButton addTarget:self action:@selector(finishButtonAction) forControlEvents:UIControlEventTouchDown];
+        self.finishButton.backgroundColor = [UIColor colorWithHexString:@"ff7f3d"];
+        self.finishButton.layer.cornerRadius = 5.f;
+        self.finishButton.layer.borderWidth = 1.f;
+        self.finishButton.layer.borderColor =[UIColor colorWithHexString:@"ff7f3d"].CGColor;
+        [self.view addSubview:self.finishButton];
+    }
     [self layoutSubviews];
+    
 }
 
 -(void)layoutSubviews
 {
+    if ([self.firstString isEqualToString:@"firstLogin"]) {
+        [self.finishButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view).with.offset(10);
+            make.right.equalTo(self.view).with.offset(-10);
+            make.bottom.equalTo(self.view.mas_bottom).with.offset(-10);
+            make.height.mas_offset(48);
+        }];
+    }
     [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.centerY.equalTo(self.view).with.offset(-50);
@@ -71,16 +94,33 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     //[self querySingleInfo];
 //    [self.tabBarController.tabBar setHidden:YES];
     [self createRequest];
 }
 -(void)configNavi{
-    [self configNaviBackItem];
     self.navigationItem.title = @"我的企业";
-    if (!strIsEmpty([WOTUserSingleton shareUser].userInfo.companyIdAdmin)) {
-        [self configNaviRightItemWithImage:[UIImage imageNamed:@"message"]];
+    
+    if ([self.firstString isEqualToString:@"firstLogin"]) {
+        NSLog(@"第一次登陆");
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightButton setTitle:@"跳过" forState:UIControlStateNormal];
+        [rightButton setTitleColor:UICOLOR_MAIN_ORANGE forState:UIControlStateNormal];
+        rightButton.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+        [rightButton addTarget:self action:@selector(skipAction) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        self.navigationItem.leftBarButtonItem.customView.hidden = YES;
+        self.navigationItem.hidesBackButton = YES;
+    }else
+    {
+        if (!strIsEmpty([WOTUserSingleton shareUser].userInfo.companyIdAdmin)) {
+            [self configNaviRightItemWithImage:[UIImage imageNamed:@"message"]];
+        }
+        [self configNaviBackItem];
     }
 }
 
@@ -213,7 +253,19 @@
 //        [self.navigationController pushViewController:vc animated:YES];
     }
 }
+#pragma mark - 跳过按钮
+-(void)skipAction
+{
+    NSNotification *notification = [NSNotification notificationWithName:@"SkipNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
 
+#pragma mark - 完成
+-(void)finishButtonAction
+{
+    NSNotification *notification = [NSNotification notificationWithName:@"SkipNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
 
 /*
 #pragma mark - Navigation

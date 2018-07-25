@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configNaviBackItem];
-    
+    self.navigationController.navigationBar.translucent=NO;
     __weak typeof(self) weakSelf = self;
     
     [self configNaviView:@"请输入关键字"  searchBlock:^(NSString *searchString) {

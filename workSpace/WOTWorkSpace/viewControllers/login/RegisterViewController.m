@@ -57,6 +57,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self configNaviBackItem];
     self.view.backgroundColor = [UIColor whiteColor];
     self.registerLogoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_ylg"]];
     self.registerLogoView.contentMode = UIViewContentModeScaleAspectFit;

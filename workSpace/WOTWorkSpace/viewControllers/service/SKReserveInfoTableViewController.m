@@ -332,18 +332,21 @@
         return;
     }
 
-    if (strIsEmpty(self.remarkStr)) {
-        self.remarkStr = @"";
+    if (strIsEmpty(self.numStr)) {
+        self.numStr = @"";
     }
     
     NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId,
-                                 @"userName":[WOTUserSingleton shareUser].userInfo.userName,
+                                 @"userName":self.nameStr,
                                  @"spaceId":[WOTUserSingleton shareUser].userInfo.spaceId,
-                                 @"tel":[WOTUserSingleton shareUser].userInfo.tel,
+                                 @"tel":self.telStr,
                                  @"facilitatorId":self.facilitatorModel.facilitatorId,
                                  @"firmName":self.facilitatorModel.firmName,
                                  @"dealState":@"未处理",
                                  @"needType":@"服务商",
+                                 @"companyName":self.companyNameStr,
+                                 @"appointmentTime":self.dateStr,
+                                 @"remark":self.numStr
                                  };
     [WOTHTTPNetwork obtainSupportWithParams:parameters response:^(id bean, NSError *error) {
         WOTBaseModel *model = (WOTBaseModel *)bean;

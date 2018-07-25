@@ -20,6 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self configNaviBackItem];
     self.navigationItem.title = @"企业成员";
     self.memberlistArray = [[NSMutableArray alloc] init];
     self.tableView = [[UITableView alloc] init];
@@ -37,7 +38,13 @@
 -(void)layoutSubviews
 {
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).with.offset(20);
+        if (@available(iOS 11,*)) {
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        }else
+        {
+            make.top.equalTo(self.view);
+        }
+        
         make.left.right.bottom.equalTo(self.view);
     }];
 }

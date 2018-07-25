@@ -26,4 +26,5 @@ typedef NS_ENUM(NSInteger,SOURCE_TYPE) {
 @property (nonatomic, assign) CompanyType companyType;
 @property (nonatomic, assign) SOURCE_TYPE sourceType;
 @property (nonatomic, strong) NSNumber *singleFacilitatorId;
+
 @end

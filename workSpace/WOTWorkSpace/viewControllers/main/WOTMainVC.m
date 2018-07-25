@@ -98,6 +98,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //    [self load3DBallView];
+    self.navigationController.navigationBarHidden = YES;
     if ([[UIDevice currentDevice] resolution] == UIDeviceResolution_iPhoneRetina58) {
         self.autoScrollViewHeight.constant = (self.view.bounds.size.height-49-41-10-42)*0.6;
         self.ballViewHeight.constant = (self.view.bounds.size.height-49-41-10-42-100)*0.4;
@@ -138,6 +139,7 @@
     [self.tabBarController.tabBar setHidden:NO];
     [self.tabBarController.tabBar setTranslucent:NO];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
 }
 
 int a = 0;
