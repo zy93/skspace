@@ -107,6 +107,7 @@
     if ([self.firstString isEqualToString:@"firstLogin"]) {
         NSLog(@"第一次登陆");
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightButton.size = CGSizeMake(50, 20);
         [rightButton setTitle:@"跳过" forState:UIControlStateNormal];
         [rightButton setTitleColor:UICOLOR_MAIN_ORANGE forState:UIControlStateNormal];
         rightButton.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];

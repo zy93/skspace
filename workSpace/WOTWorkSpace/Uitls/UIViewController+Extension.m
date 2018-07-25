@@ -19,12 +19,6 @@
     self.navigationController.navigationBar.tintColor = UICOLOR_65;
     [self.navigationItem setHidesBackButton:YES];
     [self.navigationItem setLeftBarButtonItem:backitem];
-//    [self.tabBarController.tabBar setHidden:YES];
-//    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"跳过" style:UIBarButtonItemStyleBordered target:self action:@selector(clickEvent)];
-//    
-//    self.navigationItem.rightBarButtonItem = myButton;
-    
-    
 }
 
 
@@ -36,7 +30,7 @@
     self.block = block;  //此处崩溃请检查目标VC里是否有这两个block定义。
     self.clearBlock = clearBlock;
     [searchview changeLeftPlaceholder:searchTitle];
-    [searchview setBarTintColor:[UIColor grayColor]];
+    [searchview setBarTintColor:UICOLOR_MAIN_BACKGROUND];
     [searchview setBarStyle:UIBarStyleBlackTranslucent];
     searchview.delegate = self;
     
