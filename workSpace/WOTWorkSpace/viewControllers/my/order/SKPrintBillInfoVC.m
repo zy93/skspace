@@ -42,6 +42,14 @@
        self.receiptStateStr = self.model.invoiceType;
     }
     
+    if ([self.receiptStateStr isEqualToString:@"个人"]) {
+        _titleArray = @[@"开票状态:",@"发票类型:",@"发票抬头:"];
+    }else
+    {
+        _titleArray = @[@"开票状态:",@"发票类型:",@"发票抬头:",@"企业税号:"];
+    }
+    
+    
     if ([self.printBillState isEqualToString:@"未开"]) {
         self.submitButton.hidden = NO;
     } else {
@@ -102,6 +110,12 @@
             cell = [[SKReceiptStateCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"SKReceiptStateCell"];
         }
         [cell.receiptState setTitle:self.receiptStateStr forState:UIControlStateNormal];
+        if ([self.printBillState isEqualToString:@"未开"]) {
+            cell.receiptState.enabled = YES;
+        }else
+        {
+            cell.receiptState.enabled = NO;
+        }
         cell.receiptState.indexPath = indexPath;
         [cell.receiptState addTarget:self action:@selector(chooseReceipt:) forControlEvents:UIControlEventTouchUpInside];
         cell.titleLabel.text = self.titleArray[indexPath.row];
@@ -295,18 +309,18 @@
     return _submitButton;
 }
 
--(NSArray *)titleArray
-{
-    if (!_titleArray) {
-        if ([self.receiptStateStr isEqualToString:@"个人"]) {
-            _titleArray = @[@"开票状态:",@"发票类型:",@"发票抬头:"];
-        }else
-        {
-            _titleArray = @[@"开票状态:",@"发票类型:",@"发票抬头:",@"企业税号:"];
-        }
-        
-    }
-    return _titleArray;
-}
+//-(NSArray *)titleArray
+//{
+//    if (!_titleArray) {
+//        if ([self.receiptStateStr isEqualToString:@"个人"]) {
+//            _titleArray = @[@"开票状态:",@"发票类型:",@"发票抬头:"];
+//        }else
+//        {
+//            _titleArray = @[@"开票状态:",@"发票类型:",@"发票抬头:",@"企业税号:"];
+//        }
+//
+//    }
+//    return _titleArray;
+//}
 
 @end
