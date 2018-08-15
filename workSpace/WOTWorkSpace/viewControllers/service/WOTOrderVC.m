@@ -260,6 +260,7 @@
     _datepickerview.okBlock = ^(NSInteger year,NSInteger month,NSInteger day,NSInteger hour,NSInteger min){
         weakSelf.datepickerview.hidden = YES;
         NSString *selecTime = [NSString stringWithFormat:@"%04ld/%02ld/%02ld 00:00:00",year, month, day];
+        NSString *endSelecTime = [NSString stringWithFormat:@"%04ld/%02ld/%02ld 23:59:59",year, month, day];
         weakSelf.isValidTime = [weakSelf.judgmentTime judgementTimeWithYear:year month:month day:day];
         
         if (weakSelf.isValidTime) {
@@ -276,12 +277,14 @@
             if (weakSelf.isValidTime) {
                 weakSelf.datepickerview.hidden  = YES;
                 
-                if (weakSelf.selectCellIndex.row == 1) {
-                    weakSelf.reservationStationStartDate = selecTime;
-                }
-                else {
-                    weakSelf.reservationStationEndDate = selecTime;
-                }
+//                if (weakSelf.selectCellIndex.row == 1) {
+//                    weakSelf.reservationStationStartDate = selecTime;
+//                }
+//                else {
+//                    weakSelf.reservationStationEndDate = selecTime;
+//                }
+                weakSelf.reservationStationStartDate = selecTime;
+                weakSelf.reservationStationEndDate = endSelecTime;
                 [weakSelf Timedisplay:selecTime];
             }else
             {
@@ -307,7 +310,7 @@
     switch ([WOTSingtleton shared].orderType) {
         case ORDER_TYPE_BOOKSTATION:
         {
-            list1 = @[infoCell, selectDateCell,selectDateCell, serviceCell, describeCell];
+            list1 = @[infoCell, selectDateCell, serviceCell, describeCell];
             list2 = @[scrollViewCell]; //配套设施
             list3 = @[scrollViewCell]; //社区团队
             list4 = @[mapCell];
@@ -405,8 +408,8 @@
             [MBProgressHUDUtil showMessage:@"请选择正确的时间范围！" toView:self.view];
             return;
         }
-        if (!( bookstationInter> 0)) {            
-            [[WOTConfigThemeUitls shared] showAlert:self message:@"您的工位使用时间不足，请购买礼包" okBlock:^{
+        if (bookstationInter < 480) {
+            [[WOTConfigThemeUitls shared] showAlert:self message:@"您的工位使用时间不足8小时，请购买礼包" okBlock:^{
                 SKGiftBagViewController *vc = [[SKGiftBagViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];
             } cancel:^{

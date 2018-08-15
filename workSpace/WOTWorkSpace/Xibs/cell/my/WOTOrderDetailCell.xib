@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -30,17 +30,37 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icK-Mq-PTE">
+                        <rect key="frame" x="224" y="8" width="80" height="26"/>
+                        <color key="backgroundColor" red="1" green="0.49803921568627452" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="AKU-xN-11W"/>
+                            <constraint firstAttribute="height" constant="26" id="m7B-HJ-tuP"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <state key="normal" title="申请开票">
+                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="13"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="S6X-0F-AqZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0gp-dS-wGB"/>
                     <constraint firstItem="bbu-1c-9kk" firstAttribute="centerY" secondItem="S6X-0F-AqZ" secondAttribute="centerY" id="9JD-PR-jrW"/>
+                    <constraint firstAttribute="trailing" secondItem="icK-Mq-PTE" secondAttribute="trailing" constant="16" id="I2i-cj-9wd"/>
                     <constraint firstItem="S6X-0F-AqZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="XkU-8W-QR2"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bbu-1c-9kk" secondAttribute="trailing" constant="20" id="YBZ-ik-l9i"/>
                     <constraint firstItem="bbu-1c-9kk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="110" id="Yfe-z7-I1G"/>
                     <constraint firstItem="bbu-1c-9kk" firstAttribute="leading" secondItem="S6X-0F-AqZ" secondAttribute="trailing" constant="10" id="vPP-56-jPR"/>
+                    <constraint firstItem="icK-Mq-PTE" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="yfM-fm-tYB"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="printBillButton" destination="icK-Mq-PTE" id="B6l-ht-Ahe"/>
                 <outlet property="subtitleLab" destination="bbu-1c-9kk" id="kIZ-Qo-ZrZ"/>
                 <outlet property="titleLab" destination="S6X-0F-AqZ" id="juE-ge-30Q"/>
             </connections>

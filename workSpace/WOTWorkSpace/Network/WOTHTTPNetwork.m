@@ -530,6 +530,15 @@
     } response:response];
 }
 
++(void)submitReceiptWithOrderDic:(NSDictionary *)orderDic response:(response)response
+{
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Order/invoice"];
+    [self doRequestWithParameters:orderDic useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        WOTBaseModel * model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
 +(void)queryCompanyTimeRemainingWithId:(NSString *)companyId response:(response)response
 {
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/CompanyInfo/findById"];

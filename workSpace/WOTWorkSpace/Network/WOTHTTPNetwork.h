@@ -237,6 +237,10 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)queryCommunityServiceInfoWithSpaceId:(NSNumber *)spaceId response:(response)response;
 
+#pragma mark - 发票信息提交
+
++(void)submitReceiptWithOrderDic:(NSDictionary *)orderDic response:(response)response;
+
 #pragma mark - 企业
 
 /**

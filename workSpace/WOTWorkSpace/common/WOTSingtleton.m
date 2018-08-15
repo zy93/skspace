@@ -34,7 +34,6 @@
 }
 
 
-
 -(bool)isuserLogin{
     if (_isuserLogin == nil) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:LOGIN_STATE_USERDEFAULT]) {

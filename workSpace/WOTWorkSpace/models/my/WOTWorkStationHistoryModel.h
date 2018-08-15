@@ -39,6 +39,13 @@
 @property (nonatomic, strong) NSNumber * userId;
 @property (nonatomic, strong) NSString * userName;
 @property (nonatomic, strong) NSString * userTel;
+@property (nonatomic, strong) NSString *invoiceState;
+@property (nonatomic, strong) NSString *invoiceType;
+@property (nonatomic, strong) NSString *invoiceTitle;
+@property (nonatomic, strong) NSString *invoiceTaxNum;
+@property (nonatomic, strong) NSString *invoiceRemark;
+@property (nonatomic,copy) NSString *orderCancel;
+
 @end
 
 

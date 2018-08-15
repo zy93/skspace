@@ -193,6 +193,12 @@
 		C5065F5E20BD496500AD9269 /* SKRoomDiscountsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F5D20BD496500AD9269 /* SKRoomDiscountsTableViewCell.m */; };
 		C5065F6120BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F6020BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.m */; };
 		C5065F6420BD4E2F00AD9269 /* SKRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5065F6320BD4E2F00AD9269 /* SKRoomModel.m */; };
+		C507082521227460008401FF /* SKPrintBillInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C507082421227460008401FF /* SKPrintBillInfoVC.m */; };
+		C507082921227A97008401FF /* SKReceiptStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C507082721227A97008401FF /* SKReceiptStateCell.m */; };
+		C507082A21227A97008401FF /* SKReceiptStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C507082821227A97008401FF /* SKReceiptStateCell.xib */; };
+		C507082E21227B32008401FF /* SKReceiptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C507082C21227B32008401FF /* SKReceiptCell.m */; };
+		C507082F21227B32008401FF /* SKReceiptCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C507082D21227B32008401FF /* SKReceiptCell.xib */; };
+		C507083221229CA2008401FF /* SKUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C507083121229CA2008401FF /* SKUIButton.m */; };
 		C509611B2022EF68009A9D4F /* SKSpaceDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C509611A2022EF68009A9D4F /* SKSpaceDetailsVC.m */; };
 		C509611E2022F1B0009A9D4F /* SKSpaceSiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = C509611D2022F1B0009A9D4F /* SKSpaceSiteView.m */; };
 		C50961212022FA18009A9D4F /* SKTtileView.m in Sources */ = {isa = PBXBuildFile; fileRef = C50961202022FA18009A9D4F /* SKTtileView.m */; };
@@ -839,6 +845,16 @@
 		C5065F6020BD4C7F00AD9269 /* SKRoomDescribeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKRoomDescribeTableViewCell.m; sourceTree = "<group>"; };
 		C5065F6220BD4E2F00AD9269 /* SKRoomModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKRoomModel.h; sourceTree = "<group>"; };
 		C5065F6320BD4E2F00AD9269 /* SKRoomModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKRoomModel.m; sourceTree = "<group>"; };
+		C507082321227460008401FF /* SKPrintBillInfoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKPrintBillInfoVC.h; sourceTree = "<group>"; };
+		C507082421227460008401FF /* SKPrintBillInfoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKPrintBillInfoVC.m; sourceTree = "<group>"; };
+		C507082621227A97008401FF /* SKReceiptStateCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKReceiptStateCell.h; sourceTree = "<group>"; };
+		C507082721227A97008401FF /* SKReceiptStateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKReceiptStateCell.m; sourceTree = "<group>"; };
+		C507082821227A97008401FF /* SKReceiptStateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKReceiptStateCell.xib; sourceTree = "<group>"; };
+		C507082B21227B32008401FF /* SKReceiptCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKReceiptCell.h; sourceTree = "<group>"; };
+		C507082C21227B32008401FF /* SKReceiptCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKReceiptCell.m; sourceTree = "<group>"; };
+		C507082D21227B32008401FF /* SKReceiptCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKReceiptCell.xib; sourceTree = "<group>"; };
+		C507083021229CA2008401FF /* SKUIButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKUIButton.h; sourceTree = "<group>"; };
+		C507083121229CA2008401FF /* SKUIButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKUIButton.m; sourceTree = "<group>"; };
 		C50961192022EF68009A9D4F /* SKSpaceDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceDetailsVC.h; sourceTree = "<group>"; };
 		C509611A2022EF68009A9D4F /* SKSpaceDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKSpaceDetailsVC.m; sourceTree = "<group>"; };
 		C509611C2022F1B0009A9D4F /* SKSpaceSiteView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKSpaceSiteView.h; sourceTree = "<group>"; };
@@ -3162,6 +3178,16 @@
 				E8EACF951F035ABA0015535D /* WOTOrderLIstBaseVC.m */,
 				2AD0991820561F9F00564CE7 /* WOTOrderDetailVC.h */,
 				2AD0991920561F9F00564CE7 /* WOTOrderDetailVC.m */,
+				C507082321227460008401FF /* SKPrintBillInfoVC.h */,
+				C507082421227460008401FF /* SKPrintBillInfoVC.m */,
+				C507083021229CA2008401FF /* SKUIButton.h */,
+				C507083121229CA2008401FF /* SKUIButton.m */,
+				C507082621227A97008401FF /* SKReceiptStateCell.h */,
+				C507082721227A97008401FF /* SKReceiptStateCell.m */,
+				C507082821227A97008401FF /* SKReceiptStateCell.xib */,
+				C507082B21227B32008401FF /* SKReceiptCell.h */,
+				C507082C21227B32008401FF /* SKReceiptCell.m */,
+				C507082D21227B32008401FF /* SKReceiptCell.xib */,
 				E8693AD91F049A6B00772BC1 /* WOTSearchVC.h */,
 				E8693ADA1F049A6B00772BC1 /* WOTSearchVC.m */,
 			);
@@ -3331,6 +3357,7 @@
 				2AA70E1720527EA00052277C /* WOTMyOrderInfoCell.xib in Resources */,
 				C5C9C7F620A97FFC0075E449 /* SKMemberTableViewCell.xib in Resources */,
 				E8693B0C1F04F47700772BC1 /* My.storyboard in Resources */,
+				C507082F21227B32008401FF /* SKReceiptCell.xib in Resources */,
 				2A7D878F2030655D00CF4CCD /* WOTSurplusTimeCell.xib in Resources */,
 				E8190DBB1F0F69660000B07C /* WOTPersionalInformationTagCell.xib in Resources */,
 				2AD0991F20561FC800564CE7 /* WOTOrderDetailCell.xib in Resources */,
@@ -3374,6 +3401,7 @@
 				2A1624EA1F0E211300F216F9 /* CityCode.plist in Resources */,
 				2A4214721F146A700010B003 /* share_qq_select@2x.png in Resources */,
 				2A4214751F146A700010B003 /* share_qqkongjian@3x.png in Resources */,
+				C507082A21227A97008401FF /* SKReceiptStateCell.xib in Resources */,
 				2AF78CE21F09F8F900F7B56D /* ServiceCategory.plist in Resources */,
 				E85032E31F0B5EDE00E79257 /* Socialcontact.storyboard in Resources */,
 				2A4214701F146A700010B003 /* share_qq@2x.png in Resources */,
@@ -3554,6 +3582,7 @@
 				E8EACF931F035A990015535D /* WOTSettingVC.m in Sources */,
 				2A3B55001FD957C300358B8A /* CardView.m in Sources */,
 				2AF78CF11F0A3B7000F7B56D /* WOTVisitorsAppointmentVC.m in Sources */,
+				C507082921227A97008401FF /* SKReceiptStateCell.m in Sources */,
 				E80F4C0F1F0F24AA008BF066 /* WOTUitls.m in Sources */,
 				E86FD1F71F207734009BE16A /* WOTMainAppleRepairVC.m in Sources */,
 				C5C9C80F20AAAE010075E449 /* SKMyEnterModel.m in Sources */,
@@ -3617,6 +3646,7 @@
 				E85A85F81F0202460016FCA1 /* MBProgressHUDUtil.m in Sources */,
 				E866156B1F1F2F56005E182A /* WOTQRCodeUtils.m in Sources */,
 				E8190DD11F0F69660000B07C /* WOTSpaceCityScrollView.m in Sources */,
+				C507082E21227B32008401FF /* SKReceiptCell.m in Sources */,
 				C59D56F91FDA2D6A001870B2 /* WFTextView.m in Sources */,
 				E8370F1A1F0DD9EE0070C077 /* WOTMenuViewParentVC.m in Sources */,
 				2AF78CF71F0A3EFA00F7B56D /* WOTFeedbackVC.m in Sources */,
@@ -3719,6 +3749,7 @@
 				E869E8401F1E15CA00DBDBB9 /* WOTPostImage.m in Sources */,
 				E8190DCD1F0F69660000B07C /* XXPageTabItemLable.m in Sources */,
 				C5C9C85620ABCE360075E449 /* SKPayDelegateModel.m in Sources */,
+				C507082521227460008401FF /* SKPrintBillInfoVC.m in Sources */,
 				E8190DC31F0F69660000B07C /* WOTServiceProvidersCell.m in Sources */,
 				2AED7BDD1FFB4D7300316588 /* WOTApplyCell.m in Sources */,
 				2AD2BE201F2711BD00D4C3BC /* WOTCurtainCell.m in Sources */,
@@ -3890,6 +3921,7 @@
 				E8190DCC1F0F69660000B07C /* ZYQSphereView.m in Sources */,
 				E8DAE7461F30228E00830A2F /* WOTConciseRefreshControl.m in Sources */,
 				E86FD1FA1F208582009BE16A /* WOTAppleRepairCommonCell.m in Sources */,
+				C507083221229CA2008401FF /* SKUIButton.m in Sources */,
 				E8190DB01F0F69660000B07C /* WOTMyEnterPriseCell.m in Sources */,
 				E8EACF7E1F0344EC0015535D /* WOTPageMenuParentVC.m in Sources */,
 				C55A29881FD6DFD9001E0DB7 /* FindPassWordViewController.m in Sources */,

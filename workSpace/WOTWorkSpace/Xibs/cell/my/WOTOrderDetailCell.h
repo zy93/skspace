@@ -11,5 +11,7 @@
 @interface WOTOrderDetailCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLab;
+@property (weak, nonatomic) IBOutlet UIButton *printBillButton;
+
 
 @end

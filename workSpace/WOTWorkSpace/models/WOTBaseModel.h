@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSString*code;
 @property (nonatomic, strong) NSString*result;
-@property (nonatomic, strong) NSString* msg;
+@property (nonatomic, strong) NSString*msg;
 
 @end
 
