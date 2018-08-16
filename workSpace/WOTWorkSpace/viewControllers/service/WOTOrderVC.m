@@ -172,7 +172,7 @@
         [self requestMeetingReservationsInfo];
         
     } else if ([WOTSingtleton shared].orderType == ORDER_TYPE_BOOKSTATION) {
-        [self requestStationNumber];
+        [self requestStationNumber:[NSDate getNewTimeZero]];
     }
     else if ([WOTSingtleton shared].orderType == ORDER_TYPE_SPACE){
         [self.confirmButton setTitle:@"预约入驻" forState:UIControlStateNormal];
@@ -272,6 +272,7 @@
         }
         if ([WOTSingtleton shared].orderType != ORDER_TYPE_BOOKSTATION) {
             weakSelf.reservationStationStartDate = selecTime;
+            [weakSelf requestStationNumber:selecTime];
             [weakSelf requestMeetingReservationsInfo];
         }else {
             if (weakSelf.isValidTime) {
@@ -286,6 +287,7 @@
                 weakSelf.reservationStationStartDate = selecTime;
                 weakSelf.reservationStationEndDate = endSelecTime;
                 [weakSelf Timedisplay:selecTime];
+                [weakSelf requestStationNumber:selecTime];
             }else
             {
                 [MBProgressHUDUtil showMessage:@"请选择有效时间！" toView:weakSelf.view];
@@ -1394,6 +1396,10 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
             NSString *string = [infoArray componentsJoinedByString:@" "];
             [MBProgressHUDUtil showMessage:string toView:self.view];
             return ;
+        }else if ([model_msg.code isEqualToString:@"205"])
+        {
+            [MBProgressHUDUtil showMessage:@"您在其他空间下已经有订单！" toView:self.view];
+            return ;
         }else
         {
             [MBProgressHUDUtil showMessage:@"提交失败" toView:self.view];
@@ -1486,10 +1492,10 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
 }
 
 #pragma mark - 请求工位数量 request
--(void)requestStationNumber
+-(void)requestStationNumber:(NSString *)timeStr
 {
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getBookStationNumberWithSpaceId:self.spaceModel.spaceId time:[NSDate getNewTimeZero] response:^(id bean, NSError *error) {
+    [WOTHTTPNetwork getBookStationNumberWithSpaceId:self.spaceModel.spaceId time:timeStr response:^(id bean, NSError *error) {
         if (error) {
             NSLog(@"error:%@",error);
             return ;

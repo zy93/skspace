@@ -2010,7 +2010,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="1340"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="WOTOrderForInfoCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTOrderForInfoCell" rowHeight="300" id="g39-n5-d19" customClass="WOTOrderForInfoCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WOTOrderForInfoCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="WOTOrderForInfoCell" rowHeight="300" id="g39-n5-d19" customClass="WOTOrderForInfoCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g39-n5-d19" id="xDS-la-O4y">
@@ -2018,19 +2018,22 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-i0-jbb">
-                                                    <rect key="frame" x="378" y="270.5" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="327.5" y="260" width="37.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="百草园·三味书屋" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QG-OT-jBn">
-                                                    <rect key="frame" x="20" y="270" width="134" height="21.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="百草园·三味书屋" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QG-OT-jBn">
+                                                    <rect key="frame" x="20" y="260" width="150" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="150" id="OQc-Mh-PZe"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ZT-wR-V2H" customClass="SDCycleScrollView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="430" height="250"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="250" id="v6k-Jm-hS6"/>
@@ -2040,7 +2043,7 @@
                                             <constraints>
                                                 <constraint firstItem="7ZT-wR-V2H" firstAttribute="leading" secondItem="xDS-la-O4y" secondAttribute="leading" id="1Rq-i9-DEM"/>
                                                 <constraint firstItem="7ZT-wR-V2H" firstAttribute="top" secondItem="xDS-la-O4y" secondAttribute="top" id="Mp1-u3-TPf"/>
-                                                <constraint firstItem="5QG-OT-jBn" firstAttribute="top" secondItem="7ZT-wR-V2H" secondAttribute="bottom" constant="20" id="U29-ia-A40"/>
+                                                <constraint firstItem="5QG-OT-jBn" firstAttribute="top" secondItem="7ZT-wR-V2H" secondAttribute="bottom" constant="10" id="U29-ia-A40"/>
                                                 <constraint firstAttribute="trailing" secondItem="jOe-i0-jbb" secondAttribute="trailing" constant="10" id="i66-p2-mtV"/>
                                                 <constraint firstAttribute="trailing" secondItem="7ZT-wR-V2H" secondAttribute="trailing" id="kyF-dQ-EZQ"/>
                                                 <constraint firstItem="5QG-OT-jBn" firstAttribute="leading" secondItem="xDS-la-O4y" secondAttribute="leading" constant="20" id="rHu-Qg-nTc"/>
@@ -2875,16 +2878,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backAcssory" translatesAutoresizingMaskIntoConstraints="NO" id="7uu-8s-X55">
-                                                    <rect key="frame" x="403" y="14.5" width="7" height="13"/>
+                                                    <rect key="frame" x="403" y="15" width="7" height="13"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3z1-O4-huC">
-                                                    <rect key="frame" x="104.5" y="12.5" width="14.5" height="17"/>
+                                                    <rect key="frame" x="104.5" y="13" width="14.5" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70N-HK-i6K">
-                                                    <rect key="frame" x="20" y="10.5" width="69.5" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="69.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2912,46 +2915,46 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alipay_icon" translatesAutoresizingMaskIntoConstraints="NO" id="sJM-aC-uMe" userLabel="alipayImageView">
-                                                    <rect key="frame" x="20" y="10.5" width="23" height="23"/>
+                                                    <rect key="frame" x="20" y="11" width="23" height="23"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付宝支付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efB-Dm-OcH" userLabel="alipayTitle">
-                                                    <rect key="frame" x="63" y="11" width="87" height="21"/>
+                                                    <rect key="frame" x="63" y="11.5" width="87" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVD-AF-OQK" userLabel="alipayButton">
-                                                    <rect key="frame" x="395" y="11" width="15" height="22"/>
+                                                    <rect key="frame" x="395" y="11.5" width="15" height="22"/>
                                                     <state key="normal" image="select_blue"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3C-OY-fa2">
-                                                    <rect key="frame" x="20" y="10.5" width="390" height="30"/>
+                                                    <rect key="frame" x="20" y="11" width="390" height="30"/>
                                                     <connections>
                                                         <action selector="choosePayWay:" destination="nVV-4d-A99" eventType="touchUpInside" id="vpq-n3-wfq"/>
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F81-2n-FpQ" userLabel="lineView">
-                                                    <rect key="frame" x="10" y="48.5" width="420" height="1"/>
+                                                    <rect key="frame" x="10" y="49" width="420" height="1"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="fHM-FA-UBt"/>
                                                     </constraints>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_icon" translatesAutoresizingMaskIntoConstraints="NO" id="8dE-iv-cQq" userLabel="wxpayImageView">
-                                                    <rect key="frame" x="20" y="64.5" width="23" height="23"/>
+                                                    <rect key="frame" x="20" y="65" width="23" height="23"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信支付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exH-0W-s5B">
-                                                    <rect key="frame" x="63" y="64.5" width="69.5" height="21"/>
+                                                    <rect key="frame" x="63" y="65" width="69.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iv-jP-GDj" userLabel="wxpayButton">
-                                                    <rect key="frame" x="395" y="65" width="15" height="22"/>
+                                                    <rect key="frame" x="395" y="65.5" width="15" height="22"/>
                                                     <state key="normal" image="unselect_white"/>
                                                 </button>
                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNk-5u-3ri">
-                                                    <rect key="frame" x="20" y="64.5" width="390" height="30"/>
+                                                    <rect key="frame" x="20" y="65" width="390" height="30"/>
                                                     <connections>
                                                         <action selector="choosePayWay:" destination="nVV-4d-A99" eventType="touchUpInside" id="aLc-Sq-esd"/>
                                                     </connections>
@@ -2994,13 +2997,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品金额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HbG-g4-QCP">
-                                                    <rect key="frame" x="20" y="15.5" width="70" height="21"/>
+                                                    <rect key="frame" x="20" y="16" width="70" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥199" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aGL-Ix-a1h">
-                                                    <rect key="frame" x="364" y="15.5" width="46" height="21"/>
+                                                    <rect key="frame" x="364" y="16" width="46" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
