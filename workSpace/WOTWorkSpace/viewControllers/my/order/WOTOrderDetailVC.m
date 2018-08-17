@@ -206,7 +206,7 @@
 {
     if (!_cancleButton) {
         _cancleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        if (strIsEmpty(self.model.orderCancel)) {
+        if ([self.model.orderCancel isEqualToString:@"正常"]) {
             [_cancleButton setTitle:@"取消订单" forState:UIControlStateNormal];
         }
         
