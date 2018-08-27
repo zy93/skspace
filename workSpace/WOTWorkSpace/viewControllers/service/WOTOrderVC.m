@@ -752,7 +752,7 @@
                 }
                 cell.scrollview.imageURLStringsGroup = imageArr;
                 cell.infoTitle.text = _spaceModel.spaceName;
-                cell.dailyRentLabel.text = [NSString stringWithFormat:@"今日剩余工位：%ld",self.stationTotalNumber.integerValue];
+                cell.dailyRentLabel.text = [NSString stringWithFormat:@"剩余工位：%ld",self.stationTotalNumber.integerValue];
             }
                 break;
             case ORDER_TYPE_SITE:

@@ -243,7 +243,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return  225;
+    return  200;
 }
 
 
@@ -264,7 +264,7 @@
         NSArray  *array = [model.spacePicture componentsSeparatedByString:@","];
         NSString *imageUrl = [array firstObject];
         [bookcell.spaceImage sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
-        bookcell.stationNum.text  = [NSString stringWithFormat:@"地址：%@",model.spaceSite]; //@"23个工位可以预定";
+        bookcell.stationNum.text  = [NSString stringWithFormat:@"%@",model.spaceSite]; //@"23个工位可以预定";
         bookcell.stationPrice.hidden = YES;
         bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",model.onlineLocationPrice];//@"¥123元／天";
         bookcell.delegate = self;
