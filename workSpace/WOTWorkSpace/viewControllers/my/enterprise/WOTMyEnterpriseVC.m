@@ -16,6 +16,7 @@
 #import "WOTProvidersVC.h"
 #import "SKCompanyMemberViewController.h"
 #import "UIColor+ColorChange.h"
+#import "WOTApplyJoinEnterpriseModel.h"
 
 @interface WOTMyEnterpriseVC ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -36,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configNavi];
+   //[self configNavi];
     // Do any additional setup after loading the view.
     [self.table registerNib:[UINib nibWithNibName:@"WOTMyEnterPriseCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"WOTMyEnterPriseCell"];
     self.notInfoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
@@ -64,6 +65,8 @@
     [self layoutSubviews];
     
 }
+
+
 
 -(void)layoutSubviews
 {
@@ -99,6 +102,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     //[self querySingleInfo];
 //    [self.tabBarController.tabBar setHidden:YES];
+    [self configNavi];
     [self createRequest];
 }
 -(void)configNavi{
@@ -119,7 +123,8 @@
     }else
     {
         if (!strIsEmpty([WOTUserSingleton shareUser].userInfo.companyIdAdmin)) {
-            [self configNaviRightItemWithImage:[UIImage imageNamed:@"message"]];
+            
+            [self createRequestInfo];
         }
         [self configNaviBackItem];
     }
@@ -140,6 +145,26 @@
     WOTCreateEnterpriseVC *vc = [[WOTCreateEnterpriseVC alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+#pragma mark - 查询是否有消息
+-(void)createRequestInfo
+{
+    [WOTHTTPNetwork getApplyJoinEnterpriseListWithEnterpriseIds:[WOTUserSingleton shareUser].userInfo.companyIdAdmin response:^(id bean, NSError *error) {
+        WOTApplyJoinEnterpriseModel_msg *model = bean;
+        if ([model.code isEqualToString:@"200"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self configNaviRightItemWithImage:[UIImage imageNamed:@"message-no"]];
+            });
+        }
+        
+        if ([model.code isEqualToString:@"202"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self configNaviRightItemWithImage:[UIImage imageNamed:@"message"]];
+                });
+        }
+    }];
+}
+
 
 #pragma mark - 查询个人信息
 //-(void)querySingleInfo

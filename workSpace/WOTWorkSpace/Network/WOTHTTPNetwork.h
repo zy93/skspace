@@ -127,6 +127,13 @@ typedef void(^response)(id bean,NSError *error);
  @param response    回调数据到上层
  */
 +(void)getAllSpaceWithCity:(NSString *)city block:(response)response;
+
+/**
+ * 根据城市获取所有已经排序空间接口
+ @param city  城市名称 传入城市名称根据城市筛选，不传查询全部
+ @param response    回调数据到上层
+ */
++(void)getAllSpaceSortWithCity:(NSString *)city block:(response)response;
 /**
  * 无参数获取全部空间
  */

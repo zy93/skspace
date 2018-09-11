@@ -71,7 +71,7 @@
                 {
                     [hud hide:YES];
                     if ([model.code isEqualToString:@"202"]) {
-                        [MBProgressHUDUtil showMessage:@"请先进行访客预约！" toView:self.view];
+                        [MBProgressHUDUtil showMessage:model.result toView:self.view];
                         return ;
                     }
                     [MBProgressHUDUtil showMessage:@"信息获取失败！" toView:self.view];
