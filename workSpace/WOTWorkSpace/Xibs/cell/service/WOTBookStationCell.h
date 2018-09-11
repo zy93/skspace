@@ -21,7 +21,7 @@
 @interface WOTBookStationCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *spaceName;
 @property (weak, nonatomic) IBOutlet UILabel *stationNum;
-@property (weak, nonatomic) IBOutlet UILabel *stationPrice;
+@property (weak, nonatomic) IBOutlet UILabel *stationNumer;
 @property (weak, nonatomic) IBOutlet UIImageView *spaceImage;
 @property (weak, nonatomic) IBOutlet UIView *bgview;
 

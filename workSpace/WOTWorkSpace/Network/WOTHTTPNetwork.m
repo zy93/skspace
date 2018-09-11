@@ -402,6 +402,26 @@
     } response:response];
 }
 
++(void)getAllSpaceSortWithCity:(NSString *)city block:(response)response{
+    
+    NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findSortStationNum"];
+    //在原来的基础上添加集团id
+    NSMutableDictionary * parameters = [@{@"pageNo":@1,
+                                          @"pageSize":@1000,
+                                          @"spaceState":@0
+                                          } mutableCopy];
+    if (city) {
+        [parameters setValue:city forKey:@"city"];
+    }
+    
+    [self doRequestWithParameters:parameters useUrl:urlstring complete:^JSONModel *(id responseobj) {
+        WOTSpaceModel_msg * spacemodel = [[WOTSpaceModel_msg alloc]initWithDictionary:responseobj error:nil];
+        return  spacemodel;
+        
+    } response:response];
+}
+
+
 /**
  * 无参数获取全部空间
  */
@@ -1641,6 +1661,7 @@
         return model13;
     } response:response];
 }
+
 
 #pragma mark - 礼包
 +(void)queryGiftBagListWithType:(NSString *)type response:(response)response
