@@ -39,12 +39,12 @@ typedef NS_ENUM(NSUInteger, MALineDashType) {
 @property (nonatomic, readonly, retain) id <MAOverlay> overlay;
 
 ///缓存的OpenGLES坐标
-@property (nonatomic) CGPoint *glPoints;
+@property (nonatomic) CGPoint *glPoints  __attribute__((deprecated("已废弃")));
 
-///缓存的OpenGLES坐标 个数
-@property (nonatomic) NSUInteger glPointCount;
+///缓存的OpenGLES坐标
+@property (nonatomic) NSUInteger glPointCount  __attribute__((deprecated("已废弃")));
 
-///用于生成笔触纹理id的图片，since 5.3.0
+///用于生成笔触纹理id的图片（image需满足: 长宽相等,且宽度值为2的整数次幂; 如果您需要减轻绘制产生的锯齿,您可以参考AMap.bundle中的traffic_texture_blue.png的方式,在image两边增加部分透明像素.)。（since 5.3.0）
 @property (nonatomic, strong) UIImage *strokeImage;
 
 ///笔触纹理id, 修改纹理id参考, 如果strokeImage未指定、尚未加载或加载失败返回0

@@ -97,6 +97,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)switchParallelRoad:(nullable id)parallelRoad;
 
+/**
+ * @brief 设置多路线导航模式(GPS导航中拥有若干条备选路线供用户选择), 或单路线导航模式(默认模式). 注意: 1、设置的导航模式会在下一次主动路径规划时生效, 导航中设置无效, 建议在 AMapNaviDriveManager 单例初始化时就进行设置. 2、多路线导航模式还需同时满足以下4个条件才能够生效：a.路径规划时 AMapNaviDrivingStrategy 需选用多路径策略; b.起终点的直线距离需<=80KM; c.不能有途径点; d.车辆不能是货车类型. since 6.3.0
+ * @param multipleRouteNaviMode YES:多路线导航模式, NO:单路线导航模式(默认)
+ * @return 是否设置成功，如开始导航后调用就会返回NO
+ */
+- (BOOL)setMultipleRouteNaviMode:(BOOL)multipleRouteNaviMode;
+
 #pragma mark - Options
 
 ///是否播报摄像头信息,默认YES.
@@ -111,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///前方拥堵时是否重新计算路径,默认YES(需要联网). 已废弃，默认进行重算，since 5.0.0
 @property (nonatomic, assign) BOOL isRecalculateRouteForTrafficJam __attribute__((deprecated("已废弃，默认进行重算，since 5.0.0")));
 
-///智能播报模式,默认为 AMapNaviDetectedModeNone (需要联网).智能播报适用于不设置目的驾车过程中,播报电子眼、特殊道路设施等信息.巡航信息参考 AMapNaviCruiseInfo ,  AMapNaviTrafficFacilityInfo 类及相关回调.
+///巡航模式,默认为 AMapNaviDetectedModeNone. 注意：如果已经处在导航模式，要开启巡航模式时，需要先调用 stopNavi 来停止导航，再设置 detectedMode 才能生效
 @property (nonatomic, assign) AMapNaviDetectedMode detectedMode;
 
 #pragma mark - Calculate Route
@@ -121,7 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * @brief 不带起点的驾车路径规划
  * @param endPoints    终点坐标.终点列表的尾点为实际导航终点.
- * @param wayPoints    途经点坐标,最多支持16个途经点.
+ * @param wayPoints    途经点坐标,最多支持16个途经点. 超过16个会取前16个.
  * @param strategy     路径的计算策略
  * @return 规划路径所需条件和参数校验是否成功，不代表算路成功与否
  */
@@ -133,7 +140,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief 带起点的驾车路径规划
  * @param startPoints  起点坐标.起点列表的尾点为实际导航起点,其他坐标点为辅助信息,带有方向性,可有效避免算路到马路的另一侧.
  * @param endPoints    终点坐标.终点列表的尾点为实际导航终点,其他坐标点为辅助信息,带有方向性,可有效避免算路到马路的另一侧.
- * @param wayPoints    途经点坐标,最多支持16个途经点.
+ * @param wayPoints    途经点坐标,最多支持16个途经点. 超过16个会取前16个
  * @param strategy     路径的计算策略
  * @return 规划路径所需条件和参数校验是否成功，不代表算路成功与否
  */
@@ -143,20 +150,40 @@ NS_ASSUME_NONNULL_BEGIN
                            drivingStrategy:(AMapNaviDrivingStrategy)strategy;
 
 /**
+ * @brief 根据高德POIId进行驾车路径规划,为了保证路径规划的准确性,请尽量使用此方法. since 6.1.0
+ * @param startPOIId  起点POIId,如果以“我的位置”作为起点，请传nil
+ * @param endPOIId    终点POIId,必填
+ * @param wayPOIIds   途经点POIId,最多支持16个途经点. 超过16个会取前16个
+ * @param strategy    路径的计算策略
+ * @return 规划路径所需条件和参数校验是否成功，不代表算路成功与否
+ */
+- (BOOL)calculateDriveRouteWithStartPointPOIId:(nullable NSString *)startPOIId
+                                 endPointPOIId:(nonnull NSString *)endPOIId
+                                wayPointsPOIId:(nullable NSArray<NSString *> *)wayPOIIds
+                               drivingStrategy:(AMapNaviDrivingStrategy)strategy;
+
+/**
  * @brief 导航过程中重新规划路径(起点为当前位置,途经点和终点位置不变)
  * @param strategy 路径的计算策略
- * @return 规划路径所需条件和参数校验是否成功，不代表算路成功与否
+ * @return 重新规划路径所需条件和参数校验是否成功, 不代表算路成功与否, 如非导航状态下调用此方法会返回NO.
  */
 - (BOOL)recalculateDriveRouteWithDrivingStrategy:(AMapNaviDrivingStrategy)strategy;
 
 #pragma mark - Manual
 
 /**
- * @brief 设置车牌信息
+ * @brief 设置车牌信息. 已废弃，请使用 setVehicleInfo: 替代，since 6.0.0
  * @param province 车牌省份缩写，例如："京"
  * @param number 除省份及标点之外，车牌的字母和数字，例如："NH1N11"
  */
-- (void)setVehicleProvince:(NSString *)province number:(NSString *)number;
+- (void)setVehicleProvince:(NSString *)province number:(NSString *)number __attribute__((deprecated("已废弃，请使用 setVehicleInfo: 替代，since 6.0.0")));
+
+/**
+ * @brief 设置车辆信息. since 6.0.0
+ * @param vehicleInfo 车辆信息，参考 AMapNaviVehicleInfo. 如果要清空已设置的车辆信息，传入nil即可.
+ * @return 是否设置成功
+ */
+- (BOOL)setVehicleInfo:(nullable AMapNaviVehicleInfo *)vehicleInfo;
 
 /**
  * @brief 设置播报模式,默认新手详细播报( AMapNaviBroadcastModeDetailed )
@@ -196,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @brief 获取导航统计信息. 已废弃，since 5.0.0
- * @return 导航统计信息,参考 AMapNaviStatisticsInfo 类.
+ * @return 导航统计信息, 参考 AMapNaviStatisticsInfo 类.
  */
 - (nullable AMapNaviStatisticsInfo *)getNaviStatisticsInfo __attribute__((deprecated("已废弃，since 5.0.0")));
 
@@ -215,17 +242,32 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)driveManager:(AMapNaviDriveManager *)driveManager error:(NSError *)error;
 
 /**
- * @brief 驾车路径规划成功后的回调函数
+ * @brief 驾车路径规划成功后的回调函数，请尽量使用 -driveManager:onCalculateRouteSuccessWithType: 替代此方法
  * @param driveManager 驾车导航管理类
  */
 - (void)driveManagerOnCalculateRouteSuccess:(AMapNaviDriveManager *)driveManager;
 
 /**
- * @brief 驾车路径规划失败后的回调函数. 从5.3.0版本起,算路失败后导航SDK只对外通知算路失败,SDK内部不再执行停止导航的相关逻辑.因此,当算路失败后,不会收到 driveManager:updateNaviMode: 回调; AMapDriveManager.naviMode 不会切换到 AMapNaviModeNone 状态, 而是会保持在 AMapNaviModeGPS or AMapNaviModeEmulator 状态.
- * @param error 错误信息,error.code参照 AMapNaviCalcRouteState .
+ * @brief 驾车路径规划成功后的回调函数 since 6.1.0
  * @param driveManager 驾车导航管理类
+ * @param type 路径规划类型,参考 AMapNaviRoutePlanType
+ */
+- (void)driveManager:(AMapNaviDriveManager *)driveManager onCalculateRouteSuccessWithType:(AMapNaviRoutePlanType)type;
+
+/**
+ * @brief 驾车路径规划失败后的回调函数. 从5.3.0版本起,算路失败后导航SDK只对外通知算路失败,SDK内部不再执行停止导航的相关逻辑.因此,当算路失败后,不会收到 driveManager:updateNaviMode: 回调; AMapDriveManager.naviMode 不会切换到 AMapNaviModeNone 状态, 而是会保持在 AMapNaviModeGPS or AMapNaviModeEmulator 状态.
+ * @param driveManager 驾车导航管理类
+ * @param error 错误信息,error.code参照 AMapNaviCalcRouteState
  */
 - (void)driveManager:(AMapNaviDriveManager *)driveManager onCalculateRouteFailure:(NSError *)error;
+
+/**
+ * @brief 驾车路径规划失败后的回调函数. since 6.1.0
+ * @param driveManager 驾车导航管理类
+ * @param error 错误信息,error.code参照 AMapNaviCalcRouteState
+ * @param type 路径规划类型,参考 AMapNaviRoutePlanType
+ */
+- (void)driveManager:(AMapNaviDriveManager *)driveManager onCalculateRouteFailure:(NSError *)error routePlanType:(AMapNaviRoutePlanType)type;
 
 /**
  * @brief 启动导航后回调函数
@@ -249,14 +291,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * @brief 导航到达某个途经点的回调函数
  * @param driveManager 驾车导航管理类
- * @param wayPointIndex 到达途径点的编号，标号从1开始
+ * @param wayPointIndex 到达途径点的编号，标号从0开始. 注意：如果导航过程进行了路径重算(包含偏航、手动刷新等)，wayPointIndex会重新从0开始计数
  */
 - (void)driveManager:(AMapNaviDriveManager *)driveManager onArrivedWayPoint:(int)wayPointIndex;
 
 /**
- * @brief SDK需要实时的获取是否正在进行导航信息播报，以便SDK内部控制 "导航播报信息回调函数" 的触发时机，避免出现下一句话打断前一句话的情况
+ * @brief 开发者请根据实际情况返回是否正在播报语音，如果正在播报语音，请返回YES, 如果没有在播报语音，请返回NO
  * @param driveManager 驾车导航管理类
- * @return 返回当前是否正在进行导航信息播报,如一直返回YES，"导航播报信息回调函数"就一直不会触发，如一直返回NO，就会出现语句打断情况，所以请根据实际情况返回。
+ * @return 如一直返回YES，SDK内部会认为外界一直在播报，"-driveManager:playNaviSoundString:soundStringType" 就会一直不触发，导致无文字吐出; 如一直返回NO，文字吐出的频率可能会过快，会出现语句打断情况，所以请根据实际情况返回。
  */
 - (BOOL)driveManagerIsNaviSoundPlaying:(AMapNaviDriveManager *)driveManager;
 
@@ -264,18 +306,18 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief 导航播报信息回调函数,此回调函数需要和driveManagerIsNaviSoundPlaying:配合使用
  * @param driveManager 驾车导航管理类
  * @param soundString 播报文字
- * @param soundStringType 播报类型,参考 AMapNaviSoundType .
+ * @param soundStringType 播报类型,参考 AMapNaviSoundType. 注意：since 6.0.0 AMapNaviSoundType 只返回 AMapNaviSoundTypeDefault
  */
 - (void)driveManager:(AMapNaviDriveManager *)driveManager playNaviSoundString:(NSString *)soundString soundStringType:(AMapNaviSoundType)soundStringType;
 
 /**
- * @brief 模拟导航到达目的地停止导航后的回调函数
+ * @brief 模拟导航到达目的地后的回调函数
  * @param driveManager 驾车导航管理类
  */
 - (void)driveManagerDidEndEmulatorNavi:(AMapNaviDriveManager *)driveManager;
 
 /**
- * @brief 导航到达目的地后的回调函数
+ * @brief GPS导航到达目的地后的回调函数
  * @param driveManager 驾车导航管理类
  */
 - (void)driveManagerOnArrivedDestination:(AMapNaviDriveManager *)driveManager;
@@ -293,6 +335,20 @@ NS_ASSUME_NONNULL_BEGIN
  * @param gpsSignalStrength GPS信号强度类型,参考 AMapNaviGPSSignalStrength .
  */
 - (void)driveManager:(AMapNaviDriveManager *)driveManager updateGPSSignalStrength:(AMapNaviGPSSignalStrength)gpsSignalStrength;
+
+/**
+ * @brief GPS导航中关于路线的‘信息通知’回调. since 6.2.0
+ * @param driveManager 驾车导航管理类
+ * @param notifyData 通知信息, 参考 AMapNaviRouteNotifyData .
+ */
+- (void)driveManager:(AMapNaviDriveManager *)driveManager postRouteNotification:(AMapNaviRouteNotifyData *)notifyData;
+
+/**
+ * @brief 多路线GPS导航模式下，建议将某备选路线切换为主导航路线的回调函数. since 6.3.0
+ * @param driveManager 驾车导航管理类
+ * @param suggestChangeMainNaviRouteInfo 切换主导航路线的相关信息, 参考 AMapNaviSuggestChangeMainNaviRouteInfo .
+ */
+- (void)driveManager:(AMapNaviDriveManager *)driveManager onSuggestChangeMainNaviRoute:(AMapNaviSuggestChangeMainNaviRouteInfo *)suggestChangeMainNaviRouteInfo;
 
 @end
 

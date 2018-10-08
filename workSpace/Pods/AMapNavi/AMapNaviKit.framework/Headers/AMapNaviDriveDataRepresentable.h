@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * @brief 需要显示路口放大图时的回调
  * @param driveManager 驾车导航管理类
- * @param crossImage 路口放大图Image(size:500*320)
+ * @param crossImage 路口放大图Image(宽:高 = 25:16)
  */
 - (void)driveManager:(AMapNaviDriveManager *)driveManager showCrossImage:(UIImage *)crossImage;
 
@@ -76,12 +76,14 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief 需要显示车道信息时的回调.可通过 UIImage *CreateLaneInfoImageWithLaneInfo(NSString *laneBackInfo, NSString *laneSelectInfo); 方法创建车道信息图片
  * 0-直行; 1-左转; 2-直行和左转; 3-右转;
  * 4-直行和右转; 5-左转掉头; 6-左转和右转; 7-直行和左转和右转;
- * 8-右转掉头; 9-直行和左转掉头; a-直行和右转掉头; b-左转和左转掉头;
- * c-右转和右转掉头; d-左侧变宽直行; e-左侧变宽左转和左转掉头; f-保留;
+ * 8-右转掉头; 9-直行和左转掉头; 10-直行和右转掉头; 11-左转和左转掉头;
+ * 12-右转和右转掉头; 13-直行左侧道路变宽; 14-左转和左转掉头左侧变宽; 16-直行和左转和左掉头;
+ * 17-右转和左掉头; 18-左转和左掉头和右转; 19-直行和右转和左掉头; 20-左转和右掉头; 21-公交车道; 23-可变车道;
+ * 255-只会出现在laneSelectInfo，表示目前规划的路径，不可以走这个车道
  *
  * @param driveManager 驾车导航管理类
- * @param laneBackInfo 车道背景信息，例如：@"1|0|0|0|3|f|f|f"，表示当前道路有5个车道，分别为"左转-直行-直行-直行-右转"
- * @param laneSelectInfo 车道前景信息，例如：@"f|0|0|0|f|f|f|f"，表示选择当前道路的2、3、4三个直行车道
+ * @param laneBackInfo 车道背景信息，例如：@"1|0|0|4"，表示当前道路有4个车道，分别为"左转|直行|直行|右转+直行"
+ * @param laneSelectInfo 车道前景信息，其个数一定和车道背景信息一样，例如：@"255|0|0|0"，表示选择了当前道路的第2、3、4三个直行车道。
  */
 - (void)driveManager:(AMapNaviDriveManager *)driveManager showLaneBackInfo:(NSString *)laneBackInfo laneSelectInfo:(NSString *)laneSelectInfo;
 
@@ -132,6 +134,31 @@ NS_ASSUME_NONNULL_BEGIN
  * @param parallelRoadStatus 平行道路信息,参考 AMapNaviParallelRoadStatus 类
  */
 - (void)driveManager:(AMapNaviDriveManager *)driveManager updateParallelRoadStatus:(nullable AMapNaviParallelRoadStatus *)parallelRoadStatus;
+
+/**
+ * @brief 区间电子眼信息更新回调 since 6.0.0
+ * @param driveManager 驾车导航管理类
+ * @param state 自车位置和区间测速电子眼路段的位置关系,参考 AMapNaviIntervalCameraPositionState 类
+ * @param startInfo 电子眼信息,参考 AMapNaviCameraInfo 类
+ * @param endInfo 电子眼信息,参考 AMapNaviCameraInfo 类
+ */
+- (void)driveManager:(AMapNaviDriveManager *)driveManager updateIntervalCameraWithPositionState:(AMapNaviIntervalCameraPositionState)state startInfo:(nullable AMapNaviCameraInfo *)startInfo endInfo:(nullable AMapNaviCameraInfo *)endInfo;
+
+/**
+ * @brief 导航中的转向图标更新回调 since 6.2.0
+ * @param driveManager 驾车导航管理类
+ * @param turnIconImage 导航段转向图标, 默认大小为（255,255）
+ * @param AMapNaviIconType 导航段转向图标类型,参考 AMapNaviIconType 类
+ */
+- (void)driveManager:(AMapNaviDriveManager *)driveManager updateTurnIconImage:(nullable UIImage *)turnIconImage turnIconType:(AMapNaviIconType)turnIconType;
+
+/**
+ * @brief 多路线导航模式下的备选路线更新回调, 注意：此函数只有在 driveManager 设置了多路线导航模式才会回调. since 6.3.0
+ * @param driveManager 驾车导航管理类
+ * @param backupRoutes 备选路线信息数组, 参考 AMapNaviRoute 类
+ */
+- (void)driveManager:(AMapNaviDriveManager *)driveManager updateBackupRoute:(nullable NSArray<AMapNaviRoute *> *)backupRoutes;
+
 
 @end
 

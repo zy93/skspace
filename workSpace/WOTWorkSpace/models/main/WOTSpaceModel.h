@@ -41,6 +41,7 @@
 @property(nonatomic,strong)NSNumber *lettableArea;
 @property(nonatomic,strong)NSNumber *coveredArea;
 @property(nonatomic,strong)NSNumber *totalFloors;
+@property(nonatomic,strong)NSNumber *stationSubareaNum;
 @end
 
 @interface WOTSpaceModel_m : JSONModel

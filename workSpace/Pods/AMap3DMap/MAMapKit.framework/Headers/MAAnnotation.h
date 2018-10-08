@@ -41,20 +41,26 @@
 
 @required
 /**
- * @brief 动画帧更新回调接口，实现者可在内部做更新处理，如更新coordinate. since 4.5.0
+ * @brief 动画帧更新回调接口，实现者可在内部做更新处理，如更新coordinate. （since 4.5.0）
  * @param timeDelta 时间步长，单位秒
  */
 - (void)step:(CGFloat)timeDelta;
 
 /**
- * @brief 动画是否已完成. since 4.5.0
+ * @brief 动画是否已完成. 通过此方法判断是否需要将动画annotation移出渲染执行过程。（since 4.5.0）
  * @return YES动画已完成，NO没有完成
  */
 - (BOOL)isAnimationFinished;
 
+/**
+ * @brief 动画是否可以开始. 通过此方法判断是否需要将动画annotation加入渲染过程，已经start且尚未finish的动画标注才会调用step方法。（since 6.0.0）
+ * @return YES 可以开始，NO 尚未开始。
+ */
+- (BOOL)shouldAnimationStart;
+
 @optional
 /**
- * @brief 动画更新时调用此接口，获取annotationView的旋转角度，不实现默认为0. since 4.5.0
+ * @brief 动画更新时调用此接口，获取annotationView的旋转角度，不实现默认为0. （since 4.5.0）
  * @return 当前annotation的旋转角度
  */
 - (CLLocationDirection)rotateDegree;

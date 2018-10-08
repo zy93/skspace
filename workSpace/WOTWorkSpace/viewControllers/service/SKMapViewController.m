@@ -116,7 +116,7 @@ static const NSInteger RoutePlanningPaddingEdge                    = 20;
 -(void)mapView:(MAMapView *)mapView didAddAnnotationViews:(NSArray *)views{
     if ([views[0] isKindOfClass:MAPinAnnotationView.class]){
         MAPinAnnotationView *mapView = (MAPinAnnotationView*)views[0];
-        [self.mapView selectAnnotation:mapView.annotation animated:YES];
+       // [self.mapView selectAnnotation:mapView.annotation animated:YES];
     }
 }
 

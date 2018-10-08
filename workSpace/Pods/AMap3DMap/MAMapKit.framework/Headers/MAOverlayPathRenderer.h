@@ -14,22 +14,22 @@
 @interface MAOverlayPathRenderer : MAOverlayRenderer
 
 ///填充颜色,默认是kMAOverlayRendererDefaultFillColor
-@property (retain) UIColor *fillColor;
+@property (nonatomic, retain) UIColor *fillColor;
 
 ///笔触颜色,默认是kMAOverlayRendererDefaultStrokeColor
-@property (retain) UIColor *strokeColor;
+@property (nonatomic, retain) UIColor *strokeColor;
 
 ///笔触宽度,默认是0
-@property CGFloat lineWidth;
+@property (nonatomic, assign) CGFloat lineWidth;
 
 ///LineJoin,默认是kMALineJoinBevel
-@property MALineJoinType lineJoinType;
+@property (nonatomic, assign) MALineJoinType lineJoinType;
 
 ///LineCap,默认是kMALineCapButt
-@property MALineCapType lineCapType;
+@property (nonatomic, assign) MALineCapType lineCapType;
 
 ///MiterLimit,默认是10.f
-@property CGFloat miterLimit;
+@property (nonatomic, assign) CGFloat miterLimit;
 
 ///是否绘制成虚线, 默认是NO
 @property (nonatomic, assign) BOOL lineDash __deprecated_msg("已废弃，请使用lineDashType");

@@ -16,6 +16,8 @@
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import "MATraceLocation.h"
 
+@class MATraceManager;
+
 ///处理中回调， index: 批次编号，0 based
 typedef void(^MAProcessingCallback)(int index, NSArray<MATracePoint *> *points);
 
@@ -28,6 +30,27 @@ typedef void(^MAFailedCallback)(int errorCode, NSString *errorDesc);
 ///定位回调, locations: 原始定位点; tracePoints: 纠偏后的点，如果纠偏失败返回nil; distance:距离; error: 纠偏失败时的错误信息
 typedef void(^MATraceLocationCallback)(NSArray<CLLocation *> *locations, NSArray<MATracePoint *> *tracePoints, double distance, NSError *error);
 
+/**
+ * @brief 轨迹定位的代理协议，since v6.2.0
+*/
+@protocol MATraceDelegate <NSObject>
+
+@required
+
+/**
+ * @brief 轨迹定位纠偏的回调方法，since v6.2.0
+ * @param manager 轨迹定位管理对象
+ * @param locations 已经完成纠偏的原始定位数据
+ * @param tracedPoints 已经完成纠偏处理后的轨迹点
+ * @param error 如果成功的话为nil，否则为失败原因
+ */
+- (void)traceManager:(MATraceManager *)manager
+            didTrace:(NSArray<CLLocation *> *)locations
+             correct:(NSArray<MATracePoint *> *)tracePoints
+            distance:(double)distance
+           withError:(NSError *)error;
+
+@end
 
 ///轨迹纠偏管理类
 @interface MATraceManager : NSObject
@@ -56,12 +79,27 @@ typedef void(^MATraceLocationCallback)(NSArray<CLLocation *> *locations, NSArray
  * @brief 开始轨迹定位, 内部使用系统CLLocationManager，distanceFilter，desiredAccuracy均为系统默认值
  * @param locCallback 定位回调, 回调中返回坐标类型为AMapCoordinateTypeGPS
  */
-- (void)startTraceWith:(MATraceLocationCallback)locCallback;
+- (void)startTraceWith:(MATraceLocationCallback)locCallback  __attribute__((deprecated("use start instead")));
 
 /**
  * @brief 停止轨迹定位
  */
-- (void)stopTrace;
+- (void)stopTrace  __attribute__((deprecated("use stop instead")));
+
+/**
+ * @brief 轨迹定位的代理回调对象，配合start和stop方法使用，since v6.2.0
+ */
+@property (nonatomic, weak) id<MATraceDelegate> delegate;
+
+/**
+ * @brief 开始轨迹定位, 内部使用系统CLLocationManager，distanceFilter，desiredAccuracy均为系统默认值，since v6.2.0
+ */
+- (void)start;
+
+/**
+ * @brief 停止轨迹定位，since v6.2.0
+ */
+- (void)stop;
 
 @end
 

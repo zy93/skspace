@@ -52,4 +52,9 @@
  */
 - (NSArray<MAAnnotationMoveAnimation*> *)allMoveAnimations;
 
+/**
+ * @brief 设置需要开始动画，自定义其他类型动画时需要调用. since 6.0.0
+ */
+- (void)setNeedsStart;
+
 @end

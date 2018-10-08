@@ -132,28 +132,56 @@
         cityNameStr = cityName;
     }
     __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork getAllSpaceSortWithCity:cityNameStr block:^(id bean, NSError *error) {
-         [_HUD removeFromSuperview];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error) {
-                NSLog(@"error:%@",error);
-                return ;
-            }
-            WOTSpaceModel_msg *list = bean;
-            weakSelf.tableList = list.msg.list;
-            if (weakSelf.tableList.count) {
-                self.notInformationImageView.hidden = YES;
-                self.notBookStationInformationLabel.hidden = YES;
-            } else {
-                self.notInformationImageView.hidden = NO;
-                self.notBookStationInformationLabel.hidden = NO;
-                self.notBookStationInformationLabel.text = @"亲，没有选择城市哦！";
-                NSLog(@"没有数据");
-            }
-            //[self.table reloadData];
-            [weakSelf.tableIView  reloadData];
-        });
-    }];
+    if ([WOTSingtleton shared].skTimeType == SKTIMETYPE_LONGTIME) {
+        [WOTHTTPNetwork getAllSpaceAndRoomWithCity:cityNameStr block:^(id bean, NSError *error) {
+            [_HUD removeFromSuperview];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (error) {
+                    NSLog(@"error:%@",error);
+                    return ;
+                }
+                WOTSpaceModel_msg *list = bean;
+                weakSelf.tableList = list.msg.list;
+                if (weakSelf.tableList.count) {
+                    self.notInformationImageView.hidden = YES;
+                    self.notBookStationInformationLabel.hidden = YES;
+                } else {
+                    self.notInformationImageView.hidden = NO;
+                    self.notBookStationInformationLabel.hidden = NO;
+                    self.notBookStationInformationLabel.text = @"亲，没有选择城市哦！";
+                    NSLog(@"没有数据");
+                }
+                //[self.table reloadData];
+                [weakSelf.tableIView  reloadData];
+            });
+        }];
+    }else
+    {
+        [WOTHTTPNetwork getAllSpaceSortWithCity:cityNameStr block:^(id bean, NSError *error) {
+            [_HUD removeFromSuperview];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (error) {
+                    NSLog(@"error:%@",error);
+                    return ;
+                }
+                WOTSpaceModel_msg *list = bean;
+                weakSelf.tableList = list.msg.list;
+                if (weakSelf.tableList.count) {
+                    self.notInformationImageView.hidden = YES;
+                    self.notBookStationInformationLabel.hidden = YES;
+                } else {
+                    self.notInformationImageView.hidden = NO;
+                    self.notBookStationInformationLabel.hidden = NO;
+                    self.notBookStationInformationLabel.text = @"亲，没有选择城市哦！";
+                    NSLog(@"没有数据");
+                }
+                //[self.table reloadData];
+                [weakSelf.tableIView  reloadData];
+            });
+        }];
+    }
+    
+    
         
     
     
@@ -202,6 +230,9 @@
 -(void)createRequestCityList:(NSArray *)array
 {
     //NSMutableArray *cityList = [NSMutableArray new];
+    if (self.cityList.count > 0) {
+        [self.cityList removeAllObjects];
+    }
     for (WOTSpaceModel *model in array) {
         //
         BOOL isHaveCity = NO;
@@ -265,14 +296,19 @@
         NSString *imageUrl = [array firstObject];
         [bookcell.spaceImage sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
         bookcell.stationNum.text  = [NSString stringWithFormat:@"%@",model.spaceSite]; //@"23个工位可以预定";
-        bookcell.stationNumer.text = [NSString stringWithFormat:@"剩余工位:%@",model.sourcecode];
+        if ([WOTSingtleton shared].skTimeType == SKTIMETYPE_LONGTIME) {
+            bookcell.stationNumer.text = [NSString stringWithFormat:@"剩余房间:%@",model.stationSubareaNum];
+        }else
+        {
+            bookcell.stationNumer.text = [NSString stringWithFormat:@"剩余工位:%@",model.sourcecode];
+        }
+        //bookcell.stationNumer.text = [NSString stringWithFormat:@"剩余房间:%@",model.sourcecode];
 //        bookcell.stationPrice.hidden = YES;
 //        bookcell.stationPrice.text = [NSString stringWithFormat:@"￥%@/天",model.onlineLocationPrice];//@"¥123元／天";
         bookcell.delegate = self;
         bookcell.model = model;
     } else {
         // NSLog(@"测试：没有数据！");
-        
     }
     
     return bookcell;

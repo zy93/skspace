@@ -23,9 +23,4 @@
  */
 - (instancetype)initWithCircle:(MACircle *)circle;
 
-/**
- * @brief 当关联circle数据发生变化时(如半径、中心点改变)，调用此接口更新, since 4.6.0
- */
-- (void)setNeedsUpdate;
-
 @end

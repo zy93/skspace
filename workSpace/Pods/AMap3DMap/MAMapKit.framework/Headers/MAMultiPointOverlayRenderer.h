@@ -7,6 +7,7 @@
 //
 
 #import "MAMultiPointOverlay.h"
+#import "MAOverlayRenderer.h"
 
 @class MAMultiPointOverlayRenderer;
 

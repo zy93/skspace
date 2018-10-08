@@ -13,19 +13,17 @@
 #import "MAOfflineItemNationWide.h"
 #import "MAOfflineItemMunicipality.h"
 
-
-
 ///离线地图下载状态
 typedef NS_ENUM(NSInteger, MAOfflineMapDownloadStatus)
 {
-    MAOfflineMapDownloadStatusWaiting = 0,       ///< 以插入队列，等待中
-    MAOfflineMapDownloadStatusStart,         ///< 开始下载
-    MAOfflineMapDownloadStatusProgress,      ///< 下载过程中
-    MAOfflineMapDownloadStatusCompleted,     ///< 下载成功
-    MAOfflineMapDownloadStatusCancelled,     ///< 取消
-    MAOfflineMapDownloadStatusUnzip,         ///< 解压缩
-    MAOfflineMapDownloadStatusFinished,      ///< 全部顺利完成
-    MAOfflineMapDownloadStatusError          ///< 发生错误
+    MAOfflineMapDownloadStatusWaiting = 0,      //!< 以插入队列，等待中
+    MAOfflineMapDownloadStatusStart,            //!< 开始下载
+    MAOfflineMapDownloadStatusProgress,         //!< 下载过程中
+    MAOfflineMapDownloadStatusCompleted,        //!< 下载成功
+    MAOfflineMapDownloadStatusCancelled,        //!< 取消
+    MAOfflineMapDownloadStatusUnzip,            //!< 解压缩
+    MAOfflineMapDownloadStatusFinished,         //!< 全部顺利完成
+    MAOfflineMapDownloadStatusError             //!< 发生错误
 };
 
 ///离线下载错误domain
@@ -35,11 +33,8 @@ extern NSString * const MAOfflineMapErrorDomain;
 typedef NS_ENUM(NSInteger, MAOfflineMapError)
 {
     MAOfflineMapErrorUnknown = -1,              //!< 未知的错误
-    
     MAOfflineMapErrorCannotWriteToTmp = -2,     //!< 写入临时目录失败
-    
     MAOfflineMapErrorCannotOpenZipFile = -3,    //!< 打开归档文件失败
-    
     MAOfflineMapErrorCannotExpand = -4          //!< 解归档文件失败
 };
 

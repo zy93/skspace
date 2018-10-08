@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,12 +40,19 @@
                         <color key="textColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwN-l4-aUM">
+                        <rect key="frame" x="65" y="72" width="31" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="QDF-Jo-e6W" firstAttribute="leading" secondItem="gyK-HP-wM9" secondAttribute="leading" constant="10" id="1c0-zT-HhV"/>
                     <constraint firstAttribute="trailing" secondItem="gyK-HP-wM9" secondAttribute="trailing" constant="20" id="2fU-ka-1sp"/>
                     <constraint firstItem="QDF-Jo-e6W" firstAttribute="top" secondItem="gyK-HP-wM9" secondAttribute="top" constant="10" id="QMP-9x-4XU"/>
                     <constraint firstAttribute="bottom" secondItem="gyK-HP-wM9" secondAttribute="bottom" id="W6T-oW-He5"/>
+                    <constraint firstItem="bwN-l4-aUM" firstAttribute="leading" secondItem="dS6-u8-CYF" secondAttribute="leading" id="WHE-cf-Sie"/>
                     <constraint firstItem="TjT-c8-Ehq" firstAttribute="trailing" secondItem="gyK-HP-wM9" secondAttribute="trailing" id="Zlb-Ek-Mmn"/>
                     <constraint firstItem="dIl-Cs-eJ8" firstAttribute="leading" secondItem="QDF-Jo-e6W" secondAttribute="trailing" constant="10" id="bLa-R2-h8N"/>
                     <constraint firstItem="TjT-c8-Ehq" firstAttribute="top" secondItem="gyK-HP-wM9" secondAttribute="top" id="cpN-TN-U0z"/>
@@ -53,6 +60,7 @@
                     <constraint firstItem="dS6-u8-CYF" firstAttribute="leading" secondItem="dIl-Cs-eJ8" secondAttribute="leading" id="fhw-vS-YdI"/>
                     <constraint firstItem="gyK-HP-wM9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="gms-4w-o1I"/>
                     <constraint firstItem="dIl-Cs-eJ8" firstAttribute="centerY" secondItem="QDF-Jo-e6W" secondAttribute="centerY" id="szh-qd-5pC"/>
+                    <constraint firstItem="bwN-l4-aUM" firstAttribute="top" secondItem="dS6-u8-CYF" secondAttribute="bottom" constant="8" id="tB3-9A-CyL"/>
                     <constraint firstItem="dS6-u8-CYF" firstAttribute="top" secondItem="dIl-Cs-eJ8" secondAttribute="bottom" constant="8" id="vY2-Ck-ZGp"/>
                     <constraint firstItem="TjT-c8-Ehq" firstAttribute="bottom" secondItem="gyK-HP-wM9" secondAttribute="bottom" id="voS-Qp-U1e"/>
                     <constraint firstItem="TjT-c8-Ehq" firstAttribute="leading" secondItem="gyK-HP-wM9" secondAttribute="leading" id="zIx-pD-I9W"/>
@@ -60,6 +68,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="bgIV" destination="gyK-HP-wM9" id="rGX-kQ-aoA"/>
+                <outlet property="billStateLabel" destination="bwN-l4-aUM" id="t07-FZ-wZu"/>
                 <outlet property="iconIV" destination="QDF-Jo-e6W" id="jK8-tP-gf0"/>
                 <outlet property="shadeView" destination="TjT-c8-Ehq" id="klP-cL-3Y9"/>
                 <outlet property="subtitleLab" destination="dS6-u8-CYF" id="Lin-Ii-ZBJ"/>

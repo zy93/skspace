@@ -352,11 +352,11 @@
     //[self.tableView reloadData];
     NSDictionary *parameters = @{@"userId":[WOTUserSingleton shareUser].userInfo.userId};
     [self updateUserInfoWithParameters:parameters];
-    if (iOS8Later) {
-        for (PHAsset *phAsset in assets) {
-            NSLog(@"location:%@",phAsset.location);
-        }
-    }
+//    if (iOS8Later) {
+//        for (PHAsset *phAsset in assets) {
+//            NSLog(@"location:%@",phAsset.location);
+//        }
+//    }
 }
 
 

@@ -10,7 +10,7 @@
 #import "MAPolylineRenderer.h"
 #import "MAMultiPolyline.h"
 
-///此类用于绘制MAMultiPolyline对应的多段线，支持分段纹理绘制
+///此类用于绘制MAMultiPolyline对应的多彩线，支持分段纹理绘制
 @interface MAMultiTexturePolylineRenderer : MAPolylineRenderer
 
 ///关联的MAMultiPolyline model

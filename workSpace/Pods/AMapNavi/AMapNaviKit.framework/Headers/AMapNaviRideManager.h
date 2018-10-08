@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)rideManagerOnCalculateRouteSuccess:(AMapNaviRideManager *)rideManager;
 
 /**
- * @brief 骑行路径规划失败后的回调函数
+ * @brief 骑行路径规划失败后的回调函数. 从6.1.0版本起,算路失败后导航SDK只对外通知算路失败,SDK内部不再执行停止导航的相关逻辑.因此,当算路失败后,不会收到 driveManager:updateNaviMode: 回调; AMapNaviRideManager.naviMode 不会切换到 AMapNaviModeNone 状态, 而是会保持在 AMapNaviModeGPS or AMapNaviModeEmulator 状态
  * @param rideManager 骑行导航管理类
  * @param error 错误信息,error.code参照AMapNaviCalcRouteState
  */
@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief 导航播报信息回调函数
  * @param rideManager 骑行导航管理类
  * @param soundString 播报文字
- * @param soundStringType 播报类型,参考AMapNaviSoundType
+ * @param soundStringType 播报类型,参考 AMapNaviSoundType. 注意：since 6.0.0 AMapNaviSoundType 只返回 AMapNaviSoundTypeDefault
  */
 - (void)rideManager:(AMapNaviRideManager *)rideManager playNaviSoundString:(NSString *)soundString soundStringType:(AMapNaviSoundType)soundStringType;
 

@@ -121,7 +121,7 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 @property (nonatomic, getter = isRotateCameraEnabled) BOOL rotateCameraEnabled;
 
 ///是否支持天空模式，默认为YES. 开启后，进入天空模式后，annotation重用可视范围会缩减
-@property (nonatomic, getter = isSkyModelEnabled) BOOL skyModelEnable;
+@property (nonatomic, getter = isSkyModelEnabled) BOOL skyModelEnable __attribute((deprecated("已废弃 since 6.0.0")));
 
 ///是否显示楼块，默认为YES
 @property (nonatomic, getter = isShowsBuildings) BOOL showsBuildings;
@@ -129,14 +129,14 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 ///是否显示底图标注, 默认为YES
 @property (nonatomic, assign, getter = isShowsLabels) BOOL showsLabels;
 
-///是否显示交通, 默认为NO
+///是否显示交通路况图层, 默认为NO
 @property (nonatomic, getter = isShowTraffic) BOOL showTraffic;
 
 ///设置实时交通颜色,key为 MATrafficStatus
 @property (nonatomic, copy) NSDictionary <NSNumber *, UIColor *> *trafficStatus;
 
 ///设置实时交通线宽系数，默认线宽系数为0.8，范围为[0 - 1] (since 5.3.0)
-@property (nonatomic, assign) CGFloat trafficRatio;
+@property (nonatomic, assign) CGFloat trafficRatio __attribute((deprecated("已废弃 since 6.0.0, 不再支持修改实时交通线宽")));
 
 ///是否支持单击地图获取POI信息(默认为YES), 对应的回调是 -(void)mapView:(MAMapView *) didTouchPois:(NSArray *)
 @property (nonatomic, assign) BOOL touchPOIEnabled;
@@ -185,6 +185,9 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 
 ///地图渲染的runloop mode，默认为NSRunLoopCommonModes。如果是和UIScrollView一起使用且不希望地图在scrollView拖动时渲染，请设置此值为NSDefaultRunLoopMode。（since 5.1.0）
 @property (nonatomic, copy) NSRunLoopMode runLoopMode;
+
+///是否显示海外地图，默认为@NO. 注意：必须先在官网申请开通海外权限
+@property (nonatomic, getter=isShowsWorldMap) NSNumber *showsWorldMap;
 
 /**
  * @brief 设定当前地图的经纬度范围，该范围可能会被调整为适合地图窗口显示的范围
@@ -254,7 +257,7 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 
 /**
  * @brief 设置地图旋转角度(逆时针为正向)
- * @param rotationDegree 旋转角度
+ * @param rotationDegree 旋转角度, 如当前角度是0，720表示逆时针旋转2周，-720表示正时针旋转2周
  * @param animated 动画
  * @param duration 动画时间
  */
@@ -299,16 +302,16 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 - (void)setCompassImage:(UIImage *)image;
 
 /**
- * @brief 在指定区域内截图(默认会包含该区域内的annotationView)
+ * @brief 在指定区域内截图(默认会包含该区域内的annotationView),注意不要在地图回调方法内直接调用
  * @param rect 指定的区域
  * @return 截图image
  */
-- (UIImage *)takeSnapshotInRect:(CGRect)rect;
+- (UIImage *)takeSnapshotInRect:(CGRect)rect __attribute((deprecated("已废弃，请使用takeSnapshotInRect:withCompletionBlock:方法 since 6.0.0")));
 
 /**
- * @brief 在指定区域内截图(默认会包含该区域内的annotationView),并且返回截屏是否完整
+ * @brief 异步在指定区域内截图(默认会包含该区域内的annotationView), 地图载入完整时回调
  * @param rect 指定的区域
- * @param block 回调block(resultImage 是返回的图片,state是返回的状态：0代表截图时地图载入不完整，1代表地图载入完整）
+ * @param block 回调block(resultImage:返回的图片,state：0载入不完整，1完整）
  */
 - (void)takeSnapshotInRect:(CGRect)rect withCompletionBlock:(void (^)(UIImage *resultImage, NSInteger state))block;
 
@@ -381,6 +384,23 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
  */
 - (NSString *)satelliteImageApprovalNumber;
 
+/**
+ * @brief 添加CAKeyframeAnimation动画。（since 6.0.0）
+ * @param mapCenterAnimation 地图中心点动画
+ * @param zoomAnimation 放大缩小动画
+ * @param rotateAnimation 旋转动画
+ * @param cameraDegreeAnimation 仰角动画
+ */
+- (void)addAnimationWith:(CAKeyframeAnimation *)mapCenterAnimation
+           zoomAnimation:(CAKeyframeAnimation *)zoomAnimation
+         rotateAnimation:(CAKeyframeAnimation *)rotateAnimation
+   cameraDegreeAnimation:(CAKeyframeAnimation *)cameraDegreeAnimation;
+
+/**
+ * @brief 强制刷新。（since 6.0.0）
+ */
+- (void)forceRefresh;
+
 @end
 
 @interface MAMapView (Annotation)
@@ -429,7 +449,7 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 - (NSSet *)annotationsInMapRect:(MAMapRect)mapRect;
 
 /**
- * @brief 根据标注数据过去标注view
+ * @brief 根据标注数据获取标注view
  * @param annotation 标注数据
  * @return 对应的标注view
  */
@@ -443,7 +463,7 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 - (MAAnnotationView *)dequeueReusableAnnotationViewWithIdentifier:(NSString *)identifier;
 
 /**
- * @brief 选中标注数据对应的view
+ * @brief 选中标注数据对应的view。注意：如果annotation对应的annotationView因不在屏幕范围内而被移入复用池，为了完成选中操作，会将对应的annotationView添加到地图上，并将地图中心点移至annotation.coordinate的位置。
  * @param annotation 标注数据
  * @param animated 是否有动画效果
  */
@@ -710,6 +730,12 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
  */
 - (void)setCustomTextureResourcePath:(NSString *)customTextureResourcePath;
 
+/**
+ * @brief 自定义地图样式id, 官网发布后下次开启自定义样式便可生效，目前仅支持自定义标准类型. 默认不生效，调用customMapStyleEnabled=YES使生效. since 6.0.0
+ * @param customMapStyleID 自定义样式ID，从官网获取
+ */
+- (void)setCustomMapStyleID:(NSString *)customMapStyleID;
+
 @end
 
 #pragma mark - MAMapViewDelegate
@@ -883,14 +909,14 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 - (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
 
 /**
- * @brief 标注view的calloutview整体点击时，触发改回调。
+ * @brief 标注view的calloutview整体点击时，触发该回调。只有使用默认calloutview时才生效。
  * @param mapView 地图的view
  * @param view calloutView所属的annotationView
  */
 - (void)mapView:(MAMapView *)mapView didAnnotationViewCalloutTapped:(MAAnnotationView *)view;
 
 /**
- * @brief 标注view被点击时，触发改回调。（since 5.7.0）
+ * @brief 标注view被点击时，触发该回调。（since 5.7.0）
  * @param mapView 地图的view
  * @param view annotationView
  */

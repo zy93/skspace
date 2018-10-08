@@ -427,7 +427,6 @@
 		E862456F1F3D4F4900CF0D9D /* SRURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E86245551F3D4F4900CF0D9D /* SRURLUtilities.m */; };
 		E86245701F3D4F4900CF0D9D /* NSRunLoop+SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E86245571F3D4F4900CF0D9D /* NSRunLoop+SRWebSocket.m */; };
 		E86245711F3D4F4900CF0D9D /* NSURLRequest+SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E86245591F3D4F4900CF0D9D /* NSURLRequest+SRWebSocket.m */; };
-		E86245721F3D4F4900CF0D9D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E862455B1F3D4F4900CF0D9D /* Info.plist */; };
 		E86245731F3D4F4900CF0D9D /* SRSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = E862455E1F3D4F4900CF0D9D /* SRSecurityPolicy.m */; };
 		E86245741F3D4F4900CF0D9D /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E86245601F3D4F4900CF0D9D /* SRWebSocket.m */; };
 		E86245771F3D4FAB00CF0D9D /* WOTDeviceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E86245761F3D4FAB00CF0D9D /* WOTDeviceInfoModel.m */; };
@@ -1302,7 +1301,6 @@
 		E86245571F3D4F4900CF0D9D /* NSRunLoop+SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSRunLoop+SRWebSocket.m"; sourceTree = "<group>"; };
 		E86245581F3D4F4900CF0D9D /* NSURLRequest+SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+SRWebSocket.h"; sourceTree = "<group>"; };
 		E86245591F3D4F4900CF0D9D /* NSURLRequest+SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+SRWebSocket.m"; sourceTree = "<group>"; };
-		E862455B1F3D4F4900CF0D9D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E862455C1F3D4F4900CF0D9D /* SocketRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketRocket.h; sourceTree = "<group>"; };
 		E862455D1F3D4F4900CF0D9D /* SRSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRSecurityPolicy.h; sourceTree = "<group>"; };
 		E862455E1F3D4F4900CF0D9D /* SRSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRSecurityPolicy.m; sourceTree = "<group>"; };
@@ -2931,7 +2929,6 @@
 		E862455A1F3D4F4900CF0D9D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E862455B1F3D4F4900CF0D9D /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3365,7 +3362,6 @@
 				2A9E2C50202D92D80016E097 /* WOTScrollViewCell.xib in Resources */,
 				2AB8A4B31FF4F9BB008897CB /* WOTEnterpriseIntroduceMessageCell.xib in Resources */,
 				E8190DA51F0F69660000B07C /* WOTworkSpaceSearchCell.xib in Resources */,
-				E86245721F3D4F4900CF0D9D /* Info.plist in Resources */,
 				E8190DB91F0F69660000B07C /* WOTPersionalInformationCommonCell.xib in Resources */,
 				2AD2BE291F271BE400D4C3BC /* WOTLightCell.xib in Resources */,
 				2A42147F1F146A700010B003 /* share_weixin_select@3x.png in Resources */,
@@ -3452,56 +3448,32 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-WOTWorkSpace/Pods-WOTWorkSpace-resources.sh",
 				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
 				"${PODS_ROOT}/AMapNavi/AMapNaviKit.framework/AMapNavi.bundle",
+				"${PODS_ROOT}/GPUImage/framework/Resources/lookup.png",
+				"${PODS_ROOT}/GPUImage/framework/Resources/lookup_amatorka.png",
+				"${PODS_ROOT}/GPUImage/framework/Resources/lookup_miss_etikate.png",
+				"${PODS_ROOT}/GPUImage/framework/Resources/lookup_soft_elegance_1.png",
+				"${PODS_ROOT}/GPUImage/framework/Resources/lookup_soft_elegance_2.png",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@2x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_circle@3x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_original_circle.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_original_circle@2x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_original_circle@3x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_selected.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_selected@2x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_selected@3x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_unselected.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_unselected@2x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/btn_unselected@3x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/defaultphoto.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/lock.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/navBackBtn@2x.png",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLCollectionCell.xib",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLNoAuthorityViewController.xib",
 				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLPhotoActionSheet.xib",
 				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLPhotoBrowserCell.xib",
-				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLThumbnailViewController.xib",
 				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLPhotoBrowser.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMap.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMapNavi.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/lookup.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/lookup_amatorka.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/lookup_miss_etikate.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/lookup_soft_elegance_1.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/lookup_soft_elegance_2.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TZImagePickerController.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_circle@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_circle@3x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_original_circle.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_original_circle@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_original_circle@3x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_selected.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_selected@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_selected@3x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_unselected.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_unselected@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/btn_unselected@3x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/defaultphoto.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/lock.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/navBackBtn@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLCollectionCell.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLNoAuthorityViewController.nib",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLPhotoActionSheet.nib",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLPhotoBrowserCell.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLThumbnailViewController.nib",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZLPhotoBrowser.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

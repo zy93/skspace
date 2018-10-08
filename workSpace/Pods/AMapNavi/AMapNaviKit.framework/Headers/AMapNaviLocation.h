@@ -2,8 +2,8 @@
 //  AMapNaviLocation.h
 //  AMapNaviKit
 //
-//  Created by AutoNavi on 14-7-7.
-//  Copyright (c) 2014年 Amap. All rights reserved.
+//  Created by eidan on 2018/1/18.
+//  Copyright © 2018年 Amap. All rights reserved.
 //
 
 #import "AMapNaviCommonObj.h"

@@ -16,6 +16,8 @@
 @interface SKRoomListVC ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView *roomListTableView;
 @property(nonatomic,strong)NSMutableArray *roomArray;
+@property(nonatomic,strong)UIImageView *imageView;
+@property(nonatomic,strong)UILabel *titleLabel;
 @end
 
 @implementation SKRoomListVC
@@ -24,6 +26,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.roomListTableView];
+    [self.view addSubview:self.imageView];
+    [self.view addSubview:self.titleLabel];
     self.navigationItem.title = self.spaceModel.spaceName;
     self.roomArray = [[NSMutableArray alloc] init];
     [self layoutSubviews];
@@ -50,6 +54,16 @@
             make.left.equalTo(self.view);
             make.right.equalTo(self.view);
         }
+    }];
+    
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_offset(70);
+    }];
+    
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.imageView.mas_bottom);
+        make.centerX.equalTo(self.view);
     }];
 }
 
@@ -109,6 +123,29 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - 请求房间列表
+-(void)creatquestData
+{
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork queryRoomListWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
+        SKRoomModel_msg *model_msg = (SKRoomModel_msg *)bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            self.roomArray = [model_msg.msg.list mutableCopy];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.imageView.hidden = YES;
+                self.titleLabel.hidden = YES;
+               [weakSelf.roomListTableView reloadData];
+            });
+        }else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.imageView.hidden = NO;
+                self.titleLabel.hidden = NO;
+            });
+        }
+    }];
+}
+
 -(UITableView *)roomListTableView
 {
     if (_roomListTableView == nil) {
@@ -121,17 +158,25 @@
     return _roomListTableView;
 }
 
-#pragma mark - 请求房间列表
--(void)creatquestData
+-(UILabel *)titleLabel
 {
-    __weak typeof(self) weakSelf = self;
-    [WOTHTTPNetwork queryRoomListWithSpaceId:self.spaceModel.spaceId response:^(id bean, NSError *error) {
-        SKRoomModel_msg *model_msg = (SKRoomModel_msg *)bean;
-        if ([model_msg.code isEqualToString:@"200"]) {
-            self.roomArray = [model_msg.msg.list mutableCopy];
-            [weakSelf.roomListTableView reloadData];
-        }
-    }];
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.hidden = YES;
+        _titleLabel.text = @"亲，暂时没有房间";
+        _titleLabel.font = [UIFont systemFontOfSize:14];
+        _titleLabel.textColor = [UIColor colorWithHue:0.13 saturation:0.04 brightness:0.80 alpha:1.00];
+    }
+    return _titleLabel;
+}
+
+-(UIImageView *)imageView
+{
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NotInformation"]];
+        _imageView.hidden = YES;
+    }
+    return _imageView;
 }
 
 @end

@@ -293,11 +293,11 @@
    // [self numberForLine];
     [self viewWillLayoutSubviews];
     [_collectionView reloadData];
-    if (iOS8Later) {
-        for (PHAsset *phAsset in assets) {
-            NSLog(@"location:%@",phAsset.location);
-        }
-    }
+//    if (iOS8Later) {
+//        for (PHAsset *phAsset in assets) {
+//            NSLog(@"location:%@",phAsset.location);
+//        }
+//    }
 }
 
 

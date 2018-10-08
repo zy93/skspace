@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLab;
 @property (weak, nonatomic) IBOutlet UIView *shadeView;
+@property (weak, nonatomic) IBOutlet UILabel *billStateLabel;
 
 -(void)setupViews;
 

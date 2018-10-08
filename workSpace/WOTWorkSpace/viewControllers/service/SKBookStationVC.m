@@ -149,6 +149,7 @@
 -(void)createRequestCityList:(NSArray *)array
 {
     //NSMutableArray *cityList = [NSMutableArray new];
+    
     for (WOTSpaceModel *model in array) {
         //
         BOOL isHaveCity = NO;

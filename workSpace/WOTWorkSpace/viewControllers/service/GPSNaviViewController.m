@@ -29,7 +29,7 @@
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-   // [self initProperties];
+    //[self initProperties];
     
     [self initDriveView];
     
@@ -69,11 +69,11 @@
     
     if (UIInterfaceOrientationIsPortrait(interfaceOrientation))
     {
-        [self.driveView setIsLandscape:NO];
+      //  [self.driveView setIsLandscape:NO];
     }
     else if (UIInterfaceOrientationIsLandscape(interfaceOrientation))
     {
-        [self.driveView setIsLandscape:YES];
+      //  [self.driveView setIsLandscape:YES];
     }
 }
 

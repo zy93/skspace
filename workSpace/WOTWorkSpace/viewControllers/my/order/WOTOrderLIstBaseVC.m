@@ -153,6 +153,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    
     return nil;
 }
 
@@ -163,6 +164,14 @@
     cell.titleLab.text = model.commodityKind;
     cell.subtitleLab.text = [NSString stringWithFormat:@"%@·%@",model.spaceName, model.commodityName];
     [cell.bgIV setImageWithURL:[model.imageSite ToResourcesUrl]];
+    
+    if ([model.commodityKind isEqualToString:@"礼包"] || [model.commodityKind isEqualToString:@"长租工位"]) {
+        cell.billStateLabel.hidden = NO;
+        cell.billStateLabel.text = [NSString stringWithFormat:@"开票状态：%@",model.invoiceState];
+    }else
+    {
+        cell.billStateLabel.hidden = YES;
+    }
     
     if ([model.commodityKind isEqualToString:@"会议室"]) {
         [cell.iconIV setImage:[UIImage imageNamed:@"order_meeting"]];

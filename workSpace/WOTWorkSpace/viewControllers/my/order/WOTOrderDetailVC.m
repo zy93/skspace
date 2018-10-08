@@ -82,13 +82,19 @@
     [self.tableList addObject:@[@"订单编号"]];
     [self.tableList addObject:@[@"预订人", @"联系方式"]];
     [self.tableList addObject:@[@"下单时间"]];
-    self.tableValueList = [@[@[self.model.orderNum],@[self.model.userName, self.model.userTel],@[self.model.orderTime]]  mutableCopy];
+    [self.tableList addObject:@[@"订单状态"]];
+    NSString *orderStateStr ;
+    if ([self.model.orderState isEqualToString:@"SUCCESS"]) {
+        orderStateStr = @"支付成功";
+    } else {
+        orderStateStr = @"未支付";
+    }
+    self.tableValueList = [@[@[self.model.orderNum],@[self.model.userName, self.model.userTel],@[self.model.orderTime],@[orderStateStr]]  mutableCopy];
     
     
     if ([self.model.commodityKind isEqualToString:@"会议室"]) {
         [self.tableList insertObject:@[@"预定会议室", @"预定时间"] atIndex:1];
         [self.tableValueList insertObject:@[[NSString stringWithFormat:@"%@·%@",self.model.spaceName,self.model.commodityName], [NSString stringWithFormat:@"%@\n%@",[self.model.starTime substringToIndex:16],[self.model.endTime substringToIndex:16]]] atIndex:1];
-
     }
     else if ([self.model.commodityKind isEqualToString:@"场地"]) {
         [self.tableList insertObject:@[@"预定场地", @"预定时间"] atIndex:1];

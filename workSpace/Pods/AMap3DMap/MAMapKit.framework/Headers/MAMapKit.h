@@ -26,6 +26,8 @@
 #import <MAMapKit/MAShape.h>
 #import <MAMapKit/MACircle.h>
 #import <MAMapKit/MACircleRenderer.h>
+#import <MAMapKit/MAArc.h>
+#import <MAMapKit/MAArcRenderer.h>
 #import <MAMapKit/MAPolygon.h>
 #import <MAMapKit/MAPolygonRenderer.h>
 #import <MAMapKit/MAPolyline.h>
@@ -39,6 +41,8 @@
 #import <MAMapKit/MAGroundOverlayRenderer.h>
 #import <MAMapKit/MATileOverlay.h>
 #import <MAMapKit/MATileOverlayRenderer.h>
+#import <MAMapKit/MACustomBuildingOverlay.h>
+#import <MAMapKit/MACustomBuildingOverlayRenderer.h>
 
 #import <MAMapKit/MAMultiPointOverlay.h>
 #import <MAMapKit/MAMultiPointOverlayRenderer.h>

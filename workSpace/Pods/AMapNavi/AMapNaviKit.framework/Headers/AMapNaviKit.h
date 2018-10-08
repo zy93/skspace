@@ -26,8 +26,8 @@
 #import <AMapNaviKit/AMapNaviWalkView.h>
 #import <AMapNaviKit/AMapNaviRideView.h>
 #import <AMapNaviKit/AMapNaviHUDView.h>
-#import <AMapNaviKit/AMapNaviRoutePolylineOption.h>
 #import <AMapNaviKit/AMapNaviTrafficBarView.h>
 
 #import <AMapNaviKit/AMapNaviCompositeManager.h>
 #import <AMapNaviKit/AMapNaviCompositeUserConfig.h>
+#import <AMapNaviKit/AMapNaviCompositeAnnotation.h>

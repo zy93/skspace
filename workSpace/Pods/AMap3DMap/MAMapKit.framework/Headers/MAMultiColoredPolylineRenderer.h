@@ -10,16 +10,16 @@
 #import "MAPolylineRenderer.h"
 #import "MAMultiPolyline.h"
 
-///此类用于绘制MAMultiPolyline对应的多段线，支持分段颜色绘制
+///此类用于绘制 MAMultiPolyline 对应的多彩线，支持分段颜色绘制
 @interface MAMultiColoredPolylineRenderer : MAPolylineRenderer
 
 ///关联的MAMultiPolyline model
 @property (nonatomic, readonly) MAMultiPolyline *multiPolyline;
 
-///分段绘制的颜色,需要分段颜色绘制时，必须设置（内容必须为UIColor）
-@property (nonatomic, strong) NSArray *strokeColors;
+///分段绘制的颜色,需要分段颜色绘制时，必须设置（内容必须为UIColor）。根据multiPolyline.drawStyleIndexes属性指示的索引进行渲染。
+@property (nonatomic, strong) NSArray<UIColor *> *strokeColors;
 
-///颜色是否渐变
+///颜色是否渐变, 默认为NO。如果设置为YES，则为多彩渐变线。
 @property (nonatomic, getter=isGradient) BOOL gradient;
 
 /**

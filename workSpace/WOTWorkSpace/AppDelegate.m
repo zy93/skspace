@@ -27,6 +27,7 @@
 
 @implementation AppDelegate
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(skipMainInterface) name:@"SkipNotification" object:nil];

@@ -37,6 +37,12 @@
 ///Link是否有红绿灯
 @property (nonatomic, assign) BOOL isHadTrafficLights;
 
+///Link的路况信息 since 6.3.0
+@property (nonatomic, assign) AMapNaviRouteStatus trafficStatus;
+
+///Link的类型 since 6.3.0
+@property (nonatomic, assign) AMapNaviLinkType linkType;
+
 @end
 
 #pragma mark - AMapNaviSegment
@@ -143,5 +149,14 @@
 
 ///路径的所有红绿灯坐标 since 5.3.0
 @property (nonatomic, strong) NSArray<AMapNaviPoint *> *routeTrafficLights;
+
+///路径上的禁行标示信息 since 6.0.0
+@property (nonatomic, strong) NSArray<AMapNaviRouteForbiddenInfo *> *forbiddenInfo;
+
+///道路设施信息 since 6.0.0
+@property (nonatomic, strong) NSArray<AMapNaviRoadFacilityInfo *> *roadFacilityInfo;
+
+///路径的扎点 since 6.3.0
+@property (nonatomic, strong) NSArray<AMapNaviRouteIconPoint *> *routeIconPoints;
 
 @end

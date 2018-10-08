@@ -11,6 +11,7 @@
 @class AMapNaviRoute;
 @class AMapNaviLocation;
 @class AMapNaviCompositeUserConfig;
+@class AMapNaviCompositeCustomAnnotation;
 
 @protocol AMapNaviCompositeManagerDelegate;
 
@@ -33,15 +34,28 @@
 @property (nonatomic, readonly, nullable) NSDictionary<NSNumber *, AMapNaviRoute *> *naviRoutes;
 
 /**
- * @brief 通过present的方式显示导航组件页面
+ * @brief 通过present的方式显示导航组件页面 注意：此函数涉及到UI操作，请在主线程中调用，否则无效.
  * @param options 导航组件的配置类,参考 AMapNaviCompositeUserConfig .
  */
 - (void)presentRoutePlanViewControllerWithOptions:(AMapNaviCompositeUserConfig *_Nullable)options;
 
 /**
- * @brief 退出导航组件页面 since 5.5.0
+ * @brief 退出导航组件页面 注意：此函数涉及到UI操作，请在主线程中调用，否则无效. since 5.5.0
+ * @param animated 是否执行动画
  */
 - (void)dismissWithAnimated:(BOOL)animated;
+
+/**
+ * @brief 在驾车导航界面添加自定义标注. 注意：每次退出导航之后,标注都会被清空. since 5.5.0
+ * @param annotation 会被显示在驾车导航界面地图上, 具体参考 AMapNaviCompositeCustomAnnotation .
+ */
+- (void)addAnnotation:(AMapNaviCompositeCustomAnnotation *_Nonnull)annotation;
+
+/**
+ * @brief 移除驾车导航界面的自定义标注. since 5.5.0
+ * @param annotation 具体参考 AMapNaviCompositeCustomAnnotation .
+ */
+- (void)removeAnnotation:(AMapNaviCompositeCustomAnnotation *_Nonnull)annotation;
 
 @end
 
@@ -58,10 +72,17 @@
 - (void)compositeManager:(AMapNaviCompositeManager *_Nonnull)compositeManager error:(NSError *_Nonnull)error;
 
 /**
- * @brief 算路成功后的回调函数,路径规划页面的算路、导航页面的重算等成功后均会调用此方法
+ * @brief 算路成功后的回调函数, 路径规划页面的算路、导航页面的重算等成功后均会调用此方法
  * @param compositeManager 导航组件类
  */
 - (void)compositeManagerOnCalculateRouteSuccess:(AMapNaviCompositeManager *_Nonnull)compositeManager;
+
+/**
+ * @brief 算路成功后的回调函数. since 5.5.0
+ * @param compositeManager 导航组件类
+ * @param type 路径规划类型，参考 AMapNaviRoutePlanType .
+ */
+- (void)compositeManager:(AMapNaviCompositeManager *_Nonnull)compositeManager onCalculateRouteSuccessWithType:(AMapNaviRoutePlanType)type;
 
 /**
  * @brief 算路失败后的回调函数,路径规划页面的算路、导航页面的重算等失败后均会调用此方法
@@ -88,7 +109,7 @@
  * @brief 导航播报信息回调函数,此回调函数需要和compositeManagerIsNaviSoundPlaying:配合使用. 如果需要自定义"导航语音播报"功能，必须实现此代理
  * @param compositeManager 导航组件类
  * @param soundString 播报文字
- * @param soundStringType 播报类型,参考 AMapNaviSoundType .
+ * @param soundStringType 播报类型,参考 AMapNaviSoundType. 注意：since 6.0.0 AMapNaviSoundType 只返回 AMapNaviSoundTypeDefault
  */
 - (void)compositeManager:(AMapNaviCompositeManager *_Nonnull)compositeManager playNaviSoundString:(NSString *_Nullable)soundString soundStringType:(AMapNaviSoundType)soundStringType;
 
@@ -99,7 +120,7 @@
 - (void)compositeManagerStopPlayNaviSound:(AMapNaviCompositeManager *_Nonnull)compositeManager;
 
 /**
- * @brief 当前位置更新回调
+ * @brief 当前位置更新回调(无论是否在导航中，只要当前位置有更新就会回调)
  * @param compositeManager 导航组件类
  * @param naviLocation 当前位置信息,参考 AMapNaviLocation 类
  */
@@ -113,18 +134,25 @@
 - (void)compositeManager:(AMapNaviCompositeManager *_Nonnull)compositeManager didArrivedDestination:(AMapNaviMode)naviMode;
 
 /**
-* @brief 算路成功后的回调函数. 注意：目前只有偏航重算和拥堵重算会调用此方法. since 5.5.0
-* @param compositeManager 导航组件类
-* @param type 路径规划类型，参考 AMapNaviRoutePlanType .
-*/
-- (void)compositeManager:(AMapNaviCompositeManager *_Nonnull)compositeManager onCalculateRouteSuccessWithType:(AMapNaviRoutePlanType)type;
-
-/**
  * @brief 导航组件页面回退或者退出导航组件时会调用此函数 since 5.5.0
  * @param compositeManager 导航组件类
  * @param backwardActionType 导航组件页面回退的动作类型，参考 AMapNaviCompositeVCBackwardActionType .
  */
 - (void)compositeManager:(AMapNaviCompositeManager *_Nonnull)compositeManager didBackwardAction:(AMapNaviCompositeVCBackwardActionType)backwardActionType;
+
+/**
+ * @brief 每次进入导航组件时和驾车路径规划策略改变均会调用此方法 since 6.1.0
+ * @param compositeManager 导航组件类
+ * @param driveStrategy 驾车路径规划策略，参考 AMapNaviDrivingStrategy .
+ */
+- (void)compositeManager:(AMapNaviCompositeManager *_Nonnull)compositeManager onDriveStrategyChanged:(AMapNaviDrivingStrategy)driveStrategy;
+
+/**
+ * @brief 导航到达某个途经点的回调函数 since 6.1.0
+ * @param compositeManager 导航组件类
+ * @param wayPointIndex 到达途径点的编号，标号从0开始. 注意：如果导航过程进行了路径重算(包含偏航、手动刷新等)，wayPointIndex会重新从0开始计数
+ */
+- (void)compositeManager:(AMapNaviCompositeManager *_Nonnull)compositeManager onArrivedWayPoint:(int)wayPointIndex;
 
 @end
 

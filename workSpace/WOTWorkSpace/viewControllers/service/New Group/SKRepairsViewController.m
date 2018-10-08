@@ -264,11 +264,11 @@
     _selectedPhotos = [NSMutableArray arrayWithArray:photos];
     [self viewDidLayoutSubviews];
     [_collectionView reloadData];
-    if (iOS8Later) {
-        for (PHAsset *phAsset in assets) {
-            NSLog(@"location:%@",phAsset.location);
-        }
-    }
+//    if (iOS8Later) {
+//        for (PHAsset *phAsset in assets) {
+//            NSLog(@"location:%@",phAsset.location);
+//        }
+//    }
 }
 
 #pragma mark - 图片删除方法

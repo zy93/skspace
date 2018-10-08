@@ -25,6 +25,9 @@
 ///坐标点的个数
 @property (nonatomic, readonly) NSUInteger pointCount;
 
+///是否跨越180度经度线，默认NO since 6.4.0
+@property (nonatomic, assign, readonly) BOOL cross180Longitude;
+
 /**
  * @brief 将内部的坐标点数据转化为经纬度坐标并拷贝到coords内存中
  * @param coords 调用者提供的内存空间, 该空间长度必须大于等于要拷贝的坐标点的个数（range.length）

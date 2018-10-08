@@ -52,5 +52,54 @@
  */
 - (void)setNeedShowConfirmViewWhenStopGPSNavi:(BOOL)need;
 
+/**
+ * @brief 设置车辆信息. since 6.0.0
+ * @param vehicleInfo 车辆信息，参考 AMapNaviVehicleInfo.
+ */
+- (void)setVehicleInfo:(nonnull AMapNaviVehicleInfo *)vehicleInfo;
+
+/**
+ * @brief 设置驾车导航界面自定义View,该view将显示在界面的底部区域,容器View的宽度为屏幕宽度减去126,高度为46. since 6.1.0
+ * @param customView 将被显示在底部区域的自定义view
+ */
+- (void)addCustomViewToNaviDriveView:(UIView *_Nonnull)customView;
+
+/**
+ * @brief 设置驾车导航界面自定义View,该view将显示在界面的底部区域之下,容器View的宽度为屏幕宽度,高度最高为200. 注意: 设置了自定义view,导航界面将自动设置为不支持横屏 since 6.1.0
+ * @param customView 将被显示在底部区域的自定义view
+ * @return 是否设置成功(高度超过200将会返回NO)
+ */
+- (BOOL)addCustomBottomViewToNaviDriveView:(UIView *_Nonnull)customBottomView;
+
+/**
+ * @brief 设置驾车路径规划策略. 注意：如设置，将清空用户之前选择的值。如不设置，则取用户之前选择的值，如用户之前无选择过，则取 AMapNaviDrivingStrategyMultipleDefault . since 6.1.0
+ * @param driveStrategy 参考 AMapNaviDrivingStrategy .
+ */
+- (void)setDriveStrategy:(AMapNaviDrivingStrategy)driveStrategy;
+
+/**
+ * @brief 设置驾车导航时是否显示路口放大图. since 6.1.0
+ * @param need 是否显示路口放大图，默认为YES.
+ */
+- (void)setShowCrossImage:(BOOL)need;
+
+/**
+ * @brief 设置路径规划偏好策略页面是否显示. since 6.1.0
+ * @param need 是否显示，默认为YES.
+ */
+- (void)setShowDrivingStrategyPreferenceView:(BOOL)need;
+
+/**
+ * @brief 设置驾车导航界面到达目的地后是否移除路线和牵引线. since 5.5.0
+ * @param need 是否移除，默认为NO.
+ */
+- (void)setRemovePolylineAndVectorlineWhenArrivedDestination:(BOOL)need;
+
+/**
+ * @brief 设置多路线导航模式(GPS导航中拥有若干条备选路线供用户选择，默认模式), 或单路线导航模式. 注意: 多路线导航模式还需同时满足以下4个条件才能够生效：a.路径规划时 AMapNaviDrivingStrategy 需选用多路径策略; b.起终点的直线距离需<=80KM; c.不能有途径点; d.车辆不能是货车类型. since 6.3.0
+ * @param multipleRouteNaviMode YES:多路线导航模式, NO:单路线导航模式. 默认为YES.
+ * @return 是否设置成功，如外界已经开始导航后调用就会返回NO
+ */
+- (BOOL)setMultipleRouteNaviMode:(BOOL)multipleRouteNaviMode;
 
 @end

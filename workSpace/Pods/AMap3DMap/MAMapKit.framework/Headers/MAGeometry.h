@@ -265,6 +265,13 @@ extern "C" {
      */
     extern void MAGetTileProjectionFromBounds(MACoordinateBounds bounds, int levelOfDetails, AMapTileProjectionBlock tileProjection);
     
+    /**
+     * @brief 计算多边形面积，点与点之间按顺序尾部相连, 第一个点与最后一个点相连
+     * @param coordinates 指定的经纬度坐标点数组，C数组，调用者负责内存管理
+     * @param count 坐标点的个数
+     * @return 多边形的面积
+     */
+    extern double MAAreaForPolygon(CLLocationCoordinate2D *coordinates, int count);
     
     static inline MAMapPoint MAMapPointMake(double x, double y)
     {
