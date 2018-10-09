@@ -1,2 +1,2 @@
-/Users/wangxiaodong/Documents/H区--Code/尚科/客户端/SKWork/skspace/workSpace/Pods/AMapNavi/AMapNaviKit.framework/AMapNaviKit filter=lfs diff=lfs merge=lfs -text
-/Users/wangxiaodong/Documents/H区--Code/尚科/客户端/SKWork/skspace/workSpace/Pods/AMap3DMap/MAMapKit.framework/MAMapKit filter=lfs diff=lfs merge=lfs -text
+workSpace/Pods/AMapNavi/AMapNaviKit.framework/AMapNaviKit filter=lfs diff=lfs merge=lfs -text
+workSpace/Pods/AMap3DMap/MAMapKit.framework/MAMapKit filter=lfs diff=lfs merge=lfs -text
