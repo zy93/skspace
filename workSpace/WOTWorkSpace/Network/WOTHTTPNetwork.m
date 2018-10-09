@@ -405,7 +405,6 @@
 +(void)getAllSpaceSortWithCity:(NSString *)city block:(response)response{
     
     NSString * urlstring = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Space/findSortStationNum"];
-    //在原来的基础上添加集团id
     NSMutableDictionary * parameters = [@{@"pageNo":@1,
                                           @"pageSize":@1000,
                                           @"spaceState":@0
