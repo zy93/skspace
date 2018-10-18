@@ -15,6 +15,7 @@ pod 'TZImagePickerController'
 pod 'AMap3DMap'
 pod 'AMapNavi'
 pod 'MBProgressHUD'
+pod 'Masonry'
 target 'WOTWorkSpace' do
 
 

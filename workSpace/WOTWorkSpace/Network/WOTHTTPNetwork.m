@@ -1341,6 +1341,9 @@
     if (!strIsEmpty(type)) {
         [param setValue:type forKey:@"commodityKind"];
     }
+    if ([type isEqualToString:@"长租工位"] || [type isEqualToString:@"礼包"]) {
+        [param setValue:@"SUCCESS" forKey:@"orderState"];
+    }
     [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
         WOTWorkStationHistoryModel_msg *model = [[WOTWorkStationHistoryModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  model;

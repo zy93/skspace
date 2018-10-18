@@ -266,7 +266,6 @@
     NSArray *arr = @[@"全部订单", @"会议室", @"工位", @"场地", @"礼包"];
     if ([WOTSingtleton shared].isuserLogin) {
         WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
-    
         station_ordervc.page = [arr indexOfObject:type];
         [self.navigationController pushViewController:station_ordervc animated:YES];
     }

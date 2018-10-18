@@ -44,7 +44,7 @@
 @property (nonatomic, strong) NSString *invoiceTitle;
 @property (nonatomic, strong) NSString *invoiceTaxNum;
 @property (nonatomic, strong) NSString *invoiceRemark;
-@property (nonatomic,copy) NSString *orderCancel;
+@property (nonatomic, copy) NSString *orderCancel;
 
 @end
 

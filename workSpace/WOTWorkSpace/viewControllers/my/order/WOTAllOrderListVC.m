@@ -8,9 +8,10 @@
 
 #import "WOTAllOrderListVC.h"
 #import "WOTOrderLIstBaseVC.h"
-
-@interface WOTAllOrderListVC ()
-
+#import "XXPageTabView.h"
+#import "XXPageTabItemLable.h"
+@interface WOTAllOrderListVC ()<XXPageTabViewDelegate>
+@property (nonatomic,strong)XXPageTabView *pageTabView;
 @end
 
 @implementation WOTAllOrderListVC
@@ -18,40 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configNavi];
-    // Do any additional setup after loading the view.
-    //self.pageTabView.maxNumberOfPageItems = 6;
-
-    self.pageTabView.titleStyle = XXPageTabTitleStyleDefault;
-    self.pageTabView.indicatorStyle = XXPageTabIndicatorStyleDefault;
-    self.pageTabView.selectedTabIndex = self.page;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
-    self.navigationController.navigationBar.translucent = NO;
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.translucent = YES;
-}
-
--(NSArray *)createTitles{
-    return [[NSArray alloc]initWithObjects:@"全部",@"会议室", @"工位",@"长租工位",@"场地", @"礼包", nil];
-}
-
--(NSArray<__kindof UIViewController *> *)createViewControllers{
     WOTOrderLIstBaseVC *vc1 = [[WOTOrderLIstBaseVC alloc]init];
     vc1.orderlisttype = WOTPageMenuVCTypeAll;
     [self addChildViewController:vc1];
@@ -76,10 +45,34 @@
     vc6.orderlisttype = WOTPageMenuVCTypeGiftBag;
     [self addChildViewController:vc6];
     
-    return self.childViewControllers;
+    self.pageTabView = [[XXPageTabView alloc] initWithChildControllers:self.childViewControllers childTitles:@[@"全部",@"会议室",@"工位",@"长租工位",@"场地",@"礼包"]];
+    self.pageTabView.delegate = self;
+    self.pageTabView.titleStyle = XXPageTabTitleStyleDefault;
+    self.pageTabView.indicatorStyle = XXPageTabIndicatorStyleDefault;
+    self.pageTabView.indicatorWidth = 20;
+    self.pageTabView.selectedTabIndex = self.page;
+    [self.view addSubview:self.pageTabView];
+    [self.pageTabView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (@available(iOS 11.0, *)) {
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        } else {
+            make.top.equalTo(self.view.mas_top);
+        }
+        make.left.right.bottom.equalTo(self.view);
+    }];
+   
 }
 
+- (void)pageTabViewDidEndChange {
+    
+}
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
 
 -(void)configNavi{
     [self configNaviBackItem];
@@ -87,14 +80,5 @@
 }
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

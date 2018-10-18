@@ -1025,6 +1025,7 @@
         if (cell == nil) {
             cell = [[SKRoomDescribeTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:roomdescribeCell];
         }
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
       //  cell.describePictureView sd_setImageWithURL:<#(nullable NSURL *)#> placeholderImage:<#(nullable UIImage *)#>
         [cell.describePictureView sd_setImageWithURL:[NSURL URLWithString:self.roomModel.particularsPicture] placeholderImage:[UIImage imageNamed:@"bookStation"]];
@@ -1509,7 +1510,7 @@ NSDictionary *parameters = @{    @"userId":[WOTUserSingleton shareUser].userInfo
     }];
 }
 
-//查询会议室预定情况
+#pragma mark -查询会议室预定情况
 -(void)requestMeetingReservationsInfo
 {
     //    @"2017/07/13 00:00:00"

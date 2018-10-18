@@ -34,8 +34,6 @@
 @property (nonatomic, strong) NSString * spared2;
 @property (nonatomic, strong) NSString * spared3;
 
-
-
 @end
 
 @interface WOTMeetingListModel_list:JSONModel

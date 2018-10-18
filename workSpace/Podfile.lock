@@ -30,6 +30,7 @@ PODS:
   - JPush (3.1.0):
     - JCore (~> 1.2.0)
   - JSONModel (1.2.0)
+  - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
   - MJRefresh (3.1.15.7)
   - SDCycleScrollView (1.75):
@@ -52,6 +53,7 @@ DEPENDENCIES:
   - IQKeyboardManager
   - JPush
   - JSONModel (~> 1.2.0)
+  - Masonry
   - MBProgressHUD
   - MJRefresh
   - SDCycleScrollView (~> 1.64)
@@ -72,6 +74,7 @@ SPEC REPOS:
     - JCore
     - JPush
     - JSONModel
+    - Masonry
     - MBProgressHUD
     - MJRefresh
     - SDCycleScrollView
@@ -92,6 +95,7 @@ SPEC CHECKSUMS:
   JCore: f14c0549968a63c22e246a4875aa9d428446f373
   JPush: 5921e25ad13e0386351079217b009f2039084eac
   JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
@@ -100,6 +104,6 @@ SPEC CHECKSUMS:
   "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
   ZLPhotoBrowser: b666fe8f68edc63dc5c4edccca071885b87553f5
 
-PODFILE CHECKSUM: 918be4d9da519136ef89f700093792d6f2cd8897
+PODFILE CHECKSUM: f29882d6a2d8e280d445bc07d473a233609a6476
 
 COCOAPODS: 1.5.3

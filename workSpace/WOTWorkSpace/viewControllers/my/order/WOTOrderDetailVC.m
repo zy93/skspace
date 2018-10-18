@@ -111,13 +111,13 @@
         //[self.tableList insertObject:@"开票状态" atIndex:7];
         [self.tableList addObject:@[@"开票状态"]];
         [self.tableValueList insertObject:@[self.model.commodityName,self.model.commodityNumList,[NSString stringWithFormat:@"%@",self.model.money]] atIndex:1];
-        [self.tableValueList addObject:@[@""]];
+        [self.tableValueList addObject:@[self.model.invoiceState]];
     }
     else  {
         [self.tableList insertObject:@[@"礼包名称"] atIndex:1];
         [self.tableList addObject:@[@"开票状态"]];
         [self.tableValueList insertObject:@[self.model.commodityName] atIndex:1];
-        [self.tableValueList addObject:@[@""]];
+        [self.tableValueList addObject:@[self.model.invoiceState]];
     }
     [self.tableView reloadData];
 }
@@ -167,12 +167,24 @@
     cell.titleLab.text = arr[indexPath.row];
     cell.subtitleLab.text = valueArr[indexPath.row];
     
-    if ([self.model.commodityKind isEqualToString:@"长租工位"] && (indexPath.section == 4) && [self.model.orderState isEqualToString:@"SUCCESS"]) {
+    if ([self.model.commodityKind isEqualToString:@"长租工位"] && (indexPath.section == 5) && [self.model.orderState isEqualToString:@"SUCCESS"]) {
         cell.printBillButton.hidden = NO;
+        if ([self.model.invoiceState isEqualToString:@"未开"] || self.model.invoiceState == nil) {
+            [cell.printBillButton setTitle:@"申请发票" forState:UIControlStateNormal];
+        }else
+        {
+            [cell.printBillButton setTitle:@"查看发票" forState:UIControlStateNormal];
+        }
     }
     
-    if ([self.model.commodityKind isEqualToString:@"礼包"] && (indexPath.section == 4)&& [self.model.orderState isEqualToString:@"SUCCESS"]) {
+    if ([self.model.commodityKind isEqualToString:@"礼包"] && (indexPath.section == 5)&& [self.model.orderState isEqualToString:@"SUCCESS"]) {
         cell.printBillButton.hidden = NO;
+        if ([self.model.invoiceState isEqualToString:@"未开"] || self.model.invoiceState == nil) {
+            [cell.printBillButton setTitle:@"申请发票" forState:UIControlStateNormal];
+        }else
+        {
+            [cell.printBillButton setTitle:@"查看发票" forState:UIControlStateNormal];
+        }
     }
     
     return cell;

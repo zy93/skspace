@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOTPageMenuParentVC.h"
-@interface WOTSocialcontact : WOTPageMenuParentVC
+
+@interface WOTSocialcontact : UIViewController
 
 @end

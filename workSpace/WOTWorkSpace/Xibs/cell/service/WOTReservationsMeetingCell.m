@@ -21,8 +21,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 
@@ -31,10 +29,24 @@
    // NSLog(@"测试：%@",meetingModel);
     _meetingModel = meetingModel;
     [self.meetingNameLab setText:_meetingModel.conferenceName];
-    [self.meetingInfoLab setText:_meetingModel.conferenceDescribe];
+//    [self.meetingInfoLab setText:_meetingModel.conferenceDescribe];
     NSArray  *array = [_meetingModel.conferencePicture componentsSeparatedByString:@","];
     NSString *imageUrl = [array firstObject];
     [self.meetingImg sd_setImageWithURL:[imageUrl ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"bookStation"]];
     [self.meetingPriceLab setText:[NSString stringWithFormat:@"%.2f元/小时",[_meetingModel.conferencePrice floatValue]]];
+    [self requestSpaceName:meetingModel];
+}
+
+
+-(void)requestSpaceName:(WOTMeetingListModel *)meetingModel
+{
+    [WOTHTTPNetwork getSpaceFromSpaceID:meetingModel.spaceId bolock:^(id bean, NSError *error) {
+        if (bean) {
+            WOTSpaceModel *model = (WOTSpaceModel *)bean;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.meetingInfoLab setText:model.spaceName];
+            });
+        }
+    }];
 }
 @end

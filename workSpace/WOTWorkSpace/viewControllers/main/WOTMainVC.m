@@ -17,7 +17,6 @@
 #import "WOTActivitiesLIstVC.h"
 #import "WOTInformationListVC.h"
 #import "WOTBookStationVC.h"
-//#import "SKBookStationVC.h"
 #import "WOTTEnterpriseListCell.h"
 #import "WOTEnterpriseModel.h"
 #import "WOTSliderModel.h"
@@ -628,8 +627,9 @@ int a = 0;
             vc.infoStr = @"";
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
-            
+
             return;
+//            detailvc.url = [NSString stringWithFormat:@"%@?byInvitationCode=%@",self.bannerData[index].webpageUrl,[WOTUserSingleton shareUser].userInfo.meInvitationCode];
         }
         detailvc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:detailvc animated:YES];

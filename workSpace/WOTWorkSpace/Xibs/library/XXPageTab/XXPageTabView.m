@@ -132,7 +132,6 @@
         self.bodyView.contentOffset = CGPointMake(self.frame.size.width*_selectedTabIndex, 0);
         self.bodyView.contentSize = CGSizeMake(WIDTH(self)*_numberOfTabItems, 0);
         [self reviseTabContentOffsetBySelectedIndex:NO];
-        
         for(NSInteger i = 0; i < _numberOfTabItems; i++) {
             UIViewController *childController = _childControllers[i];
             childController.view.frame = CGRectMake(WIDTH(self)*i, 0, WIDTH(self), HEIGHT(self)-_tabSize.height);

@@ -15,9 +15,11 @@
 #import "SKFocusCirclesViewController.h"
 #import "SKCommentViewController.h"
 #import "SKFocusListViewController.h"
+#import "XXPageTabView.h"
+#import "XXPageTabItemLable.h"
 
 @interface WOTSocialcontact ()<XXPageTabViewDelegate,UINavigationControllerDelegate>
-
+@property (nonatomic,strong)XXPageTabView *pageTabView;
 @end
 
 @implementation WOTSocialcontact
@@ -25,28 +27,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UICOLOR_MAIN_BACKGROUND;
-    
     [self configNavi];
-    //解决布局空白问题
-    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-    if (is7Version) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-    }
+    [self setpageMenu];
     
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
 -(void)setpageMenu{
     NSArray<__kindof UIViewController *> *controllers = [self createViewControllers];
     self.pageTabView = [[XXPageTabView alloc] initWithChildControllers:controllers childTitles:[self createTitles]];
-    //self.pageTabView.bottomOffLine = YES;
     self.pageTabView.selectedColor = [UIColor colorWithHexString:@"ff7d3d"];
-    //[self.pageTabView addIndicatorViewWithStyle];
     [self.pageTabView layoutSubviews];
     self.pageTabView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height-60);
     NSLog(@"ok:%f",self.view.frame.size.height-60);
@@ -56,12 +46,23 @@
     self.pageTabView.indicatorWidth = 20;
     self.pageTabView.selectedTabIndex = 0;
     [self.view addSubview:self.pageTabView];
+    [self.pageTabView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (@available(iOS 11.0, *)) {
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        } else {
+            make.top.equalTo(self.view.mas_top);
+        }
+        make.left.right.bottom.equalTo(self.view);
+    }];
 }
 
-
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
+
 -(void)configNavi{
     self.navigationItem.title = @"社交";
     self.navigationItem.hidesBackButton = YES;

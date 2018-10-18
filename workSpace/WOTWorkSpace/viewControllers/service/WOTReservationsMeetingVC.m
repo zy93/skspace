@@ -110,13 +110,6 @@
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = barButton;
     
-//    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:self.spaceName style:UIBarButtonItemStylePlain target:self action:@selector(selectSpace:)];
-//    [self.navigationItem setRightBarButtonItem:doneItem];
-    //解决布局空白问题
-//    BOOL is7Version=[[[UIDevice currentDevice]systemVersion] floatValue] >= 7.0 ? YES : NO;
-//    if (is7Version) {
-//        self.edgesForExtendedLayout=UIRectEdgeNone;
-//    }
     
     self.navigationController.navigationBar.translucent = NO; //有个万恶的黑色
 }
@@ -189,13 +182,11 @@
                     self.notInformationImageView.hidden = NO;
                     self.notInformationLabel.hidden = NO;
                     self.notInformationLabel.text = @"亲，暂时没有场地哦！";
-                    //NSLog(@"测试：没有数据");
                 }
                 [self.table reloadData];
             });
         }];
     }
-   // [self.table reloadData];
 }
 
 
@@ -241,12 +232,11 @@
     if (cell==nil) {
         cell = [[WOTReservationsMeetingCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"WOTReservationsMeetingCell"];
     }
-   
     id model = tableList[indexPath.row];
-    
     if ([WOTSingtleton shared].orderType == ORDER_TYPE_MEETING) {
         cell.meetingPriceLab.hidden = YES;
     }
+    
     [cell setMeetingModel:model];
     return cell;
 }

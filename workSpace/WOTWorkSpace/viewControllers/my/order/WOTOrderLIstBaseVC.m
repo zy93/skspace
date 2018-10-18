@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSArray *tableList;
 @property (nonatomic,strong)UIImageView *notInfoImageView;
 @property (nonatomic,strong)UILabel *notInfoLabel;
+@property (nonatomic,strong)UITableView *tableView;
 
 @end
 
@@ -24,6 +25,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView  = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellEditingStyleNone;
+    [self.view addSubview:self.tableView];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTOrderCell" bundle:nil] forCellReuseIdentifier:@"orderlistCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"WOTMyOrderInfoCell" bundle:nil] forCellReuseIdentifier:@"WOTMyOrderInfoCell"];
 
@@ -45,6 +51,14 @@
 
 -(void)layoutSubviews
 {
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.right.left.equalTo(self.view);
+        if (@available(iOS 11.0, *)) {
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+        } else {
+            make.bottom.equalTo(self.view.mas_bottom);
+        }
+    }];
     [self.notInfoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.centerY.equalTo(self.view).with.offset(-50);
@@ -73,8 +87,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    WOTAllOrderListVC *vc = self.supern;
-//    [self AddRefreshHeader];
+    
     [self createRequest];
 }
 
@@ -198,16 +211,5 @@
     vc.model = model;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

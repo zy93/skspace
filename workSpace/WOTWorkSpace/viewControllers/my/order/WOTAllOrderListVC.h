@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOTPageMenuParentVC.h"
-@interface WOTAllOrderListVC :WOTPageMenuParentVC
+@interface WOTAllOrderListVC :UIViewController
 @property (nonatomic, assign) NSInteger page;
 @end
