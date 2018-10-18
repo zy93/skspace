@@ -38,7 +38,14 @@
     NSString *newTime = [NSString stringWithFormat:@"%@",[NSDate getNewTime]];
     JudgmentTime *time = [[JudgmentTime alloc] init];
     BOOL isShow = [time compareDate:self.model.starTime withDate:newTime];
-    if ([self.model.commodityKind isEqualToString:@"工位"] && isShow) {
+    BOOL isOrder;
+    if ([self.model.commodityKind isEqualToString:@"工位"] || [self.model.commodityKind isEqualToString:@"会议室"]) {
+        isOrder = YES;
+    }else
+    {
+        isOrder = NO;
+    }
+    if (isOrder && isShow) {
         self.cancleButton.hidden = NO;
     }else
     {
@@ -204,8 +211,8 @@
 -(void)cancleBtnAction
 {
     NSDictionary *parmDic = @{@"orderNum":self.model.orderNum,
-                              @"orderCancel":@"申请取消订单"};
-    [WOTHTTPNetwork submitReceiptWithOrderDic:parmDic response:^(id bean, NSError *error) {
+                              @"orderCancel":@"申请取消"};
+    [WOTHTTPNetwork cancelOrder:parmDic response:^(id bean, NSError *error) {
         WOTBaseModel *model = (WOTBaseModel *)bean;
         if ([model.code isEqualToString:@"200"]) {
             [MBProgressHUDUtil showMessage:@"提交成功！" toView:self.view];
@@ -218,6 +225,7 @@
             return ;
         }
     }];
+
 }
 
 -(UIButton *)cancleButton
@@ -228,13 +236,13 @@
             [_cancleButton setTitle:@"取消订单" forState:UIControlStateNormal];
         }
         
-        if ([self.model.orderCancel isEqualToString:@"申请取消订单"]) {
+        if ([self.model.orderCancel isEqualToString:@"申请取消"] || self.model.orderCancel == nil) {
             _cancleButton.alpha = 0.4;
             _cancleButton.enabled = NO;
             [_cancleButton setTitle:@"处理中" forState:UIControlStateNormal];
         }
         
-        if ([self.model.orderCancel isEqualToString:@"同意取消订单"]) {
+        if ([self.model.orderCancel isEqualToString:@"已取消订单"]) {
             _cancleButton.alpha = 0.4;
             _cancleButton.enabled = NO;
             [_cancleButton setTitle:@"已取消" forState:UIControlStateNormal];

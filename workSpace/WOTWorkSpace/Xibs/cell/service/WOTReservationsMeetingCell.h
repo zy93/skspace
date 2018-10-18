@@ -22,4 +22,5 @@
 //设置数据
 @property (nonatomic, strong) WOTMeetingListModel *meetingModel;
 
+
 @end

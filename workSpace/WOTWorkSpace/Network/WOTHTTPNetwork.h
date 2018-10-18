@@ -705,6 +705,14 @@ typedef void(^response)(id bean,NSError *error);
  */
 +(void)getOrderString:(NSDictionary *)parm response:(response)response;
 
+/**
+ 工位和会议室取消订单
+
+ @param parm 请求参数
+ @param response 结果回调
+ */
++(void)cancelOrder:(NSDictionary *)parm response:(response)response;
+
 #pragma mark - 社交
 
 +(void)sendMessageToSapceWithSpaceId:(NSNumber *)spaceId text:(NSString *)text images:(NSArray *)images response:(response)response;

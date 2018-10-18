@@ -263,7 +263,7 @@
 
 -(void)myOrderCell:(WOTMyOrderCell *)cell showOrder:(NSString *)type
 {
-    NSArray *arr = @[@"全部订单", @"会议室", @"工位", @"场地", @"礼包"];
+    NSArray *arr = @[@"全部订单", @"会议室", @"工位", @"长租工位",@"场地", @"礼包"];
     if ([WOTSingtleton shared].isuserLogin) {
         WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
         station_ordervc.page = [arr indexOfObject:type];
@@ -273,44 +273,6 @@
         [[WOTConfigThemeUitls shared] showLoginVC:self];
     }
 }
-
-//-(void)showAllOrderList{
-//    if ([WOTSingtleton shared].isuserLogin) {
-//
-//        station_ordervc.page = 0;
-//        [self.navigationController pushViewController:station_ordervc animated:YES];
-//    } else {
-//        [[WOTConfigThemeUitls shared] showLoginVC:self];
-//    }
-//}
-//
-//-(void)showStationOrderList{
-//        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
-//        station_ordervc.page = 0;
-//        [self.navigationController pushViewController:station_ordervc animated:YES];
-//
-//}
-//
-//-(void)showSiteOrderList
-//{
-//    if ([WOTSingtleton shared].isuserLogin) {
-//        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
-//        station_ordervc.page = 2;
-//        [self.navigationController pushViewController:station_ordervc animated:YES];
-//    } else {
-//        [[WOTConfigThemeUitls shared] showLoginVC:self];
-//    }
-//}
-//
-//-(void)showMettingRoomOrderList{
-//    if ([WOTSingtleton shared].isuserLogin) {
-//        WOTAllOrderListVC *station_ordervc = [[UIStoryboard storyboardWithName:@"My" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTAllOrderListVC"];
-//        station_ordervc.page = 1;
-//        [self.navigationController pushViewController:station_ordervc animated:YES];
-//    } else {
-//        [[WOTConfigThemeUitls shared] showLoginVC:self];
-//    }
-//}
 
 -(void)showSettingVC{
     _settingvc =[[UIStoryboard storyboardWithName:@"My" bundle:[NSBundle mainBundle]]instantiateViewControllerWithIdentifier:@"WOTSettingVC"];

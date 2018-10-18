@@ -245,11 +245,24 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     WOTReservationsMeetingCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
-    vc.spaceModel = self.spaceModel;
-    vc.meetingModel = cell.meetingModel;
-    vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
-    [self.navigationController pushViewController:vc animated:YES];
+    [self requestSpaceName:cell.meetingModel];
+}
+
+#pragma mark - 通过空间id请求空间
+-(void)requestSpaceName:(WOTMeetingListModel *)meetingModel
+{
+    [WOTHTTPNetwork getSpaceFromSpaceID:meetingModel.spaceId bolock:^(id bean, NSError *error) {
+         WOTSpaceModel *model = (WOTSpaceModel *)bean;
+        if (model.spaceId) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                WOTOrderVC *vc = [[UIStoryboard storyboardWithName:@"Service" bundle:nil] instantiateViewControllerWithIdentifier:@"WOTOrderVC"];
+                vc.spaceModel = model;
+                vc.meetingModel = meetingModel;
+                vc.spaceSourceType = SPACE_SOURCE_TYPE_OTHER;
+                [self.navigationController pushViewController:vc animated:YES];
+            });
+        }
+    }];
 }
 
 

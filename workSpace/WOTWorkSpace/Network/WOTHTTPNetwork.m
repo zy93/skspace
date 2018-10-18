@@ -1336,14 +1336,13 @@
     NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/find",HTTPBaseURL];
     NSMutableDictionary *param = [@{@"pageNo":@(1),
                                     @"pageSize":@(1000),
-                                    @"userId":[WOTUserSingleton shareUser].userInfo.userId
+                                    @"userId":[WOTUserSingleton shareUser].userInfo.userId,
+                                    @"orderState":@"SUCCESS"
                                     } mutableCopy];
     if (!strIsEmpty(type)) {
         [param setValue:type forKey:@"commodityKind"];
     }
-    if ([type isEqualToString:@"长租工位"] || [type isEqualToString:@"礼包"]) {
-        [param setValue:@"SUCCESS" forKey:@"orderState"];
-    }
+    
     [self doRequestWithParameters:param useUrl:url  complete:^JSONModel *(id responseobj) {
         WOTWorkStationHistoryModel_msg *model = [[WOTWorkStationHistoryModel_msg alloc]initWithDictionary:responseobj error:nil];
         return  model;
@@ -1368,6 +1367,17 @@
     
     [WOTHTTPNetwork doRequestWithParameters:parm useUrl:url  complete:^JSONModel *(id responseobj) {
         SKOrderStringModel *model = [[SKOrderStringModel alloc]initWithDictionary:responseobj error:nil];
+        return  model;
+    } response:response];
+}
+
+#pragma mark - 取消订单
++(void)cancelOrder:(NSDictionary *)parm response:(response)response
+{
+    NSString *url = [NSString stringWithFormat:@"%@/SKwork/Order/cancelOrder",HTTPBaseURL];
+    
+    [WOTHTTPNetwork doRequestWithParameters:parm useUrl:url  complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc]initWithDictionary:responseobj error:nil];
         return  model;
     } response:response];
 }
