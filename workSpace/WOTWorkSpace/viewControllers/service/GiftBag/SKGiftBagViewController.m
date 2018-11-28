@@ -15,7 +15,7 @@
 #import "NSString+Category.h"
 #import "JXPopoverView.h"
 
-@interface SKGiftBagViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface SKGiftBagViewController ()<UITableViewDelegate,UITableViewDataSource,SKGiftBagTableViewCellDelegate>
 
 @property (nonatomic,strong)UITableView *giftBagTableView;
 @property (nonatomic,copy)NSArray *giftBagListArray;
@@ -128,6 +128,7 @@
     SKGiftBagModel_list *model_list = self.giftBagListArray[indexPath.section];
     SKGiftBagModel *model = model_list.list[indexPath.row];
     [cell.giftBagImageView sd_setImageWithURL:[model.picture ToResourcesUrl] placeholderImage:[UIImage imageNamed:@"placeholder_space"]];
+    cell.delegate = self;
     cell.giftNameLabel.text = model.giftName;
     cell.giftPriceLabel.text = [NSString stringWithFormat:@"¥%@.00",model.price];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -257,6 +258,15 @@
 - (void)giftNotificationAction:(NSNotification *)notification{
     self.giftType = [notification.userInfo objectForKey:@"type"];
     [self queryGigtBagWithType:self.giftType];
+}
+
+-(void)buyButtonAction:(UITableViewCell *)cell
+{
+    NSIndexPath *indexPath = [_giftBagTableView indexPathForCell:cell];
+    SKGiftBagInfoViewController *giftBagInfoVC = [[SKGiftBagInfoViewController alloc] init];
+    SKGiftBagModel_list *model_list = self.giftBagListArray[indexPath.section];
+    giftBagInfoVC.giftBagModel  = model_list.list[indexPath.row];
+    [self.navigationController pushViewController:giftBagInfoVC animated:YES];
 }
 
 #pragma mark - 通过类型查看礼包列表

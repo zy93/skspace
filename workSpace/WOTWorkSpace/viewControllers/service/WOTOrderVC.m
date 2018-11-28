@@ -1206,6 +1206,7 @@
     {
         companyId = @"个人";
     }
+    
     NSDictionary *dic = @{
                           @"spaceId":self.spaceModel.spaceId,
                           @"spaceName":self.spaceModel.spaceName,

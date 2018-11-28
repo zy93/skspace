@@ -61,11 +61,17 @@
         [formatter setDateFormat:@"mm"];
         min = [[formatter stringFromDate:date] intValue];
         */
-        for (int i = year; i<=(month==12?year+1:year); i++) {
-            NSString *str = [NSString stringWithFormat:@"%d",i];
-//            NSLog(@"%@",str);
-            [_yeararr addObject:str];
-        }
+//        for (int i = year; i<=(month==12?year+1:year); i++) {
+//            NSString *str = [NSString stringWithFormat:@"%d",i];
+////            NSLog(@"%@",str);
+//            [_yeararr addObject:str];
+//        }
+        [_yeararr addObject:@"2018"];
+        [_yeararr addObject:@"2019"];
+        [_yeararr addObject:@"2020"];
+        [_yeararr addObject:@"2021"];
+        [_yeararr addObject:@"2022"];
+        [_yeararr addObject:@"2023"];
        
         [picker selectRow:16 inComponent:0 animated:YES];
         [picker selectRow:month-1 inComponent:1 animated:YES];

@@ -8,11 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SKGiftBagTableViewCellDelegate <NSObject>
+
+-(void)buyButtonAction:(UITableViewCell *)cell;
+
+@end
+
 @interface SKGiftBagTableViewCell : UITableViewCell
 
 @property (nonatomic,strong)UIImageView *giftBagImageView;
 @property (nonatomic,strong)UILabel *giftNameLabel;
 @property (nonatomic,strong)UILabel *giftPriceLabel;
 @property (nonatomic,strong)UIButton *buyButton;
+
+@property (nonatomic,assign) id <SKGiftBagTableViewCellDelegate> delegate;
+
 
 @end

@@ -36,6 +36,7 @@
         self.buyButton.layer.cornerRadius = 5.f;
         
         [self.buyButton setTitle:@"立即购买" forState:UIControlStateNormal];
+        [self.buyButton addTarget:self action:@selector(buyButtonActon:) forControlEvents:UIControlEventTouchUpInside];
         self.buyButton.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
         [self.buyButton setTitleColor:UICOLOR_gold forState:UIControlStateNormal];
         [self addSubview:self.buyButton];
@@ -87,6 +88,11 @@
         make.right.equalTo(self).with.offset(-15);
         make.height.mas_offset(1);
     }];
+}
+
+-(void)buyButtonActon:(UIButton *)button
+{
+    [self.delegate buyButtonAction:self];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

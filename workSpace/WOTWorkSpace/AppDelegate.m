@@ -19,7 +19,7 @@
 #import "LoginViewController.h"
 #endif
 
-#define MAP_API_KEY @"d4ac301f3334bc74439bda2d81e41061"
+#define MAP_API_KEY @"386ae9b01eaed798de614bb77a314f57"
 
 @interface AppDelegate () <JPUSHRegisterDelegate>
 
@@ -43,7 +43,7 @@
         NSLog(@"不是第一次登录");
     }
     
-    [AMapServices sharedServices].apiKey =@"d4ac301f3334bc74439bda2d81e41061";
+    [AMapServices sharedServices].apiKey =@"386ae9b01eaed798de614bb77a314f57";
     self.tabbar = [[WOTTabBarVCViewController alloc]init];
     //[self queryUnreadFriendCircle];
     //[self.tabbar.tabBar showBadgeOnItemIndex:4];

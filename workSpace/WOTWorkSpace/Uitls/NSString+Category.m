@@ -197,9 +197,28 @@
     
 }
 
-
-
 + (BOOL)valiMobile:(NSString*)mobile
+{
+    if (mobile.length != 11)
+    {
+        return NO;
+    }
+    
+    NSString *firstStr=[mobile substringWithRange:NSMakeRange(0,1)];
+    if (![firstStr isEqualToString:@"1"]) {
+        return NO;
+    }
+    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
+    NSString *filtered = [[mobile componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    
+    if (![mobile isEqualToString:filtered])
+    {
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)valiMobile1:(NSString*)mobile
 {
     mobile = [mobile stringByReplacingOccurrencesOfString:@" "withString:@""];
     if (mobile.length != 11)
