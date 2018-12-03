@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "KeyChainStore.h"
 
 //时间格式 字符串
 #define kDateFormatString1 @"yyyy-MM-dd HH:mm:ss"
@@ -66,5 +67,8 @@
 
 //将分钟数转化为天、小时、分钟
 +(NSString *)dateTimeDifferenceHoursWithMinutes:(NSNumber *)minutes;
+
+//获取UUID
+//+ (NSString *)getUUIDByKeyChain;
 
 @end

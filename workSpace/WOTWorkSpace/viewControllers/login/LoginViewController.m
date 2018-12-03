@@ -14,6 +14,7 @@
 #import "JPUSHService.h"
 #import "SKInfoNotifationModel.h"
 #import "WOTSettingVC.h"
+#import "KeyChainStore.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 
@@ -248,7 +249,8 @@
         [MBProgressHUDUtil showMessage:@"电话格式不正确！" toView:self.view];
         return;
     }
-    [WOTHTTPNetwork userLoginWithTelOrEmail:self.userTelField.text password:self.verificationCodeField.text alias:[NSString stringWithFormat:@"%@C",self.userTelField.text] response:^(id bean,NSError *error) {
+    NSString *uuidStr = [KeyChainStore getUUIDByKeyChain];
+    [WOTHTTPNetwork userLoginWithTelOrEmail:self.userTelField.text password:self.verificationCodeField.text alias:[NSString stringWithFormat:@"%@C",self.userTelField.text] withUUID:uuidStr response:^(id bean,NSError *error) {
         NSLog(@"");
         if (bean) {
             WOTLoginModel_msg *model = (WOTLoginModel_msg *)bean;
@@ -273,6 +275,9 @@
                         [self.navigationController popViewControllerAnimated:YES];
                     }
                 });
+            }
+            else if ([model.code isEqualToString:@"204"]) {
+                [self userAndDeviceUnlikeWithUUID:uuidStr];
             }
             else {
                 [MBProgressHUDUtil showMessage:model.result toView:self.view];
@@ -354,6 +359,40 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - 账户与设备不一致
+-(void)userAndDeviceUnlikeWithUUID:(NSString *)uuidStr
+{
+//    [[WOTConfigThemeUitls shared] showAlert:[[LoginViewController alloc] init] title:@"账户与设备不一致" message:@"是否重新绑定设备" okBlock:^{
+//        [self sendBindingDeviceWithUUID:uuidStr];
+//    } cancel:^{
+//
+//    }];
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"账户与设备不一致" message:@"是否重新绑定设备" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self sendBindingDeviceWithUUID:uuidStr];
+    }];
+    UIAlertAction *cancleaction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alert addAction:action];
+    [alert addAction:cancleaction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)sendBindingDeviceWithUUID:(NSString *)uuidStr
+{
+    [WOTHTTPNetwork sendBindingDeviceWithTel:self.userTelField.text withDeviceUUID:uuidStr response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showMessage:@"发送成功，等待审核！" toView:self.view];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"发送请求失败！" toView:self.view];
+        }
+    }];
 }
 
 

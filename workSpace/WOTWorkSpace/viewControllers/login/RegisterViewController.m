@@ -12,7 +12,7 @@
 #import "WOTHTTPNetwork.h"
 #import "WOTGetVerifyModel.h"
 #import "WOTRegisterModel.h"
-
+#import "KeyChainStore.h"
 @interface RegisterViewController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong)UIImageView *registerLogoView;
@@ -355,8 +355,8 @@
         [MBProgressHUDUtil showMessage:@"两次密码输入不同！" toView:self.view];
         return;
     }
-   
-    [WOTHTTPNetwork userRegisterWitVerifyCode:self.registerVCodeText.text tel:self.registerTelTextField.text userName:self.registerTelTextField.text  password:self.registerPWText.text alias:[NSString stringWithFormat:@"%@C",self.registerTelTextField.text] invitationCode:self.invitationCodeText.text  response:^(id bean, NSError *error) {
+   NSString *uuidStr = [KeyChainStore getUUIDByKeyChain];
+    [WOTHTTPNetwork userRegisterWitVerifyCode:self.registerVCodeText.text tel:self.registerTelTextField.text userName:self.registerTelTextField.text  password:self.registerPWText.text alias:[NSString stringWithFormat:@"%@C",self.registerTelTextField.text] invitationCode:self.invitationCodeText.text withUUID:uuidStr response:^(id bean, NSError *error) {
         WOTRegisterModel *model = bean;
         if ([model.code isEqualToString:@"200"]) {
 

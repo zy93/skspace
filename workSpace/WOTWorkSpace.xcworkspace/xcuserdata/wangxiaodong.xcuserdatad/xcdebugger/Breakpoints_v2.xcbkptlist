@@ -20,12 +20,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WOTWorkSpace/viewControllers/main/WOTMainVC.m"
-            timestampString = "561465172.398826"
+            timestampString = "565254289.681603"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "672"
             endingLineNumber = "672"
             landmarkName = "-getBannerDataSource:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WOTWorkSpace/viewControllers/service/SKMapViewController.m"
+            timestampString = "565004860.1736341"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "-amapLocationManager:didUpdateLocation:reGeocode:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WOTWorkSpace/viewControllers/login/WOTLoginVC.m"
+            timestampString = "565094044.537953"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "-clickLoginBtn:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WOTWorkSpace/viewControllers/login/LoginViewController.m"
+            timestampString = "565094044.53801"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
+            landmarkName = "-userAndDeviceUnlikeWithUUID:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WOTWorkSpace/viewControllers/main/WOTMainVC.m"
+            timestampString = "565254289.681797"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "802"
+            endingLineNumber = "802"
+            landmarkName = "-sendBindingDeviceWithUUID:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

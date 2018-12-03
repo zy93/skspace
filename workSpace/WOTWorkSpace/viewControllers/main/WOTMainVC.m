@@ -43,7 +43,7 @@
 #import "SKNewEnterpriseModel.h"
 #import "WOTShareVC.h"
 #import "WOTProvidersVC.h"
-
+#import "KeyChainStore.h"
 @interface WOTMainVC ()<UIScrollViewDelegate,NewPagedFlowViewDelegate,NewPagedFlowViewDataSource,SDCycleScrollViewDelegate,WOTShortcutMenuViewDelegate,WOTEnterpriseScrollViewDelegate>
 @property(nonatomic,strong)ZYQSphereView *sphereView;
 @property(nonatomic,strong)NewPagedFlowView *pageFlowView;
@@ -124,7 +124,7 @@
     }else {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -138,7 +138,7 @@
     [self.tabBarController.tabBar setHidden:NO];
     [self.tabBarController.tabBar setTranslucent:NO];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
+    [self verifyUserAndDevice];
 }
 
 int a = 0;
@@ -778,14 +778,59 @@ int a = 0;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)methodPrompting
+{
+    NSString *uuidStr = [KeyChainStore getUUIDByKeyChain];
+    if (![WOTUserSingleton shareUser].userInfo.tel) {
+        return;
+    }
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"账户与设备不一致" message:@"是否重新绑定设备" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self sendBindingDeviceWithUUID:uuidStr];
+    }];
+    UIAlertAction *cancleaction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [WOTSingtleton shared].isuserLogin = NO;
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
+        [[WOTUserSingleton shareUser] deletePlistFile];
+        [WOTUserSingleton destroyInstance];
+    }];
+    [alert addAction:action];
+    [alert addAction:cancleaction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
-*/
+
+-(void)sendBindingDeviceWithUUID:(NSString *)uuidStr
+{
+    [WOTHTTPNetwork sendBindingDeviceWithTel:[WOTUserSingleton shareUser].userInfo.tel withDeviceUUID:uuidStr response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        [WOTSingtleton shared].isuserLogin = NO;
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:LOGIN_STATE_USERDEFAULT];
+        [[WOTUserSingleton shareUser] deletePlistFile];
+        [WOTUserSingleton destroyInstance];
+        if ([model.code isEqualToString:@"200"]) {
+            [MBProgressHUDUtil showMessage:@"发送成功，等待审核！" toView:self.view];
+        }else
+        {
+            [MBProgressHUDUtil showMessage:@"发送请求失败！" toView:self.view];
+        }
+    }];
+}
+
+-(void)verifyUserAndDevice
+{
+    NSString *uuidStr = [KeyChainStore getUUIDByKeyChain];
+    if (![WOTUserSingleton shareUser].userInfo.tel) {
+        return;
+    }
+    [WOTHTTPNetwork verifyUserAndDeviceWithTel:[WOTUserSingleton shareUser].userInfo.tel withDeviceUUID:uuidStr response:^(id bean, NSError *error) {
+        WOTBaseModel *model = (WOTBaseModel *)bean;
+        if ([model.code isEqualToString:@"204"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self methodPrompting];
+            });
+        }
+    }];
+}
+
 
 @end

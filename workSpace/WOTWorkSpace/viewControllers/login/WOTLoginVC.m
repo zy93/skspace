@@ -11,7 +11,7 @@
 #import "WOTSelectCityCodeVC.h"
 #import "WOTUserRegisterVC.h"
 #import "WOTLoginModel.h"
-
+#import "KeyChainStore.h"
 @interface WOTLoginVC ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *passwordText;
@@ -93,6 +93,7 @@
 }
 
 - (IBAction)clickLoginBtn:(id)sender {
+    NSString *uuidStr = [KeyChainStore getUUIDByKeyChain];
     if (strIsEmpty(self.accountText.text)) {
         [MBProgressHUDUtil showMessage:@"请输入完整的电话号码" toView:self.view];
         
@@ -102,7 +103,7 @@
         } else {
             [MBProgressHUDUtil showLoadingWithMessage:@"登录中..." toView:self.view whileExcusingBlock:^(MBProgressHUD *hud) {
                 
-                [WOTHTTPNetwork userLoginWithTelOrEmail:self.accountText.text password:self.passwordText.text alias:[NSString stringWithFormat:@"%@C",self.passwordText.text] response:^(id bean,NSError *error) {
+                [WOTHTTPNetwork userLoginWithTelOrEmail:self.accountText.text password:self.passwordText.text alias:[NSString stringWithFormat:@"%@C",self.passwordText.text] withUUID:uuidStr  response:^(id bean,NSError *error) {
                     [hud setHidden:YES];
                     NSLog(@"");
                     if (bean) {

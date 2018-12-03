@@ -282,6 +282,7 @@
 		C5CBA582201073A8002943EF /* SKOrderStringModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CBA581201073A8002943EF /* SKOrderStringModel.m */; };
 		C5CBA58520109E56002943EF /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C5CBA58320109E56002943EF /* AlipaySDK.bundle */; };
 		C5CBA58620109E56002943EF /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CBA58420109E56002943EF /* AlipaySDK.framework */; };
+		C5CC8B3921AE66C600D7A399 /* KeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CC8B3821AE66C600D7A399 /* KeyChainStore.m */; };
 		C5D8B1AE2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D8B1AD2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m */; };
 		C5DB163B20EB1432008352D0 /* SKServiceProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB163A20EB1431008352D0 /* SKServiceProductModel.m */; };
 		C5DB163F20EB148C008352D0 /* SKProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5DB163D20EB148B008352D0 /* SKProductCell.xib */; };
@@ -1004,6 +1005,8 @@
 		C5CBA581201073A8002943EF /* SKOrderStringModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKOrderStringModel.m; sourceTree = "<group>"; };
 		C5CBA58320109E56002943EF /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		C5CBA58420109E56002943EF /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		C5CC8B3721AE66C500D7A399 /* KeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChainStore.h; sourceTree = "<group>"; };
+		C5CC8B3821AE66C600D7A399 /* KeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChainStore.m; sourceTree = "<group>"; };
 		C5D8B1AC2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKCompanyRemainingTimeModel.h; sourceTree = "<group>"; };
 		C5D8B1AD2091D6B000FAD2BA /* SKCompanyRemainingTimeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SKCompanyRemainingTimeModel.m; sourceTree = "<group>"; };
 		C5DB163920EB1431008352D0 /* SKServiceProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKServiceProductModel.h; sourceTree = "<group>"; };
@@ -2693,6 +2696,8 @@
 		E85A860B1F0233270016FCA1 /* Uitls */ = {
 			isa = PBXGroup;
 			children = (
+				C5CC8B3721AE66C500D7A399 /* KeyChainStore.h */,
+				C5CC8B3821AE66C600D7A399 /* KeyChainStore.m */,
 				C59DE1762047CD70002E127D /* MapPath */,
 				C55A298B1FD6E16B001E0DB7 /* UIColor+ColorChange.h */,
 				C55A298A1FD6E16B001E0DB7 /* UIColor+ColorChange.m */,
@@ -3209,6 +3214,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -3608,6 +3616,7 @@
 				E8190DA41F0F69660000B07C /* WOTworkSpaceSearchCell.m in Sources */,
 				E86245641F3D4F4900CF0D9D /* SRProxyConnect.m in Sources */,
 				E86245811F3D59F100CF0D9D /* WOTDeviceListRequestTool.m in Sources */,
+				C5CC8B3921AE66C600D7A399 /* KeyChainStore.m in Sources */,
 				C50961212022FA18009A9D4F /* SKTtileView.m in Sources */,
 				2A7D877F2030489200CF4CCD /* WOTMyInviteVC.m in Sources */,
 				E85A861B1F0252F20016FCA1 /* WOTBaseNavigationController.m in Sources */,

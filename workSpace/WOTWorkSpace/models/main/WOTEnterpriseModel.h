@@ -42,7 +42,7 @@
 @property(nonatomic,strong)NSString* financeMail ;
 @property(nonatomic,strong)NSString* financeTel ;
 @property(nonatomic,strong)NSString* financingNum ;
-@property(nonatomic,strong)NSNumber* givingRemainingTime ;
+@property(nonatomic,strong)NSNumber* givingRemainingTime;//企业剩余时间
 @property(nonatomic,strong)NSNumber* givingTimeTotal ;
 @property(nonatomic,strong)NSString* givingTimeType ;
 @property(nonatomic,strong)NSNumber* highTech ;

@@ -47,7 +47,6 @@
         {
             if ([subview isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
                 searchTextField = subview;
-                
             }
         }
     }
@@ -62,7 +61,6 @@
     [butt addTarget:self action:@selector(clearSearchBtn:) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:butt];
     [self.navigationItem setTitleView:bgView];
-    
 }
 
 
@@ -85,7 +83,6 @@
     [rightbtn setTitleColor:textColor forState:UIControlStateNormal];
     [rightbtn addTarget:self action:@selector(rightItemAction) forControlEvents: UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:rightbtn];
-    
 }
 
 

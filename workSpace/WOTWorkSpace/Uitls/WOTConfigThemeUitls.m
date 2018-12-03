@@ -18,7 +18,7 @@
     static dispatch_once_t token;
     dispatch_once(&token, ^{
         instance = [[self alloc]init];
-        
+        UIInterfaceOrientationLandscapeLeft
     });
     return  instance;
 }

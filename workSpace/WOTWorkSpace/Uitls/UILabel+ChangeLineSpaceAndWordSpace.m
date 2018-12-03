@@ -29,7 +29,6 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [labelText length])];
     label.attributedText = attributedString;
     [label sizeToFit];
-    
 }
 
 + (void)changeSpaceForLabel:(UILabel *)label withLineSpace:(float)lineSpace WordSpace:(float)wordSpace {

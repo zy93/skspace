@@ -16,6 +16,24 @@ typedef void(^response)(id bean,NSError *error);
 @interface WOTHTTPNetwork : NSObject
 
 #pragma mark - 用户
+
+/**
+ 验证账户和设备
+
+ @param userTel 用户电话
+ @param uuidStr 设备uuid
+ @param response 回调数据到上层
+ */
++(void)verifyUserAndDeviceWithTel:(NSString *)userTel withDeviceUUID:(NSString *)uuidStr response:(response)response;
+
+/**
+ 发送绑定请求
+ @param userTel 用户电话
+ @param uuidStr 设备uuid
+ @param response 回调数据到上层
+ */
++(void)sendBindingDeviceWithTel:(NSString *)userTel withDeviceUUID:(NSString *)uuidStr response:(response)response;
+
 /**
  * 登录接口
  @param telOrEmail  登录账号手机号或邮箱
@@ -23,7 +41,7 @@ typedef void(^response)(id bean,NSError *error);
  @param alias       用户设备alias
  @param response    回调数据到上层
  */
-+(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd alias:(NSString *)alias response:(response)response;
++(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd alias:(NSString *)alias withUUID:(NSString *)uuidStr response:(response)response;
 
 /**
  * 发送手机验证码
@@ -40,7 +58,7 @@ typedef void(^response)(id bean,NSError *error);
  @param invitationCode 邀请码
  @param response    回调数据到上层
  */
-+(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel userName:(NSString *)userName password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode response:(response)response;
++(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel userName:(NSString *)userName password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode withUUID:(NSString *)uuidStr response:(response)response;
 
 
 /**

@@ -17,6 +17,7 @@
 #import "UITabBar+badge.h"
 #import "SKInfoNotifationModel.h"
 #import "LoginViewController.h"
+#import "KeyChainStore.h"
 #endif
 
 #define MAP_API_KEY @"386ae9b01eaed798de614bb77a314f57"
@@ -103,6 +104,9 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [self queryUnreadFriendCircle];
     [self queryNewInfo];
+    //校验账号和设备
+    
+    [self.tabbar setSelectedIndex:0];
 }
 
 
@@ -186,9 +190,11 @@
         loginVC.firstString = @"firstLogin";
         UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:loginVC];
         self.window.rootViewController = navigation;
+        [self.window makeKeyAndVisible];
     }else
     {
         self.window.rootViewController =self.tabbar ;
+        [self.window makeKeyAndVisible];
     }
     
 }
@@ -410,7 +416,10 @@
             }
         }];
     }
-    
 }
+
+
+
+
 
 @end

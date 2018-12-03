@@ -11,6 +11,9 @@
 @interface WOTSurplusTimeVC () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView * topIV;
 @property (nonatomic, strong) UITableView * table;
+
+@property (nonatomic, strong) NSMutableArray *titleArray;
+@property (nonatomic, strong) NSMutableArray *timeArray;
 @end
 
 @implementation WOTSurplusTimeVC
@@ -51,7 +54,7 @@
         make.right.equalTo(self.topIV.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
     }];
-    
+    [self queryAllCompany];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,7 +70,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return self.titleArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,37 +104,69 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"SurplusTableViewCell"];
     }
-    if (indexPath.row==0) {
-        //分钟制转小时制
-        long hours = [WOTUserSingleton shareUser].userInfo.workHours.integerValue/60;
-        long minute= [WOTUserSingleton shareUser].userInfo.workHours.integerValue%60;
-        cell.textLabel.text = @"剩余工位时长";
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%ld分钟",hours==0?@"":[NSString stringWithFormat:@"%ld小时",hours],minute];
-        cell.textLabel.font = [UIFont systemFontOfSize:15.f];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:13.f];
-    }
-    else {
-        //分钟制转小时制
-        long hours = [WOTUserSingleton shareUser].userInfo.meetingHours.integerValue/60;
-        long minute= [WOTUserSingleton shareUser].userInfo.meetingHours.integerValue%60;
-        cell.textLabel.text = @"剩余会议室时长";
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%ld分钟",hours==0?@"":[NSString stringWithFormat:@"%ld小时",hours],minute];
-        cell.textLabel.font = [UIFont systemFontOfSize:15.f];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:13.f];
-    }
+    cell.textLabel.text = self.titleArray[indexPath.row];
+    cell.detailTextLabel.text = self.timeArray[indexPath.row];
+    cell.textLabel.font = [UIFont systemFontOfSize:15.f];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:13.f];
     return cell;
 }
 
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - 将分钟转化为显示的字符串
+-(NSString *)timeIntChaneStr:(NSNumber *)hoursNumber
+{
+    long hours = hoursNumber.integerValue/60;
+    long minute= hoursNumber.integerValue%60;
+    NSString *str = [NSString stringWithFormat:@"%@%ld分钟",hours==0?@"":[NSString stringWithFormat:@"%ld小时",hours],minute];
+    return str;
 }
-*/
+
+-(NSMutableArray *)titleArray
+{
+    if (!_titleArray) {
+        _titleArray = [[NSMutableArray alloc] init];
+        [_titleArray addObject:@"个人剩余工位时长"];
+        [_titleArray addObject:@"个人剩余会议室时长"];
+    }
+    return _titleArray;
+}
+
+-(NSMutableArray *)timeArray
+{
+    if (!_timeArray) {
+        _timeArray = [[NSMutableArray alloc] init];
+        [_timeArray addObject:[self timeIntChaneStr:[WOTUserSingleton shareUser].userInfo.workHours]];
+        [_timeArray addObject:[self timeIntChaneStr:[WOTUserSingleton shareUser].userInfo.meetingHours]];
+    }
+    return _timeArray;
+}
+
+#pragma mark - 请求所有企业
+-(void)queryAllCompany
+{
+    NSString *adminList = [WOTUserSingleton shareUser].userInfo.companyIdAdmin;
+    NSString *employees = [WOTUserSingleton shareUser].userInfo.companyId;
+    NSMutableString *result = [NSMutableString new];
+    if (!strIsEmpty(adminList)) {
+        result = [adminList mutableCopy];
+    }
+    if (!strIsEmpty(employees)) {
+        NSString *a =  [NSString stringWithFormat:@"%@%@",strIsEmpty(result)?@"":@",",employees];
+        [result appendString:a];
+    }
+    if (strIsEmpty(result)) {
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+    [WOTHTTPNetwork getUserEnterpriseWithCompanyId:result response:^(id bean, NSError *error) {
+        WOTEnterpriseModel_msg *model_msg = bean;
+        if ([model_msg.code isEqualToString:@"200"]) {
+            for (WOTEnterpriseModel *model in model_msg.msg.list) {
+                [weakSelf.titleArray addObject:[NSString stringWithFormat:@"%@剩余会议室时长",model.companyName]];
+                [weakSelf.timeArray addObject:[self timeIntChaneStr:model.givingRemainingTime]];
+            }
+            [weakSelf.table reloadData];
+        }
+    }];
+}
 
 @end

@@ -10,4 +10,6 @@
 
 @interface WOTMainVC : UIViewController
 
+
+-(void)methodPrompting;
 @end

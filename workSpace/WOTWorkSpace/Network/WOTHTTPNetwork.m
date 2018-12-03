@@ -225,12 +225,40 @@
 }
 
 
++(void)verifyUserAndDeviceWithTel:(NSString *)userTel withDeviceUUID:(NSString *)uuidStr response:(response)response
+{
+    NSDictionary *dic = @{@"tel" :userTel,
+                          @"deviceId":uuidStr
+                          };
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/verifyDeviceId"];
+    
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
++(void)sendBindingDeviceWithTel:(NSString *)userTel withDeviceUUID:(NSString *)uuidStr response:(response)response
+{
+    NSDictionary *dic = @{@"tel" :userTel,
+                          @"deviceId":uuidStr,
+                          @"state":@"申请中"
+                          };
+    NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/Deviceidrecord/add"];
+    
+    [self doRequestWithParameters:dic useUrl:string complete:^JSONModel *(id responseobj) {
+        WOTBaseModel *model = [[WOTBaseModel alloc] initWithDictionary:responseobj error:nil];
+        return model;
+    } response:response];
+}
+
 //登录
-+(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd alias:(NSString *)alias response:(response)response
++(void)userLoginWithTelOrEmail:(NSString *)telOrEmail password:(NSString *)pwd alias:(NSString *)alias withUUID:(NSString *)uuidStr response:(response)response
 {
     NSDictionary *dic = @{@"tel" :telOrEmail,
                           @"password":[WOTUitls md5HexDigestByString:pwd],
-                          @"alias":alias
+                          @"alias":alias,
+                          @"deviceId":uuidStr
                           };
     NSString * string = [NSString stringWithFormat:@"%@%@", HTTPBaseURL,@"/SKwork/User/Login"];
     
@@ -251,13 +279,14 @@
     } response:response];
 }
 
-+(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel userName:(NSString *)userName password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode response:(response)response
++(void)userRegisterWitVerifyCode:(NSString *)code tel:(NSString *)tel userName:(NSString *)userName password:(NSString *)pass alias:(NSString *)alias invitationCode:(NSString *)invitationCode withUUID:(NSString *)uuidStr response:(response)response
 {
     NSMutableDictionary *dic = [@{@"tel":tel,
                           @"verifyNum": code,
                           @"password":[WOTUitls md5HexDigestByString:pass],
                           @"userName":userName,
-                          @"alias":alias
+                          @"alias":alias,
+                          @"deviceId":uuidStr
                           } mutableCopy];
     if (!strIsEmpty(invitationCode)) {
         [dic setValue:@"byInvitationCode " forKey:invitationCode];
